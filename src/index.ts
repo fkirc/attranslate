@@ -25,9 +25,13 @@ commander
   .option(
     '-s, --service <service>',
     `selects the service to be used for translation`,
-    'googleTranslate',
+    'google-translate',
   )
   .option('--list-services', `outputs a list of available services`)
+  .option(
+    '-c, --config <value>',
+    'supply a config parameter (e.g. path to key file) to the translation service',
+  )
   .option(
     '-k, --key-based',
     `uses the template file's values instead of the keys as translation source`,
@@ -83,19 +87,22 @@ const translate = async (
   deleteUnusedStrings = false,
   useKeyBasedFiles = false,
   fixInconsistencies = false,
-  service: keyof typeof serviceMap = 'googleTranslate',
+  service: keyof typeof serviceMap = 'google-translate',
+  config?: string,
 ) => {
   const workingDir = path.resolve(process.cwd(), inputDir);
-  const availableLanguages = getAvailableLanguages(workingDir);
-  const targetLanguages = availableLanguages.filter(f => f !== sourceLang);
+  const languageFolders = getAvailableLanguages(workingDir);
+  const targetLanguages = languageFolders.filter(f => f !== sourceLang);
 
-  if (!availableLanguages.includes(sourceLang)) {
+  if (!languageFolders.includes(sourceLang)) {
     throw new Error(`The source language ${sourceLang} doesn't exist.`);
   }
 
   if (typeof serviceMap[service] === 'undefined') {
     throw new Error(`The service ${service} doesn't exist.`);
   }
+
+  const translationService = serviceMap[service];
 
   const templateFiles = loadTranslations(
     path.resolve(workingDir, sourceLang),
@@ -122,6 +129,17 @@ const translate = async (
   console.log(`-> ${templateFiles.map(f => f.name).join(', ')}`);
   console.log();
 
+  console.log(`✨ Initializing ${translationService.name}...`);
+  translationService.initialize(config);
+  process.stdout.write(chalk`├── Getting available languages `);
+  const availableLanguages = await translationService.getAvailableLanguages();
+  console.log(
+    chalk`({green.bold ${String(availableLanguages.length)} languages})`,
+  );
+  console.log(chalk`└── {green.bold Done}`);
+  console.log();
+
+  // Look for inconsistencies in natural-language-style JSON files
   if (!useKeyBasedFiles) {
     console.log(`🔍 Looking for key-value inconsistencies in source files`);
     const insonsistentFiles: string[] = [];
@@ -252,7 +270,7 @@ const translate = async (
         key => !templateStrings.includes(key),
       );
 
-      const translatedStrings = await serviceMap[service](
+      const translatedStrings = await translationService.translateStrings(
         stringsToTranslate,
         sourceLang.split('-').pop()!,
         language.split('-').pop()!,
@@ -311,6 +329,7 @@ translate(
   commander.keyBased,
   commander.fixInconsistencies,
   commander.service,
+  commander.config,
 ).catch(e => {
   console.log();
   console.log(chalk.bgRed('An error has occured:'));

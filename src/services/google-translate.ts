@@ -1,29 +1,46 @@
 import { Translate } from '@google-cloud/translate';
 import { replaceIcu, reInsertIcu } from '../icu';
+import { TranslationService } from '.';
 
-const translate = new Translate({ autoRetry: true });
+export class GoogleTranslate implements TranslationService {
+  private translate: Translate;
 
-export const translateStrings = async (
-  strings: { key: string; value: string }[],
-  from: string,
-  to: string,
-) => {
-  return Promise.all(
-    strings.map(async ({ key, value }) => {
-      const { clean, replacements } = replaceIcu(value);
+  public name = 'Google Translate';
 
-      const translationResult = (await translate.translate(clean, {
-        from,
-        to,
-      }))[0];
+  initialize(config?: string) {
+    console.info({ config });
 
-      return {
-        key: key,
-        value: value,
-        translated: reInsertIcu(translationResult, replacements),
-      };
-    }),
-  );
-};
+    this.translate = new Translate({
+      autoRetry: true,
+      keyFilename: config || undefined,
+    });
+  }
 
-export default translateStrings;
+  async getAvailableLanguages() {
+    const [languages] = await this.translate.getLanguages();
+    return languages.map(l => l.code.toLowerCase());
+  }
+
+  async translateStrings(
+    strings: { key: string; value: string }[],
+    from: string,
+    to: string,
+  ) {
+    return Promise.all(
+      strings.map(async ({ key, value }) => {
+        const { clean, replacements } = replaceIcu(value);
+
+        const translationResult = (await this.translate.translate(clean, {
+          from,
+          to,
+        }))[0];
+
+        return {
+          key: key,
+          value: value,
+          translated: reInsertIcu(translationResult, replacements),
+        };
+      }),
+    );
+  }
+}

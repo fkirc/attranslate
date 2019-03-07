@@ -1,41 +1,53 @@
 import inquirer from 'inquirer';
 import { replaceIcu, reInsertIcu } from '../icu';
+import { TranslationService } from '.';
+import languages from '../languages';
 
-export default async (
-  strings: { key: string; value: string }[],
-  from: string,
-  to: string,
-) => {
-  const results: { key: string; value: string; translated: string }[] = [];
+export class ManualTranslation implements TranslationService {
+  public name = 'Manual Translation';
 
-  if (strings.length === 0) {
-    return [];
+  initialize() {}
+
+  async getAvailableLanguages() {
+    return languages;
   }
 
-  console.log();
-  console.log(`├─┌── Translatable strings:`);
+  async translateStrings(
+    strings: { key: string; value: string }[],
+    from: string,
+    to: string,
+  ) {
+    const results: { key: string; value: string; translated: string }[] = [];
 
-  for (const { key, value } of strings) {
-    const { replacements } = replaceIcu(value);
-    process.stdout.write('│ ├── ');
+    if (strings.length === 0) {
+      return [];
+    }
 
-    const result = await inquirer.prompt<{ result: string }>([
-      {
-        name: 'result',
-        message: `[${from} -> ${to}] ${
-          key !== value ? `(${key}) ` : ''
-        }${value}:`,
-      },
-    ]);
+    console.log();
+    console.log(`├─┌── Translatable strings:`);
 
-    results.push({
-      key,
-      value,
-      translated: reInsertIcu(result.result, replacements),
-    });
+    for (const { key, value } of strings) {
+      const { replacements } = replaceIcu(value);
+      process.stdout.write('│ ├── ');
+
+      const result = await inquirer.prompt<{ result: string }>([
+        {
+          name: 'result',
+          message: `[${from} -> ${to}] ${
+            key !== value ? `(${key}) ` : ''
+          }${value}:`,
+        },
+      ]);
+
+      results.push({
+        key,
+        value,
+        translated: reInsertIcu(result.result, replacements),
+      });
+    }
+
+    process.stdout.write(`│ └── Done`);
+
+    return results;
   }
-
-  process.stdout.write(`│ └── Done`);
-
-  return results;
-};
+}

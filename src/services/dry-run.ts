@@ -1,21 +1,35 @@
-export default async (
-  strings: { key: string; value: string }[],
-  from: string,
-  to: string,
-) => {
-  console.log();
+import { TranslationService } from '.';
+import languages from '../languages';
+import chalk from 'chalk';
 
-  if (strings.length > 0) {
-    console.log(`├─┌── Translatable strings:`);
+export class DryRun implements TranslationService {
+  public name = 'Dry Run';
 
-    for (const { key, value } of strings) {
-      console.log(`│ ├──── ${key !== value ? `(${key}) ` : ''}${value}`);
-    }
+  initialize() {}
 
-    process.stdout.write(`│ └── Done`);
-  } else {
-    process.stdout.write(`│ └── No translatable strings`);
+  async getAvailableLanguages() {
+    return languages;
   }
 
-  return [];
-};
+  async translateStrings(
+    strings: { key: string; value: string }[],
+    from: string,
+    to: string,
+  ) {
+    console.log();
+
+    if (strings.length > 0) {
+      console.log(`├─┌── Translatable strings:`);
+
+      for (const { key, value } of strings) {
+        console.log(`│ ├──── ${key !== value ? `(${key}) ` : ''}${value}`);
+      }
+
+      process.stdout.write(chalk`│ └── {green.bold Done}`);
+    } else {
+      process.stdout.write(chalk`│ └── {green.bold None}`);
+    }
+
+    return [];
+  }
+}
