@@ -1,7 +1,7 @@
 {
   "name": "i18next-google-translate",
   "description": "Translate a folder of JSON files into multiple languages.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
@@ -9,6 +9,18 @@
     "build": "tsc",
     "prepublish": "tsc"
   },
+  "author": {
+    "name": "Leo Bernard",
+    "url": "https://leolabs.org"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/leolabs/i18next-google-translate.git"
+  },
+  "homepage": "https://github.com/leolabs/i18next-google-translate",
+  "files": [
+    "lib/*"
+  ],
   "bin": "lib/index.js",
   "dependencies": {
     "@google-cloud/translate": "^2.1.3",
