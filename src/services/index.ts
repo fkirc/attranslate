@@ -1,5 +1,6 @@
 import googleTranslate from './google-translate';
 import dryRun from './dry-run';
+import manual from './manual';
 
 export const serviceMap: {
   [k: string]: (
@@ -10,4 +11,5 @@ export const serviceMap: {
 } = {
   googleTranslate,
   dryRun,
+  manual,
 };
