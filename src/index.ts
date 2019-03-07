@@ -49,13 +49,16 @@ const getAvailableLanguages = (directory: string) =>
     .filter(d => fs.statSync(d).isDirectory())
     .map(d => path.basename(d));
 
-const loadTranslations = (directory: string) =>
+const loadTranslations = (directory: string, keyBased: boolean = false) =>
   fs
     .readdirSync(directory)
     .filter(f => f.endsWith('.json'))
     .map(f => ({
       name: f,
-      content: flatten.convert(require(path.resolve(directory, f))),
+      originalContent: require(path.resolve(directory, f)),
+      content: keyBased
+        ? flatten.convert(require(path.resolve(directory, f)))
+        : require(path.resolve(directory, f)),
     }));
 
 const fixSourceInconsistencies = (directory: string) => {
@@ -94,7 +97,10 @@ const translate = async (
     throw new Error(`The service ${service} doesn't exist.`);
   }
 
-  const templateFiles = loadTranslations(path.resolve(workingDir, sourceLang));
+  const templateFiles = loadTranslations(
+    path.resolve(workingDir, sourceLang),
+    useKeyBasedFiles,
+  );
 
   if (templateFiles.length === 0) {
     throw new Error(
@@ -159,8 +165,50 @@ const translate = async (
     console.log();
   }
 
+  if (useKeyBasedFiles) {
+    console.log(`🔍 Looking for invalid keys in source files`);
+    const invalidFiles: string[] = [];
+
+    for (const file of templateFiles) {
+      const invalidKeys = Object.keys(file.originalContent).filter(
+        k => typeof file.originalContent[k] === 'string' && k.includes('.'),
+      );
+
+      if (invalidKeys.length > 0) {
+        invalidFiles.push(file.name);
+        console.log(
+          chalk`├── {yellow.bold ${file.name} contains} {red.bold ${String(
+            invalidKeys.length,
+          )}} {yellow.bold invalid key(s)}`,
+        );
+      }
+    }
+
+    if (invalidFiles.length) {
+      console.log(
+        chalk`└── {yellow.bold Found invalid keys in} {red.bold ${String(
+          invalidFiles.length,
+        )}} {yellow.bold file(s).}`,
+      );
+
+      console.log();
+
+      console.log(
+        chalk`It looks like you're trying to use the key-based mode on natural-language-style JSON files.`,
+      );
+      console.log(
+        chalk`Please make sure that your keys don't contain periods (.) or remove the {green.bold --key-based} / {green.bold -f} flag.`,
+      );
+      console.log();
+      process.exit(1);
+    }
+  }
+
   for (const language of targetLanguages) {
-    const existingFiles = loadTranslations(path.resolve(workingDir, language));
+    const existingFiles = loadTranslations(
+      path.resolve(workingDir, language),
+      useKeyBasedFiles,
+    );
 
     console.log(`💬 Translating strings from ${sourceLang} to ${language}`);
 
