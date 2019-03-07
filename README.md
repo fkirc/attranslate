@@ -148,6 +148,9 @@ using the `-c` or `--config` option.
 
 ### Manual
 
+This service doesn't require any configuration. You will be prompted to translate the
+source strings manually in the console.
+
 ## Available Options
 
 ```
