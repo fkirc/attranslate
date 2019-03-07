@@ -238,7 +238,7 @@ const translate = async (
       );
     }
 
-    console.log(chalk`└── All strings have been translated.`);
+    console.log(chalk`└── {green.bold All strings have been translated.}`);
     console.log();
   }
 
