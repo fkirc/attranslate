@@ -192,7 +192,7 @@ const translate = async (
       chalk`It looks like you're trying to use the key-based mode on natural-language-style JSON files.`,
     );
     console.log(
-      chalk`Please make sure that your keys don't contain periods (.) or remove the {green.bold --key-based} / {green.bold -f} flag.`,
+      chalk`Please make sure that your keys don't contain periods (.) or remove the {green.bold --type} / {green.bold -t} option.`,
     );
     console.log();
     process.exit(1);
