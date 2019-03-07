@@ -98,3 +98,7 @@ Options:
   -d, --delete-unused-strings         Deletes strings in translation files that don't exist in the template
   -h, --help                          output usage information
 ```
+
+## Contributing
+
+If you'd like to contribute to this project, please feel free to open a pull request.
