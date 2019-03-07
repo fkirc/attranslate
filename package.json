@@ -39,6 +39,7 @@
     "inquirer": "^6.2.2",
     "lodash": "^4.17.11",
     "messageformat-parser": "^4.1.0",
+    "node-fetch": "^2.3.0",
     "ts-node": "^8.0.2",
     "tslint": "^5.13.1",
     "typescript": "^3.3.3333"
@@ -47,6 +48,7 @@
     "@types/dotenv": "^6.1.0",
     "@types/inquirer": "^0.0.44",
     "@types/lodash": "^4.14.122",
-    "@types/lodash-es": "^4.17.3"
+    "@types/lodash-es": "^4.17.3",
+    "@types/node-fetch": "^2.1.6"
   }
 }
