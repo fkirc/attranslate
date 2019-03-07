@@ -8,6 +8,12 @@ import { omit, merge } from 'lodash';
 import * as path from 'path';
 
 import { serviceMap } from './services';
+import {
+  loadTranslations,
+  getAvailableLanguages,
+  fixSourceInconsistencies,
+  FileType,
+} from './util/file-system';
 
 require('dotenv').config();
 
@@ -23,6 +29,11 @@ commander
     'en',
   )
   .option(
+    '-t, --type <key-based|natural|auto>',
+    `specify the file structure type`,
+    'auto',
+  )
+  .option(
     '-s, --service <service>',
     `selects the service to be used for translation`,
     'google-translate',
@@ -31,10 +42,6 @@ commander
   .option(
     '-c, --config <value>',
     'supply a config parameter (e.g. path to key file) to the translation service',
-  )
-  .option(
-    '-k, --key-based',
-    `uses the template file's values instead of the keys as translation source`,
   )
   .option(
     '-f, --fix-inconsistencies',
@@ -46,46 +53,11 @@ commander
   )
   .parse(process.argv);
 
-const getAvailableLanguages = (directory: string) =>
-  fs
-    .readdirSync(directory)
-    .map(d => path.resolve(directory, d))
-    .filter(d => fs.statSync(d).isDirectory())
-    .map(d => path.basename(d));
-
-const loadTranslations = (directory: string, keyBased: boolean = false) =>
-  fs
-    .readdirSync(directory)
-    .filter(f => f.endsWith('.json'))
-    .map(f => ({
-      name: f,
-      originalContent: require(path.resolve(directory, f)),
-      content: keyBased
-        ? flatten.convert(require(path.resolve(directory, f)))
-        : require(path.resolve(directory, f)),
-    }));
-
-const fixSourceInconsistencies = (directory: string) => {
-  const files = loadTranslations(directory);
-
-  for (const file of files) {
-    const fixedContent = Object.keys(file.content).reduce(
-      (acc, cur) => ({ ...acc, [cur]: cur }),
-      {} as { [k: string]: string },
-    );
-
-    fs.writeFileSync(
-      path.resolve(directory, file.name),
-      JSON.stringify(fixedContent, null, 2),
-    );
-  }
-};
-
 const translate = async (
   inputDir: string = '.',
   sourceLang: string = 'en',
   deleteUnusedStrings = false,
-  useKeyBasedFiles = false,
+  fileType: FileType = 'auto',
   fixInconsistencies = false,
   service: keyof typeof serviceMap = 'google-translate',
   config?: string,
@@ -106,7 +78,7 @@ const translate = async (
 
   const templateFiles = loadTranslations(
     path.resolve(workingDir, sourceLang),
-    useKeyBasedFiles,
+    fileType,
   );
 
   if (templateFiles.length === 0) {
@@ -123,10 +95,11 @@ const translate = async (
   console.log(`-> ${targetLanguages.join(', ')}`);
   console.log();
 
-  console.log(
-    chalk`Found {green.bold ${String(templateFiles.length)}} namespace(s):`,
-  );
-  console.log(`-> ${templateFiles.map(f => f.name).join(', ')}`);
+  console.log(`🏭 Loading source files...`);
+  for (const file of templateFiles) {
+    console.log(chalk`├── ${String(file.name)} (${file.type})`);
+  }
+  console.log(chalk`└── {green.bold Done}`);
   console.log();
 
   console.log(`✨ Initializing ${translationService.name}...`);
@@ -139,92 +112,93 @@ const translate = async (
   console.log(chalk`└── {green.bold Done}`);
   console.log();
 
-  // Look for inconsistencies in natural-language-style JSON files
-  if (!useKeyBasedFiles) {
-    console.log(`🔍 Looking for key-value inconsistencies in source files...`);
-    const insonsistentFiles: string[] = [];
-
-    for (const file of templateFiles) {
-      const inconsistentKeys = Object.keys(file.content).filter(
-        key => key !== file.content[key],
-      );
-
-      if (inconsistentKeys.length > 0) {
-        insonsistentFiles.push(file.name);
-        console.log(
-          chalk`├── {yellow.bold ${file.name} contains} {red.bold ${String(
-            inconsistentKeys.length,
-          )}} {yellow.bold inconsistent key(s)}`,
-        );
-      }
-    }
-
-    if (insonsistentFiles.length > 0) {
-      console.log(
-        chalk`└── {yellow.bold Found key-value inconsistencies in} {red.bold ${String(
-          insonsistentFiles.length,
-        )}} {yellow.bold file(s).}`,
-      );
-
-      console.log();
-
-      if (fixInconsistencies) {
-        console.log(`💚 Fixing inconsistencies...`);
-        fixSourceInconsistencies(path.resolve(workingDir, sourceLang));
-        console.log(chalk`└── {green.bold Fixed all inconsistencies.}`);
-      } else {
-        console.log(
-          chalk`Please either fix these inconsistencies manually or supply the {green.bold -f} flag to automatically fix them.`,
-        );
-      }
-    } else {
-      console.log(chalk`└── {green.bold No inconsistencies found}`);
-    }
-    console.log();
+  if (!availableLanguages.includes(sourceLang)) {
+    throw new Error(
+      `${
+        translationService.name
+      } doesn't support the source language ${sourceLang}`,
+    );
   }
 
-  // Look for invalid keys in key-based JSON files
-  if (useKeyBasedFiles) {
-    console.log(`🔍 Looking for invalid keys in source files...`);
-    const invalidFiles: string[] = [];
+  console.log(`🔍 Looking for key-value inconsistencies in source files...`);
+  const insonsistentFiles: string[] = [];
 
-    for (const file of templateFiles) {
-      const invalidKeys = Object.keys(file.originalContent).filter(
-        k => typeof file.originalContent[k] === 'string' && k.includes('.'),
+  for (const file of templateFiles.filter(f => f.type === 'natural')) {
+    const inconsistentKeys = Object.keys(file.content).filter(
+      key => key !== file.content[key],
+    );
+
+    if (inconsistentKeys.length > 0) {
+      insonsistentFiles.push(file.name);
+      console.log(
+        chalk`├── {yellow.bold ${file.name} contains} {red.bold ${String(
+          inconsistentKeys.length,
+        )}} {yellow.bold inconsistent key(s)}`,
       );
-
-      if (invalidKeys.length > 0) {
-        invalidFiles.push(file.name);
-        console.log(
-          chalk`├── {yellow.bold ${file.name} contains} {red.bold ${String(
-            invalidKeys.length,
-          )}} {yellow.bold invalid key(s)}`,
-        );
-      }
     }
-
-    if (invalidFiles.length) {
-      console.log(
-        chalk`└── {yellow.bold Found invalid keys in} {red.bold ${String(
-          invalidFiles.length,
-        )}} {yellow.bold file(s).}`,
-      );
-
-      console.log();
-
-      console.log(
-        chalk`It looks like you're trying to use the key-based mode on natural-language-style JSON files.`,
-      );
-      console.log(
-        chalk`Please make sure that your keys don't contain periods (.) or remove the {green.bold --key-based} / {green.bold -f} flag.`,
-      );
-      console.log();
-      process.exit(1);
-    } else {
-      console.log(chalk`└── {green.bold No invalid keys found}`);
-    }
-    console.log();
   }
+
+  if (insonsistentFiles.length > 0) {
+    console.log(
+      chalk`└── {yellow.bold Found key-value inconsistencies in} {red.bold ${String(
+        insonsistentFiles.length,
+      )}} {yellow.bold file(s).}`,
+    );
+
+    console.log();
+
+    if (fixInconsistencies) {
+      console.log(`💚 Fixing inconsistencies...`);
+      fixSourceInconsistencies(path.resolve(workingDir, sourceLang));
+      console.log(chalk`└── {green.bold Fixed all inconsistencies.}`);
+    } else {
+      console.log(
+        chalk`Please either fix these inconsistencies manually or supply the {green.bold -f} flag to automatically fix them.`,
+      );
+    }
+  } else {
+    console.log(chalk`└── {green.bold No inconsistencies found}`);
+  }
+  console.log();
+
+  console.log(`🔍 Looking for invalid keys in source files...`);
+  const invalidFiles: string[] = [];
+
+  for (const file of templateFiles.filter(f => f.type === 'key-based')) {
+    const invalidKeys = Object.keys(file.originalContent).filter(
+      k => typeof file.originalContent[k] === 'string' && k.includes('.'),
+    );
+
+    if (invalidKeys.length > 0) {
+      invalidFiles.push(file.name);
+      console.log(
+        chalk`├── {yellow.bold ${file.name} contains} {red.bold ${String(
+          invalidKeys.length,
+        )}} {yellow.bold invalid key(s)}`,
+      );
+    }
+  }
+
+  if (invalidFiles.length) {
+    console.log(
+      chalk`└── {yellow.bold Found invalid keys in} {red.bold ${String(
+        invalidFiles.length,
+      )}} {yellow.bold file(s).}`,
+    );
+
+    console.log();
+    console.log(
+      chalk`It looks like you're trying to use the key-based mode on natural-language-style JSON files.`,
+    );
+    console.log(
+      chalk`Please make sure that your keys don't contain periods (.) or remove the {green.bold --key-based} / {green.bold -f} flag.`,
+    );
+    console.log();
+    process.exit(1);
+  } else {
+    console.log(chalk`└── {green.bold No invalid keys found}`);
+  }
+  console.log();
 
   for (const language of targetLanguages) {
     if (!availableLanguages.includes(language)) {
@@ -239,7 +213,7 @@ const translate = async (
 
     const existingFiles = loadTranslations(
       path.resolve(workingDir, language),
-      useKeyBasedFiles,
+      fileType,
     );
 
     console.log(
@@ -279,7 +253,8 @@ const translate = async (
         .filter(key => !existingKeys.includes(key))
         .map(key => ({
           key,
-          value: useKeyBasedFiles ? templateFile.content[key] : key,
+          value:
+            templateFile.type === 'key-based' ? templateFile.content[key] : key,
         }));
 
       const unusedStrings = existingKeys.filter(
@@ -298,18 +273,20 @@ const translate = async (
       );
 
       if (service !== 'dryRun') {
+        const translatedFile = {
+          ...omit(
+            existingTranslations,
+            deleteUnusedStrings ? unusedStrings : [],
+          ),
+          ...newKeys,
+        };
+
         fs.writeFileSync(
           path.resolve(workingDir, language, templateFile.name),
           JSON.stringify(
-            merge(
-              flatten.undo(
-                omit(
-                  existingTranslations,
-                  deleteUnusedStrings ? unusedStrings : [],
-                ),
-              ),
-              flatten.undo(newKeys),
-            ),
+            templateFile.type === 'key-based'
+              ? flatten.undo(translatedFile)
+              : translatedFile,
             null,
             2,
           ) + `\n`,
@@ -342,12 +319,13 @@ translate(
   commander.input,
   commander.sourceLanguage,
   commander.deleteUnusedStrings,
-  commander.keyBased,
+  commander.fileType,
   commander.fixInconsistencies,
   commander.service,
   commander.config,
-).catch(e => {
+).catch((e: Error) => {
   console.log();
   console.log(chalk.bgRed('An error has occured:'));
   console.log(chalk.bgRed(e.message));
+  console.log(chalk.bgRed(e.stack));
 });
