@@ -4,7 +4,7 @@ import chalk from 'chalk';
 import commander from 'commander';
 import * as flatten from 'flattenjs';
 import * as fs from 'fs';
-import { omit, merge } from 'lodash';
+import { omit } from 'lodash';
 import * as path from 'path';
 
 import { serviceMap } from './services';
