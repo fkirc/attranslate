@@ -40,11 +40,11 @@ export const reInsertIcu = (
 ) => replacements.reduce((acc, cur) => acc.replace(cur.to, cur.from), clean);
 
 export const translateStrings = async (
-  strings: {key: string, value: string}[],
+  strings: { key: string; value: string }[],
   from: string,
   to: string,
 ) => {
-  const results: { key: string, original: string; translated: string }[] = [];
+  const results: { key: string; original: string; translated: string }[] = [];
 
   for (const string of strings) {
     const { clean, replacements } = replaceIcu(string.value);
@@ -63,3 +63,5 @@ export const translateStrings = async (
 
   return results;
 };
+
+export default translateStrings;

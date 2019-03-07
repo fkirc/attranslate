@@ -4,9 +4,9 @@ import commander from 'commander';
 import * as fs from 'fs';
 import * as path from 'path';
 import chalk from 'chalk';
-
-import { translateStrings } from './translate';
 import { omit } from 'lodash';
+
+import { serviceMap } from './services';
 
 require('dotenv').config();
 
@@ -17,10 +17,16 @@ commander
     '.',
   )
   .option(
-    '-s, --source-language <sourceLang>',
+    '-l, --source-language <sourceLang>',
     'specify the source language',
     'en',
   )
+  .option(
+    '-s, --service <service>',
+    `selects the service to be used for translation`,
+    'googleTranslate',
+  )
+  .option('--list-services', `outputs a list of available services`)
   .option(
     '-k, --key-based',
     `uses the template file's values instead of the keys as translation source`,
@@ -73,14 +79,18 @@ const translate = async (
   deleteUnusedStrings = false,
   useKeyBasedFiles = false,
   fixInconsistencies = false,
+  service: keyof typeof serviceMap = 'googleTranslate',
 ) => {
   const workingDir = path.resolve(process.cwd(), inputDir);
   const availableLanguages = getAvailableLanguages(workingDir);
-
   const targetLanguages = availableLanguages.filter(f => f !== sourceLang);
 
   if (!availableLanguages.includes(sourceLang)) {
     throw new Error(`The source language ${sourceLang} doesn't exist.`);
+  }
+
+  if (typeof serviceMap[service] === 'undefined') {
+    throw new Error(`The service ${service} doesn't exist.`);
   }
 
   const templateFiles = loadTranslations(path.resolve(workingDir, sourceLang));
@@ -193,7 +203,7 @@ const translate = async (
         key => !templateStrings.includes(key),
       );
 
-      const translatedStrings = await translateStrings(
+      const translatedStrings = await serviceMap[service](
         stringsToTranslate,
         sourceLang.split('-').pop()!,
         language.split('-').pop()!,
@@ -235,12 +245,19 @@ const translate = async (
   console.log(chalk.green.bold('All new strings have been translated!'));
 };
 
+if (commander.listServices) {
+  console.log('Available services:');
+  console.log(Object.keys(serviceMap).join(', '));
+  process.exit(0);
+}
+
 translate(
   commander.input,
   commander.sourceLanguage,
   commander.deleteUnusedStrings,
   commander.keyBased,
   commander.fixInconsistencies,
+  commander.service,
 ).catch(e => {
   console.log();
   console.log(chalk.bgRed('An error has occured:'));
