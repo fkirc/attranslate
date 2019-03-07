@@ -8,8 +8,8 @@ export default async (
   if (strings.length > 0) {
     console.log(`├─┌── Translatable strings:`);
 
-    for (const string of strings) {
-      console.log(`│ ├──── ${string.value}`);
+    for (const { key, value } of strings) {
+      console.log(`│ ├──── ${key !== value ? `(${key}) ` : ''}${value}`);
     }
 
     process.stdout.write(`│ └── Done`);

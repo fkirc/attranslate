@@ -9,8 +9,8 @@ export const translateStrings = async (
   to: string,
 ) => {
   return Promise.all(
-    strings.map(async string => {
-      const { clean, replacements } = replaceIcu(string.value);
+    strings.map(async ({ key, value }) => {
+      const { clean, replacements } = replaceIcu(value);
 
       const translationResult = (await translate.translate(clean, {
         from,
@@ -18,8 +18,8 @@ export const translateStrings = async (
       }))[0];
 
       return {
-        key: string.key,
-        original: string.value,
+        key: key,
+        value: value,
         translated: reInsertIcu(translationResult, replacements),
       };
     }),

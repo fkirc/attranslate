@@ -6,7 +6,7 @@ export default async (
   from: string,
   to: string,
 ) => {
-  const results: { key: string; original: string; translated: string }[] = [];
+  const results: { key: string; value: string; translated: string }[] = [];
 
   if (strings.length === 0) {
     return [];
@@ -15,22 +15,22 @@ export default async (
   console.log();
   console.log(`├─┌── Translatable strings:`);
 
-  for (const string of strings) {
-    const { replacements } = replaceIcu(string.value);
+  for (const { key, value } of strings) {
+    const { replacements } = replaceIcu(value);
     process.stdout.write('│ ├── ');
 
     const result = await inquirer.prompt<{ result: string }>([
       {
         name: 'result',
         message: `[${from} -> ${to}] ${
-          string.key !== string.value ? `(${string.key}) ` : ''
-        }${string.value}:`,
+          key !== value ? `(${key}) ` : ''
+        }${value}:`,
       },
     ]);
 
     results.push({
-      key: string.key,
-      original: string.value,
+      key,
+      value,
       translated: reInsertIcu(result.result, replacements),
     });
   }
