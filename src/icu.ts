@@ -20,7 +20,7 @@ export const replaceIcu = (input: string) => {
 
   const replacements = matches.slice(1).map((match, index) => ({
     from: match,
-    to: `{${index}}`,
+    to: `<${index}>`,
   }));
 
   const clean = replacements.reduce(
