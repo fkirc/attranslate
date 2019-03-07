@@ -141,7 +141,7 @@ const translate = async (
 
   // Look for inconsistencies in natural-language-style JSON files
   if (!useKeyBasedFiles) {
-    console.log(`🔍 Looking for key-value inconsistencies in source files`);
+    console.log(`🔍 Looking for key-value inconsistencies in source files...`);
     const insonsistentFiles: string[] = [];
 
     for (const file of templateFiles) {
@@ -169,7 +169,7 @@ const translate = async (
       console.log();
 
       if (fixInconsistencies) {
-        console.log(`💚 Fixing inconsistencies`);
+        console.log(`💚 Fixing inconsistencies...`);
         fixSourceInconsistencies(path.resolve(workingDir, sourceLang));
         console.log(chalk`└── {green.bold Fixed all inconsistencies.}`);
       } else {
@@ -184,7 +184,7 @@ const translate = async (
   }
 
   if (useKeyBasedFiles) {
-    console.log(`🔍 Looking for invalid keys in source files`);
+    console.log(`🔍 Looking for invalid keys in source files...`);
     const invalidFiles: string[] = [];
 
     for (const file of templateFiles) {
@@ -228,7 +228,9 @@ const translate = async (
       useKeyBasedFiles,
     );
 
-    console.log(`💬 Translating strings from ${sourceLang} to ${language}`);
+    console.log(
+      chalk`💬 Translating strings from {green.bold ${sourceLang}} to {green.bold ${language}}...`,
+    );
 
     if (deleteUnusedStrings) {
       const templateFileNames = templateFiles.map(t => t.name);
