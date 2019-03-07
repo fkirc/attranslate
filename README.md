@@ -26,7 +26,23 @@ $ npm i -S json-autotranslate
 ```shell
 $ yarn json-autotranslate
 # or
-npx json-autotranslate
+$ npx json-autotranslate
+```
+
+### Usage Examples
+
+Translate natural language source files located in the `locales` directory using
+Google Translate and delete existing keys in translated JSON files that are no
+longer used.
+
+```shell
+$ yarn json-autocomplete -i locales -d -c service-account.json
+```
+
+Manually translate key-based source files located in the `locales` directory.
+
+```shell
+$ yarn json-autocomplete -i locales -s manual
 ```
 
 ## Directory Structure
@@ -96,7 +112,9 @@ As of this release, json-autotranslate offers four services:
 - **manual** (allows you to translate strings manually by entering them into the CLI)
 - **dry-run** (outputs a list of strings that will be translated without touching any files)
 
-You can select a service using the `-s` or `--service` flag.
+You can select a service using the `-s` or `--service` option. If you specify the
+`--list-services` flag, json-autotranslate will output a list of all available
+services.
 
 ### Google Translate
 
@@ -127,6 +145,8 @@ DeepL charges a fixed monthly price plus a variable fee for every 500 translated
 
 After you have completed your sign-up, you can pass the API key to json-autotranslate
 using the `-c` or `--config` option.
+
+### Manual
 
 ## Available Options
 
