@@ -14,8 +14,8 @@ their structure doesn't get mangled by the translation.
 
 ## Prerequisites
 
-To use this tool, you need to obtain valid credentials from Google. Follow these
-steps to get them:
+To use this tool with Google Translate, you need to obtain valid credentials from
+Google. Follow these steps to get them:
 
 1.  [Select or create a Cloud Platform project][projects]
 2.  [Enable billing for your project][billing] (optional, I think)
@@ -79,23 +79,41 @@ by passing the `--fix-inconsistencies` flag.
 ### Key-Based
 
 If you pass the `--key-based` flag, this tool will use the source file's values
-as the basis of translations.
+as the basis of translations. Keys can be nested, the structure will be transfered
+over to the translated files as well.
 
 ```json
 {
-  "ERROR_USERNAME": "Your username doesn't exist.",
-  "ERROR_EMAIL": "{email} is not a valid email address."
+  "ERRORS": {
+    "USERNAME": "Your username doesn't exist.",
+    "EMAIL": "{email} is not a valid email address."
+  },
+  "LOGIN": "Login",
+  "FORGOT_PASSWORD": "Forgot password?"
 }
 ```
+
+## Available Services
+
+As of this release, i18next-google-translate offers three services:
+
+- **googleTranslate** (default, uses Google Translate to translate strings)
+- **manual** (allows you to translate strings manually by entering them into the CLI)
+- **dryRun** (outputs a list of strings that will be translated without touching any files)
+
+You can select a service using the `-s` or `--service` flag.
 
 ## Available Parameters
 
 ```
 Options:
-  -i, --input <inputDir>              The directory containing language directories (default: ".")
-  -s, --source-language <sourceLang>  Specify the source language (default: "en")
-  -k, --key-based                     Uses the template file's values instead of the keys as translation source
-  -d, --delete-unused-strings         Deletes strings in translation files that don't exist in the template
+  -i, --input <inputDir>              the directory containing language directories (default: ".")
+  -l, --source-language <sourceLang>  specify the source language (default: "en")
+  -s, --service <service>             selects the service to be used for translation (default: "googleTranslate")
+  --list-services                     outputs a list of available services
+  -k, --key-based                     uses the template file's values instead of the keys as translation source
+  -f, --fix-inconsistencies           automatically fixes inconsistent key-value pairs by setting the value to the key
+  -d, --delete-unused-strings         deletes strings in translation files that don't exist in the template
   -h, --help                          output usage information
 ```
 
