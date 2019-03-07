@@ -1,13 +1,13 @@
 {
   "name": "json-autotranslate",
   "description": "Translate a folder of JSON files containing translations into multiple languages.",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
     "start": "ts-node src/index.ts",
     "build": "tsc",
-    "prepublish": "tsc"
+    "prepublishOnly": "tsc"
   },
   "author": {
     "name": "Leo Bernard",
