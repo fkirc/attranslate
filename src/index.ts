@@ -1,10 +1,11 @@
 #!/usr/bin/env node
 
-import commander from 'commander';
-import * as fs from 'fs';
-import * as path from 'path';
 import chalk from 'chalk';
-import { omit } from 'lodash';
+import commander from 'commander';
+import * as flatten from 'flattenjs';
+import * as fs from 'fs';
+import { omit, merge } from 'lodash';
+import * as path from 'path';
 
 import { serviceMap } from './services';
 
@@ -54,7 +55,7 @@ const loadTranslations = (directory: string) =>
     .filter(f => f.endsWith('.json'))
     .map(f => ({
       name: f,
-      content: require(path.resolve(directory, f)),
+      content: flatten.convert(require(path.resolve(directory, f))),
     }));
 
 const fixSourceInconsistencies = (directory: string) => {
@@ -218,13 +219,15 @@ const translate = async (
         fs.writeFileSync(
           path.resolve(workingDir, language, templateFile.name),
           JSON.stringify(
-            {
-              ...omit(
-                existingTranslations,
-                deleteUnusedStrings ? unusedStrings : [],
+            merge(
+              flatten.undo(
+                omit(
+                  existingTranslations,
+                  deleteUnusedStrings ? unusedStrings : [],
+                ),
               ),
-              ...newKeys,
-            },
+              flatten.undo(newKeys),
+            ),
             null,
             2,
           ) + `\n`,
