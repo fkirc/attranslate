@@ -8,8 +8,6 @@ export class GoogleTranslate implements TranslationService {
   public name = 'Google Translate';
 
   initialize(config?: string) {
-    console.info({ config });
-
     this.translate = new Translate({
       autoRetry: true,
       keyFilename: config || undefined,
