@@ -31,6 +31,7 @@ commander
   .option(
     '-t, --type <key-based|natural|auto>',
     `specify the file structure type`,
+    /^(key-based|natural|auto)$/,
     'auto',
   )
   .option(
@@ -319,7 +320,7 @@ translate(
   commander.input,
   commander.sourceLanguage,
   commander.deleteUnusedStrings,
-  commander.fileType,
+  commander.type,
   commander.fixInconsistencies,
   commander.service,
   commander.config,
@@ -328,4 +329,5 @@ translate(
   console.log(chalk.bgRed('An error has occured:'));
   console.log(chalk.bgRed(e.message));
   console.log(chalk.bgRed(e.stack));
+  console.log();
 });
