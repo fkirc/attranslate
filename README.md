@@ -68,8 +68,11 @@ other files will be ignored.
 
 There are two ways that json-autotranslate can interpret files:
 
-- Natural Language
-- Key-Based
+- Natural Language (`natural`)
+- Key-Based (`key-based`)
+
+If you don't specify a file structure type, json-autotranslate will automatically
+determine the type on a per-file basis. In most cases, this is sufficient.
 
 ### Natural Language
 
@@ -155,15 +158,15 @@ source strings manually in the console.
 
 ```
 Options:
-  -i, --input <inputDir>              the directory containing language directories (default: ".")
-  -l, --source-language <sourceLang>  specify the source language (default: "en")
-  -s, --service <service>             selects the service to be used for translation (default: "google-translate")
-  --list-services                     outputs a list of available services
-  -c, --config <value>                supply a config parameter (e.g. path to key file) to the translation service
-  -k, --key-based                     uses the template file's values instead of the keys as translation source
-  -f, --fix-inconsistencies           automatically fixes inconsistent key-value pairs by setting the value to the key
-  -d, --delete-unused-strings         deletes strings in translation files that don't exist in the template
-  -h, --help                          output usage information
+  -i, --input <inputDir>               the directory containing language directories (default: ".")
+  -l, --source-language <sourceLang>   specify the source language (default: "en")
+  -t, --type <key-based|natural|auto>  specify the file structure type (default: "auto")
+  -s, --service <service>              selects the service to be used for translation (default: "google-translate")
+  --list-services                      outputs a list of available services
+  -c, --config <value>                 supply a config parameter (e.g. path to key file) to the translation service
+  -f, --fix-inconsistencies            automatically fixes inconsistent key-value pairs by setting the value to the key
+  -d, --delete-unused-strings          deletes strings in translation files that don't exist in the template
+  -h, --help                           output usage information
 ```
 
 ## Contributing
