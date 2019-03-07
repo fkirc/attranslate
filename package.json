@@ -48,7 +48,6 @@
     "@types/dotenv": "^6.1.0",
     "@types/inquirer": "^0.0.44",
     "@types/lodash": "^4.14.122",
-    "@types/lodash-es": "^4.17.3",
     "@types/node-fetch": "^2.1.6"
   }
 }
