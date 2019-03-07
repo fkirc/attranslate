@@ -183,6 +183,7 @@ const translate = async (
     console.log();
   }
 
+  // Look for invalid keys in key-based JSON files
   if (useKeyBasedFiles) {
     console.log(`🔍 Looking for invalid keys in source files...`);
     const invalidFiles: string[] = [];
