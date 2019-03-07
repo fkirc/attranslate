@@ -8,24 +8,22 @@ export const translateStrings = async (
   from: string,
   to: string,
 ) => {
-  const results: { key: string; original: string; translated: string }[] = [];
+  return Promise.all(
+    strings.map(async string => {
+      const { clean, replacements } = replaceIcu(string.value);
 
-  for (const string of strings) {
-    const { clean, replacements } = replaceIcu(string.value);
+      const translationResult = (await translate.translate(clean, {
+        from,
+        to,
+      }))[0];
 
-    const translationResult = (await translate.translate(clean, {
-      from,
-      to,
-    }))[0];
-
-    results.push({
-      key: string.key,
-      original: string.value,
-      translated: reInsertIcu(translationResult, replacements),
-    });
-  }
-
-  return results;
+      return {
+        key: string.key,
+        original: string.value,
+        translated: reInsertIcu(translationResult, replacements),
+      };
+    }),
+  );
 };
 
 export default translateStrings;
