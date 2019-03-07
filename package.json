@@ -1,5 +1,5 @@
 {
-  "name": "i18next-google-translate",
+  "name": "json-autotranslate",
   "description": "Translate a folder of JSON files containing translations into multiple languages.",
   "version": "1.1.0",
   "main": "index.js",
@@ -22,9 +22,9 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/leolabs/i18next-google-translate.git"
+    "url": "https://github.com/leolabs/json-autotranslate.git"
   },
-  "homepage": "https://github.com/leolabs/i18next-google-translate",
+  "homepage": "https://github.com/leolabs/json-autotranslate",
   "files": [
     "lib/*"
   ],
