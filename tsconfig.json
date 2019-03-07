@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "declaration": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "outDir": "./lib"
+  },
+  "files": ["src/index.ts"]
+}
