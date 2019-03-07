@@ -178,7 +178,7 @@ const translate = async (
         );
       }
     } else {
-      console.log(chalk`└── {green.bold No inconsistencies found.}`);
+      console.log(chalk`└── {green.bold No inconsistencies found}`);
     }
     console.log();
   }
@@ -219,7 +219,10 @@ const translate = async (
       );
       console.log();
       process.exit(1);
+    } else {
+      console.log(chalk`└── {green.bold No invalid keys found}`);
     }
+    console.log();
   }
 
   for (const language of targetLanguages) {
