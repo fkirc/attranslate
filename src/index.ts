@@ -214,20 +214,22 @@ const translate = async (
         {} as { [k: string]: string },
       );
 
-      fs.writeFileSync(
-        path.resolve(workingDir, language, templateFile.name),
-        JSON.stringify(
-          {
-            ...omit(
-              existingTranslations,
-              deleteUnusedStrings ? unusedStrings : [],
-            ),
-            ...newKeys,
-          },
-          null,
-          2,
-        ) + `\n`,
-      );
+      if (service !== 'dryRun') {
+        fs.writeFileSync(
+          path.resolve(workingDir, language, templateFile.name),
+          JSON.stringify(
+            {
+              ...omit(
+                existingTranslations,
+                deleteUnusedStrings ? unusedStrings : [],
+              ),
+              ...newKeys,
+            },
+            null,
+            2,
+          ) + `\n`,
+        );
+      }
 
       console.log(
         deleteUnusedStrings && unusedStrings.length > 0
