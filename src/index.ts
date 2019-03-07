@@ -226,7 +226,7 @@ const translate = async (
           },
           null,
           2,
-        ),
+        ) + `\n`,
       );
 
       console.log(

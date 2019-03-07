@@ -1,7 +1,7 @@
 {
   "name": "i18next-google-translate",
   "description": "Translate a folder of JSON files containing translations into multiple languages.",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
