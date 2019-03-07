@@ -1,7 +1,7 @@
 import inquirer from 'inquirer';
-import { replaceIcu, reInsertIcu } from '../icu';
+import { replaceIcu, reInsertIcu } from '../util/icu';
+import languages from '../util/languages';
 import { TranslationService } from '.';
-import languages from '../languages';
 
 export class ManualTranslation implements TranslationService {
   public name = 'Manual Translation';

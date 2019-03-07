@@ -1,5 +1,5 @@
 import { TranslationService } from '.';
-import languages from '../languages';
+import languages from '../util/languages';
 import chalk from 'chalk';
 
 export class DryRun implements TranslationService {

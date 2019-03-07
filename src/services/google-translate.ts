@@ -1,5 +1,5 @@
 import { Translate } from '@google-cloud/translate';
-import { replaceIcu, reInsertIcu } from '../icu';
+import { replaceIcu, reInsertIcu } from '../util/icu';
 import { TranslationService } from '.';
 
 export class GoogleTranslate implements TranslationService {

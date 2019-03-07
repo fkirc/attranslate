@@ -1,7 +1,7 @@
 import fetch from 'node-fetch';
 
 import { TranslationService, TranslationResult } from '.';
-import { replaceIcu, reInsertIcu } from '../icu';
+import { replaceIcu, reInsertIcu } from '../util/icu';
 
 const API_ENDPOINT = 'https://api.deepl.com/v2';
 
