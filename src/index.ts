@@ -223,6 +223,16 @@ const translate = async (
   }
 
   for (const language of targetLanguages) {
+    if (!availableLanguages.includes(language)) {
+      console.log(
+        chalk`🙈 {yellow.bold ${
+          translationService.name
+        } doesn't support} {red.bold ${language}}{yellow.bold . Skipping this language.}`,
+      );
+      console.log();
+      continue;
+    }
+
     const existingFiles = loadTranslations(
       path.resolve(workingDir, language),
       useKeyBasedFiles,
