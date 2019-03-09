@@ -7,6 +7,13 @@ export class GoogleTranslate implements TranslationService {
 
   public name = 'Google Translate';
 
+  cleanResponse(response: string) {
+    return response.replace(
+      /\<(.+?)\s*\>\s*(.+?)\s*\<\/\s*(.+?)>/g,
+      '<$1>$2</$3>',
+    );
+  }
+
   initialize(config?: string) {
     this.translate = new Translate({
       autoRetry: true,
@@ -36,7 +43,9 @@ export class GoogleTranslate implements TranslationService {
         return {
           key: key,
           value: value,
-          translated: reInsertIcu(translationResult, replacements),
+          translated: this.cleanResponse(
+            reInsertIcu(translationResult, replacements),
+          ),
         };
       }),
     );
