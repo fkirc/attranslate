@@ -1,11 +1,12 @@
 {
   "name": "json-autotranslate",
   "description": "Translate a folder of JSON files containing translations into multiple languages.",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
     "start": "ts-node src/index.ts",
+    "test": "jest",
     "build": "tsc",
     "prepublishOnly": "tsc"
   },
@@ -47,7 +48,10 @@
   "devDependencies": {
     "@types/dotenv": "^6.1.0",
     "@types/inquirer": "^0.0.44",
+    "@types/jest": "^24.0.10",
     "@types/lodash": "^4.14.122",
-    "@types/node-fetch": "^2.1.6"
+    "@types/node-fetch": "^2.1.6",
+    "jest": "^24.3.1",
+    "ts-jest": "^24.0.0"
   }
 }
