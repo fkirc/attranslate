@@ -14,13 +14,18 @@ export const generateSearchRegex = (input: string) => {
   );
 };
 
-export const replaceIcu = (input: string) => {
+export const xmlStyleReplacer = (index: number) => `<${index} />`;
+
+export const replaceIcu = (
+  input: string,
+  replacer: (index: number) => string = xmlStyleReplacer,
+) => {
   const searchRegex = generateSearchRegex(input);
   const matches = input.match(searchRegex);
 
   const replacements = matches.slice(1).map((match, index) => ({
     from: match,
-    to: `<${index}>`,
+    to: replacer(index),
   }));
 
   const clean = replacements.reduce(
