@@ -8,7 +8,7 @@ export const generateSearchRegex = (input: string) => {
       .map((part: string) =>
         typeof part === 'string'
           ? part.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-          : '(.+?)',
+          : '(.*)',
       )
       .join(''),
   );
