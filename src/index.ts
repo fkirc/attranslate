@@ -14,7 +14,7 @@ import {
   fixSourceInconsistencies,
   FileType,
 } from './util/file-system';
-import { matcherMap } from './replacers';
+import { matcherMap } from './matchers';
 
 require('dotenv').config();
 

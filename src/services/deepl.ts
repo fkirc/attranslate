@@ -5,7 +5,7 @@ import {
   replaceInterpolations,
   reInsertInterpolations,
   Matcher,
-} from '../replacers';
+} from '../matchers';
 
 const API_ENDPOINT = 'https://api.deepl.com/v2';
 

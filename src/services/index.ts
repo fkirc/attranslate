@@ -2,7 +2,7 @@ import { GoogleTranslate } from './google-translate';
 import { DeepL } from './deepl';
 import { DryRun } from './dry-run';
 import { ManualTranslation } from './manual';
-import { Matcher } from '../replacers';
+import { Matcher } from '../matchers';
 
 export interface TranslationResult {
   key: string;

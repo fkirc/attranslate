@@ -3,7 +3,7 @@ import {
   replaceInterpolations,
   reInsertInterpolations,
   Matcher,
-} from '../replacers';
+} from '../matchers';
 import languages from '../util/languages';
 import { TranslationService } from '.';
 

@@ -3,7 +3,7 @@ import {
   replaceInterpolations,
   reInsertInterpolations,
   Matcher,
-} from '../replacers';
+} from '../matchers';
 import { TranslationService } from '.';
 
 export class GoogleTranslate implements TranslationService {
