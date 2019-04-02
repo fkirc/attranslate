@@ -1,9 +1,14 @@
 import { Translate } from '@google-cloud/translate';
-import { replaceIcu, reInsertIcu } from '../util/icu';
+import {
+  replaceInterpolations,
+  reInsertInterpolations,
+  Matcher,
+} from '../replacers';
 import { TranslationService } from '.';
 
 export class GoogleTranslate implements TranslationService {
   private translate: Translate;
+  private interpolationMatcher: Matcher;
 
   public name = 'Google Translate';
 
@@ -14,11 +19,13 @@ export class GoogleTranslate implements TranslationService {
     );
   }
 
-  initialize(config?: string) {
+  initialize(config?: string, interpolationMatcher?: Matcher) {
     this.translate = new Translate({
       autoRetry: true,
       keyFilename: config || undefined,
     });
+
+    this.interpolationMatcher = interpolationMatcher;
   }
 
   async getAvailableLanguages() {
@@ -33,7 +40,10 @@ export class GoogleTranslate implements TranslationService {
   ) {
     return Promise.all(
       strings.map(async ({ key, value }) => {
-        const { clean, replacements } = replaceIcu(value);
+        const { clean, replacements } = replaceInterpolations(
+          value,
+          this.interpolationMatcher,
+        );
 
         const translationResult = (await this.translate.translate(clean, {
           from,
@@ -44,7 +54,7 @@ export class GoogleTranslate implements TranslationService {
           key: key,
           value: value,
           translated: this.cleanResponse(
-            reInsertIcu(translationResult, replacements),
+            reInsertInterpolations(translationResult, replacements),
           ),
         };
       }),

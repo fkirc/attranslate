@@ -1,12 +1,19 @@
 import inquirer from 'inquirer';
-import { replaceIcu, reInsertIcu } from '../util/icu';
+import {
+  replaceInterpolations,
+  reInsertInterpolations,
+  Matcher,
+} from '../replacers';
 import languages from '../util/languages';
 import { TranslationService } from '.';
 
 export class ManualTranslation implements TranslationService {
+  private interpolationMatcher: Matcher;
   public name = 'Manual Translation';
 
-  initialize() {}
+  initialize(config?, interpolationMatcher?: Matcher) {
+    this.interpolationMatcher = interpolationMatcher;
+  }
 
   async getAvailableLanguages() {
     return languages;
@@ -27,7 +34,10 @@ export class ManualTranslation implements TranslationService {
     console.log(`├─┌── Translatable strings:`);
 
     for (const { key, value } of strings) {
-      const { replacements } = replaceIcu(value);
+      const { replacements } = replaceInterpolations(
+        value,
+        this.interpolationMatcher,
+      );
       process.stdout.write('│ ├── ');
 
       const result = await inquirer.prompt<{ result: string }>([
@@ -42,7 +52,7 @@ export class ManualTranslation implements TranslationService {
       results.push({
         key,
         value,
-        translated: reInsertIcu(result.result, replacements),
+        translated: reInsertInterpolations(result.result, replacements),
       });
     }
 

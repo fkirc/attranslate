@@ -2,6 +2,7 @@ import { GoogleTranslate } from './google-translate';
 import { DeepL } from './deepl';
 import { DryRun } from './dry-run';
 import { ManualTranslation } from './manual';
+import { Matcher } from '../replacers';
 
 export interface TranslationResult {
   key: string;
@@ -10,7 +11,7 @@ export interface TranslationResult {
 }
 export interface TranslationService {
   name: string;
-  initialize: (config?: string) => void;
+  initialize: (config?: string, interpolationMatcher?: Matcher) => void;
   getAvailableLanguages: () => Promise<string[]>;
   translateStrings: (
     strings: { key: string; value: string }[],

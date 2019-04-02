@@ -36,13 +36,13 @@ Google Translate and delete existing keys in translated JSON files that are no
 longer used.
 
 ```shell
-$ yarn json-autocomplete -i locales -d -c service-account.json
+$ yarn json-autotranslate -i locales -d -c service-account.json
 ```
 
 Manually translate key-based source files located in the `locales` directory.
 
 ```shell
-$ yarn json-autocomplete -i locales -s manual
+$ yarn json-autotranslate -i locales -s manual
 ```
 
 ## Directory Structure
@@ -154,6 +154,22 @@ using the `-c` or `--config` option.
 This service doesn't require any configuration. You will be prompted to translate the
 source strings manually in the console.
 
+## Available Matchers
+
+Matchers are used to replace interpolations with placeholders before they are sent to
+the translation service. This ensures that interpolations don't get scrambled in the
+process. As of this release, json-autotranslate offers four matchers for different
+styles of interpolation:
+
+- **icu** (default, matches [ICU MessageFormat](https://translate.google.com) interpolations)
+- **i18next** (matches [i18next](https://www.i18next.com/translation-function/interpolation) interpolations)
+- **sprintf** (matches sprintf-style interpolations like `%s`)
+- **none** (doesn't match any interpolations)
+
+You can select a matchers using the `-m` or `--matcher` option. If you specify the
+`--list-matchers` flag, json-autotranslate will output a list of all available
+matchers.
+
 ## Available Options
 
 ```
@@ -163,6 +179,8 @@ Options:
   -t, --type <key-based|natural|auto>  specify the file structure type (default: "auto")
   -s, --service <service>              selects the service to be used for translation (default: "google-translate")
   --list-services                      outputs a list of available services
+  -m, --matcher <matcher>              selects the matcher to be used for interpolations (default: "icu")
+  --list-matchers                      outputs a list of available matchers
   -c, --config <value>                 supply a config parameter (e.g. path to key file) to the translation service
   -f, --fix-inconsistencies            automatically fixes inconsistent key-value pairs by setting the value to the key
   -d, --delete-unused-strings          deletes strings in translation files that don't exist in the template

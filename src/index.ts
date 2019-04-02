@@ -14,6 +14,7 @@ import {
   fixSourceInconsistencies,
   FileType,
 } from './util/file-system';
+import { matcherMap } from './replacers';
 
 require('dotenv').config();
 
@@ -41,6 +42,12 @@ commander
   )
   .option('--list-services', `outputs a list of available services`)
   .option(
+    '-m, --matcher <matcher>',
+    `selects the matcher to be used for interpolations`,
+    'icu',
+  )
+  .option('--list-matchers', `outputs a list of available matchers`)
+  .option(
     '-c, --config <value>',
     'supply a config parameter (e.g. path to key file) to the translation service',
   )
@@ -61,6 +68,7 @@ const translate = async (
   fileType: FileType = 'auto',
   fixInconsistencies = false,
   service: keyof typeof serviceMap = 'google-translate',
+  matcher: keyof typeof matcherMap = 'icu',
   config?: string,
 ) => {
   const workingDir = path.resolve(process.cwd(), inputDir);
@@ -73,6 +81,10 @@ const translate = async (
 
   if (typeof serviceMap[service] === 'undefined') {
     throw new Error(`The service ${service} doesn't exist.`);
+  }
+
+  if (typeof matcherMap[matcher] === 'undefined') {
+    throw new Error(`The matcher ${matcher} doesn't exist.`);
   }
 
   const translationService = serviceMap[service];
@@ -104,7 +116,7 @@ const translate = async (
   console.log();
 
   console.log(`✨ Initializing ${translationService.name}...`);
-  translationService.initialize(config);
+  translationService.initialize(config, matcherMap[matcher]);
   process.stdout.write(chalk`├── Getting available languages `);
   const availableLanguages = await translationService.getAvailableLanguages();
   console.log(
@@ -316,6 +328,12 @@ if (commander.listServices) {
   process.exit(0);
 }
 
+if (commander.listMatchers) {
+  console.log('Available matchers:');
+  console.log(Object.keys(matcherMap).join(', '));
+  process.exit(0);
+}
+
 translate(
   commander.input,
   commander.sourceLanguage,
@@ -323,6 +341,7 @@ translate(
   commander.type,
   commander.fixInconsistencies,
   commander.service,
+  commander.matcher,
   commander.config,
 ).catch((e: Error) => {
   console.log();
