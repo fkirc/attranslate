@@ -1,7 +1,7 @@
 {
   "name": "json-autotranslate",
   "description": "Translate a folder of JSON files containing translations into multiple languages.",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
