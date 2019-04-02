@@ -9,9 +9,9 @@ If some of the strings have already been translated, they won't be translated
 again. This improves performance and ensures that you won't accidentally lose
 existing translations.
 
-ICU MessageFormat parts (e.g. `{name}`) are replaced by placeholders (e.g. `<0>`)
-before being passed to the translation service, so their structure doesn't get
-mangled by the translation.
+Interpolations (ICU: `{name}`, i18next: `{{name}}`, sprintf: `%s`) are replaced by
+placeholders (e.g. `<0 />`) before being passed to the translation service, so their
+structure doesn't get mangled by the translation.
 
 ## Installation
 
