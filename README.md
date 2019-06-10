@@ -91,7 +91,7 @@ by passing the `--fix-inconsistencies` flag.
 
 ### Key-Based
 
-If you pass the `--key-based` flag, this tool will use the source file's values
+If you pass use the `keybased` option (`--type keybased`), this tool will use the source file's values
 as the basis of translations. Keys can be nested, the structure will be transfered
 over to the translated files as well.
 
