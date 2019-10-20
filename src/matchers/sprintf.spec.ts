@@ -11,7 +11,7 @@ describe('Sprintf replacer', () => {
     expect(replacements).toEqual([]);
   });
 
-  it('should replace ICU syntax with placeholders', () => {
+  it('should replace sprintf syntax with placeholders', () => {
     const { clean, replacements } = replaceInterpolations(
       'this is a %s sentence with %s placeholders',
       matchSprintf,
