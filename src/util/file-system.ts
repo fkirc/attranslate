@@ -41,7 +41,10 @@ export const loadTranslations = (
       };
     });
 
-export const fixSourceInconsistencies = (directory: string) => {
+export const fixSourceInconsistencies = (
+  directory: string,
+  cacheDir: string,
+) => {
   const files = loadTranslations(directory).filter(f => f.type === 'natural');
 
   for (const file of files) {
@@ -52,6 +55,11 @@ export const fixSourceInconsistencies = (directory: string) => {
 
     fs.writeFileSync(
       path.resolve(directory, file.name),
+      JSON.stringify(fixedContent, null, 2) + '\n',
+    );
+
+    fs.writeFileSync(
+      path.resolve(cacheDir, file.name),
       JSON.stringify(fixedContent, null, 2) + '\n',
     );
   }
