@@ -286,16 +286,12 @@ const translate = async (
         languageFile ? languageFile.name : '',
       );
       let cacheDiff: string[] = [];
-      if (fs.existsSync(cachePath)) {
+      if (fs.existsSync(cachePath) && !fs.statSync(cachePath).isDirectory()) {
         const cachedFile = flatten.convert(
           JSON.parse(fs.readFileSync(cachePath).toString()),
         );
         const cDiff = diff(cachedFile, templateFile.content);
         cacheDiff = Object.keys(cDiff).filter(k => cDiff[k]);
-        console.log();
-        console.log('Cached File:', cachedFile);
-        console.log('Current File:', templateFile.content);
-        console.log('Cache Diff:', cacheDiff);
         const changedItems = Object.keys(cacheDiff).length.toString();
         process.stdout.write(
           chalk` ({green.bold ${changedItems}} changes from cache)`,
