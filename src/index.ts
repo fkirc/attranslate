@@ -283,7 +283,7 @@ const translate = async (
       const cachePath = path.resolve(
         resolvedCacheDir,
         sourceLang,
-        languageFile.name,
+        languageFile ? languageFile.name : '',
       );
       let cacheDiff: string[] = [];
       if (fs.existsSync(cachePath)) {
