@@ -288,7 +288,12 @@ const translate = async (
       let cacheDiff: string[] = [];
       if (fs.existsSync(cachePath) && !fs.statSync(cachePath).isDirectory()) {
         const cachedFile = flatten.convert(
-          JSON.parse(fs.readFileSync(cachePath).toString()),
+          JSON.parse(
+            fs
+              .readFileSync(cachePath)
+              .toString()
+              .trim(),
+          ),
         );
         const cDiff = diff(cachedFile, templateFile.content);
         cacheDiff = Object.keys(cDiff).filter(k => cDiff[k]);
