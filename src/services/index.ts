@@ -9,12 +9,20 @@ export interface TranslationResult {
   value: string;
   translated: string;
 }
+
+export interface TString {
+  key: string;
+  value: string;
+}
 export interface TranslationService {
   name: string;
-  initialize: (config?: string, interpolationMatcher?: Matcher) => void;
-  getAvailableLanguages: () => Promise<string[]>;
+  initialize: (
+    config?: string,
+    interpolationMatcher?: Matcher,
+  ) => Promise<void>;
+  supportsLanguage: (language: string) => boolean;
   translateStrings: (
-    strings: { key: string; value: string }[],
+    strings: TString[],
     from: string,
     to: string,
   ) => Promise<TranslationResult[]>;

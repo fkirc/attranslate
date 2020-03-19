@@ -14,7 +14,7 @@ export class DeepL implements TranslationService {
   private apiKey: string;
   private interpolationMatcher: Matcher;
 
-  initialize(config?: string, interpolationMatcher?: Matcher) {
+  async initialize(config?: string, interpolationMatcher?: Matcher) {
     if (!config) {
       throw new Error(`Please provide an API key for DeepL.`);
     }
@@ -23,8 +23,10 @@ export class DeepL implements TranslationService {
     this.apiKey = config;
   }
 
-  async getAvailableLanguages() {
-    return ['en', 'de', 'fr', 'es', 'pt', 'it', 'nl', 'pl', 'ru'];
+  supportsLanguage(language: string) {
+    return ['en', 'de', 'fr', 'es', 'pt', 'it', 'nl', 'pl', 'ru'].includes(
+      language,
+    );
   }
 
   async translateStrings(

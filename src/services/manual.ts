@@ -4,19 +4,18 @@ import {
   reInsertInterpolations,
   Matcher,
 } from '../matchers';
-import languages from '../util/languages';
 import { TranslationService } from '.';
 
 export class ManualTranslation implements TranslationService {
   private interpolationMatcher: Matcher;
   public name = 'Manual Translation';
 
-  initialize(config?, interpolationMatcher?: Matcher) {
+  async initialize(config?, interpolationMatcher?: Matcher) {
     this.interpolationMatcher = interpolationMatcher;
   }
 
-  async getAvailableLanguages() {
-    return languages;
+  supportsLanguage() {
+    return true;
   }
 
   async translateStrings(
@@ -45,7 +44,7 @@ export class ManualTranslation implements TranslationService {
           name: 'result',
           message: `[${from} -> ${to}] ${
             key !== value ? `(${key}) ` : ''
-          }${value}:`,
+          }"${value}":`,
         },
       ]);
 

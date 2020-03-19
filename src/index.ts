@@ -130,16 +130,11 @@ const translate = async (
   console.log();
 
   console.log(`✨ Initializing ${translationService.name}...`);
-  translationService.initialize(config, matcherMap[matcher]);
-  process.stdout.write(chalk`├── Getting available languages `);
-  const availableLanguages = await translationService.getAvailableLanguages();
-  console.log(
-    chalk`({green.bold ${String(availableLanguages.length)} languages})`,
-  );
+  await translationService.initialize(config, matcherMap[matcher]);
   console.log(chalk`└── {green.bold Done}`);
   console.log();
 
-  if (!availableLanguages.includes(sourceLang)) {
+  if (!translationService.supportsLanguage(sourceLang)) {
     throw new Error(
       `${translationService.name} doesn't support the source language ${sourceLang}`,
     );
@@ -232,7 +227,7 @@ const translate = async (
   let removedTranslations = 0;
 
   for (const language of targetLanguages) {
-    if (!availableLanguages.includes(language)) {
+    if (!translationService.supportsLanguage(language)) {
       console.log(
         chalk`🙈 {yellow.bold ${translationService.name} doesn't support} {red.bold ${language}}{yellow.bold . Skipping this language.}`,
       );

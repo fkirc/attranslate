@@ -1,21 +1,16 @@
-import { TranslationService } from '.';
-import languages from '../util/languages';
+import { TranslationService, TString } from '.';
 import chalk from 'chalk';
 
 export class DryRun implements TranslationService {
   public name = 'Dry Run';
 
-  initialize() {}
+  async initialize() {}
 
-  async getAvailableLanguages() {
-    return languages;
+  supportsLanguage() {
+    return true;
   }
 
-  async translateStrings(
-    strings: { key: string; value: string }[],
-    from: string,
-    to: string,
-  ) {
+  async translateStrings(strings: TString[]) {
     console.log();
 
     if (strings.length > 0) {

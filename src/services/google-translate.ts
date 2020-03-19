@@ -4,11 +4,12 @@ import {
   reInsertInterpolations,
   Matcher,
 } from '../matchers';
-import { TranslationService } from '.';
+import { TranslationService, TString } from '.';
 
 export class GoogleTranslate implements TranslationService {
   private translate: Translate;
   private interpolationMatcher: Matcher;
+  private supportedLanguages: string[] = [];
 
   public name = 'Google Translate';
 
@@ -19,13 +20,14 @@ export class GoogleTranslate implements TranslationService {
     );
   }
 
-  initialize(config?: string, interpolationMatcher?: Matcher) {
+  async initialize(config?: string, interpolationMatcher?: Matcher) {
     this.translate = new Translate({
       autoRetry: true,
       keyFilename: config || undefined,
     });
 
     this.interpolationMatcher = interpolationMatcher;
+    this.supportedLanguages = await this.getAvailableLanguages();
   }
 
   async getAvailableLanguages() {
@@ -33,11 +35,11 @@ export class GoogleTranslate implements TranslationService {
     return languages.map(l => l.code.toLowerCase());
   }
 
-  async translateStrings(
-    strings: { key: string; value: string }[],
-    from: string,
-    to: string,
-  ) {
+  supportsLanguage(language: string) {
+    return this.supportedLanguages.includes(language);
+  }
+
+  async translateStrings(strings: TString[], from: string, to: string) {
     return Promise.all(
       strings.map(async ({ key, value }) => {
         const { clean, replacements } = replaceInterpolations(
@@ -45,10 +47,12 @@ export class GoogleTranslate implements TranslationService {
           this.interpolationMatcher,
         );
 
-        const translationResult = (await this.translate.translate(clean, {
-          from,
-          to,
-        }))[0];
+        const translationResult = (
+          await this.translate.translate(clean, {
+            from,
+            to,
+          })
+        )[0];
 
         return {
           key: key,
