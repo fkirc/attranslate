@@ -82,7 +82,7 @@ const translate = async (
   const workingDir = path.resolve(process.cwd(), inputDir);
   const resolvedCacheDir = path.resolve(process.cwd(), cacheDir);
   const languageFolders = getAvailableLanguages(workingDir);
-  const targetLanguages = languageFolders.filter(f => f !== sourceLang);
+  const targetLanguages = languageFolders.filter((f) => f !== sourceLang);
 
   if (!fs.existsSync(resolvedCacheDir)) {
     fs.mkdirSync(resolvedCacheDir);
@@ -143,9 +143,9 @@ const translate = async (
   console.log(`🔍 Looking for key-value inconsistencies in source files...`);
   const insonsistentFiles: string[] = [];
 
-  for (const file of templateFiles.filter(f => f.type === 'natural')) {
+  for (const file of templateFiles.filter((f) => f.type === 'natural')) {
     const inconsistentKeys = Object.keys(file.content).filter(
-      key => key !== file.content[key],
+      (key) => key !== file.content[key],
     );
 
     if (inconsistentKeys.length > 0) {
@@ -187,9 +187,9 @@ const translate = async (
   console.log(`🔍 Looking for invalid keys in source files...`);
   const invalidFiles: string[] = [];
 
-  for (const file of templateFiles.filter(f => f.type === 'key-based')) {
+  for (const file of templateFiles.filter((f) => f.type === 'key-based')) {
     const invalidKeys = Object.keys(file.originalContent).filter(
-      k => typeof file.originalContent[k] === 'string' && k.includes('.'),
+      (k) => typeof file.originalContent[k] === 'string' && k.includes('.'),
     );
 
     if (invalidKeys.length > 0) {
@@ -245,9 +245,9 @@ const translate = async (
     );
 
     if (deleteUnusedStrings) {
-      const templateFileNames = templateFiles.map(t => t.name);
+      const templateFileNames = templateFiles.map((t) => t.name);
       const deletableFiles = existingFiles.filter(
-        f => !templateFileNames.includes(f.name),
+        (f) => !templateFileNames.includes(f.name),
       );
 
       for (const file of deletableFiles) {
@@ -268,7 +268,7 @@ const translate = async (
       process.stdout.write(`├── Translating ${templateFile.name}`);
 
       const languageFile = existingFiles.find(
-        f => f.name === templateFile.name,
+        (f) => f.name === templateFile.name,
       );
       const existingKeys = languageFile
         ? Object.keys(languageFile.content)
@@ -283,15 +283,10 @@ const translate = async (
       let cacheDiff: string[] = [];
       if (fs.existsSync(cachePath) && !fs.statSync(cachePath).isDirectory()) {
         const cachedFile = flatten.convert(
-          JSON.parse(
-            fs
-              .readFileSync(cachePath)
-              .toString()
-              .trim(),
-          ),
+          JSON.parse(fs.readFileSync(cachePath).toString().trim()),
         );
         const cDiff = diff(cachedFile, templateFile.content);
-        cacheDiff = Object.keys(cDiff).filter(k => cDiff[k]);
+        cacheDiff = Object.keys(cDiff).filter((k) => cDiff[k]);
         const changedItems = Object.keys(cacheDiff).length.toString();
         process.stdout.write(
           chalk` ({green.bold ${changedItems}} changes from cache)`,
@@ -300,21 +295,21 @@ const translate = async (
 
       const templateStrings = Object.keys(templateFile.content);
       const stringsToTranslate = templateStrings
-        .filter(key => !existingKeys.includes(key) || cacheDiff.includes(key))
-        .map(key => ({
+        .filter((key) => !existingKeys.includes(key) || cacheDiff.includes(key))
+        .map((key) => ({
           key,
           value:
             templateFile.type === 'key-based' ? templateFile.content[key] : key,
         }));
 
       const unusedStrings = existingKeys.filter(
-        key => !templateStrings.includes(key),
+        (key) => !templateStrings.includes(key),
       );
 
       const translatedStrings = await translationService.translateStrings(
         stringsToTranslate,
-        sourceLang.split('-').pop()!,
-        language.split('-').pop()!,
+        sourceLang,
+        language,
       );
 
       const newKeys = translatedStrings.reduce(
@@ -377,7 +372,7 @@ const translate = async (
       ncp(
         path.resolve(workingDir, sourceLang),
         path.resolve(resolvedCacheDir, sourceLang),
-        err => (err ? rej() : res()),
+        (err) => (err ? rej() : res()),
       ),
     );
     console.log(chalk`└── {green.bold Translation files have been cached.}`);

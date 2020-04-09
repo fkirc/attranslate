@@ -6,6 +6,11 @@ import {
 } from '../matchers';
 import { TranslationService, TString } from '.';
 
+// Contains replacements for language codes
+const codeMap = {
+  'zh-tw': 'zh-TW',
+};
+
 export class GoogleTranslate implements TranslationService {
   private translate: Translate;
   private interpolationMatcher: Matcher;
@@ -32,11 +37,23 @@ export class GoogleTranslate implements TranslationService {
 
   async getAvailableLanguages() {
     const [languages] = await this.translate.getLanguages();
-    return languages.map(l => l.code.toLowerCase());
+    console.log(languages);
+    return languages.map((l) => l.code.toLowerCase());
   }
 
   supportsLanguage(language: string) {
     return this.supportedLanguages.includes(language);
+  }
+
+  cleanLanguageCode(languageCode: string) {
+    const lowerCaseCode = languageCode.toLowerCase();
+    console.log('Lower case:', languageCode);
+
+    if (codeMap[lowerCaseCode]) {
+      return codeMap[lowerCaseCode];
+    }
+
+    return lowerCaseCode.split('-')[0];
   }
 
   async translateStrings(strings: TString[], from: string, to: string) {
@@ -47,12 +64,10 @@ export class GoogleTranslate implements TranslationService {
           this.interpolationMatcher,
         );
 
-        const translationResult = (
-          await this.translate.translate(clean, {
-            from,
-            to,
-          })
-        )[0];
+        const [translationResult] = await this.translate.translate(clean, {
+          from: this.cleanLanguageCode(from),
+          to: this.cleanLanguageCode(to),
+        });
 
         return {
           key: key,
