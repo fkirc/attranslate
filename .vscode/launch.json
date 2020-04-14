@@ -1,0 +1,32 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "Run Azure",
+			"type": "node",
+			"request": "launch",
+			"args": [
+                "${workspaceRoot}/src/index.ts",
+                "-i", "locales",
+                "-s", "azure",
+                "-m", "i18next",
+                "-c", "${input:azurekey}",
+                "-d"
+            ],
+			"runtimeArgs": ["-r", "ts-node/register"],
+			"cwd": "${workspaceRoot}",
+			"protocol": "inspector",
+			"internalConsoleOptions": "openOnSessionStart",
+			"env": {
+				"TS_NODE_IGNORE": "false"
+			}
+		}
+    ],
+    "inputs": [
+        {
+            "id": "azurekey",
+            "description": "Azure Translate Key",
+            "type": "promptString"
+        }
+    ]
+}
