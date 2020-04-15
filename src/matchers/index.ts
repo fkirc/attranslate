@@ -2,7 +2,7 @@ import { matchIcu } from './icu';
 import { matchI18Next } from './i18next';
 import { matchSprintf } from './sprintf';
 
-export const xmlStyleReplacer = (index: number) => `<${index} />`;
+export const xmlStyleReplacer = (index: number) => `<span>${index}</span>`;
 export const matchNothing: Matcher = () => [];
 
 export type Matcher = (
