@@ -35,6 +35,6 @@ export const serviceMap: {
   'google-translate': new GoogleTranslate(),
   deepl: new DeepL(),
   'dry-run': new DryRun(),
-  'azure': new AzureTranslator(),
+  azure: new AzureTranslator(),
   manual: new ManualTranslation(),
 };
