@@ -1,110 +1,117 @@
 import fetch from 'node-fetch';
+import { chunk, flatten } from 'lodash';
 
 import { TranslationService, TranslationResult, TString } from '.';
-import { Matcher, reInsertInterpolations, replaceInterpolations } from '../matchers';
+import {
+  Matcher,
+  reInsertInterpolations,
+  replaceInterpolations,
+} from '../matchers';
 
-type AzureResponse = {
-    translations: [{
-        text: string
-        to: string
-    }]
+interface TranslationResponse {
+  translations: [
+    {
+      text: string;
+      to: string;
+    },
+  ];
 }
 
+interface SupportedLanguagesResponse {
+  translation: {
+    [code: string]: {
+      name: string;
+      nativeName: string;
+      direction: 'ltr' | 'rtl';
+    };
+  };
+}
+
+const LANGUAGE_ENDPOINT =
+  'https://api.cognitive.microsofttranslator.com/languages?api-version=3.0';
+const TRANSLATE_ENDPOINT =
+  'https://api.cognitive.microsofttranslator.com/translate?api-version=3.0';
+
 export class AzureTranslator implements TranslationService {
+  public name = 'Azure';
+  private apiKey: string;
+  private interpolationMatcher: Matcher;
+  private supportedLanguages: Set<string>;
 
-    public name = "Azure";
-    private apiKey: string;
-    private interpolationMatcher: Matcher;
-    private supportedLanguages: Set<string>;
+  async initialize(apiKey?: string, interpolationMatcher?: Matcher) {
+    if (!apiKey) throw new Error(`Please provide an API key for Azure.`);
 
-    async initialize(apiKey?: string, interpolationMatcher?: Matcher) {
-        if (!apiKey)
-            throw new Error(`Please provide an API key for Azure.`);
+    this.apiKey = apiKey;
+    this.interpolationMatcher = interpolationMatcher;
+    this.supportedLanguages = await this.getAvailableLanguages();
+  }
 
-        this.apiKey = apiKey;
-        this.interpolationMatcher = interpolationMatcher;
+  async getAvailableLanguages() {
+    const response = await fetch(LANGUAGE_ENDPOINT);
+    const supported = (await response.json()) as SupportedLanguagesResponse;
+    const keys = Object.keys(supported.translation).map((k) => k.toLowerCase());
 
-        this.supportedLanguages = await this.getAvailableLanguages();
+    // Some language codes can be simplified by using only the part before the dash
+    const simplified = keys
+      .filter((k) => k.includes('-'))
+      .map((l) => l.split('-')[0]);
+
+    return new Set(keys.concat(simplified));
+  }
+
+  supportsLanguage(language: string) {
+    return this.supportedLanguages.has(language.toLowerCase());
+  }
+
+  async translateBatch(batch: TString[], from: string, to: string) {
+    const toTranslate = batch.map(({ key, value }) => {
+      const { clean, replacements } = replaceInterpolations(
+        value,
+        this.interpolationMatcher,
+      );
+
+      return { key, value, clean, replacements };
+    });
+
+    const response = await fetch(
+      `${TRANSLATE_ENDPOINT}&from=${from}&to=${to}&textType=html`,
+      {
+        method: 'POST',
+        headers: {
+          'Ocp-Apim-Subscription-Key': this.apiKey,
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: JSON.stringify(toTranslate.map((c) => ({ Text: c.clean }))),
+      },
+    );
+
+    if (!response.ok) {
+      throw new Error('Azure Translation failed: ' + (await response.text()));
     }
 
-    async getAvailableLanguages() {
-        const response = await fetch("https://api.cognitive.microsofttranslator.com/languages?api-version=3.0");
-        const supported = await response.json() as { 
-            translation: { 
-                [code: string]: {
-                    name: string
-                    nativeName: string
-                    direction: "ltr" | "rtl"
-                }
-            }
-        };
+    const data = (await response.json()) as TranslationResponse[];
 
-        const keys = Object.keys(supported.translation);
+    return data.map((res, i) => ({
+      key: toTranslate[i].key,
+      value: toTranslate[i].value,
+      translated: reInsertInterpolations(
+        res.translations[0].text,
+        toTranslate[i].replacements,
+      ),
+    }));
+  }
 
-        const twoLetter = keys.map(l => l.substr(0, 2));
+  async translateStrings(
+    strings: TString[],
+    from: string,
+    to: string,
+  ): Promise<TranslationResult[]> {
+    const batches = chunk(strings, 50);
 
-        return new Set(keys.concat(twoLetter));
-    }
+    const results = await Promise.all(
+      batches.map((batch) => this.translateBatch(batch, from, to)),
+    );
 
-    supportsLanguage(language: string) {
-        return this.supportedLanguages.has(language.toLowerCase());
-    }
-
-    async translateStrings(strings: TString[], from: string, to: string): Promise<TranslationResult[]> {
-        const root = "https://api.cognitive.microsofttranslator.com/translate?api-version=3.0";
-
-        const headers = {
-            ["Ocp-Apim-Subscription-Key"]: this.apiKey,
-            ["Content-Type"]: "application/json; charset=UTF-8"
-        };
-
-        const batchSize = 50;
-        const result: TranslationResult[] = [];
-        var all: Promise<any>[] = [];
-        
-        while (strings.length) {
-            const batch = strings.splice(0, batchSize);
-
-            const toTranslate = batch.map(({ key, value }) => {
-                const { clean, replacements } = replaceInterpolations(
-                    value,
-                    this.interpolationMatcher,
-                );
-
-                return { key, value, clean, replacements };
-            });
-
-            const body = JSON.stringify(
-                toTranslate.map(c => ({ Text: c.clean }))
-            );
-
-            all.push(
-                fetch(`${root}&from=${from}&to=${to}`, {
-                    method: "POST",
-                    headers,
-                    body,
-                })
-                .then(async response => {
-                    const data = await response.json() as AzureResponse[];
-
-                    for (let i = 0; i < data.length; ++i) {
-                        const to = toTranslate[i];
-
-                        const translated = reInsertInterpolations(
-                            data[i].translations[0].text, to.replacements);
-
-                        result.push({
-                            key: to.key,
-                            value: to.value,
-                            translated
-                        })
-                    }
-                })
-            );
-        }
-
-        await Promise.all(all);
-
-        return result;
-    }
+    return flatten(results);
+  }
 }
