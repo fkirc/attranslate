@@ -168,10 +168,8 @@ Azure account if you don't have one already and
 You'll get an API key soon after that which you can pass to json-autotranslate
 using the `-c` or `--config` flag.
 
-As of today[^1], the first 2M characters of translation per month are free.
-After that you'll have to pay \$10 per 1M characters that you translate.
-
-[^1]: 15th of April 2020
+As of now, the first 2M characters of translation per month are free. After that
+you'll have to pay \$10 per 1M characters that you translate.
 
 ### Manual
 
