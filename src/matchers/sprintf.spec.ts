@@ -16,10 +16,12 @@ describe('Sprintf replacer', () => {
       'this is a %s sentence with %s placeholders',
       matchSprintf,
     );
-    expect(clean).toEqual('this is a <0 /> sentence with <1 /> placeholders');
+    expect(clean).toEqual(
+      'this is a <span>0</span> sentence with <span>1</span> placeholders',
+    );
     expect(replacements).toEqual([
-      { from: '%s', to: '<0 />' },
-      { from: '%s', to: '<1 />' },
+      { from: '%s', to: '<span>0</span>' },
+      { from: '%s', to: '<span>1</span>' },
     ]);
   });
 });

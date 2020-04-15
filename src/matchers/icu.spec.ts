@@ -16,10 +16,12 @@ describe('ICU replacer', () => {
       'this is a {test} sentence with {multiple} placeholders',
       matchIcu,
     );
-    expect(clean).toEqual('this is a <0 /> sentence with <1 /> placeholders');
+    expect(clean).toEqual(
+      'this is a <span>0</span> sentence with <span>1</span> placeholders',
+    );
     expect(replacements).toEqual([
-      { from: '{test}', to: '<0 />' },
-      { from: '{multiple}', to: '<1 />' },
+      { from: '{test}', to: '<span>0</span>' },
+      { from: '{multiple}', to: '<span>1</span>' },
     ]);
   });
 
@@ -28,10 +30,12 @@ describe('ICU replacer', () => {
       'this is a {test} sentence with {placeholders}',
       matchIcu,
     );
-    expect(clean).toEqual('this is a <0 /> sentence with <1 />');
+    expect(clean).toEqual(
+      'this is a <span>0</span> sentence with <span>1</span>',
+    );
     expect(replacements).toEqual([
-      { from: '{test}', to: '<0 />' },
-      { from: '{placeholders}', to: '<1 />' },
+      { from: '{test}', to: '<span>0</span>' },
+      { from: '{placeholders}', to: '<span>1</span>' },
     ]);
   });
 });

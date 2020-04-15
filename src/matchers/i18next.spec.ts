@@ -16,10 +16,12 @@ describe('i18next replacer', () => {
       'this is a {{test}} sentence with {{multiple}} placeholders',
       matchI18Next,
     );
-    expect(clean).toEqual('this is a <0 /> sentence with <1 /> placeholders');
+    expect(clean).toEqual(
+      'this is a <span>0</span> sentence with <span>1</span> placeholders',
+    );
     expect(replacements).toEqual([
-      { from: '{{test}}', to: '<0 />' },
-      { from: '{{multiple}}', to: '<1 />' },
+      { from: '{{test}}', to: '<span>0</span>' },
+      { from: '{{multiple}}', to: '<span>1</span>' },
     ]);
   });
 
@@ -28,10 +30,12 @@ describe('i18next replacer', () => {
       "this is a $t({{test}}) sentence with $t(advanced, {'count': {{advanced}} }) placeholders",
       matchI18Next,
     );
-    expect(clean).toEqual('this is a <0 /> sentence with <1 /> placeholders');
+    expect(clean).toEqual(
+      'this is a <span>0</span> sentence with <span>1</span> placeholders',
+    );
     expect(replacements).toEqual([
-      { from: '$t({{test}})', to: '<0 />' },
-      { from: "$t(advanced, {'count': {{advanced}} })", to: '<1 />' },
+      { from: '$t({{test}})', to: '<span>0</span>' },
+      { from: "$t(advanced, {'count': {{advanced}} })", to: '<span>1</span>' },
     ]);
   });
 });
