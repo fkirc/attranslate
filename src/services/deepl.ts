@@ -24,7 +24,7 @@ export class DeepL implements TranslationService {
   }
 
   supportsLanguage(language: string) {
-    return ['en', 'de', 'fr', 'es', 'pt', 'it', 'nl', 'pl', 'ru'].includes(
+    return ['en', 'de', 'fr', 'es', 'pt', 'it', 'nl', 'pl', 'ru', 'zh'].includes(
       language,
     );
   }
