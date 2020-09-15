@@ -3,7 +3,6 @@ import { serviceMap } from '../services';
 import { matcherMap } from '../matchers';
 import path from "path";
 import fs from "fs";
-import chalk from 'chalk';
 import { flatten, unflatten } from '../util/flatten';
 import { diff } from 'deep-object-diff';
 import { omit } from 'lodash';
@@ -27,7 +26,7 @@ export const translate = async (
 
   if (!fs.existsSync(resolvedCacheDir)) {
     fs.mkdirSync(resolvedCacheDir);
-    console.log(`🗂 Created the cache directory.`);
+    console.log(`Created the cache directory.`);
   }
 
   if (!languageFolders.includes(sourceLang)) {
@@ -56,23 +55,23 @@ export const translate = async (
   }
 
   console.log(
-    chalk`Found {green.bold ${String(
+    `Found ${String(
       targetLanguages.length,
-    )}} target language(s):`,
+    )} target language(s):`,
   );
   console.log(`-> ${targetLanguages.join(', ')}`);
   console.log();
 
   console.log(`🏭 Loading source files...`);
   for (const file of templateFiles) {
-    console.log(chalk`├── ${String(file.name)} (${file.type})`);
+    console.log(`├── ${String(file.name)} (${file.type})`);
   }
-  console.log(chalk`└── {green.bold Done}`);
+  console.log(`└── Done`);
   console.log();
 
   console.log(`✨ Initializing ${translationService.name}...`);
   await translationService.initialize(config, matcherMap[matcher]);
-  console.log(chalk`└── {green.bold Done}`);
+  console.log(`└── Done`);
   console.log();
 
   if (!translationService.supportsLanguage(sourceLang)) {
@@ -92,16 +91,16 @@ export const translate = async (
     if (inconsistentKeys.length > 0) {
       insonsistentFiles.push(file.name);
       console.log(
-        chalk`├── {yellow.bold ${file.name} contains} {red.bold ${String(
+        `├── ${file.name} contains ${String(
           inconsistentKeys.length,
-        )}} {yellow.bold inconsistent key(s)}`,
+        )} inconsistent key(s)`,
       );
     }
   }
 
   if (insonsistentFiles.length > 0) {
     console.log(
-      chalk`└── {yellow.bold Found key-value inconsistencies in} {red.bold ${String(
+      `└── {yellow.bold Found key-value inconsistencies in} {red.bold ${String(
         insonsistentFiles.length,
       )}} {yellow.bold file(s).}`,
     );
@@ -114,14 +113,14 @@ export const translate = async (
         path.resolve(workingDir, sourceLang),
         path.resolve(resolvedCacheDir, sourceLang),
       );
-      console.log(chalk`└── {green.bold Fixed all inconsistencies.}`);
+      console.log(`└── {green.bold Fixed all inconsistencies.}`);
     } else {
       console.log(
-        chalk`Please either fix these inconsistencies manually or supply the {green.bold -f} flag to automatically fix them.`,
+        `Please either fix these inconsistencies manually or supply the {green.bold -f} flag to automatically fix them.`,
       );
     }
   } else {
-    console.log(chalk`└── {green.bold No inconsistencies found}`);
+    console.log(`└── {green.bold No inconsistencies found}`);
   }
   console.log();
 
@@ -136,7 +135,7 @@ export const translate = async (
     if (invalidKeys.length > 0) {
       invalidFiles.push(file.name);
       console.log(
-        chalk`├── {yellow.bold ${file.name} contains} {red.bold ${String(
+        `├── {yellow.bold ${file.name} contains} {red.bold ${String(
           invalidKeys.length,
         )}} {yellow.bold invalid key(s)}`,
       );
@@ -145,22 +144,22 @@ export const translate = async (
 
   if (invalidFiles.length) {
     console.log(
-      chalk`└── {yellow.bold Found invalid keys in} {red.bold ${String(
+      `└── {yellow.bold Found invalid keys in} {red.bold ${String(
         invalidFiles.length,
       )}} {yellow.bold file(s).}`,
     );
 
     console.log();
     console.log(
-      chalk`It looks like you're trying to use the key-based mode on natural-language-style JSON files.`,
+      `It looks like you're trying to use the key-based mode on natural-language-style JSON files.`,
     );
     console.log(
-      chalk`Please make sure that your keys don't contain periods (.) or remove the {green.bold --type} / {green.bold -t} option.`,
+      `Please make sure that your keys don't contain periods (.) or remove the {green.bold --type} / {green.bold -t} option.`,
     );
     console.log();
     process.exit(1);
   } else {
-    console.log(chalk`└── {green.bold No invalid keys found}`);
+    console.log(`└── {green.bold No invalid keys found}`);
   }
   console.log();
 
@@ -170,7 +169,7 @@ export const translate = async (
   for (const language of targetLanguages) {
     if (!translationService.supportsLanguage(language)) {
       console.log(
-        chalk`🙈 {yellow.bold ${translationService.name} doesn't support} {red.bold ${language}}{yellow.bold . Skipping this language.}`,
+        `🙈 {yellow.bold ${translationService.name} doesn't support} {red.bold ${language}}{yellow.bold . Skipping this language.}`,
       );
       console.log();
       continue;
@@ -182,7 +181,7 @@ export const translate = async (
     );
 
     console.log(
-      chalk`💬 Translating strings from {green.bold ${sourceLang}} to {green.bold ${language}}...`,
+      `💬 Translating strings from {green.bold ${sourceLang}} to {green.bold ${language}}...`,
     );
 
     if (deleteUnusedStrings) {
@@ -193,7 +192,7 @@ export const translate = async (
 
       for (const file of deletableFiles) {
         console.log(
-          chalk`├── {red.bold ${file.name} is no longer used and will be deleted.}`,
+          `├── {red.bold ${file.name} is no longer used and will be deleted.}`,
         );
 
         fs.unlinkSync(path.resolve(workingDir, language, file.name));
@@ -230,7 +229,7 @@ export const translate = async (
         cacheDiff = Object.keys(cDiff).filter((k) => (cDiff as any)[k]);
         const changedItems = Object.keys(cacheDiff).length.toString();
         process.stdout.write(
-          chalk` ({green.bold ${changedItems}} changes from cache)`,
+          ` ({green.bold ${changedItems}} changes from cache)`,
         );
       }
 
@@ -296,14 +295,14 @@ export const translate = async (
 
       console.log(
         deleteUnusedStrings && unusedStrings.length > 0
-          ? chalk` ({green.bold +${String(
+          ? ` ( +${String(
           translatedStrings.length,
-          )}}/{red.bold -${String(unusedStrings.length)}})`
-          : chalk` ({green.bold +${String(translatedStrings.length)}})`,
+          )}/ -${String(unusedStrings.length)})`
+          : ` ( +${String(translatedStrings.length)})`,
       );
     }
 
-    console.log(chalk`└── {green.bold All strings have been translated.}`);
+    console.log(`└── All strings have been translated.`);
     console.log();
   }
 
@@ -316,19 +315,14 @@ export const translate = async (
         (err) => (err ? rej() : res()),
       ),
     );
-    console.log(chalk`└── {green.bold Translation files have been cached.}`);
+    console.log(`└── Translation files have been cached.`);
     console.log();
   }
 
-  console.log(
-    chalk.green.bold(`${addedTranslations} new translations have been added!`),
+  console.log(`${addedTranslations} new translations have been added!`
   );
 
   if (removedTranslations > 0) {
-    console.log(
-      chalk.green.bold(
-        `${removedTranslations} translations have been removed!`,
-      ),
-    );
+    console.log(`${removedTranslations} translations have been removed!`);
   }
 };

@@ -1,5 +1,4 @@
 import { TranslationService, TString } from '.';
-import chalk from 'chalk';
 
 export class DryRun implements TranslationService {
   public name = 'Dry Run';
@@ -20,9 +19,9 @@ export class DryRun implements TranslationService {
         console.log(`│ ├──── ${key !== value ? `(${key}) ` : ''}${value}`);
       }
 
-      process.stdout.write(chalk`│ └── {green.bold Done}`);
+      process.stdout.write(`│ └── Done`);
     } else {
-      process.stdout.write(chalk`│ └── {green.bold None}`);
+      process.stdout.write(`│ └── None`);
     }
 
     return [];

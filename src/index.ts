@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-import chalk from 'chalk';
 import commander from 'commander';
 import { serviceMap } from './services';
 import { matcherMap } from './matchers';
@@ -83,9 +82,9 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
     commander.config,
   ).catch((e: Error) => {
     console.log();
-    console.log(chalk.bgRed('An error has occured:'));
-    console.log(chalk.bgRed(e.message));
-    console.log(chalk.bgRed(e.stack as any));
+    console.error('An error has occured:');
+    console.error(e.message);
+    console.error(e.stack);
     console.log();
   });
 }
