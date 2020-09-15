@@ -1,5 +1,59 @@
 # aktranslate - Automated Key Translate for App Developers
 
+Thanks to automated translation services, it is possible to speedup traditional translation workflows.
+For example, let's say that a translation service achieves 90% correct translations on the spot.
+In this case, a quick fix of the remaining 10% is faster than doing everything by hand.
+`aktranslate` makes it easy to integrate translation services into your workflows.
+
+## Why aktranslate?
+
+Instead of re-inventing the wheel, `aktranslate` integrates into existing translation systems.
+`aktranslate` has you covered, regardless of whether you use i18n, raw JavaScript, React, Native-Android-XML, Native-iOS-Localizables or other systems. 
+In contrast to paid online services, a single developer can integrate `aktranslate` in a matter of minutes.
+
+# Features
+
+## Cross-platform Support
+
+`aktranslate` is designed to translate any app for any platform.
+`aktranslate` works for Web/Android/iOS or any combination of platforms. To make this possible, aktranslate supports the following file formats:
+- i18next JSON
+- Android XML
+- iOS plist
+
+## Flexible Workflows
+
+`aktranslate` does not enforce any specific workflow. 
+In particular, `aktranslate` does not force you to use any translation service. 
+It is also possible to use aktranslate for converting between different file formats without changing the language (e.g. from Android-XML to iOS-Localizable).
+
+## Allow Manual Overwrites
+
+aktranslate recognizes that automated translations are not perfect.
+Therefore, whenever you are unhappy with the produced result, aktranslate allows you to simply overwrite translations in your destination files.
+
+## Available Services
+
+Depending on your configuration, some translation services work better than others.
+aktranslate supports the following translation services:
+
+- [Google Cloud Translate](https://translate.google.com)
+- [DeepL](https://deepl.com)
+- [Azure Translator](https://azure.microsoft.com/en-us/services/cognitive-services/translator-text-api/)
+- Manual: Allows you to translate strings manually by entering them into aktranslate.
+- Sync Without Translations: Does not change the language; useful for converting between different file formats.
+
+## High Performance
+
+aktranslate only translates recently changed or recently added content.
+This does not only speedup your workflow, but also saves cost for paid translation services.
+
+## Fast Integration
+
+aktranslate is designed for a quick integration into any app or website.
+Therefore, aktranslate allows you to keep working on the same translation files that you used before.
+
+
 This tool allows you to translate a locale folder containing multiple JSON files
 into multiple languages using Google Translate, DeepL, Azure Translator, or
 manually. You can either use the translation keys (natural translation) or their
@@ -13,23 +67,7 @@ Interpolations (ICU: `{name}`, i18next: `{{name}}`, sprintf: `%s`) are replaced
 by placeholders (e.g. `<0 />`) before being passed to the translation service,
 so their structure doesn't get mangled by the translation.
 
-## Installation
-
-```shell
-$ yarn add json-autotranslate
-# or
-$ npm i -S json-autotranslate
-```
-
-## Running json-autotranslate
-
-```shell
-$ yarn json-autotranslate
-# or
-$ npx json-autotranslate
-```
-
-### Usage Examples
+# Usage Examples
 
 Translate natural language source files located in the `locales` directory using
 Google Translate and delete existing keys in translated JSON files that are no
@@ -44,6 +82,20 @@ Manually translate key-based source files located in the `locales` directory.
 ```shell
 $ yarn json-autotranslate -i locales -s manual
 ```
+
+# Integration Guide
+
+Firstly, make sure that npm is installed on your machine.
+If you are a JavaScript-developer, then you can install aktranslate to your package.json:
+
+`npm install --save-dev aktranslate`
+
+If you are not a JavaScript developer, then you can install aktranslate globally:
+
+`npm install --global aktranslate`
+
+Next, you should write a project-specific script that invokes aktranslate for your specific files.
+See sample scripts for a guidance on how to translate your project-specific files.
 
 ## Directory Structure
 
@@ -106,25 +158,6 @@ structure will be transfered over to the translated files as well.
   "FORGOT_PASSWORD": "Forgot password?"
 }
 ```
-
-## Available Services
-
-As of this release, json-autotranslate offers five services:
-
-- **google-translate** (default, uses
-  [Google Translate](https://translate.google.com) to translate strings)
-- **deepl** (uses [DeepL](https://deepl.com) to translate strings)
-- **azure** (uses Azure's
-  [Translator Text](https://azure.microsoft.com/en-us/services/cognitive-services/translator-text-api/)
-  to translate strings)
-- **manual** (allows you to translate strings manually by entering them into the
-  CLI)
-- **dry-run** (outputs a list of strings that will be translated without
-  touching any files)
-
-You can select a service using the `-s` or `--service` option. If you specify
-the `--list-services` flag, json-autotranslate will output a list of all
-available services.
 
 ### Google Translate
 
@@ -212,7 +245,3 @@ Options:
   -h, --help                           output usage information
 ```
 
-## Contributing
-
-If you'd like to contribute to this project, please feel free to open a pull
-request.
