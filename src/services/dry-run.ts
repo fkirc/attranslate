@@ -1,7 +1,7 @@
-import { TranslationService, TString } from '.';
+import { TranslationService, TString } from ".";
 
 export class DryRun implements TranslationService {
-  public name = 'Dry Run';
+  public name = "Dry Run";
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   async initialize() {}
@@ -18,7 +18,7 @@ export class DryRun implements TranslationService {
       console.log(`├─┌── Translatable strings:`);
 
       for (const { key, value } of strings) {
-        console.log(`│ ├──── ${key !== value ? `(${key}) ` : ''}${value}`);
+        console.log(`│ ├──── ${key !== value ? `(${key}) ` : ""}${value}`);
       }
 
       process.stdout.write(`│ └── Done`);

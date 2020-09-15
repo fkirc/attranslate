@@ -1,72 +1,72 @@
 #!/usr/bin/env node
 
-import commander from 'commander';
-import { serviceMap } from './services';
-import { matcherMap } from './matchers';
-import { translate } from './core/translate';
+import commander from "commander";
+import { serviceMap } from "./services";
+import { matcherMap } from "./matchers";
+import { translate } from "./core/translate";
 
-process.on('unhandledRejection', (error) => {
-  console.error('[fatal]', error);
+process.on("unhandledRejection", (error) => {
+  console.error("[fatal]", error);
 });
 
 export function run(process: NodeJS.Process, cliBinDir: string): void {
   commander
     .option(
-      '-i, --input <inputDir>',
-      'the directory containing language directories',
-      '.',
+      "-i, --input <inputDir>",
+      "the directory containing language directories",
+      "."
     )
     .option(
-      '--cache <cacheDir>',
-      'set the cache directory',
-      '.json-autotranslate-cache',
+      "--cache <cacheDir>",
+      "set the cache directory",
+      ".json-autotranslate-cache"
     )
     .option(
-      '-l, --source-language <sourceLang>',
-      'specify the source language',
-      'en',
+      "-l, --source-language <sourceLang>",
+      "specify the source language",
+      "en"
     )
     .option(
-      '-t, --type <key-based|natural|auto>',
+      "-t, --type <key-based|natural|auto>",
       `specify the file structure type`,
       /^(key-based|natural|auto)$/,
-      'auto',
+      "auto"
     )
     .option(
-      '-s, --service <service>',
+      "-s, --service <service>",
       `selects the service to be used for translation`,
-      'google-translate',
+      "google-translate"
     )
-    .option('--list-services', `outputs a list of available services`)
+    .option("--list-services", `outputs a list of available services`)
     .option(
-      '-m, --matcher <matcher>',
+      "-m, --matcher <matcher>",
       `selects the matcher to be used for interpolations`,
-      'icu',
+      "icu"
     )
-    .option('--list-matchers', `outputs a list of available matchers`)
+    .option("--list-matchers", `outputs a list of available matchers`)
     .option(
-      '-c, --config <value>',
-      'supply a config parameter (e.g. path to key file) to the translation service',
-    )
-    .option(
-      '-f, --fix-inconsistencies',
-      `automatically fixes inconsistent key-value pairs by setting the value to the key`,
+      "-c, --config <value>",
+      "supply a config parameter (e.g. path to key file) to the translation service"
     )
     .option(
-      '-d, --delete-unused-strings',
-      `deletes strings in translation files that don't exist in the template`,
+      "-f, --fix-inconsistencies",
+      `automatically fixes inconsistent key-value pairs by setting the value to the key`
+    )
+    .option(
+      "-d, --delete-unused-strings",
+      `deletes strings in translation files that don't exist in the template`
     )
     .parse(process.argv);
 
   if (commander.listServices) {
-    console.log('Available services:');
-    console.log(Object.keys(serviceMap).join(', '));
+    console.log("Available services:");
+    console.log(Object.keys(serviceMap).join(", "));
     process.exit(0);
   }
 
   if (commander.listMatchers) {
-    console.log('Available matchers:');
-    console.log(Object.keys(matcherMap).join(', '));
+    console.log("Available matchers:");
+    console.log(Object.keys(matcherMap).join(", "));
     process.exit(0);
   }
 
@@ -79,10 +79,10 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
     commander.fixInconsistencies,
     commander.service,
     commander.matcher,
-    commander.config,
+    commander.config
   ).catch((e: Error) => {
     console.log();
-    console.error('An error has occured:');
+    console.error("An error has occured:");
     console.error(e.message);
     console.error(e.stack);
     console.log();

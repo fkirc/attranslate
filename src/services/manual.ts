@@ -1,14 +1,14 @@
-import inquirer from 'inquirer';
+import inquirer from "inquirer";
 import {
   replaceInterpolations,
   reInsertInterpolations,
   Matcher,
-} from '../matchers';
-import { TranslationService } from '.';
+} from "../matchers";
+import { TranslationService } from ".";
 
 export class ManualTranslation implements TranslationService {
   private interpolationMatcher: Matcher | undefined;
-  public name = 'Manual Translation';
+  public name = "Manual Translation";
 
   // eslint-disable-next-line require-await
   async initialize(config?: string, interpolationMatcher?: Matcher) {
@@ -22,7 +22,7 @@ export class ManualTranslation implements TranslationService {
   async translateStrings(
     strings: { key: string; value: string }[],
     from: string,
-    to: string,
+    to: string
   ) {
     const results: { key: string; value: string; translated: string }[] = [];
 
@@ -36,15 +36,15 @@ export class ManualTranslation implements TranslationService {
     for (const { key, value } of strings) {
       const { replacements } = replaceInterpolations(
         value,
-        this.interpolationMatcher,
+        this.interpolationMatcher
       );
-      process.stdout.write('│ ├── ');
+      process.stdout.write("│ ├── ");
 
       const result = await inquirer.prompt<{ result: string }>([
         {
-          name: 'result',
+          name: "result",
           message: `[${from} -> ${to}] ${
-            key !== value ? `(${key}) ` : ''
+            key !== value ? `(${key}) ` : ""
           }"${value}":`,
         },
       ]);

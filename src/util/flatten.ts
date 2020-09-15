@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import _ from "lodash";
 
 export function unflatten(params: Record<string, unknown>) {
   return _.reduce(
@@ -6,7 +6,7 @@ export function unflatten(params: Record<string, unknown>) {
     function (result: Record<string, unknown>, value: unknown, key: string) {
       return _.set(result, key, value);
     },
-    {},
+    {}
   );
 }
 
@@ -17,10 +17,10 @@ export function flatten(obj: unknown) {
       if (_.isObject(value)) {
         const flatMap = _.mapKeys(flatten(value), function (
           mvalue: unknown,
-          mkey: string,
+          mkey: string
         ) {
           if (_.isArray(value)) {
-            const index = mkey.indexOf('.');
+            const index = mkey.indexOf(".");
             if (-1 !== index) {
               return `${key}[${mkey.slice(0, index)}]${mkey.slice(index)}`;
             }
@@ -36,6 +36,6 @@ export function flatten(obj: unknown) {
 
       return result;
     },
-    {},
+    {}
   );
 }

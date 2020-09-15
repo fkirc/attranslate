@@ -3,26 +3,26 @@ import {
   fixSourceInconsistencies,
   getAvailableLanguages,
   loadTranslations,
-} from '../util/file-system';
-import { serviceMap } from '../services';
-import { matcherMap } from '../matchers';
-import path from 'path';
-import fs from 'fs';
-import { flatten, unflatten } from '../util/flatten';
-import { diff } from 'deep-object-diff';
-import { omit } from 'lodash';
-import ncp from 'ncp';
+} from "../util/file-system";
+import { serviceMap } from "../services";
+import { matcherMap } from "../matchers";
+import path from "path";
+import fs from "fs";
+import { flatten, unflatten } from "../util/flatten";
+import { diff } from "deep-object-diff";
+import { omit } from "lodash";
+import ncp from "ncp";
 
 export const translate = async (
-  inputDir = '.',
-  cacheDir = '.json-autotranslate-cache',
-  sourceLang = 'en',
+  inputDir = ".",
+  cacheDir = ".json-autotranslate-cache",
+  sourceLang = "en",
   deleteUnusedStrings = false,
-  fileType: FileType = 'auto',
+  fileType: FileType = "auto",
   fixInconsistencies = false,
-  service: keyof typeof serviceMap = 'google-translate',
-  matcher: keyof typeof matcherMap = 'icu',
-  config?: string,
+  service: keyof typeof serviceMap = "google-translate",
+  matcher: keyof typeof matcherMap = "icu",
+  config?: string
 ) => {
   const workingDir = path.resolve(process.cwd(), inputDir);
   const resolvedCacheDir = path.resolve(process.cwd(), cacheDir);
@@ -38,11 +38,11 @@ export const translate = async (
     throw new Error(`The source language ${sourceLang} doesn't exist.`);
   }
 
-  if (typeof serviceMap[service] === 'undefined') {
+  if (typeof serviceMap[service] === "undefined") {
     throw new Error(`The service ${service} doesn't exist.`);
   }
 
-  if (typeof matcherMap[matcher] === 'undefined') {
+  if (typeof matcherMap[matcher] === "undefined") {
     throw new Error(`The matcher ${matcher} doesn't exist.`);
   }
 
@@ -50,17 +50,17 @@ export const translate = async (
 
   const templateFiles = loadTranslations(
     path.resolve(workingDir, sourceLang),
-    fileType,
+    fileType
   );
 
   if (templateFiles.length === 0) {
     throw new Error(
-      `The source language ${sourceLang} doesn't contain any JSON files.`,
+      `The source language ${sourceLang} doesn't contain any JSON files.`
     );
   }
 
   console.log(`Found ${String(targetLanguages.length)} target language(s):`);
-  console.log(`-> ${targetLanguages.join(', ')}`);
+  console.log(`-> ${targetLanguages.join(", ")}`);
   console.log();
 
   console.log(`🏭 Loading source files...`);
@@ -77,26 +77,26 @@ export const translate = async (
 
   if (!translationService.supportsLanguage(sourceLang)) {
     throw new Error(
-      `${translationService.name} doesn't support the source language ${sourceLang}`,
+      `${translationService.name} doesn't support the source language ${sourceLang}`
     );
   }
 
   console.log(`🔍 Looking for key-value inconsistencies in source files...`);
   const insonsistentFiles: string[] = [];
 
-  for (const file of templateFiles.filter((f) => f.type === 'natural')) {
+  for (const file of templateFiles.filter((f) => f.type === "natural")) {
     const inconsistentKeys = Object.keys(file.content).filter(
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      (key) => key !== file.content[key],
+      (key) => key !== file.content[key]
     );
 
     if (inconsistentKeys.length > 0) {
       insonsistentFiles.push(file.name);
       console.log(
         `├── ${file.name} contains ${String(
-          inconsistentKeys.length,
-        )} inconsistent key(s)`,
+          inconsistentKeys.length
+        )} inconsistent key(s)`
       );
     }
   }
@@ -104,8 +104,8 @@ export const translate = async (
   if (insonsistentFiles.length > 0) {
     console.log(
       `└── {yellow.bold Found key-value inconsistencies in} {red.bold ${String(
-        insonsistentFiles.length,
-      )}} {yellow.bold file(s).}`,
+        insonsistentFiles.length
+      )}} {yellow.bold file(s).}`
     );
 
     console.log();
@@ -114,12 +114,12 @@ export const translate = async (
       console.log(`💚 Fixing inconsistencies...`);
       fixSourceInconsistencies(
         path.resolve(workingDir, sourceLang),
-        path.resolve(resolvedCacheDir, sourceLang),
+        path.resolve(resolvedCacheDir, sourceLang)
       );
       console.log(`└── {green.bold Fixed all inconsistencies.}`);
     } else {
       console.log(
-        `Please either fix these inconsistencies manually or supply the {green.bold -f} flag to automatically fix them.`,
+        `Please either fix these inconsistencies manually or supply the {green.bold -f} flag to automatically fix them.`
       );
     }
   } else {
@@ -130,19 +130,19 @@ export const translate = async (
   console.log(`🔍 Looking for invalid keys in source files...`);
   const invalidFiles: string[] = [];
 
-  for (const file of templateFiles.filter((f) => f.type === 'key-based')) {
+  for (const file of templateFiles.filter((f) => f.type === "key-based")) {
     const invalidKeys = Object.keys(file.originalContent).filter(
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      (k) => typeof file.originalContent[k] === 'string' && k.includes('.'),
+      (k) => typeof file.originalContent[k] === "string" && k.includes(".")
     );
 
     if (invalidKeys.length > 0) {
       invalidFiles.push(file.name);
       console.log(
         `├── {yellow.bold ${file.name} contains} {red.bold ${String(
-          invalidKeys.length,
-        )}} {yellow.bold invalid key(s)}`,
+          invalidKeys.length
+        )}} {yellow.bold invalid key(s)}`
       );
     }
   }
@@ -150,16 +150,16 @@ export const translate = async (
   if (invalidFiles.length) {
     console.log(
       `└── {yellow.bold Found invalid keys in} {red.bold ${String(
-        invalidFiles.length,
-      )}} {yellow.bold file(s).}`,
+        invalidFiles.length
+      )}} {yellow.bold file(s).}`
     );
 
     console.log();
     console.log(
-      `It looks like you're trying to use the key-based mode on natural-language-style JSON files.`,
+      `It looks like you're trying to use the key-based mode on natural-language-style JSON files.`
     );
     console.log(
-      `Please make sure that your keys don't contain periods (.) or remove the {green.bold --type} / {green.bold -t} option.`,
+      `Please make sure that your keys don't contain periods (.) or remove the {green.bold --type} / {green.bold -t} option.`
     );
     console.log();
     process.exit(1);
@@ -174,7 +174,7 @@ export const translate = async (
   for (const language of targetLanguages) {
     if (!translationService.supportsLanguage(language)) {
       console.log(
-        `🙈 {yellow.bold ${translationService.name} doesn't support} {red.bold ${language}}{yellow.bold . Skipping this language.}`,
+        `🙈 {yellow.bold ${translationService.name} doesn't support} {red.bold ${language}}{yellow.bold . Skipping this language.}`
       );
       console.log();
       continue;
@@ -182,22 +182,22 @@ export const translate = async (
 
     const existingFiles = loadTranslations(
       path.resolve(workingDir, language),
-      fileType,
+      fileType
     );
 
     console.log(
-      `💬 Translating strings from {green.bold ${sourceLang}} to {green.bold ${language}}...`,
+      `💬 Translating strings from {green.bold ${sourceLang}} to {green.bold ${language}}...`
     );
 
     if (deleteUnusedStrings) {
       const templateFileNames = templateFiles.map((t) => t.name);
       const deletableFiles = existingFiles.filter(
-        (f) => !templateFileNames.includes(f.name),
+        (f) => !templateFileNames.includes(f.name)
       );
 
       for (const file of deletableFiles) {
         console.log(
-          `├── {red.bold ${file.name} is no longer used and will be deleted.}`,
+          `├── {red.bold ${file.name} is no longer used and will be deleted.}`
         );
 
         fs.unlinkSync(path.resolve(workingDir, language, file.name));
@@ -213,7 +213,7 @@ export const translate = async (
       process.stdout.write(`├── Translating ${templateFile.name}`);
 
       const languageFile = existingFiles.find(
-        (f) => f.name === templateFile.name,
+        (f) => f.name === templateFile.name
       );
       const existingKeys = languageFile
         ? Object.keys(languageFile.content)
@@ -223,18 +223,18 @@ export const translate = async (
       const cachePath = path.resolve(
         resolvedCacheDir,
         sourceLang,
-        languageFile ? languageFile.name : '',
+        languageFile ? languageFile.name : ""
       );
       let cacheDiff: string[] = [];
       if (fs.existsSync(cachePath) && !fs.statSync(cachePath).isDirectory()) {
         const cachedFile = flatten(
-          JSON.parse(fs.readFileSync(cachePath).toString().trim()),
+          JSON.parse(fs.readFileSync(cachePath).toString().trim())
         );
         const cDiff = diff(cachedFile, templateFile.content);
         cacheDiff = Object.keys(cDiff).filter((k) => (cDiff as never)[k]);
         const changedItems = Object.keys(cacheDiff).length.toString();
         process.stdout.write(
-          ` ({green.bold ${changedItems}} changes from cache)`,
+          ` ({green.bold ${changedItems}} changes from cache)`
         );
       }
 
@@ -246,48 +246,48 @@ export const translate = async (
           value:
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
-            templateFile.type === 'key-based' ? templateFile.content[key] : key,
+            templateFile.type === "key-based" ? templateFile.content[key] : key,
         }));
 
       const unusedStrings = existingKeys.filter(
-        (key) => !templateStrings.includes(key),
+        (key) => !templateStrings.includes(key)
       );
 
       const translatedStrings = await translationService.translateStrings(
         stringsToTranslate,
         sourceLang,
-        language,
+        language
       );
 
       const newKeys = translatedStrings.reduce(
         (acc, cur) => ({ ...acc, [cur.key]: cur.translated }),
-        {} as { [k: string]: string },
+        {} as { [k: string]: string }
       );
 
       addedTranslations += translatedStrings.length;
       removedTranslations += deleteUnusedStrings ? unusedStrings.length : 0;
 
-      if (service !== 'dry-run') {
+      if (service !== "dry-run") {
         const translatedFile = {
           ...omit(
             existingTranslations,
-            deleteUnusedStrings ? unusedStrings : [],
+            deleteUnusedStrings ? unusedStrings : []
           ),
           ...newKeys,
         };
 
         const newContent =
           JSON.stringify(
-            templateFile.type === 'key-based'
+            templateFile.type === "key-based"
               ? unflatten(translatedFile)
               : translatedFile,
             null,
-            2,
+            2
           ) + `\n`;
 
         fs.writeFileSync(
           path.resolve(workingDir, language, templateFile.name),
-          newContent,
+          newContent
         );
 
         const languageCachePath = path.resolve(resolvedCacheDir, language);
@@ -296,16 +296,16 @@ export const translate = async (
         }
         fs.writeFileSync(
           path.resolve(languageCachePath, templateFile.name),
-          JSON.stringify(translatedFile, null, 2) + '\n',
+          JSON.stringify(translatedFile, null, 2) + "\n"
         );
       }
 
       console.log(
         deleteUnusedStrings && unusedStrings.length > 0
           ? ` ( +${String(translatedStrings.length)}/ -${String(
-              unusedStrings.length,
+              unusedStrings.length
             )})`
-          : ` ( +${String(translatedStrings.length)})`,
+          : ` ( +${String(translatedStrings.length)})`
       );
     }
 
@@ -313,14 +313,14 @@ export const translate = async (
     console.log();
   }
 
-  if (service !== 'dry-run') {
-    console.log('🗂 Caching source translation files...');
+  if (service !== "dry-run") {
+    console.log("🗂 Caching source translation files...");
     await new Promise((res, rej) =>
       ncp(
         path.resolve(workingDir, sourceLang),
         path.resolve(resolvedCacheDir, sourceLang),
-        (err) => (err ? rej() : res()),
-      ),
+        (err) => (err ? rej() : res())
+      )
     );
     console.log(`└── Translation files have been cached.`);
     console.log();

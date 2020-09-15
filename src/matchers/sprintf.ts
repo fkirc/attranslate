@@ -1,8 +1,8 @@
-import { Matcher } from '.';
+import { Matcher } from ".";
 
 export const matchSprintf: Matcher = (
   input: string,
-  replacer: (i: number) => string,
+  replacer: (i: number) => string
 ) => {
   const matches = input.match(/(%.)/g);
 

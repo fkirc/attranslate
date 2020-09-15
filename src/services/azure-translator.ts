@@ -1,19 +1,19 @@
-import fetch from 'node-fetch';
-import { chunk, flatten } from 'lodash';
+import fetch from "node-fetch";
+import { chunk, flatten } from "lodash";
 
-import { TranslationService, TranslationResult, TString } from '.';
+import { TranslationService, TranslationResult, TString } from ".";
 import {
   Matcher,
   reInsertInterpolations,
   replaceInterpolations,
-} from '../matchers';
+} from "../matchers";
 
 interface TranslationResponse {
   translations: [
     {
       text: string;
       to: string;
-    },
+    }
   ];
 }
 
@@ -22,18 +22,18 @@ interface SupportedLanguagesResponse {
     [code: string]: {
       name: string;
       nativeName: string;
-      direction: 'ltr' | 'rtl';
+      direction: "ltr" | "rtl";
     };
   };
 }
 
 const LANGUAGE_ENDPOINT =
-  'https://api.cognitive.microsofttranslator.com/languages?api-version=3.0';
+  "https://api.cognitive.microsofttranslator.com/languages?api-version=3.0";
 const TRANSLATE_ENDPOINT =
-  'https://api.cognitive.microsofttranslator.com/translate?api-version=3.0';
+  "https://api.cognitive.microsofttranslator.com/translate?api-version=3.0";
 
 export class AzureTranslator implements TranslationService {
-  public name = 'Azure';
+  public name = "Azure";
   private apiKey: string | undefined;
   private interpolationMatcher: Matcher | undefined;
   private supportedLanguages: Set<string> | undefined;
@@ -53,8 +53,8 @@ export class AzureTranslator implements TranslationService {
 
     // Some language codes can be simplified by using only the part before the dash
     const simplified = keys
-      .filter((k) => k.includes('-'))
-      .map((l) => l.split('-')[0]);
+      .filter((k) => k.includes("-"))
+      .map((l) => l.split("-")[0]);
 
     return new Set(keys.concat(simplified));
   }
@@ -67,7 +67,7 @@ export class AzureTranslator implements TranslationService {
     const toTranslate = batch.map(({ key, value }) => {
       const { clean, replacements } = replaceInterpolations(
         value,
-        this.interpolationMatcher,
+        this.interpolationMatcher
       );
 
       return { key, value, clean, replacements };
@@ -76,18 +76,18 @@ export class AzureTranslator implements TranslationService {
     const response = await fetch(
       `${TRANSLATE_ENDPOINT}&from=${from}&to=${to}&textType=html`,
       {
-        method: 'POST',
+        method: "POST",
         headers: {
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          'Ocp-Apim-Subscription-Key': this.apiKey!,
-          'Content-Type': 'application/json; charset=UTF-8',
+          "Ocp-Apim-Subscription-Key": this.apiKey!,
+          "Content-Type": "application/json; charset=UTF-8",
         },
         body: JSON.stringify(toTranslate.map((c) => ({ Text: c.clean }))),
-      },
+      }
     );
 
     if (!response.ok) {
-      throw new Error('Azure Translation failed: ' + (await response.text()));
+      throw new Error("Azure Translation failed: " + (await response.text()));
     }
 
     const data = (await response.json()) as TranslationResponse[];
@@ -97,7 +97,7 @@ export class AzureTranslator implements TranslationService {
       value: toTranslate[i].value,
       translated: reInsertInterpolations(
         res.translations[0].text,
-        toTranslate[i].replacements,
+        toTranslate[i].replacements
       ),
     }));
   }
@@ -105,12 +105,12 @@ export class AzureTranslator implements TranslationService {
   async translateStrings(
     strings: TString[],
     from: string,
-    to: string,
+    to: string
   ): Promise<TranslationResult[]> {
     const batches = chunk(strings, 50);
 
     const results = await Promise.all(
-      batches.map((batch) => this.translateBatch(batch, from, to)),
+      batches.map((batch) => this.translateBatch(batch, from, to))
     );
 
     return flatten(results);

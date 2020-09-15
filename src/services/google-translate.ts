@@ -1,14 +1,14 @@
-import { Translate } from '@google-cloud/translate';
+import { Translate } from "@google-cloud/translate";
 import {
   replaceInterpolations,
   reInsertInterpolations,
   Matcher,
-} from '../matchers';
-import { TranslationService, TString } from '.';
+} from "../matchers";
+import { TranslationService, TString } from ".";
 
 // Contains replacements for language codes
 const codeMap = {
-  'zh-tw': 'zh-TW',
+  "zh-tw": "zh-TW",
 };
 
 export class GoogleTranslate implements TranslationService {
@@ -16,12 +16,12 @@ export class GoogleTranslate implements TranslationService {
   private interpolationMatcher: Matcher | undefined;
   private supportedLanguages: string[] = [];
 
-  public name = 'Google Translate';
+  public name = "Google Translate";
 
   cleanResponse(response: string) {
     return response.replace(
       /\<(.+?)\s*\>\s*(.+?)\s*\<\/\s*(.+?)>/g,
-      '<$1>$2</$3>',
+      "<$1>$2</$3>"
     );
   }
 
@@ -48,14 +48,14 @@ export class GoogleTranslate implements TranslationService {
 
   cleanLanguageCode(languageCode: string) {
     const lowerCaseCode = languageCode.toLowerCase();
-    console.log('Lower case:', languageCode);
+    console.log("Lower case:", languageCode);
 
     const codeMapCode = (codeMap as never)[lowerCaseCode];
     if (codeMapCode) {
       return codeMapCode;
     }
 
-    return lowerCaseCode.split('-')[0];
+    return lowerCaseCode.split("-")[0];
   }
 
   // eslint-disable-next-line require-await
@@ -64,7 +64,7 @@ export class GoogleTranslate implements TranslationService {
       strings.map(async ({ key, value }) => {
         const { clean, replacements } = replaceInterpolations(
           value,
-          this.interpolationMatcher,
+          this.interpolationMatcher
         );
 
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -77,10 +77,10 @@ export class GoogleTranslate implements TranslationService {
           key: key,
           value: value,
           translated: this.cleanResponse(
-            reInsertInterpolations(translationResult, replacements),
+            reInsertInterpolations(translationResult, replacements)
           ),
         };
-      }),
+      })
     );
   }
 }
