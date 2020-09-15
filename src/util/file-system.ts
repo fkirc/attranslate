@@ -7,13 +7,13 @@ export type FileType = 'key-based' | 'natural' | 'auto';
 export const getAvailableLanguages = (directory: string) =>
   fs
     .readdirSync(directory)
-    .map(d => path.resolve(directory, d))
-    .filter(d => fs.statSync(d).isDirectory())
-    .map(d => path.basename(d));
+    .map((d) => path.resolve(directory, d))
+    .filter((d) => fs.statSync(d).isDirectory())
+    .map((d) => path.basename(d));
 
 export const detectFileType = (json: any): FileType => {
   const invalidKeys = Object.keys(json).filter(
-    k => typeof json[k] === 'string' && (k.includes('.') || k.includes(' ')),
+    (k) => typeof json[k] === 'string' && (k.includes('.') || k.includes(' ')),
   );
 
   return invalidKeys.length > 0 ? 'natural' : 'key-based';
@@ -25,8 +25,8 @@ export const loadTranslations = (
 ) =>
   fs
     .readdirSync(directory)
-    .filter(f => f.endsWith('.json'))
-    .map(f => {
+    .filter((f) => f.endsWith('.json'))
+    .map((f) => {
       const json = require(path.resolve(directory, f));
       const type = fileType === 'auto' ? detectFileType(json) : fileType;
 
@@ -45,7 +45,7 @@ export const fixSourceInconsistencies = (
   directory: string,
   cacheDir: string,
 ) => {
-  const files = loadTranslations(directory).filter(f => f.type === 'natural');
+  const files = loadTranslations(directory).filter((f) => f.type === 'natural');
 
   for (const file of files) {
     const fixedContent = Object.keys(file.content).reduce(

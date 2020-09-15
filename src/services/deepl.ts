@@ -24,9 +24,18 @@ export class DeepL implements TranslationService {
   }
 
   supportsLanguage(language: string) {
-    return ['en', 'de', 'fr', 'es', 'pt', 'it', 'nl', 'pl', 'ru', 'zh'].includes(
-      language,
-    );
+    return [
+      'en',
+      'de',
+      'fr',
+      'es',
+      'pt',
+      'it',
+      'nl',
+      'pl',
+      'ru',
+      'zh',
+    ].includes(language);
   }
 
   async translateStrings(
@@ -35,7 +44,7 @@ export class DeepL implements TranslationService {
     to: string,
   ) {
     return Promise.all(
-      strings.map(string => this.translateString(string, from, to)),
+      strings.map((string) => this.translateString(string, from, to)),
     );
   }
 
@@ -43,7 +52,7 @@ export class DeepL implements TranslationService {
     string: { key: string; value: string },
     from: string,
     to: string,
-    triesLeft: number = 5,
+    triesLeft = 5,
   ): Promise<TranslationResult> {
     const { clean, replacements } = replaceInterpolations(
       string.value,
@@ -64,9 +73,9 @@ export class DeepL implements TranslationService {
       }
 
       throw new Error(
-        `[${response.status} ${
-          response.statusText
-        }]: ${(await response.text()) || 'Empty body'}`,
+        `[${response.status} ${response.statusText}]: ${
+          (await response.text()) || 'Empty body'
+        }`,
       );
     }
 

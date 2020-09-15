@@ -69,9 +69,9 @@ commander
   .parse(process.argv);
 
 const translate = async (
-  inputDir: string = '.',
-  cacheDir: string = '.json-autotranslate-cache',
-  sourceLang: string = 'en',
+  inputDir = '.',
+  cacheDir = '.json-autotranslate-cache',
+  sourceLang = 'en',
   deleteUnusedStrings = false,
   fileType: FileType = 'auto',
   fixInconsistencies = false,
