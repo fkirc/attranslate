@@ -12,8 +12,8 @@ const codeMap = {
 };
 
 export class GoogleTranslate implements TranslationService {
-  private translate: Translate;
-  private interpolationMatcher: Matcher;
+  private translate: Translate | undefined;
+  private interpolationMatcher: Matcher | undefined;
   private supportedLanguages: string[] = [];
 
   public name = 'Google Translate';
@@ -36,7 +36,7 @@ export class GoogleTranslate implements TranslationService {
   }
 
   async getAvailableLanguages() {
-    const [languages] = await this.translate.getLanguages();
+    const [languages] = await this.translate!.getLanguages();
     console.log(languages);
     return languages.map((l) => l.code.toLowerCase());
   }
@@ -49,8 +49,9 @@ export class GoogleTranslate implements TranslationService {
     const lowerCaseCode = languageCode.toLowerCase();
     console.log('Lower case:', languageCode);
 
-    if (codeMap[lowerCaseCode]) {
-      return codeMap[lowerCaseCode];
+    const codeMapCode = (codeMap as any)[lowerCaseCode];
+    if (codeMapCode) {
+      return codeMapCode;
     }
 
     return lowerCaseCode.split('-')[0];
@@ -64,7 +65,7 @@ export class GoogleTranslate implements TranslationService {
           this.interpolationMatcher,
         );
 
-        const [translationResult] = await this.translate.translate(clean, {
+        const [translationResult] = await this.translate!.translate(clean, {
           from: this.cleanLanguageCode(from),
           to: this.cleanLanguageCode(to),
         });

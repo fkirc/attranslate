@@ -7,10 +7,10 @@ import {
 import { TranslationService } from '.';
 
 export class ManualTranslation implements TranslationService {
-  private interpolationMatcher: Matcher;
+  private interpolationMatcher: Matcher | undefined;
   public name = 'Manual Translation';
 
-  async initialize(config?, interpolationMatcher?: Matcher) {
+  async initialize(config?: string, interpolationMatcher?: Matcher) {
     this.interpolationMatcher = interpolationMatcher;
   }
 

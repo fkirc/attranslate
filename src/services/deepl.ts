@@ -11,8 +11,8 @@ const API_ENDPOINT = 'https://api.deepl.com/v2';
 
 export class DeepL implements TranslationService {
   public name = 'DeepL';
-  private apiKey: string;
-  private interpolationMatcher: Matcher;
+  private apiKey: string | undefined;
+  private interpolationMatcher: Matcher | undefined;
 
   async initialize(config?: string, interpolationMatcher?: Matcher) {
     if (!config) {
@@ -63,7 +63,7 @@ export class DeepL implements TranslationService {
     url.searchParams.append('text', clean);
     url.searchParams.append('source_lang', from.toUpperCase());
     url.searchParams.append('target_lang', to.toUpperCase());
-    url.searchParams.append('auth_key', this.apiKey);
+    url.searchParams.append('auth_key', this.apiKey!);
 
     const response = await fetch(String(url));
 

@@ -1,3 +1,4 @@
+// @ts-ignore
 import { parse } from 'messageformat-parser';
 import { Matcher } from '.';
 

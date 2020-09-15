@@ -286,7 +286,7 @@ const translate = async (
           JSON.parse(fs.readFileSync(cachePath).toString().trim()),
         );
         const cDiff = diff(cachedFile, templateFile.content);
-        cacheDiff = Object.keys(cDiff).filter((k) => cDiff[k]);
+        cacheDiff = Object.keys(cDiff).filter((k) => (cDiff as any)[k]);
         const changedItems = Object.keys(cacheDiff).length.toString();
         process.stdout.write(
           chalk` ({green.bold ${changedItems}} changes from cache)`,
@@ -418,6 +418,6 @@ translate(
   console.log();
   console.log(chalk.bgRed('An error has occured:'));
   console.log(chalk.bgRed(e.message));
-  console.log(chalk.bgRed(e.stack));
+  console.log(chalk.bgRed(e.stack as any));
   console.log();
 });
