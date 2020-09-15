@@ -18,55 +18,91 @@ import {
 import { matcherMap } from './matchers';
 import { flatten, unflatten } from './util/flatten';
 
+process.on('unhandledRejection', error => {
+  console.error('[fatal]', error);
+});
+
 require('dotenv').config();
 
-commander
-  .option(
-    '-i, --input <inputDir>',
-    'the directory containing language directories',
-    '.',
-  )
-  .option(
-    '--cache <cacheDir>',
-    'set the cache directory',
-    '.json-autotranslate-cache',
-  )
-  .option(
-    '-l, --source-language <sourceLang>',
-    'specify the source language',
-    'en',
-  )
-  .option(
-    '-t, --type <key-based|natural|auto>',
-    `specify the file structure type`,
-    /^(key-based|natural|auto)$/,
-    'auto',
-  )
-  .option(
-    '-s, --service <service>',
-    `selects the service to be used for translation`,
-    'google-translate',
-  )
-  .option('--list-services', `outputs a list of available services`)
-  .option(
-    '-m, --matcher <matcher>',
-    `selects the matcher to be used for interpolations`,
-    'icu',
-  )
-  .option('--list-matchers', `outputs a list of available matchers`)
-  .option(
-    '-c, --config <value>',
-    'supply a config parameter (e.g. path to key file) to the translation service',
-  )
-  .option(
-    '-f, --fix-inconsistencies',
-    `automatically fixes inconsistent key-value pairs by setting the value to the key`,
-  )
-  .option(
-    '-d, --delete-unused-strings',
-    `deletes strings in translation files that don't exist in the template`,
-  )
-  .parse(process.argv);
+export function run(process: NodeJS.Process, cliBinDir: string): void {
+  commander
+    .option(
+      '-i, --input <inputDir>',
+      'the directory containing language directories',
+      '.',
+    )
+    .option(
+      '--cache <cacheDir>',
+      'set the cache directory',
+      '.json-autotranslate-cache',
+    )
+    .option(
+      '-l, --source-language <sourceLang>',
+      'specify the source language',
+      'en',
+    )
+    .option(
+      '-t, --type <key-based|natural|auto>',
+      `specify the file structure type`,
+      /^(key-based|natural|auto)$/,
+      'auto',
+    )
+    .option(
+      '-s, --service <service>',
+      `selects the service to be used for translation`,
+      'google-translate',
+    )
+    .option('--list-services', `outputs a list of available services`)
+    .option(
+      '-m, --matcher <matcher>',
+      `selects the matcher to be used for interpolations`,
+      'icu',
+    )
+    .option('--list-matchers', `outputs a list of available matchers`)
+    .option(
+      '-c, --config <value>',
+      'supply a config parameter (e.g. path to key file) to the translation service',
+    )
+    .option(
+      '-f, --fix-inconsistencies',
+      `automatically fixes inconsistent key-value pairs by setting the value to the key`,
+    )
+    .option(
+      '-d, --delete-unused-strings',
+      `deletes strings in translation files that don't exist in the template`,
+    )
+    .parse(process.argv);
+
+  if (commander.listServices) {
+    console.log('Available services:');
+    console.log(Object.keys(serviceMap).join(', '));
+    process.exit(0);
+  }
+
+  if (commander.listMatchers) {
+    console.log('Available matchers:');
+    console.log(Object.keys(matcherMap).join(', '));
+    process.exit(0);
+  }
+
+  translate(
+    commander.input,
+    commander.cacheDir,
+    commander.sourceLanguage,
+    commander.deleteUnusedStrings,
+    commander.type,
+    commander.fixInconsistencies,
+    commander.service,
+    commander.matcher,
+    commander.config,
+  ).catch((e: Error) => {
+    console.log();
+    console.log(chalk.bgRed('An error has occured:'));
+    console.log(chalk.bgRed(e.message));
+    console.log(chalk.bgRed(e.stack as any));
+    console.log();
+  });
+}
 
 const translate = async (
   inputDir = '.',
@@ -356,8 +392,8 @@ const translate = async (
       console.log(
         deleteUnusedStrings && unusedStrings.length > 0
           ? chalk` ({green.bold +${String(
-              translatedStrings.length,
-            )}}/{red.bold -${String(unusedStrings.length)}})`
+          translatedStrings.length,
+          )}}/{red.bold -${String(unusedStrings.length)}})`
           : chalk` ({green.bold +${String(translatedStrings.length)}})`,
       );
     }
@@ -391,33 +427,3 @@ const translate = async (
     );
   }
 };
-
-if (commander.listServices) {
-  console.log('Available services:');
-  console.log(Object.keys(serviceMap).join(', '));
-  process.exit(0);
-}
-
-if (commander.listMatchers) {
-  console.log('Available matchers:');
-  console.log(Object.keys(matcherMap).join(', '));
-  process.exit(0);
-}
-
-translate(
-  commander.input,
-  commander.cacheDir,
-  commander.sourceLanguage,
-  commander.deleteUnusedStrings,
-  commander.type,
-  commander.fixInconsistencies,
-  commander.service,
-  commander.matcher,
-  commander.config,
-).catch((e: Error) => {
-  console.log();
-  console.log(chalk.bgRed('An error has occured:'));
-  console.log(chalk.bgRed(e.message));
-  console.log(chalk.bgRed(e.stack as any));
-  console.log();
-});
