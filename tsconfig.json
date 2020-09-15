@@ -2,7 +2,10 @@
   "compilerOptions": {
     "esModuleInterop": true,
     "importHelpers": true,
-    "lib": ["es2019"],
+    "lib": [
+      "es2019",
+      "dom"
+    ],
     "module": "commonjs",
     "moduleResolution": "node",
     "noEmitHelpers": true,
