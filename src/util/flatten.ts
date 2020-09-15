@@ -1,9 +1,9 @@
-const _ = require('lodash');
+import _ from 'lodash';
 
-export function unflatten(params: any) {
+export function unflatten(params: Record<string, unknown>) {
   return _.reduce(
     params,
-    function (result: unknown, value: unknown, key: string) {
+    function (result: Record<string, unknown>, value: unknown, key: string) {
       return _.set(result, key, value);
     },
     {},
@@ -12,11 +12,11 @@ export function unflatten(params: any) {
 
 export function flatten(obj: unknown) {
   return _.transform(
-    obj,
-    function (result: unknown, value: unknown, key: string) {
+    obj as never,
+    function (result: Record<string, unknown>, value: unknown, key: string) {
       if (_.isObject(value)) {
         const flatMap = _.mapKeys(flatten(value), function (
-          mvalue: object,
+          mvalue: unknown,
           mkey: string,
         ) {
           if (_.isArray(value)) {
@@ -31,7 +31,7 @@ export function flatten(obj: unknown) {
 
         _.assign(result, flatMap);
       } else {
-        (result as any)[key] = value;
+        result[key] = value;
       }
 
       return result;

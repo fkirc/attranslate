@@ -36,6 +36,7 @@ export class GoogleTranslate implements TranslationService {
   }
 
   async getAvailableLanguages() {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const [languages] = await this.translate!.getLanguages();
     console.log(languages);
     return languages.map((l) => l.code.toLowerCase());
@@ -49,7 +50,7 @@ export class GoogleTranslate implements TranslationService {
     const lowerCaseCode = languageCode.toLowerCase();
     console.log('Lower case:', languageCode);
 
-    const codeMapCode = (codeMap as any)[lowerCaseCode];
+    const codeMapCode = (codeMap as never)[lowerCaseCode];
     if (codeMapCode) {
       return codeMapCode;
     }
@@ -57,6 +58,7 @@ export class GoogleTranslate implements TranslationService {
     return lowerCaseCode.split('-')[0];
   }
 
+  // eslint-disable-next-line require-await
   async translateStrings(strings: TString[], from: string, to: string) {
     return Promise.all(
       strings.map(async ({ key, value }) => {
@@ -65,6 +67,7 @@ export class GoogleTranslate implements TranslationService {
           this.interpolationMatcher,
         );
 
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const [translationResult] = await this.translate!.translate(clean, {
           from: this.cleanLanguageCode(from),
           to: this.cleanLanguageCode(to),

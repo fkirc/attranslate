@@ -10,6 +10,7 @@ export class ManualTranslation implements TranslationService {
   private interpolationMatcher: Matcher | undefined;
   public name = 'Manual Translation';
 
+  // eslint-disable-next-line require-await
   async initialize(config?: string, interpolationMatcher?: Matcher) {
     this.interpolationMatcher = interpolationMatcher;
   }

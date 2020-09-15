@@ -39,7 +39,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "exit 0 && TODO"
+      "pre-commit": "npm run reformat"
     }
   },
   "dependencies": {

@@ -3,12 +3,14 @@ import { TranslationService, TString } from '.';
 export class DryRun implements TranslationService {
   public name = 'Dry Run';
 
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   async initialize() {}
 
   supportsLanguage() {
     return true;
   }
 
+  // eslint-disable-next-line require-await
   async translateStrings(strings: TString[]) {
     console.log();
 

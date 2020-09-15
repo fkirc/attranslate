@@ -14,7 +14,11 @@ export class DeepL implements TranslationService {
   private apiKey: string | undefined;
   private interpolationMatcher: Matcher | undefined;
 
-  async initialize(config?: string, interpolationMatcher?: Matcher) {
+  // eslint-disable-next-line require-await
+  async initialize(
+    config?: string,
+    interpolationMatcher?: Matcher,
+  ): Promise<void> {
     if (!config) {
       throw new Error(`Please provide an API key for DeepL.`);
     }
@@ -38,6 +42,7 @@ export class DeepL implements TranslationService {
     ].includes(language);
   }
 
+  // eslint-disable-next-line require-await
   async translateStrings(
     strings: { key: string; value: string }[],
     from: string,
@@ -63,6 +68,7 @@ export class DeepL implements TranslationService {
     url.searchParams.append('text', clean);
     url.searchParams.append('source_lang', from.toUpperCase());
     url.searchParams.append('target_lang', to.toUpperCase());
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     url.searchParams.append('auth_key', this.apiKey!);
 
     const response = await fetch(String(url));

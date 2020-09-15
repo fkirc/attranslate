@@ -86,6 +86,8 @@ export const translate = async (
 
   for (const file of templateFiles.filter((f) => f.type === 'natural')) {
     const inconsistentKeys = Object.keys(file.content).filter(
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       (key) => key !== file.content[key],
     );
 
@@ -130,6 +132,8 @@ export const translate = async (
 
   for (const file of templateFiles.filter((f) => f.type === 'key-based')) {
     const invalidKeys = Object.keys(file.originalContent).filter(
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       (k) => typeof file.originalContent[k] === 'string' && k.includes('.'),
     );
 
@@ -227,7 +231,7 @@ export const translate = async (
           JSON.parse(fs.readFileSync(cachePath).toString().trim()),
         );
         const cDiff = diff(cachedFile, templateFile.content);
-        cacheDiff = Object.keys(cDiff).filter((k) => (cDiff as any)[k]);
+        cacheDiff = Object.keys(cDiff).filter((k) => (cDiff as never)[k]);
         const changedItems = Object.keys(cacheDiff).length.toString();
         process.stdout.write(
           ` ({green.bold ${changedItems}} changes from cache)`,
@@ -240,6 +244,8 @@ export const translate = async (
         .map((key) => ({
           key,
           value:
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
             templateFile.type === 'key-based' ? templateFile.content[key] : key,
         }));
 

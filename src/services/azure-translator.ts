@@ -78,6 +78,7 @@ export class AzureTranslator implements TranslationService {
       {
         method: 'POST',
         headers: {
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           'Ocp-Apim-Subscription-Key': this.apiKey!,
           'Content-Type': 'application/json; charset=UTF-8',
         },

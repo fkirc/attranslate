@@ -1,6 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { flatten } from './flatten';
+import { resolve } from 'path';
 
 export type FileType = 'key-based' | 'natural' | 'auto';
 
@@ -11,7 +12,7 @@ export const getAvailableLanguages = (directory: string) =>
     .filter((d) => fs.statSync(d).isDirectory())
     .map((d) => path.basename(d));
 
-export const detectFileType = (json: any): FileType => {
+export const detectFileType = (json: never): FileType => {
   const invalidKeys = Object.keys(json).filter(
     (k) => typeof json[k] === 'string' && (k.includes('.') || k.includes(' ')),
   );
@@ -27,8 +28,9 @@ export const loadTranslations = (
     .readdirSync(directory)
     .filter((f) => f.endsWith('.json'))
     .map((f) => {
-      const json = require(path.resolve(directory, f));
-      const type = fileType === 'auto' ? detectFileType(json) : fileType;
+      const json = resolve(directory, f);
+      const type =
+        fileType === 'auto' ? detectFileType(json as never) : fileType;
 
       return {
         name: f,
@@ -36,8 +38,8 @@ export const loadTranslations = (
         type,
         content:
           type === 'key-based'
-            ? flatten(require(path.resolve(directory, f)))
-            : require(path.resolve(directory, f)),
+            ? flatten(resolve(directory, f))
+            : resolve(directory, f),
       };
     });
 
