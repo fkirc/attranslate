@@ -2,7 +2,6 @@
 
 import chalk from 'chalk';
 import commander from 'commander';
-import * as flatten from 'flattenjs';
 import * as fs from 'fs';
 import { omit } from 'lodash';
 import * as path from 'path';
@@ -17,6 +16,7 @@ import {
   FileType,
 } from './util/file-system';
 import { matcherMap } from './matchers';
+import { flatten, unflatten } from './util/flatten';
 
 require('dotenv').config();
 
@@ -282,7 +282,7 @@ const translate = async (
       );
       let cacheDiff: string[] = [];
       if (fs.existsSync(cachePath) && !fs.statSync(cachePath).isDirectory()) {
-        const cachedFile = flatten.convert(
+        const cachedFile = flatten(
           JSON.parse(fs.readFileSync(cachePath).toString().trim()),
         );
         const cDiff = diff(cachedFile, templateFile.content);
@@ -332,7 +332,7 @@ const translate = async (
         const newContent =
           JSON.stringify(
             templateFile.type === 'key-based'
-              ? flatten.undo(translatedFile)
+              ? unflatten(translatedFile)
               : translatedFile,
             null,
             2,

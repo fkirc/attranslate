@@ -46,7 +46,6 @@
     "commander": "^2.19.0",
     "deep-object-diff": "^1.1.0",
     "dotenv": "^6.2.0",
-    "flattenjs": "^1.0.4",
     "inquirer": "^6.2.2",
     "lodash": "^4.17.11",
     "messageformat-parser": "^4.1.0",
