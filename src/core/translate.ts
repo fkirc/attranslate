@@ -1,8 +1,13 @@
-import { FileType, fixSourceInconsistencies, getAvailableLanguages, loadTranslations } from '../util/file-system';
+import {
+  FileType,
+  fixSourceInconsistencies,
+  getAvailableLanguages,
+  loadTranslations,
+} from '../util/file-system';
 import { serviceMap } from '../services';
 import { matcherMap } from '../matchers';
-import path from "path";
-import fs from "fs";
+import path from 'path';
+import fs from 'fs';
 import { flatten, unflatten } from '../util/flatten';
 import { diff } from 'deep-object-diff';
 import { omit } from 'lodash';
@@ -54,11 +59,7 @@ export const translate = async (
     );
   }
 
-  console.log(
-    `Found ${String(
-      targetLanguages.length,
-    )} target language(s):`,
-  );
+  console.log(`Found ${String(targetLanguages.length)} target language(s):`);
   console.log(`-> ${targetLanguages.join(', ')}`);
   console.log();
 
@@ -295,9 +296,9 @@ export const translate = async (
 
       console.log(
         deleteUnusedStrings && unusedStrings.length > 0
-          ? ` ( +${String(
-          translatedStrings.length,
-          )}/ -${String(unusedStrings.length)})`
+          ? ` ( +${String(translatedStrings.length)}/ -${String(
+              unusedStrings.length,
+            )})`
           : ` ( +${String(translatedStrings.length)})`,
       );
     }
@@ -319,8 +320,7 @@ export const translate = async (
     console.log();
   }
 
-  console.log(`${addedTranslations} new translations have been added!`
-  );
+  console.log(`${addedTranslations} new translations have been added!`);
 
   if (removedTranslations > 0) {
     console.log(`${removedTranslations} translations have been removed!`);

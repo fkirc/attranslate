@@ -5,7 +5,7 @@ import { serviceMap } from './services';
 import { matcherMap } from './matchers';
 import { translate } from './core/translate';
 
-process.on('unhandledRejection', error => {
+process.on('unhandledRejection', (error) => {
   console.error('[fatal]', error);
 });
 
