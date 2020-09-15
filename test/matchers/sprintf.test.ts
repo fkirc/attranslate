@@ -1,5 +1,5 @@
-import { matchSprintf } from './sprintf';
-import { replaceInterpolations } from '.';
+import { matchSprintf } from '../../src/matchers/sprintf';
+import { replaceInterpolations } from '../../src/matchers';
 
 describe('Sprintf replacer', () => {
   it('should not error when no placeholders are present', () => {
