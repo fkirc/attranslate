@@ -1,6 +1,5 @@
 import { GoogleTranslate } from "./google-translate";
 import { DeepL } from "./deepl";
-import { DryRun } from "./dry-run";
 import { AzureTranslator } from "./azure-translator";
 import { ManualTranslation } from "./manual";
 import { Matcher } from "../matchers";
@@ -34,7 +33,6 @@ export const serviceMap: {
 } = {
   "google-translate": new GoogleTranslate(),
   deepl: new DeepL(),
-  "dry-run": new DryRun(),
   azure: new AzureTranslator(),
   manual: new ManualTranslation(),
 };
