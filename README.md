@@ -1,4 +1,4 @@
-# json-autotranslate
+# aktranslate - Automated Key Translate for App Developers
 
 This tool allows you to translate a locale folder containing multiple JSON files
 into multiple languages using Google Translate, DeepL, Azure Translator, or

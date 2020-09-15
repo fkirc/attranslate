@@ -1,7 +1,7 @@
 {
-  "name": "json-autotranslate",
-  "description": "Translate a folder of JSON files containing translations into multiple languages.",
-  "version": "1.6.1",
+  "name": "aktranslate",
+  "description": "Integrate automated translation services into your app development. Convert between file formats.",
+  "version": "0.0.1",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
@@ -10,22 +10,20 @@
     "build": "tsc",
     "prepublishOnly": "tsc"
   },
-  "author": {
-    "name": "Leo Bernard",
-    "url": "https://leolabs.org"
-  },
+  "author": "Felix Kirchengast",
   "keywords": [
     "google-translate",
     "translate",
-    "i18next",
+    "i18n",
     "react-i18next",
-    "i18n"
+    "android",
+    "iOS"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/leolabs/json-autotranslate.git"
+    "url": "git+https://github.com/fkirc/aktranslate.git"
   },
-  "homepage": "https://github.com/leolabs/json-autotranslate",
+  "homepage": "https://github.com/fkirc/aktranslate#readme",
   "files": [
     "lib/*"
   ],
@@ -50,11 +48,11 @@
   "devDependencies": {
     "@types/dotenv": "^6.1.0",
     "@types/inquirer": "^0.0.44",
-    "@types/jest": "^24.0.10",
+    "@types/jest": "^26.0.13",
     "@types/lodash": "^4.14.122",
     "@types/ncp": "^2.0.3",
     "@types/node-fetch": "^2.1.6",
-    "jest": "^24.3.1",
-    "ts-jest": "^24.0.0"
+    "jest": "^26.4.2",
+    "ts-jest": "^26.3.0"
   }
 }
