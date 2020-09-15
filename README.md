@@ -8,16 +8,18 @@ In this case, a quick fix of the remaining 10% is faster than doing everything b
 ## Why aktranslate?
 
 Instead of re-inventing the wheel, `aktranslate` integrates into existing translation systems.
-`aktranslate` has you covered, regardless of whether you use i18n, raw JavaScript, React, Native-Android-XML, Native-iOS-Localizables or other systems. 
+`aktranslate` has you covered, regardless of whether you use i18n, ICU, JavaScript-frameworks, Android-XML, iOS-Localizables or other systems. 
 In contrast to paid online services, a single developer can integrate `aktranslate` in a matter of minutes.
 
 # Features
 
 ## Cross-platform Support
 
-`aktranslate` is designed to translate any app for any platform.
+`aktranslate` is designed to translate any app/website for any platform.
 `aktranslate` works for Web/Android/iOS or any combination of platforms. To make this possible, aktranslate supports the following file formats:
-- i18next JSON
+- i18n JSON
+- ICU JSON
+- sprintf JSON
 - Android XML
 - iOS plist
 
@@ -45,7 +47,7 @@ aktranslate supports the following translation services:
 
 ## High Performance
 
-aktranslate only translates recently changed or recently added content.
+If some of the strings have already been translated, then aktranslate won't translate them again.
 This does not only speedup your workflow, but also saves cost for paid translation services.
 
 ## Fast Integration
@@ -54,14 +56,10 @@ aktranslate is designed for a quick integration into any app or website.
 Therefore, aktranslate allows you to keep working on the same translation files that you used before.
 
 
-This tool allows you to translate a locale folder containing multiple JSON files
-into multiple languages using Google Translate, DeepL, Azure Translator, or
-manually. You can either use the translation keys (natural translation) or their
-values (key-based translation) as a source for translations.
+## Key vs. Natural TODO
 
-If some of the strings have already been translated, they won't be translated
-again. This improves performance and ensures that you won't accidentally lose
-existing translations.
+You can either use the translation keys (natural translation) or their
+values (key-based translation) as a source for translations.
 
 Interpolations (ICU: `{name}`, i18next: `{{name}}`, sprintf: `%s`) are replaced
 by placeholders (e.g. `<0 />`) before being passed to the translation service,
