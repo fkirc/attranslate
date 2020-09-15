@@ -34,7 +34,7 @@
     "lint": "npm run eslint",
     "reformat": "npm run eslint -- --fix",
     "eslint": "./node_modules/.bin/eslint '**/*.{js,ts,tsx}' --ignore-path=.gitignore",
-    "test": "jest --runInBand --maxConcurrency=1",
+    "test": "jest",
     "prepublishOnly": "git diff --exit-code"
   },
   "husky": {
