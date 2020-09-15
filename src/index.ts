@@ -22,8 +22,6 @@ process.on('unhandledRejection', error => {
   console.error('[fatal]', error);
 });
 
-require('dotenv').config();
-
 export function run(process: NodeJS.Process, cliBinDir: string): void {
   commander
     .option(
