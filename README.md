@@ -18,7 +18,7 @@ Instead of re-inventing the wheel, `attranslate` integrates into existing transl
 
 ## Cross-platform Support
 
-`attranslate` is designed to translate any app/website for any platform.
+`attranslate` is designed to translate any app or website with any toolchain.
 `attranslate` works for Web/Android/iOS or any combination of platforms. To make this possible, attranslate supports the following file formats:
 - i18n/ICU JSON
 - Android XML
