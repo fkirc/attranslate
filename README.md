@@ -1,120 +1,99 @@
-# aktranslate - Automated Key Translate for App Developers
+# attranslate - Automated Text Translate for Apps and Websites
 
 Thanks to automated translation services, it is possible to speedup traditional translation workflows.
 For example, let's say that a translation service achieves 90% correct translations on the spot.
 In this case, a quick fix of the remaining 10% is faster than doing everything by hand.
-`aktranslate` makes it easy to integrate translation services into your workflows.
+`attranslate` makes it easy to integrate translation services into your workflows.
 
-## Why aktranslate?
+## Why attranslate?
 
-Instead of re-inventing the wheel, `aktranslate` integrates into existing translation systems.
-`aktranslate` has you covered, regardless of whether you use i18n, ICU, JavaScript-frameworks, Android-XML, iOS-Localizables or other systems. 
-In contrast to paid online services, a single developer can integrate `aktranslate` in a matter of minutes.
+Instead of re-inventing the wheel, `attranslate` integrates into existing translation systems.
+`attranslate` has you covered, regardless of whether you use i18n, ICU, JavaScript-frameworks, Android-XML, iOS-Localizables or other systems. 
+
+- In contrast to paid online services, a single developer can integrate `attranslate` in a matter of minutes.
+- In contrast to json-autotranslate, attranslate does not enforce any specific workflow.
+- In contrast to manual translations, attranslate does not slow down development.
 
 # Features
 
 ## Cross-platform Support
 
-`aktranslate` is designed to translate any app/website for any platform.
-`aktranslate` works for Web/Android/iOS or any combination of platforms. To make this possible, aktranslate supports the following file formats:
-- i18n JSON
-- ICU JSON
-- sprintf JSON
+`attranslate` is designed to translate any app/website for any platform.
+`attranslate` works for Web/Android/iOS or any combination of platforms. To make this possible, attranslate supports the following file formats:
+- i18n/ICU JSON
 - Android XML
 - iOS plist
+- Microsoft Excel
 
 ## Flexible Workflows
 
-`aktranslate` does not enforce any specific workflow. 
-In particular, `aktranslate` does not force you to use any translation service. 
-It is also possible to use aktranslate for converting between different file formats without changing the language (e.g. from Android-XML to iOS-Localizable).
+`attranslate` does not enforce any specific workflow. 
+In particular, `attranslate` does not force you to use any translation service. 
+It is also possible to use attranslate for converting between different file formats without changing the language (e.g. from Android-XML to iOS-Localizable).
 
 ## Allow Manual Overwrites
 
-aktranslate recognizes that automated translations are not perfect.
-Therefore, whenever you are unhappy with the produced result, aktranslate allows you to simply overwrite translations in your destination files.
+attranslate recognizes that automated translations are not perfect.
+Therefore, whenever you are unhappy with the produced result, attranslate allows you to simply overwrite translations in your destination files.
 
 ## Available Services
 
 Depending on your configuration, some translation services work better than others.
-aktranslate supports the following translation services:
+attranslate supports the following translation services:
 
 - [Google Cloud Translate](https://translate.google.com)
 - [DeepL](https://deepl.com)
 - [Azure Translator](https://azure.microsoft.com/en-us/services/cognitive-services/translator-text-api/)
-- Manual: Allows you to translate strings manually by entering them into aktranslate.
+- Manual: Allows you to translate strings manually by entering them into attranslate.
 - Sync Without Translations: Does not change the language; useful for converting between different file formats.
 
 ## High Performance
 
-If some of the strings have already been translated, then aktranslate won't translate them again.
+If some of the strings have already been translated, then attranslate won't translate them again.
 This does not only speedup your workflow, but also saves cost for paid translation services.
 
 ## Fast Integration
 
-aktranslate is designed for a quick integration into any app or website.
-Therefore, aktranslate allows you to keep working on the same translation files that you used before.
-
-
-## Key vs. Natural TODO
-
-You can either use the translation keys (natural translation) or their
-values (key-based translation) as a source for translations.
-
-Interpolations (ICU: `{name}`, i18next: `{{name}}`, sprintf: `%s`) are replaced
-by placeholders (e.g. `<0 />`) before being passed to the translation service,
-so their structure doesn't get mangled by the translation.
+attranslate is designed for a quick integration into any app or website.
+Therefore, attranslate allows you to keep working on the same translation files that you used before.
 
 # Usage Examples
 
-Translate natural language source files located in the `locales` directory using
-Google Translate and delete existing keys in translated JSON files that are no
-longer used.
+TODO: Perhaps link to sample-scripts
 
-```shell
-$ yarn json-autotranslate -i locales -d -c service-account.json
+# Available Options
+
+```
+Options:
+  -i, --input <inputDir>               the directory containing language directories (default: ".")
+  -l, --source-language <sourceLang>   specify the source language (default: "en")
+  -t, --type <key-based|natural|auto>  specify the file structure type (default: "auto")
+  -s, --service <service>              selects the service to be used for translation (default: "google-translate")
+  --list-services                      outputs a list of available services
+  -m, --matcher <matcher>              selects the matcher to be used for interpolations (default: "icu")
+  --list-matchers                      outputs a list of available matchers
+  -c, --config <value>                 supply a config parameter (e.g. path to key file) to the translation service
+  -f, --fix-inconsistencies            automatically fixes inconsistent key-value pairs by setting the value to the key
+  -d, --delete-unused-strings          deletes strings in translation files that don't exist in the template
+  -h, --help                           output usage information
 ```
 
-Manually translate key-based source files located in the `locales` directory.
-
-```shell
-$ yarn json-autotranslate -i locales -s manual
-```
 
 # Integration Guide
 
 Firstly, make sure that npm is installed on your machine.
-If you are a JavaScript-developer, then you can install aktranslate to your package.json:
+If you are a JavaScript-developer, then you can install attranslate to your package.json:
 
-`npm install --save-dev aktranslate`
+`npm install --save-dev attranslate`
 
-If you are not a JavaScript developer, then you can install aktranslate globally:
+If you are not a JavaScript developer, then you can install attranslate globally:
 
-`npm install --global aktranslate`
+`npm install --global attranslate`
 
-Next, you should write a project-specific script that invokes aktranslate for your specific files.
+Next, you should write a project-specific script that invokes attranslate for your specific files.
 See sample scripts for a guidance on how to translate your project-specific files.
 
-## Directory Structure
-
-Your `locales` directory should look like this:
-
-```
-locales
-├── de
-├── en
-│   ├── login.json
-│   └── register.json
-├── fr
-└── it
-```
-
-If you don't specify another source language, this tool will translate all files
-located in the `en` into all other languages that exist as directories. A single
-language directory (e.g. `en`) should only contain JSON files. Sub-directories
-and other files will be ignored.
-
-## File Structure
+## Key vs. Natural
 
 There are two ways that json-autotranslate can interpret files:
 
@@ -124,6 +103,8 @@ There are two ways that json-autotranslate can interpret files:
 If you don't specify a file structure type, json-autotranslate will
 automatically determine the type on a per-file basis. In most cases, this is
 sufficient.
+You can either use the translation keys (natural translation) or their
+values (key-based translation) as a source for translations.
 
 ### Natural Language
 
@@ -207,39 +188,20 @@ you'll have to pay \$10 per 1M characters that you translate.
 This service doesn't require any configuration. You will be prompted to
 translate the source strings manually in the console.
 
-## Available Matchers
+## Interpolations and Matchers
 
-Matchers are used to replace interpolations with placeholders before they are
-sent to the translation service. This ensures that interpolations don't get
-scrambled in the process. As of this release, json-autotranslate offers four
-matchers for different styles of interpolation:
+Many apps/websites use _interpolations_  to insert dynamic values into translations.
+For example, an interpolation like `Your name is {{name}}` might be replaced with `Your name is Felix`.
 
-- **icu** (default, matches [ICU MessageFormat](https://translate.google.com)
-  interpolations)
-- **i18next** (matches
-  [i18next](https://www.i18next.com/translation-function/interpolation)
-  interpolations)
-- **sprintf** (matches sprintf-style interpolations like `%s`)
-- **none** (doesn't match any interpolations)
+To work with interpolations, attranslate provides so-called _matchers_.
+A matcher replaces interpolations with placeholders before they are
+sent to a translation service. This ensures that interpolations don't get
+scrambled in the process.
+attranslate offers the following matchers for different styles of interpolations:
 
-You can select a matchers using the `-m` or `--matcher` option. If you specify
-the `--list-matchers` flag, json-autotranslate will output a list of all
-available matchers.
+- **ICU**: Matches ICU interpolations like `{name}`.
+- **i18n**: Matches [i18next](https://www.i18next.com/translation-function/interpolation) interpolations like `{{name}}`.
+- **sprintf**: Matches sprintf-style interpolations like `%s`.
+- **None**: Doesn't match any interpolations.
 
-## Available Options
-
-```
-Options:
-  -i, --input <inputDir>               the directory containing language directories (default: ".")
-  -l, --source-language <sourceLang>   specify the source language (default: "en")
-  -t, --type <key-based|natural|auto>  specify the file structure type (default: "auto")
-  -s, --service <service>              selects the service to be used for translation (default: "google-translate")
-  --list-services                      outputs a list of available services
-  -m, --matcher <matcher>              selects the matcher to be used for interpolations (default: "icu")
-  --list-matchers                      outputs a list of available matchers
-  -c, --config <value>                 supply a config parameter (e.g. path to key file) to the translation service
-  -f, --fix-inconsistencies            automatically fixes inconsistent key-value pairs by setting the value to the key
-  -d, --delete-unused-strings          deletes strings in translation files that don't exist in the template
-  -h, --help                           output usage information
-```
-
+You should select a matcher using the `--matcher` option.
