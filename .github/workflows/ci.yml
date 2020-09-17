@@ -24,12 +24,14 @@ jobs:
         with:
           node-version: 14.x
       - uses: actions/checkout@v2
-      - name: Restore Dependency Cache
-        uses: actions/cache@v1
+      - name: Cache dependencies
+        uses: actions/cache@v2
         with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
           path: ~/.npm
-          key: ${{ runner.OS }}-dependency-cache-${{ hashFiles('**/package.json') }}
-      - run: npm install
+          key: ${{ runner.os }}-cache-node-modules-${{ hashFiles('**/package-lock.json') }}
+      - run: npm cache verify
+      - run: npm ci
       - run: npm run lint
       - run: npm run build
       - run: npm run test
@@ -38,7 +40,6 @@ jobs:
         run: |
           npm version ${{ github.event.inputs.new_version }} --git-tag-version=true
           npm config set '//registry.npmjs.org/:_authToken' "${NPM_TOKEN}"
-          npm whoami
           npm publish
           git push origin && git push origin --tags
         env:
