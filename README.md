@@ -23,7 +23,6 @@ Instead of re-inventing the wheel, `attranslate` integrates into existing transl
 - i18n/ICU JSON
 - Android XML
 - iOS plist
-- Microsoft Excel
 
 ## Flexible Workflows
 

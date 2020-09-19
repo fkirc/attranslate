@@ -17,13 +17,15 @@ on:
 
 jobs:
   ci:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
       - uses: actions/setup-node@v1
         with:
           node-version: 14.x
       - uses: actions/checkout@v2
+      - run: git config --global user.email "mail@felixkirchengast.at"
+      - run: git config --global user.name "Felix Kirchengast (GitHub Action)"
       - name: Cache dependencies
         uses: actions/cache@v2
         with:
