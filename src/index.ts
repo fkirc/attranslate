@@ -10,6 +10,7 @@ process.on("unhandledRejection", (error) => {
 });
 
 export function run(process: NodeJS.Process, cliBinDir: string): void {
+  commander.addHelpCommand(false);
   commander
     .option(
       "-i, --input <inputDir>",
@@ -86,5 +87,6 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
     console.error(e.message);
     console.error(e.stack);
     console.log();
+    process.exit(1);
   });
 }
