@@ -1,4 +1,4 @@
-Usage: aktranslate [options]
+Usage: attranslate [options]
 
 Options:
   -i, --input <inputDir>               the directory containing language

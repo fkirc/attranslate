@@ -2,7 +2,7 @@ import { exec } from "child_process";
 import { join } from "path";
 
 function buildTranslateCommand(args: string) {
-  return `${join(process.cwd(), "bin", "aktranslate")} ${args}`;
+  return `${join(process.cwd(), "bin", "attranslate")} ${args}`;
 }
 
 export async function runTranslate(

@@ -1,10 +1,10 @@
 {
-  "name": "aktranslate",
+  "name": "attranslate",
   "version": "0.0.1",
   "description": "Integrate automated translation services into your app development. Convert between file formats.",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/fkirc/aktranslate.git"
+    "url": "git+https://github.com/fkirc/attranslate.git"
   },
   "keywords": [
     "google-translate",
@@ -17,11 +17,11 @@
   "license": "MIT",
   "author": "Felix Kirchengast",
   "bugs": {
-    "url": "https://github.com/fkirc/aktranslate/issues"
+    "url": "https://github.com/fkirc/attranslate/issues"
   },
-  "homepage": "https://github.com/fkirc/aktranslate#readme",
+  "homepage": "https://github.com/fkirc/attranslate#readme",
   "bin": {
-    "aktranslate": "bin/aktranslate"
+    "attranslate": "bin/attranslate"
   },
   "main": "./dist/index.js",
   "files": [
