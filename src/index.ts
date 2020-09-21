@@ -59,6 +59,11 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
     )
     .parse(process.argv);
 
+  if (commander.args?.length) {
+    // Args are not permitted, only work with options.
+    commander.unknownCommand();
+  }
+
   if (commander.listServices) {
     console.log("Available services:");
     console.log(Object.keys(serviceMap).join(", "));

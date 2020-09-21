@@ -23,7 +23,7 @@ test("no arguments", async () => {
 test("unknown command", async () => {
   const output = await runTranslateExpectFailure("fijsoijv");
   expect(output).toBe(
-    "error: unknown command 'fijsoijv'. See 'capsafe --help'.\n"
+    "error: unknown command 'fijsoijv'. See 'attranslate --help'.\n"
   );
 });
 
