@@ -12,8 +12,11 @@ process.on("unhandledRejection", (error) => {
 export function run(process: NodeJS.Process, cliBinDir: string): void {
   commander.addHelpCommand(false);
   commander
-    .requiredOption("--src", "The source file to be translated")
-    .requiredOption("--dst", "The destination file for the translations")
+    .requiredOption("--src <sourceFile>", "The source file to be translated")
+    .requiredOption(
+      "--dst <destinationFile>",
+      "The destination file for the translations"
+    )
     .option(
       "-i, --input <inputDir>",
       "the directory containing language directories",

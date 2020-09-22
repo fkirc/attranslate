@@ -9,7 +9,7 @@ function getHelpReference(): string {
 
 test("reGenerateHelp", async () => {
   if (process.env.GENERATE_REFS) {
-    await runTranslate(`--help 2> ${helpRef}`);
+    await runTranslate(`--help > ${helpRef}`);
   } else {
     console.log("Skipped");
   }
@@ -27,17 +27,34 @@ test("-h", async () => {
 
 test("no arguments", async () => {
   const output = await runTranslateExpectFailure("");
-  expect(output).toBe("error: required option '--src' not specified\n");
-});
-
-test("unknown command", async () => {
-  const output = await runTranslateExpectFailure("fijsoijv");
   expect(output).toBe(
-    "error: unknown command 'fijsoijv'. See 'attranslate --help'.\n"
+    "error: required option '--src <sourceFile>' not specified\n"
   );
 });
 
-test("unknown option", async () => {
+test("unknown command without options", async () => {
+  const output = await runTranslateExpectFailure("fijsoijv");
+  expect(output).toBe(
+    "error: required option '--src <sourceFile>' not specified\n"
+  );
+});
+
+test("unknown command with options", async () => {
+  const output = await runTranslateExpectFailure("jivduns --src=di --dst=da");
+  // TODO: Fix
+  expect(output).toBe(
+    "error: unknown command 'jivduns'. See 'attranslate --help'.\n"
+  );
+});
+
+test("unknown option without valid options", async () => {
   const output = await runTranslateExpectFailure("--version");
+  expect(output).toBe(
+    "error: required option '--src <sourceFile>' not specified\n"
+  );
+});
+
+test("unknown option + valid options", async () => {
+  const output = await runTranslateExpectFailure("--version --src=di --dst=da");
   expect(output).toBe("error: unknown option '--version'\n");
 });

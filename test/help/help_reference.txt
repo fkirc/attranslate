@@ -1,8 +1,8 @@
 Usage: attranslate [options]
 
 Options:
-  --src                                The source file to be translated
-  --dst                                The destination file for the
+  --src <sourceFile>                   The source file to be translated
+  --dst <destinationFile>              The destination file for the
                                        translations
   -i, --input <inputDir>               the directory containing language
                                        directories (default: ".")
