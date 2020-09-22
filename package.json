@@ -35,6 +35,7 @@
     "reformat": "npm run eslint -- --fix",
     "eslint": "./node_modules/.bin/eslint '**/*.{js,ts,tsx}' --ignore-path=.gitignore",
     "test": "jest",
+    "test:generate_refs": "GENERATE_REFS=True npm run test",
     "prepublishOnly": "git diff --exit-code"
   },
   "husky": {

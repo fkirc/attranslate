@@ -1,6 +1,9 @@
 Usage: attranslate [options]
 
 Options:
+  --src                                The source file to be translated
+  --dst                                The destination file for the
+                                       translations
   -i, --input <inputDir>               the directory containing language
                                        directories (default: ".")
   --cache <cacheDir>                   set the cache directory (default:
