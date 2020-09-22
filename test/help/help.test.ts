@@ -1,9 +1,19 @@
 import { runTranslate, runTranslateExpectFailure } from "../test-util";
 import { readUtf8File } from "../../src/util/util";
 
+const helpRef = "test/help/help_reference.txt";
+
 function getHelpReference(): string {
-  return readUtf8File("test/help/help_reference.txt");
+  return readUtf8File(helpRef);
 }
+
+test("reGenerateHelp", async () => {
+  if (process.env.GENERATE_REFS) {
+    await runTranslate(`--help 2> ${helpRef}`);
+  } else {
+    console.log("Skipped");
+  }
+});
 
 test("--help", async () => {
   const output = await runTranslate(`--help`, "/");
@@ -17,7 +27,7 @@ test("-h", async () => {
 
 test("no arguments", async () => {
   const output = await runTranslateExpectFailure("");
-  expect(output).toBe(getHelpReference());
+  expect(output).toBe("error: required option '--src' not specified\n");
 });
 
 test("unknown command", async () => {
