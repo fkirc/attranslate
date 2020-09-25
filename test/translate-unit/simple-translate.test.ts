@@ -1,5 +1,4 @@
 import { translateCore, TranslateArgs } from "../../src/core/translate";
-require("isomorphic-fetch");
 
 test("simpleTranslate", async () => {
   const args: TranslateArgs = {
