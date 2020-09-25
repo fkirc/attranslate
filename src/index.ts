@@ -3,7 +3,7 @@
 import commander from "commander";
 import { serviceMap } from "./services";
 import { matcherMap } from "./matchers";
-import { translate } from "./core/translate";
+import { translateCore, TranslateArgs } from "./core/translate";
 
 process.on("unhandledRejection", (error) => {
   console.error("[fatal]", error);
@@ -58,13 +58,14 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
     process.exit(0);
   }
 
-  translate(
-    commander.srcFile,
-    commander.srcLng,
-    commander.dstFile,
-    commander.dstLng,
-    commander.serviceConfig
-  ).catch((e: Error) => {
+  const args: TranslateArgs = {
+    srcFile: commander.srcFile,
+    srcLng: commander.srcLng,
+    dstFile: commander.dstFile,
+    dstLng: commander.dstLng,
+    serviceConfig: commander.serviceConfig,
+  };
+  translateCore(args).catch((e: Error) => {
     console.log();
     console.error("An error has occured:");
     console.error(e.message);

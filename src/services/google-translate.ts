@@ -38,6 +38,7 @@ export class GoogleTranslate implements TranslationService {
   async getAvailableLanguages() {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const [languages] = await this.translate!.getLanguages();
+    console.log("Available languages:");
     console.log(languages);
     return languages.map((l) => l.code.toLowerCase());
   }

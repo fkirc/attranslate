@@ -8,13 +8,15 @@ import { diff } from "deep-object-diff";
 import { omit } from "lodash";
 import ncp from "ncp";
 
-export const translate = async (
-  srcFile: string,
-  srcLng: string,
-  dstFile: string,
-  dstLng: string,
-  serviceConfig: string
-) => {
+export interface TranslateArgs {
+  srcFile: string;
+  srcLng: string;
+  dstFile: string;
+  dstLng: string;
+  serviceConfig: string;
+}
+
+export async function translateCore(args: TranslateArgs) {
   const service: keyof typeof serviceMap = "google-translate"; // TODO: Config
   const matcher: keyof typeof matcherMap = "icu"; // TODO: Config
 
@@ -37,16 +39,16 @@ export const translate = async (
 
   const translationService = serviceMap[service];
 
-  const templateFile = loadTranslations(srcFile);
+  const templateFile = loadTranslations(args.srcFile);
 
   console.log(`✨ Initializing ${translationService.name}...`);
-  await translationService.initialize(serviceConfig, matcherMap[matcher]);
+  await translationService.initialize(args.serviceConfig, matcherMap[matcher]);
   console.log(`└── Done`);
   console.log();
 
-  if (!translationService.supportsLanguage(srcLng)) {
+  if (!translationService.supportsLanguage(args.srcLng)) {
     throw new Error(
-      `${translationService.name} doesn't support the source language ${srcLng}`
+      `${translationService.name} doesn't support the source language ${args.srcLng}`
     );
   }
 
@@ -124,18 +126,18 @@ export const translate = async (
   let addedTranslations = 0;
   let removedTranslations = 0;
 
-  if (!translationService.supportsLanguage(dstLng)) {
+  if (!translationService.supportsLanguage(args.dstLng)) {
     console.error(
-      `🙈 {yellow.bold ${translationService.name} doesn't support} {red.bold ${dstLng}}{yellow.bold.}`
+      `🙈 {yellow.bold ${translationService.name} doesn't support} {red.bold ${args.dstLng}}{yellow.bold.}`
     );
     console.log();
     process.exit(1);
   }
 
-  const existingFile = loadTranslations(path.resolve(dstFile)); // TODO: Rewrite
+  const existingFile = loadTranslations(path.resolve(args.dstFile)); // TODO: Rewrite
 
   console.log(
-    `💬 Translating strings from {green.bold ${srcLng}} to {green.bold ${dstLng}}...`
+    `💬 Translating strings from {green.bold ${args.srcLng}} to {green.bold ${args.dstLng}}...`
   );
 
   /*if (deleteUnusedStrings) { // TODO: Reimplement
@@ -165,7 +167,7 @@ export const translate = async (
 
   const cachePath = path.resolve(
     resolvedCacheDir,
-    srcLng,
+    args.srcLng,
     existingFile ? existingFile.name : ""
   );
   let cacheDiff: string[] = [];
@@ -196,8 +198,8 @@ export const translate = async (
 
   const translatedStrings = await translationService.translateStrings(
     stringsToTranslate,
-    srcLng,
-    dstLng
+    args.srcLng,
+    args.dstLng
   );
 
   const newKeys = translatedStrings.reduce(
@@ -223,7 +225,7 @@ export const translate = async (
         2
       ) + `\n`;
 
-    fs.writeFileSync(path.resolve(dstFile), newContent);
+    fs.writeFileSync(path.resolve(args.dstFile), newContent);
 
     // TODO: Do we need output caches?
     /*const languageCachePath = path.resolve(resolvedCacheDir, dstFile); // TODO: Remove?
@@ -251,7 +253,7 @@ export const translate = async (
     console.log("🗂 Caching source translation files...");
     await new Promise((res, rej) =>
       ncp(
-        path.resolve(srcFile),
+        path.resolve(args.srcFile),
         path.resolve(resolvedCacheDir, "src-file-cache"), // TODO: Change
         (err) => (err ? rej() : res())
       )
@@ -265,4 +267,4 @@ export const translate = async (
   if (removedTranslations > 0) {
     console.log(`${removedTranslations} translations have been removed!`);
   }
-};
+}
