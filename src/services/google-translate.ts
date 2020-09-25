@@ -39,12 +39,15 @@ export class GoogleTranslate implements TranslationService {
       keyFile: this.serviceConfig,
     };
     const client = new TranslationServiceClient(clientOptions);
+    const projectId = "secure-zip-notes"; // TODO: Read this from service account json?
+    const location = "global";
 
     const interpols = inputs.map((tString) => {
       return replaceInterpolations(tString.value, this.interpolationMatcher);
     });
     const cleanStrings = interpols.map((v) => v.clean);
     const request: ITranslateTextRequest = {
+      parent: `projects/${projectId}/locations/${location}`,
       contents: cleanStrings,
       mimeType: "text/plain",
       sourceLanguageCode: from,
