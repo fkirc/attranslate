@@ -1,49 +1,29 @@
-import * as fs from "fs";
-import * as path from "path";
 import { flatten } from "./flatten";
 import { resolve } from "path";
 
 export type FileType = "key-based" | "natural" | "auto";
 
-export const getAvailableLanguages = (directory: string) =>
-  fs
-    .readdirSync(directory)
-    .map((d) => path.resolve(directory, d))
-    .filter((d) => fs.statSync(d).isDirectory())
-    .map((d) => path.basename(d));
+// TODO: Rewrite or remove
+// export const detectFileType = (json: never): FileType => {
+//   const invalidKeys = Object.keys(json).filter(
+//     (k) => typeof json[k] === "string" && (k.includes(".") || k.includes(" "))
+//   );
+//
+//   return invalidKeys.length > 0 ? "natural" : "key-based";
+// };
 
-export const detectFileType = (json: never): FileType => {
-  const invalidKeys = Object.keys(json).filter(
-    (k) => typeof json[k] === "string" && (k.includes(".") || k.includes(" "))
-  );
+export function loadTranslations(path: string) {
+  const type: FileType = "key-based"; // TODO: Rewrite or remove
+  return {
+    name: path,
+    originalContent: resolve(path),
+    type,
+    content: flatten(resolve(path)),
+  };
+}
 
-  return invalidKeys.length > 0 ? "natural" : "key-based";
-};
-
-export const loadTranslations = (
-  directory: string,
-  fileType: FileType = "auto"
-) =>
-  fs
-    .readdirSync(directory)
-    .filter((f) => f.endsWith(".json"))
-    .map((f) => {
-      const json = resolve(directory, f);
-      const type =
-        fileType === "auto" ? detectFileType(json as never) : fileType;
-
-      return {
-        name: f,
-        originalContent: json,
-        type,
-        content:
-          type === "key-based"
-            ? flatten(resolve(directory, f))
-            : resolve(directory, f),
-      };
-    });
-
-export const fixSourceInconsistencies = (
+// TODO: Rewrite or remove
+/*export const fixSourceInconsistencies = (
   directory: string,
   cacheDir: string
 ) => {
@@ -65,4 +45,4 @@ export const fixSourceInconsistencies = (
       JSON.stringify(fixedContent, null, 2) + "\n"
     );
   }
-};
+};*/

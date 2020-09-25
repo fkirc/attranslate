@@ -12,44 +12,25 @@ process.on("unhandledRejection", (error) => {
 export function run(process: NodeJS.Process, cliBinDir: string): void {
   commander.addHelpCommand(false);
   commander
-    .requiredOption("--src <sourceFile>", "The source file to be translated")
+    .requiredOption(
+      "--srcFile <sourceFile>",
+      "The source file to be translated"
+    )
     .requiredOption(
       "--srcLng <sourceLanguage>",
       "A language code for the source language"
     )
     .requiredOption(
-      "--dst <destinationFile>",
+      "--dstFile <destinationFile>",
       "The destination file for the translations"
     )
     .requiredOption(
       "--dstLng <destinationLanguage>",
       "A language code for the destination language"
     )
-    .option(
-      "-i, --input <inputDir>",
-      "the directory containing language directories",
-      "."
-    )
-    .option(
-      "--cache <cacheDir>",
-      "set the cache directory",
-      ".json-autotranslate-cache"
-    )
-    .option(
-      "-l, --source-language <sourceLang>",
-      "specify the source language",
-      "en"
-    )
-    .option(
-      "-t, --type <key-based|natural|auto>",
-      `specify the file structure type`,
-      /^(key-based|natural|auto)$/,
-      "auto"
-    )
-    .option(
-      "-s, --service <service>",
-      `selects the service to be used for translation`,
-      "google-translate"
+    .requiredOption(
+      "--serviceConfig <pathToKeyFile>",
+      "supply configuration (e.g. path to key file) for the translation service"
     )
     .option("--list-services", `outputs a list of available services`)
     .option(
@@ -58,18 +39,6 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
       "icu"
     )
     .option("--list-matchers", `outputs a list of available matchers`)
-    .option(
-      "-c, --config <value>",
-      "supply a config parameter (e.g. path to key file) to the translation service"
-    )
-    .option(
-      "-f, --fix-inconsistencies",
-      `automatically fixes inconsistent key-value pairs by setting the value to the key`
-    )
-    .option(
-      "-d, --delete-unused-strings",
-      `deletes strings in translation files that don't exist in the template`
-    )
     .parse(process.argv);
 
   if (commander.args?.length) {
@@ -90,15 +59,11 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
   }
 
   translate(
-    commander.input,
-    commander.cacheDir,
-    commander.sourceLanguage,
-    commander.deleteUnusedStrings,
-    commander.type,
-    commander.fixInconsistencies,
-    commander.service,
-    commander.matcher,
-    commander.config
+    commander.srcFile,
+    commander.srcLng,
+    commander.dstFile,
+    commander.dstLng,
+    commander.serviceConfig
   ).catch((e: Error) => {
     console.log();
     console.error("An error has occured:");
