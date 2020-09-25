@@ -4,10 +4,11 @@ import {
   reInsertInterpolations,
   Matcher,
 } from "../matchers";
-import { TranslationService, TString } from ".";
+import { TranslationResult, TranslationService, TString } from ".";
 import { google } from "@google-cloud/translate/build/protos/protos";
 import ITranslateTextRequest = google.cloud.translation.v3.ITranslateTextRequest;
 import { ClientOptions } from "google-gax";
+import ITranslation = google.cloud.translation.v3.ITranslation;
 
 export class GoogleTranslate implements TranslationService {
   private interpolationMatcher: Matcher | undefined;
@@ -33,36 +34,50 @@ export class GoogleTranslate implements TranslationService {
   }
 
   // eslint-disable-next-line require-await
-  async translateStrings(strings: TString[], from: string, to: string) {
+  async translateStrings(inputs: TString[], from: string, to: string) {
     const clientOptions: ClientOptions = {
       keyFile: this.serviceConfig,
     };
     const client = new TranslationServiceClient(clientOptions);
 
-    return Promise.all(
-      strings.map(async ({ key, value }) => {
-        const { clean, replacements } = replaceInterpolations(
-          value,
-          this.interpolationMatcher
-        );
-        const request: ITranslateTextRequest = {
-          contents: [clean],
-          mimeType: "text/plain",
-          sourceLanguageCode: from,
-          targetLanguageCode: to,
-        };
-        const [response] = await client.translateText(request);
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        const translationResult: string = response.translations![0]
-          .translatedText!; // TODO: Error handling
-        return {
-          key: key,
-          value: value,
-          translated: this.cleanResponse(
-            reInsertInterpolations(translationResult, replacements)
-          ),
-        };
-      })
+    const interpols = inputs.map((tString) => {
+      return replaceInterpolations(tString.value, this.interpolationMatcher);
+    });
+    const cleanStrings = interpols.map((v) => v.clean);
+    const request: ITranslateTextRequest = {
+      contents: cleanStrings,
+      mimeType: "text/plain",
+      sourceLanguageCode: from,
+      targetLanguageCode: to,
+    };
+    const [response] = await client.translateText(request);
+
+    // TODO: Error handling
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    return response.translations!.map((value, index) => {
+      return this.transformGCloudResult(
+        value,
+        inputs[index],
+        interpols[index].replacements
+      );
+    });
+  }
+
+  transformGCloudResult(
+    result: ITranslation,
+    input: TString,
+    replacements: { from: string; to: string }[]
+  ): TranslationResult {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const rawTranslation = result!.translatedText!; // TODO: Error handling
+    const cleanTranslation = reInsertInterpolations(
+      rawTranslation,
+      replacements
     );
+    return {
+      key: input.key,
+      value: input.value,
+      translated: cleanTranslation,
+    };
   }
 }
