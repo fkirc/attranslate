@@ -225,14 +225,15 @@ export const translate = async (
 
     fs.writeFileSync(path.resolve(dstFile), newContent);
 
-    const languageCachePath = path.resolve(resolvedCacheDir, dstFile); // TODO: Remove?
+    // TODO: Do we need output caches?
+    /*const languageCachePath = path.resolve(resolvedCacheDir, dstFile); // TODO: Remove?
     if (!fs.existsSync(languageCachePath)) {
       fs.mkdirSync(languageCachePath);
     }
     fs.writeFileSync(
       path.resolve(languageCachePath, templateFile.name),
       JSON.stringify(translatedFile, null, 2) + "\n"
-    );
+    );*/
   }
 
   console.log(
