@@ -17,6 +17,7 @@ export interface TranslateArgs {
 }
 
 export async function translateCore(args: TranslateArgs) {
+  console.log("run translate with args", args); // TODO: Remove
   const service: keyof typeof serviceMap = "google-translate"; // TODO: Config
   const matcher: keyof typeof matcherMap = "icu"; // TODO: Config
 

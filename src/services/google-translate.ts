@@ -7,9 +7,11 @@ import {
 import { TranslationService, TString } from ".";
 import { google } from "@google-cloud/translate/build/protos/protos";
 import ITranslateTextRequest = google.cloud.translation.v3.ITranslateTextRequest;
+import { ClientOptions } from "google-gax";
 
 export class GoogleTranslate implements TranslationService {
   private interpolationMatcher: Matcher | undefined;
+  private serviceConfig: string | undefined;
 
   public name = "Google Translate";
 
@@ -21,8 +23,9 @@ export class GoogleTranslate implements TranslationService {
   }
 
   // eslint-disable-next-line require-await
-  async initialize(config?: string, interpolationMatcher?: Matcher) {
+  async initialize(serviceConfig?: string, interpolationMatcher?: Matcher) {
     this.interpolationMatcher = interpolationMatcher;
+    this.serviceConfig = serviceConfig;
   }
 
   supportsLanguage(language: string) {
@@ -31,7 +34,10 @@ export class GoogleTranslate implements TranslationService {
 
   // eslint-disable-next-line require-await
   async translateStrings(strings: TString[], from: string, to: string) {
-    const client = new TranslationServiceClient();
+    const clientOptions: ClientOptions = {
+      keyFile: this.serviceConfig,
+    };
+    const client = new TranslationServiceClient(clientOptions);
 
     return Promise.all(
       strings.map(async ({ key, value }) => {
