@@ -40,8 +40,9 @@ test("unknown command without options", async () => {
 });
 
 test("unknown command with options", async () => {
-  const output = await runTranslateExpectFailure("jivduns --src=di --dst=da");
-  // TODO: Fix
+  const output = await runTranslateExpectFailure(
+    "jivduns --src=di --srcLng=en --dst=en --dstLng=zh"
+  );
   expect(output).toBe(
     "error: unknown command 'jivduns'. See 'attranslate --help'.\n"
   );
@@ -55,6 +56,8 @@ test("unknown option without valid options", async () => {
 });
 
 test("unknown option + valid options", async () => {
-  const output = await runTranslateExpectFailure("--version --src=di --dst=da");
+  const output = await runTranslateExpectFailure(
+    "--version --src=di --srcLng=de --dst=da --dstLng=en"
+  );
   expect(output).toBe("error: unknown option '--version'\n");
 });

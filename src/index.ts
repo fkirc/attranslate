@@ -14,8 +14,16 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
   commander
     .requiredOption("--src <sourceFile>", "The source file to be translated")
     .requiredOption(
+      "--srcLng <sourceLanguage>",
+      "A language code for the source language"
+    )
+    .requiredOption(
       "--dst <destinationFile>",
       "The destination file for the translations"
+    )
+    .requiredOption(
+      "--dstLng <destinationLanguage>",
+      "A language code for the destination language"
     )
     .option(
       "-i, --input <inputDir>",

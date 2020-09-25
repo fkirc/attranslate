@@ -2,8 +2,11 @@ Usage: attranslate [options]
 
 Options:
   --src <sourceFile>                   The source file to be translated
+  --srcLng <sourceLanguage>            A language code for the source language
   --dst <destinationFile>              The destination file for the
                                        translations
+  --dstLng <destinationLanguage>       A language code for the destination
+                                       language
   -i, --input <inputDir>               the directory containing language
                                        directories (default: ".")
   --cache <cacheDir>                   set the cache directory (default:
