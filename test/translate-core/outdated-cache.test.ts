@@ -3,7 +3,7 @@ import {
   CoreResults,
   translateCore,
 } from "../../src/core/translate-core";
-import { commonArgs, commonResult, germanTarget } from "./core-test-util";
+import { commonArgs, deTarget } from "./core-test-util";
 import { TSet } from "../../src/core/core-definitions";
 
 const incompleteCache: TSet = {
@@ -17,14 +17,14 @@ const incompleteCache: TSet = {
 test("incomplete cache, up-do-date target", async () => {
   const args: CoreArgs = {
     ...commonArgs,
-    oldTarget: germanTarget,
+    oldTarget: deTarget,
     srcCache: incompleteCache,
   };
   const expectRes: CoreResults = {
-    ...commonResult,
-    countNew: 0,
-    countUpdated: 0,
-    countService: 0,
+    newTarget: deTarget,
+    added: null,
+    updated: null,
+    serviceResults: null,
   };
   const res = await translateCore(args);
   expect(res).toStrictEqual(expectRes);
@@ -33,14 +33,14 @@ test("incomplete cache, up-do-date target", async () => {
 test("outdated cache, up-do-date target", async () => {
   const args: CoreArgs = {
     ...commonArgs,
-    oldTarget: germanTarget,
+    oldTarget: deTarget,
     srcCache: outdatedCache,
   };
   const expectRes: CoreResults = {
-    ...commonResult,
-    countNew: 0,
-    countUpdated: 0,
-    countService: 3,
+    newTarget: deTarget,
+    added: new Map(),
+    updated: new Map(),
+    serviceResults: new Map([["hello", "Hallo"]]),
   };
   const res = await translateCore(args);
   expect(res).toStrictEqual(expectRes);
@@ -49,9 +49,8 @@ test("outdated cache, up-do-date target", async () => {
 const outdatedCache: TSet = {
   lng: "en",
   translations: new Map([
-    ["hello", "Chrallo"],
-    ["world", "Wolt"],
-    ["attranslate", "ATTT"],
+    ["hello", "cache broken"],
+    ["world", "World"],
     ["outcome", "No more slowdowns"],
     ["getStarted", "Get started within minutes"],
   ]),
@@ -60,22 +59,23 @@ const outdatedCache: TSet = {
 const outdatedTarget: TSet = {
   lng: "de",
   translations: new Map([
-    ["hello", "Hello"],
-    ["world", "World"],
-    ["attranslate", "fwfsfs"],
-    ["outcome", "sfsef"],
+    ["hello", "both cache and target broken"],
+    ["world", "target broken"],
+    ["outcome", "No more slowdowns"],
+    ["attranslate", "missing cache"],
   ]),
 };
 
-export const mixedResult: TSet = {
+const mixedResult: TSet = {
   lng: "de",
   translations: new Map([
+    // TODO: Fix wrong order?
     ["hello", "Hallo"],
-    ["world", "Welt"],
-    ["attranslate", "Automatisierter Textübersetzer"],
     ["value", "Innerhalb von Sekunden übersetzen"],
-    ["getStarted", "Beginnen Sie innerhalb von Minuten"], // TODO: Fix wrong order?
-    ["outcome", "sfsef"],
+    ["getStarted", "Beginnen Sie innerhalb von Minuten"],
+    ["world", "target broken"],
+    ["outcome", "No more slowdowns"],
+    ["attranslate", "missing cache"],
   ]),
 };
 
@@ -86,11 +86,17 @@ test("outdated cache, outdated target", async () => {
     srcCache: outdatedCache,
   };
   const expectRes: CoreResults = {
-    ...commonResult,
     newTarget: mixedResult,
-    countNew: 2,
-    countUpdated: 3,
-    countService: 5,
+    added: new Map([
+      ["value", "Innerhalb von Sekunden übersetzen"],
+      ["getStarted", "Beginnen Sie innerhalb von Minuten"],
+    ]),
+    updated: new Map([["hello", "Hallo"]]),
+    serviceResults: new Map([
+      ["hello", "Hallo"],
+      ["value", "Innerhalb von Sekunden übersetzen"],
+      ["getStarted", "Beginnen Sie innerhalb von Minuten"],
+    ]),
   };
   const res = await translateCore(args);
   expect(res).toStrictEqual(expectRes);

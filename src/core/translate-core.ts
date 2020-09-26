@@ -22,9 +22,9 @@ export interface CoreArgs {
 
 export interface CoreResults {
   newTarget: TSet;
-  countNew: number;
-  countUpdated: number;
-  countService: number;
+  added: Map<string, string> | null;
+  updated: Map<string, string> | null;
+  serviceResults: Map<string, string> | null;
 }
 
 function extractStringsToTranslate(args: CoreArgs): TSet {
@@ -53,7 +53,7 @@ function extractStringsToTranslate(args: CoreArgs): TSet {
 function mergeResults(
   args: CoreArgs,
   serviceResults: TSet | null
-): CoreResults {
+): Omit<CoreResults, "serviceResults"> {
   if (!serviceResults) {
     if (!args.srcCache) {
       console.info(
@@ -67,43 +67,40 @@ function mergeResults(
     }
     return {
       newTarget: args.oldTarget,
-      countNew: 0,
-      countUpdated: 0,
-      countService: 0,
+      added: null,
+      updated: null,
     };
   }
-  const countService = serviceResults.translations.size;
   if (!args.oldTarget) {
-    console.info(`Create a new target file with ${countService} translations.`);
     return {
       newTarget: serviceResults,
-      countNew: countService,
-      countUpdated: 0,
-      countService,
+      added: serviceResults.translations,
+      updated: null,
     };
   }
-  const countNew = selectLeftDistinct(
+
+  const added = selectLeftDistinct(
     serviceResults,
     args.oldTarget,
     "COMPARE_KEYS"
-  ).translations.size;
-  if (countNew >= 1) {
-    console.info(`Add ${countNew} new translations.`);
+  ).translations;
+  if (added.size >= 1) {
+    console.info(`Added ${added} new translations.`);
   }
-  const countUpdated = selectLeftDistinct(
+
+  const updated = selectLeftDistinct(
     serviceResults,
     args.oldTarget,
     "COMPARE_VALUES"
-  ).translations.size;
-  if (countUpdated >= 1) {
-    console.info(`Update ${countUpdated} existing translations.`);
+  ).translations;
+  if (updated.size >= 1) {
+    console.info(`Update ${updated} existing translations.`);
   }
   // TODO: Delete stale keys from target?
   return {
     newTarget: leftJoin(serviceResults, args.oldTarget),
-    countNew: countNew,
-    countUpdated: countUpdated,
-    countService,
+    added,
+    updated,
   };
 }
 
@@ -134,6 +131,7 @@ export async function translateCore(args: CoreArgs): Promise<CoreResults> {
   }
 
   if (!args.srcCache) {
+    // TODO: Move message?
     console.info(
       `Cache not found -> Generate a new cache to enable selective translations.\n` +
         `To make selective translations, do one of the following:\n` +
@@ -141,5 +139,7 @@ export async function translateCore(args: CoreArgs): Promise<CoreResults> {
         `Option 2: Delete parts of your target-file and then re-run this tool.`
     );
   }
-  return mergeResults(args, serviceResults);
+  const merge = mergeResults(args, serviceResults);
+  const serviceT = serviceResults?.translations ?? null;
+  return { ...merge, serviceResults: serviceT };
 }

@@ -3,12 +3,7 @@ import {
   CoreResults,
   translateCore,
 } from "../../src/core/translate-core";
-import {
-  commonArgs,
-  commonResult,
-  enSrc,
-  germanTarget,
-} from "./core-test-util";
+import { commonArgs, enSrc, deTarget } from "./core-test-util";
 import { TSet } from "../../src/core/core-definitions";
 
 const modifiedTarget: TSet = {
@@ -31,10 +26,10 @@ test("up-to-date cache, no target", async () => {
     srcCache: enSrc,
   };
   const expectRes: CoreResults = {
-    ...commonResult,
-    countNew: 6,
-    countUpdated: 0,
-    countService: 6,
+    newTarget: deTarget,
+    added: deTarget.translations,
+    updated: null,
+    serviceResults: deTarget.translations,
   };
   const res = await translateCore(args);
   expect(res).toStrictEqual(expectRes);
@@ -43,14 +38,14 @@ test("up-to-date cache, no target", async () => {
 test("up-to-date cache, up-to-date target", async () => {
   const args: CoreArgs = {
     ...commonArgs,
-    oldTarget: germanTarget,
+    oldTarget: deTarget,
     srcCache: enSrc,
   };
   const expectRes: CoreResults = {
-    ...commonResult,
-    countNew: 0,
-    countUpdated: 0,
-    countService: 0,
+    newTarget: deTarget,
+    added: null,
+    updated: null,
+    serviceResults: null,
   };
   const res = await translateCore(args);
   expect(res).toStrictEqual(expectRes);
@@ -63,11 +58,10 @@ test("up-to-date cache, modified target", async () => {
     srcCache: enSrc,
   };
   const expectRes: CoreResults = {
-    ...commonResult,
     newTarget: modifiedTarget,
-    countNew: 0,
-    countUpdated: 0,
-    countService: 0,
+    added: null,
+    updated: null,
+    serviceResults: null,
   };
   const res = await translateCore(args);
   expect(res).toStrictEqual(expectRes);

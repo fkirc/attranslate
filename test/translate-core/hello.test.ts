@@ -30,9 +30,9 @@ describe.each([
       targetLng: lngT.lng,
     };
     const expectRes: CoreResults = {
-      countNew: 1,
-      countUpdated: 0,
-      countService: 1,
+      added: new Map([["hello", lngT.t]]),
+      updated: null,
+      serviceResults: new Map([["hello", lngT.t]]),
       newTarget: {
         lng: lngT.lng,
         translations: new Map([["hello", lngT.t]]),

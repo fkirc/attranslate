@@ -4,7 +4,7 @@ import {
   translateCore,
 } from "../../src/core/translate-core";
 import { TSet } from "../../src/core/core-definitions";
-import { commonArgs, commonResult, germanTarget } from "./core-test-util";
+import { commonArgs, deTarget } from "./core-test-util";
 
 const partialGermanTarget: TSet = {
   lng: "de",
@@ -22,10 +22,10 @@ test("no cache, no target", async () => {
     srcCache: null,
   };
   const expectRes: CoreResults = {
-    ...commonResult,
-    countNew: 6,
-    countUpdated: 0,
-    countService: 6,
+    newTarget: deTarget,
+    added: deTarget.translations,
+    updated: null,
+    serviceResults: deTarget.translations,
   };
   const res = await translateCore(args);
   expect(res).toStrictEqual(expectRes);
@@ -34,14 +34,14 @@ test("no cache, no target", async () => {
 test("no cache, clean target", async () => {
   const args: CoreArgs = {
     ...commonArgs,
-    oldTarget: germanTarget,
+    oldTarget: deTarget,
     srcCache: null,
   };
   const expectRes: CoreResults = {
-    ...commonResult,
-    countNew: 0,
-    countUpdated: 0,
-    countService: 0,
+    newTarget: deTarget,
+    added: null,
+    updated: null,
+    serviceResults: null,
   };
   const res = await translateCore(args);
   expect(res).toStrictEqual(expectRes);
@@ -53,11 +53,16 @@ test("no cache, partial target", async () => {
     oldTarget: partialGermanTarget,
     srcCache: null,
   };
+  const added = new Map<string, string>([
+    ["hello", "Hallo"],
+    ["value", "Innerhalb von Sekunden übersetzen"],
+    ["outcome", "Keine Verlangsamungen mehr"],
+  ]);
   const expectRes: CoreResults = {
-    ...commonResult,
-    countNew: 3,
-    countUpdated: 0,
-    countService: 3,
+    newTarget: deTarget,
+    added,
+    updated: new Map(),
+    serviceResults: added,
   };
   const res = await translateCore(args);
   expect(res).toStrictEqual(expectRes);

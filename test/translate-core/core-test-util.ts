@@ -1,5 +1,5 @@
 import { TSet } from "../../src/core/core-definitions";
-import { CoreArgs, CoreResults } from "../../src/core/translate-core";
+import { CoreArgs } from "../../src/core/translate-core";
 
 export const enSrc: TSet = {
   lng: "en",
@@ -21,7 +21,7 @@ export const commonArgs: Omit<CoreArgs, "oldTarget" | "srcCache"> = {
   targetLng: "de",
 };
 
-export const germanTarget: TSet = {
+export const deTarget: TSet = {
   lng: "de",
   translations: new Map([
     ["hello", "Hallo"],
@@ -31,11 +31,4 @@ export const germanTarget: TSet = {
     ["outcome", "Keine Verlangsamungen mehr"],
     ["getStarted", "Beginnen Sie innerhalb von Minuten"],
   ]),
-};
-
-export const commonResult: Omit<
-  CoreResults,
-  "countNew" | "countUpdated" | "countService"
-> = {
-  newTarget: germanTarget,
 };
