@@ -6,7 +6,6 @@ import { Matcher } from "../matchers";
 
 export interface TranslationResult {
   key: string;
-  value: string;
   translated: string;
 }
 
@@ -14,6 +13,7 @@ export interface TString {
   key: string;
   value: string;
 }
+
 export interface TranslationService {
   name: string;
   initialize: (

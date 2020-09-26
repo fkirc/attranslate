@@ -1,14 +1,14 @@
 import { loadTranslations } from "../util/file-system";
 import { serviceMap } from "../services";
 import { matcherMap } from "../matchers";
-import path from "path";
-import fs from "fs";
 import { flatten, unflatten } from "../util/flatten";
 import { diff } from "deep-object-diff";
 import { omit } from "lodash";
-import ncp from "ncp";
+import * as path from "path";
+import * as fs from "fs";
+import ncp = require("ncp");
 
-export interface TranslateArgs {
+export interface CliArgs {
   srcFile: string;
   srcLng: string;
   dstFile: string;
@@ -16,7 +16,7 @@ export interface TranslateArgs {
   serviceConfig: string;
 }
 
-export async function translateCore(args: TranslateArgs) {
+export async function translateCli(args: CliArgs) {
   console.log("run translate with args", args); // TODO: Remove
   const service: keyof typeof serviceMap = "google-translate"; // TODO: Config
   const matcher: keyof typeof matcherMap = "icu"; // TODO: Config

@@ -3,7 +3,7 @@
 import commander from "commander";
 import { serviceMap } from "./services";
 import { matcherMap } from "./matchers";
-import { translateCore, TranslateArgs } from "./core/translate";
+import { translateCli, TranslateArgs } from "./core/translate";
 
 process.on("unhandledRejection", (error) => {
   console.error("[fatal]", error);
@@ -65,7 +65,7 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
     dstLng: commander.dstLng,
     serviceConfig: commander.serviceConfig,
   };
-  translateCore(args).catch((e: Error) => {
+  translateCli(args).catch((e: Error) => {
     console.log();
     console.error("An error has occured:");
     console.error(e.message);

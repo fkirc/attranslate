@@ -79,7 +79,6 @@ export class GoogleTranslate implements TranslationService {
     );
     return {
       key: input.key,
-      value: input.value,
       translated: cleanTranslation,
     };
   }

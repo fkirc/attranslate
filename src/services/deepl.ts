@@ -87,7 +87,6 @@ export class DeepL implements TranslationService {
 
     return {
       key: string.key,
-      value: string.value,
       translated: reInsertInterpolations(
         (await response.json()).translations[0].text,
         replacements
