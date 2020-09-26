@@ -1,18 +1,10 @@
+import { TSet } from "../../src/core/core-definitions";
 import {
   CoreArgs,
   CoreResults,
   translateCore,
 } from "../../src/core/translate-core";
-import { TSet } from "../../src/core/core-definitions";
-
-const commonArgs: Omit<
-  CoreArgs,
-  "src" | "oldTarget" | "oldSrcCache" | "targetLng"
-> = {
-  service: "google-translate", // TODO: Type safety
-  serviceConfig: "gcloud/gcloud_service_account.json",
-  matcher: "icu", // TODO: Type safety
-};
+import { commonArgs } from "./core-test-util";
 
 interface LngT {
   lng: string;
@@ -25,31 +17,27 @@ describe.each([
   { lng: "fr", t: "Bonjour" },
   { lng: "it", t: "Ciao" },
 ])("Hello %s", (lngT: LngT) => {
-  test("Hello world - no cache", async () => {
-    const src: TSet = {
+  test("Hello international", async () => {
+    const srcHello: TSet = {
       lng: "en",
       translations: new Map([["hello", "Hello"]]),
     };
     const args: CoreArgs = {
-      src,
-      oldTarget: null,
-      oldSrcCache: null,
-      targetLng: lngT.lng,
       ...commonArgs,
+      src: srcHello,
+      oldTarget: null,
+      srcCache: null,
+      targetLng: lngT.lng,
     };
     const expectRes: CoreResults = {
+      countNew: 1,
+      countUpdated: 0,
       newTarget: {
         lng: lngT.lng,
         translations: new Map([["hello", lngT.t]]),
-      },
-      newSrcCache: {
-        lng: "en",
-        translations: new Map([["hello", "Hello"]]),
       },
     };
     const res = await translateCore(args);
     expect(res).toStrictEqual(expectRes);
   });
 });
-
-// TODO: Test other core cases.

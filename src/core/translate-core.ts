@@ -12,7 +12,7 @@ import { logFatal } from "../util/util";
 
 export interface CoreArgs {
   src: TSet;
-  oldSrcCache: TSet | null;
+  srcCache: TSet | null;
   oldTarget: TSet | null;
   targetLng: string;
   service: keyof typeof serviceMap; // TODO: Type safety
@@ -21,8 +21,9 @@ export interface CoreArgs {
 }
 
 export interface CoreResults {
-  newTarget: TSet | null;
-  newSrcCache: TSet | null;
+  newTarget: TSet;
+  countNew: number;
+  countUpdated: number;
 }
 
 function extractStringsToTranslate(args: CoreArgs): TSet {
@@ -30,7 +31,7 @@ function extractStringsToTranslate(args: CoreArgs): TSet {
   if (!src.translations.size) {
     logFatal("Did not find any source translations");
   }
-  const oldSrcCache: TSet | null = args.oldSrcCache;
+  const oldSrcCache: TSet | null = args.srcCache;
   const oldTarget: TSet | null = args.oldTarget;
   if (!oldTarget) {
     // Translate everything if an old target does not yet exist.
@@ -48,45 +49,58 @@ function extractStringsToTranslate(args: CoreArgs): TSet {
   }
 }
 
-function mergeResultsToNewTarget(
+function mergeResults(
   args: CoreArgs,
   serviceResults: TSet | null
-): TSet {
+): CoreResults {
   if (!serviceResults) {
-    if (!args.oldSrcCache) {
+    if (!args.srcCache) {
       console.info(
         `Skipped translations because we had to generate a new cache.`
       );
     } else {
       console.info(`Nothing changed, translations are up-to-date.`);
     }
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    return args.oldTarget!;
+    if (!args.oldTarget) {
+      logFatal("Missing both serviceResults and oldTarget");
+    }
+    return {
+      newTarget: args.oldTarget,
+      countNew: 0,
+      countUpdated: 0,
+    };
   }
+  const serviceSize = serviceResults.translations.size;
   if (!args.oldTarget) {
-    console.info(
-      `Create a new target file with ${serviceResults.translations.size} translations.`
-    );
-    return serviceResults;
+    console.info(`Create a new target file with ${serviceSize} translations.`);
+    return {
+      newTarget: serviceResults,
+      countNew: serviceSize,
+      countUpdated: 0,
+    };
   }
-  const newTranslations = selectLeftDistinct(
+  const countNew = selectLeftDistinct(
     serviceResults,
     args.oldTarget,
     "COMPARE_KEYS"
   ).translations.size;
-  if (newTranslations >= 1) {
-    console.info(`Add ${newTranslations} new translations.`);
+  if (countNew >= 1) {
+    console.info(`Add ${countNew} new translations.`);
   }
-  const updatedTranslations = selectLeftDistinct(
+  const countUpdated = selectLeftDistinct(
     serviceResults,
     args.oldTarget,
     "COMPARE_VALUES"
   ).translations.size;
-  if (updatedTranslations >= 1) {
-    console.info(`Update ${updatedTranslations} existing translations.`);
+  if (countUpdated >= 1) {
+    console.info(`Update ${countUpdated} existing translations.`);
   }
   // TODO: Delete stale keys from target?
-  return leftJoin(serviceResults, args.oldTarget);
+  return {
+    newTarget: leftJoin(serviceResults, args.oldTarget),
+    countNew: countNew,
+    countUpdated: countUpdated,
+  };
 }
 
 export async function translateCore(args: CoreArgs): Promise<CoreResults> {
@@ -115,7 +129,7 @@ export async function translateCore(args: CoreArgs): Promise<CoreResults> {
     );
   }
 
-  if (!args.oldSrcCache) {
+  if (!args.srcCache) {
     console.info(
       `Cache not found -> Generate a new cache to enable selective translations.\n` +
         `To make selective translations, do one of the following:\n` +
@@ -123,9 +137,5 @@ export async function translateCore(args: CoreArgs): Promise<CoreResults> {
         `Option 2: Delete parts of your target-file and then re-run this tool.`
     );
   }
-  const newTarget = mergeResultsToNewTarget(args, serviceResults);
-  return {
-    newTarget,
-    newSrcCache: args.src,
-  };
+  return mergeResults(args, serviceResults);
 }
