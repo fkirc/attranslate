@@ -20,6 +20,7 @@ const modifiedTarget: TSet = {
     ["value", "stsd"],
     ["outcome", "sfsef"],
     ["getStarted", "rrw"],
+    ["leftover", "Outdated"], // TODO: Remove outdated leftovers via option?
   ]),
 };
 
@@ -33,6 +34,7 @@ test("up-to-date cache, no target", async () => {
     ...commonResult,
     countNew: 6,
     countUpdated: 0,
+    countService: 6,
   };
   const res = await translateCore(args);
   expect(res).toStrictEqual(expectRes);
@@ -48,6 +50,7 @@ test("up-to-date cache, up-to-date target", async () => {
     ...commonResult,
     countNew: 0,
     countUpdated: 0,
+    countService: 0,
   };
   const res = await translateCore(args);
   expect(res).toStrictEqual(expectRes);
@@ -64,6 +67,7 @@ test("up-to-date cache, modified target", async () => {
     newTarget: modifiedTarget,
     countNew: 0,
     countUpdated: 0,
+    countService: 0,
   };
   const res = await translateCore(args);
   expect(res).toStrictEqual(expectRes);

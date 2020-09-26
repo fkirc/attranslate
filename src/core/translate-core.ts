@@ -24,6 +24,7 @@ export interface CoreResults {
   newTarget: TSet;
   countNew: number;
   countUpdated: number;
+  countService: number;
 }
 
 function extractStringsToTranslate(args: CoreArgs): TSet {
@@ -68,15 +69,17 @@ function mergeResults(
       newTarget: args.oldTarget,
       countNew: 0,
       countUpdated: 0,
+      countService: 0,
     };
   }
-  const serviceSize = serviceResults.translations.size;
+  const countService = serviceResults.translations.size;
   if (!args.oldTarget) {
-    console.info(`Create a new target file with ${serviceSize} translations.`);
+    console.info(`Create a new target file with ${countService} translations.`);
     return {
       newTarget: serviceResults,
-      countNew: serviceSize,
+      countNew: countService,
       countUpdated: 0,
+      countService,
     };
   }
   const countNew = selectLeftDistinct(
@@ -100,6 +103,7 @@ function mergeResults(
     newTarget: leftJoin(serviceResults, args.oldTarget),
     countNew: countNew,
     countUpdated: countUpdated,
+    countService,
   };
 }
 

@@ -32,6 +32,7 @@ describe.each([
     const expectRes: CoreResults = {
       countNew: 1,
       countUpdated: 0,
+      countService: 1,
       newTarget: {
         lng: lngT.lng,
         translations: new Map([["hello", lngT.t]]),

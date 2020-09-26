@@ -33,6 +33,9 @@ export const germanTarget: TSet = {
   ]),
 };
 
-export const commonResult: Omit<CoreResults, "countNew" | "countUpdated"> = {
+export const commonResult: Omit<
+  CoreResults,
+  "countNew" | "countUpdated" | "countService"
+> = {
   newTarget: germanTarget,
 };

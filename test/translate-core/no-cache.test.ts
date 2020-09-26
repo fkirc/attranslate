@@ -25,6 +25,7 @@ test("no cache, no target", async () => {
     ...commonResult,
     countNew: 6,
     countUpdated: 0,
+    countService: 6,
   };
   const res = await translateCore(args);
   expect(res).toStrictEqual(expectRes);
@@ -40,6 +41,7 @@ test("no cache, clean target", async () => {
     ...commonResult,
     countNew: 0,
     countUpdated: 0,
+    countService: 0,
   };
   const res = await translateCore(args);
   expect(res).toStrictEqual(expectRes);
@@ -55,6 +57,7 @@ test("no cache, partial target", async () => {
     ...commonResult,
     countNew: 3,
     countUpdated: 0,
+    countService: 3,
   };
   const res = await translateCore(args);
   expect(res).toStrictEqual(expectRes);
