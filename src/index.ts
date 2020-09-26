@@ -3,7 +3,7 @@
 import commander from "commander";
 import { serviceMap } from "./services";
 import { matcherMap } from "./matchers";
-import { translateCli, TranslateArgs } from "./core/translate";
+import { translateCli, CliArgs } from "./core/translate-cli";
 
 process.on("unhandledRejection", (error) => {
   console.error("[fatal]", error);
@@ -58,7 +58,7 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
     process.exit(0);
   }
 
-  const args: TranslateArgs = {
+  const args: CliArgs = {
     srcFile: commander.srcFile,
     srcLng: commander.srcLng,
     dstFile: commander.dstFile,

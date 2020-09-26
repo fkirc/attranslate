@@ -28,7 +28,7 @@ describe.each([
 ])("Hello %s", (lngT: LngT) => {
   test("Hello world - no cache", async () => {
     const src: TSet = {
-      translations: [{ key: "hello", value: "Hello" }],
+      translations: new Map([["hello", "Hello"]]),
     };
     const args: CoreArgs = {
       src,
@@ -39,11 +39,15 @@ describe.each([
     };
     const expectRes: CoreResults = {
       newTarget: {
-        translations: [{ key: "hello", value: lngT.t }],
+        translations: new Map([["hello", lngT.t]]),
       },
-      newSrcCache: null,
+      newSrcCache: {
+        translations: new Map([["hello", "Hello"]]),
+      },
     };
     const res = await translateCore(args);
     expect(res).toStrictEqual(expectRes);
   });
 });
+
+// TODO: Test other core cases.
