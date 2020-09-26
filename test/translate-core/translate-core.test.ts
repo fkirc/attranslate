@@ -9,7 +9,6 @@ const commonArgs: Omit<
   CoreArgs,
   "src" | "oldTarget" | "oldSrcCache" | "targetLng"
 > = {
-  srcLng: "en",
   service: "google-translate", // TODO: Type safety
   serviceConfig: "gcloud/gcloud_service_account.json",
   matcher: "icu", // TODO: Type safety
@@ -28,6 +27,7 @@ describe.each([
 ])("Hello %s", (lngT: LngT) => {
   test("Hello world - no cache", async () => {
     const src: TSet = {
+      lng: "en",
       translations: new Map([["hello", "Hello"]]),
     };
     const args: CoreArgs = {
@@ -39,9 +39,11 @@ describe.each([
     };
     const expectRes: CoreResults = {
       newTarget: {
+        lng: lngT.lng,
         translations: new Map([["hello", lngT.t]]),
       },
       newSrcCache: {
+        lng: "en",
         translations: new Map([["hello", "Hello"]]),
       },
     };

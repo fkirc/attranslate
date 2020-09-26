@@ -1,5 +1,6 @@
 import { TSet } from "./core-definitions";
 import { TranslationResult, TString } from "../services";
+import { logFatal } from "../util/util";
 
 export type DiffStrategy =
   | "COMPARE_KEYS"
@@ -11,6 +12,11 @@ export function selectLeftDistinct(
   right: TSet,
   strategy: DiffStrategy
 ): TSet {
+  if (strategy !== "COMPARE_KEYS") {
+    if (left.lng !== right.lng) {
+      logFatal("Cannot compare values of different languages");
+    }
+  }
   const leftDistinct = new Map<string, string>();
   left.translations.forEach((value, key) => {
     const rightT: string | undefined = right.translations.get(key);
@@ -27,11 +33,15 @@ export function selectLeftDistinct(
     }
   });
   return {
+    lng: left.lng,
     translations: leftDistinct,
   };
 }
 
 export function leftJoin(left: TSet, right: TSet): TSet {
+  if (left.lng !== right.lng) {
+    logFatal("Cannot join different languages");
+  }
   const leftJoin = new Map<string, string>();
   left.translations.forEach((value, key) => {
     leftJoin.set(key, value);
@@ -42,6 +52,7 @@ export function leftJoin(left: TSet, right: TSet): TSet {
     }
   });
   return {
+    lng: left.lng,
     translations: leftJoin,
   };
 }
@@ -58,13 +69,15 @@ export function convertToTStringList(tSet: TSet): TString[] {
 }
 
 export function convertFromServiceResults(
-  serviceResults: TranslationResult[]
+  serviceResults: TranslationResult[],
+  lng: string
 ): TSet {
   const tSet = new Map<string, string>();
   serviceResults.forEach((tResult) => {
     tSet.set(tResult.key, tResult.translated);
   });
   return {
+    lng,
     translations: tSet,
   };
 }

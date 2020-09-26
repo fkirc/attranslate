@@ -1,18 +1,17 @@
 # attranslate - Automated Text Translate for Apps and Websites
 
-Thanks to automated translation services, it is possible to speedup traditional translation workflows.
+Automated translation services can speedup traditional workflows.
 For example, let's say that a translation service achieves 90% correct translations on the spot.
 In this case, a quick fix of the remaining 10% is faster than doing everything by hand.
-`attranslate` makes it easy to integrate translation services into your workflows.
+`attranslate` makes it easy to integrate any translation services into your workflows.
 
 ## Why attranslate?
 
+In contrast to paid services, `attranslate` does not need any account-registration.
+A single developer can integrate `attranslate` in a matter of minutes.
+
 Instead of re-inventing the wheel, `attranslate` integrates into existing translation systems.
 `attranslate` has you covered, regardless of whether you use i18n, ICU, JavaScript-frameworks, Android-XML, iOS-Localizables or other systems. 
-
-- In contrast to paid online services, a single developer can integrate `attranslate` in a matter of minutes.
-- In contrast to json-autotranslate, attranslate does not enforce any specific workflow.
-- In contrast to manual translations, attranslate does not slow down development.
 
 # Features
 
@@ -48,7 +47,7 @@ attranslate supports the following translation services:
 
 ## High Performance
 
-If some of the strings have already been translated, then attranslate won't translate them again.
+If some texts have already been translated, then `attranslate` won't translate them again.
 This does not only speedup your workflow, but also saves cost for paid translation services.
 
 ## Fast Integration

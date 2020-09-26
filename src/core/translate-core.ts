@@ -14,7 +14,6 @@ export interface CoreArgs {
   src: TSet;
   oldSrcCache: TSet | null;
   oldTarget: TSet | null;
-  srcLng: string;
   targetLng: string;
   service: keyof typeof serviceMap; // TODO: Type safety
   serviceConfig: string;
@@ -102,13 +101,18 @@ export async function translateCore(args: CoreArgs): Promise<CoreResults> {
       getMatcherInstance(args)
     );
     // TODO: Maybe add supportsLangauge check for translationService
-    console.info(`Translating from '${args.srcLng}' to '${args.targetLng}'...`);
+    console.info(
+      `Translating from '${args.src.lng}' to '${args.targetLng}'...`
+    );
     const rawServiceResults = await translationService.translateStrings(
       convertToTStringList(stringsToTranslate),
-      args.srcLng,
+      args.src.lng,
       args.targetLng
     );
-    serviceResults = convertFromServiceResults(rawServiceResults);
+    serviceResults = convertFromServiceResults(
+      rawServiceResults,
+      args.targetLng
+    );
   }
 
   if (!args.oldSrcCache) {
