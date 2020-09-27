@@ -126,7 +126,7 @@ export async function translateCore(args: CoreArgs): Promise<CoreResults> {
       `Cache not found -> Generate a new cache to enable selective translations.\n` +
         `To make selective translations, do one of the following:\n` +
         `Option 1: Change your source-file and then re-run this tool.\n` +
-        `Option 2: Delete parts of your target-file and then re-run this tool.`
+        `Option 2: Delete parts of your target-file and then re-run this tool.\n`
     );
   }
   const merge = mergeResults(args, serviceResults);
