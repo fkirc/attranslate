@@ -79,45 +79,17 @@ Options:
 
 # Integration Guide
 
-Firstly, make sure that npm is installed on your machine.
-If you are a JavaScript-developer, then you can install attranslate to your package.json:
+Firstly, ensure that [npm](https://nodejs.org/) is installed on your machine.
+If you are a JavaScript-developer, then you can install `attranslate` to your package.json:
 
 `npm install --save-dev attranslate`
 
-If you are not a JavaScript developer, then you can install attranslate globally:
+If you are not a JavaScript-developer, then you can install `attranslate` globally:
 
 `npm install --global attranslate`
 
-Next, you should write a project-specific script that invokes attranslate for your specific files.
+Next, you should write a project-specific script that invokes `attranslate` for your specific files.
 See sample scripts for a guidance on how to translate your project-specific files.
-
-## Key vs. Natural
-
-There are two ways that json-autotranslate can interpret files:
-
-- Natural Language (`natural`)
-- Key-Based (`key-based`)
-
-If you don't specify a file structure type, json-autotranslate will
-automatically determine the type on a per-file basis. In most cases, this is
-sufficient.
-You can either use the translation keys (natural translation) or their
-values (key-based translation) as a source for translations.
-
-### Natural Language
-
-This is the default way that this tool will interpret your source files. The
-keys will be used as the basis of translations. If one or more of the values in
-your source files don't match their respective key, you'll see a warning as this
-could indicate an inconsistency in your translations. You can fix those
-inconsistencies by passing the `--fix-inconsistencies` flag.
-
-```json
-{
-  "Your username doesn't exist.": "Your username doesn't exist.",
-  "{email} is not a valid email address.": "{email} is not a valid email address."
-}
-```
 
 ### Key-Based
 
@@ -163,11 +135,7 @@ API keys are only available to DeepL Pro API users. If you don't have a
 Developer account yet, you can create one
 [here](https://www.deepl.com/en/pro.html#developer).
 
-DeepL charges a fixed monthly price plus a variable fee for every 500 translated
-characters.
-
-After you have completed your sign-up, you can pass the API key to
-json-autotranslate using the `-c` or `--config` option.
+After you have completed the sign-up, you can pass the API key using the `--serviceConfig` option.
 
 ### Azure Translator Text
 
@@ -175,11 +143,8 @@ To use this tool with Azure's Translator Text, you need to obtain an API key
 from their website. [Sign Up](https://azure.microsoft.com/en-us/free/) for an
 Azure account if you don't have one already and
 [create a new translator instance](https://portal.azure.com/#create/Microsoft.CognitiveServicesTextTranslation).
-You'll get an API key soon after that which you can pass to json-autotranslate
-using the `-c` or `--config` flag.
-
-As of now, the first 2M characters of translation per month are free. After that
-you'll have to pay \$10 per 1M characters that you translate.
+You'll get an API key that you can pass to `attranslate`
+using the `--serviceConfig` flag.
 
 ### Manual
 

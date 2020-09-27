@@ -22,7 +22,7 @@ export async function translateCli(args: CliArgs) {
   const matcher: keyof typeof matcherMap = "icu"; // TODO: Config
 
   const deleteUnusedStrings = false; // TODO: Config or remove.
-  const cacheDir = ".json-autotranslate-cache"; // TODO: Config
+  const cacheDir = "."; // TODO: Config
   const resolvedCacheDir = path.resolve(process.cwd(), cacheDir);
 
   if (!fs.existsSync(resolvedCacheDir)) {
