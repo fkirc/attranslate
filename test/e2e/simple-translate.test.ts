@@ -62,6 +62,16 @@ describe.each([
     await runCommand(`git checkout ${cacheOutdatedDir}`);
   });
 
+  test("outdated cache, modified target", async () => {
+    await runCommand(`cp ${modifiedTarget} ${args.target}`);
+    const output = await runTranslate(buildE2EArgs(outdatedCacheArgs));
+    expect(output).toContain("Update 1 existing translations\n");
+    expect(output).toContain(`Write target-file ${getDebugPath(args.target)}`);
+    expect(output).toContain(`Write cache`);
+    await runCommand(`git checkout ${cacheOutdatedDir}`);
+    await runCommand(`git checkout ${args.target}`);
+  });
+
   const missingCacheArgs: E2EArgs = {
     ...commonArgs,
     cacheDir: cacheMissingDir,
