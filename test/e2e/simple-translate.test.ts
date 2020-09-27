@@ -6,12 +6,12 @@ const cacheDir = "test-assets/cache/";
 
 describe.each([
   {
-    src: "test-assets/hello-en-flat.json",
-    target: "test-assets/hello-de-flat.json",
+    src: "test-assets/flat-json/hello-en-flat.json",
+    target: "test-assets/flat-json/hello-de-flat.json",
   },
   {
-    src: "test-assets/hello-en-nested.json",
-    target: "test-assets/hello-de-nested.json",
+    src: "test-assets/nested-json/hello-en-nested.json",
+    target: "test-assets/nested-json/hello-de-nested.json",
   },
 ])("simple translate", (args) => {
   const commonArgs: E2EArgs = {
@@ -37,10 +37,12 @@ describe.each([
     cacheDir: outdatedCacheDir,
   };
   test("outdated cache, missing target", async () => {
-    const output = await runTranslate(buildE2EArgs(outdatedCacheArgs));
     await runCommand(`rm ${args.target}`);
-    expect(output).toContain("Add 3 new translations");
-    expect(output).toContain("Write target-file");
+    const output = await runTranslate(buildE2EArgs(outdatedCacheArgs));
+    //expect(output).toContain("Add 3 new translations");
+    expect(output).toContain(`Add 3 new translations`);
+    expect(output).toContain(`Write cache`);
+    expect(output).toContain(outdatedCacheDir);
     await runCommand(`git checkout ${outdatedCacheDir}`);
   });
 });
