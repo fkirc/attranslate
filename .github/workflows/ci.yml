@@ -39,6 +39,7 @@ jobs:
       - run: npm run lint
       - run: npm run build
       - run: npm run test
+      - run: git diff --exit-code
       - name: Release
         if: ${{ github.event.inputs.release == 'true' }}
         run: |
