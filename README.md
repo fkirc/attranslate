@@ -1,4 +1,4 @@
-# attranslate - Automated Text Translate for Apps and Websites
+# attranslate - Automated Text Translator for Apps and Websites
 
 Automated translation services can speedup traditional workflows.
 For example, let's say that a translation service achieves 90% correct translations on the spot.
