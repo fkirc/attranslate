@@ -84,18 +84,11 @@ function mergeResults(
     args.oldTarget,
     "COMPARE_KEYS"
   ).translations;
-  if (added.size >= 1) {
-    console.info(`Added ${added} new translations.`);
-  }
-
   const updated = selectLeftDistinct(
     serviceResults,
     args.oldTarget,
     "COMPARE_VALUES"
   ).translations;
-  if (updated.size >= 1) {
-    console.info(`Update ${updated} existing translations.`);
-  }
   // TODO: Delete stale keys from target?
   return {
     newTarget: leftJoin(serviceResults, args.oldTarget),

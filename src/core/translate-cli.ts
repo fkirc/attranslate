@@ -46,6 +46,10 @@ export async function translateCli(args: CliArgs) {
   };
   const result = await translateCore(coreArgs);
   if (!areEqual(result.newTarget, oldTarget)) {
+    const countAdded: number = result.added?.size ?? 0;
+    const countUpdated: number = result.updated?.size ?? 0;
+    console.info(`Add ${countAdded} new translations`);
+    console.info(`Update ${countUpdated} existing translations`);
     console.info(`Write target-file ${getDebugPath(args.targetFile)}`);
     writeTFile(args.targetFile, result.newTarget);
   }
