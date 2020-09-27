@@ -4,7 +4,7 @@ import {
   reInsertInterpolations,
   Matcher,
 } from "../matchers";
-import { TranslationResult, TranslationService, TString } from ".";
+import { TResult, TranslationService, TString } from ".";
 import { google } from "@google-cloud/translate/build/protos/protos";
 import ITranslateTextRequest = google.cloud.translation.v3.ITranslateTextRequest;
 import { ClientOptions } from "google-gax";
@@ -70,7 +70,7 @@ export class GoogleTranslate implements TranslationService {
     result: ITranslation,
     input: TString,
     replacements: { from: string; to: string }[]
-  ): TranslationResult {
+  ): TResult {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const rawTranslation = result!.translatedText!; // TODO: Error handling
     const cleanTranslation = reInsertInterpolations(

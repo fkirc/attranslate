@@ -1,6 +1,6 @@
 import fetch from "node-fetch";
 
-import { TranslationService, TranslationResult } from ".";
+import { TranslationService, TResult } from ".";
 import {
   replaceInterpolations,
   reInsertInterpolations,
@@ -58,7 +58,7 @@ export class DeepL implements TranslationService {
     from: string,
     to: string,
     triesLeft = 5
-  ): Promise<TranslationResult> {
+  ): Promise<TResult> {
     const { clean, replacements } = replaceInterpolations(
       string.value,
       this.interpolationMatcher

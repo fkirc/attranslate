@@ -1,7 +1,7 @@
 import fetch from "node-fetch";
 import { chunk, flatten } from "lodash";
 
-import { TranslationService, TranslationResult, TString } from ".";
+import { TranslationService, TResult, TString } from ".";
 import {
   Matcher,
   reInsertInterpolations,
@@ -106,7 +106,7 @@ export class AzureTranslator implements TranslationService {
     strings: TString[],
     from: string,
     to: string
-  ): Promise<TranslationResult[]> {
+  ): Promise<TResult[]> {
     const batches = chunk(strings, 50);
 
     const results = await Promise.all(

@@ -4,7 +4,7 @@ import { AzureTranslator } from "./azure-translator";
 import { ManualTranslation } from "./manual";
 import { Matcher } from "../matchers";
 
-export interface TranslationResult {
+export interface TResult {
   key: string;
   translated: string;
 }
@@ -25,7 +25,7 @@ export interface TranslationService {
     strings: TString[],
     from: string,
     to: string
-  ) => Promise<TranslationResult[]>;
+  ) => Promise<TResult[]>;
 }
 
 export const serviceMap = {

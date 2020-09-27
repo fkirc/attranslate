@@ -1,5 +1,5 @@
 import { TSet } from "./core-definitions";
-import { TranslationResult, TString } from "../services";
+import { TResult, TString } from "../services";
 import { logFatal } from "../util/util";
 
 export type DiffStrategy =
@@ -89,7 +89,7 @@ export function areEqual(set1: TSet, set2: TSet | null): boolean {
 }
 
 export function convertFromServiceResults(
-  serviceResults: TranslationResult[],
+  serviceResults: TResult[],
   lng: string
 ): TSet {
   const tSet = new Map<string, string>();
