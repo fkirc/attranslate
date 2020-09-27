@@ -10,7 +10,7 @@ export function unflatten(params: Record<string, unknown>) {
   );
 }
 
-export function flatten(obj: unknown) {
+export function flatten(obj: unknown): Record<string, string> {
   return _.transform(
     obj as never,
     function (result: Record<string, unknown>, value: unknown, key: string) {

@@ -113,6 +113,6 @@ export class AzureTranslator implements TranslationService {
       batches.map((batch) => this.translateBatch(batch, from, to))
     );
 
-    return flatten(results);
+    return flatten(results); // TODO: Adapt this batch structure for gcloud
   }
 }

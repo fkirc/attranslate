@@ -116,9 +116,6 @@ export async function translateCore(args: CoreArgs): Promise<CoreResults> {
       getMatcherInstance(args)
     );
     // TODO: Maybe add supportsLangauge check for translationService
-    console.info(
-      `Translating from '${args.src.lng}' to '${args.targetLng}'...`
-    );
     const rawServiceResults = await translationService.translateStrings(
       convertToTStringList(stringsToTranslate),
       args.src.lng,

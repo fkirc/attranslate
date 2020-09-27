@@ -29,7 +29,7 @@ function checkDir(dir: string): void {
   }
 }
 
-function checkNotDir(path: string): void {
+export function checkNotDir(path: string): void {
   checkExists(path);
   if (isDirectory(path)) {
     logFatal(`${getDebugPath(path)} is a directory.`);
@@ -57,7 +57,7 @@ export function deleteFile(path: string): void {
   console.log(`Deleted ${getDebugPath(path)}`);
 }
 
-function writeJsonFile(path: string, object: unknown): string {
+export function writeJsonFile(path: string, object: unknown): string {
   const jsonString = JSON.stringify(object);
   writeFileSync(path, jsonString, { encoding: "utf8" });
   return jsonString;

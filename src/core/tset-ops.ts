@@ -68,6 +68,26 @@ export function convertToTStringList(tSet: TSet): TString[] {
   return tList;
 }
 
+export function areEqual(set1: TSet, set2: TSet | null): boolean {
+  if (!set2) {
+    return false;
+  }
+  if (set1.lng !== set2.lng) {
+    return false;
+  }
+  if (set1.translations.size !== set2.translations.size) {
+    return false;
+  }
+  for (const key1 of set1.translations.keys()) {
+    const value1 = set1.translations.get(key1);
+    const value2 = set2.translations.get(key1);
+    if (value1 !== value2) {
+      return false;
+    }
+  }
+  return true;
+}
+
 export function convertFromServiceResults(
   serviceResults: TranslationResult[],
   lng: string
