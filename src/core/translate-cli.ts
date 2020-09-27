@@ -11,8 +11,8 @@ import ncp = require("ncp");
 export interface CliArgs {
   srcFile: string;
   srcLng: string;
-  dstFile: string;
-  dstLng: string;
+  targetFile: string;
+  targetLng: string;
   serviceConfig: string;
 }
 
@@ -127,18 +127,18 @@ export async function translateCli(args: CliArgs) {
   let addedTranslations = 0;
   let removedTranslations = 0;
 
-  if (!translationService.supportsLanguage(args.dstLng)) {
+  if (!translationService.supportsLanguage(args.targetLng)) {
     console.error(
-      `🙈 {yellow.bold ${translationService.name} doesn't support} {red.bold ${args.dstLng}}{yellow.bold.}`
+      `🙈 {yellow.bold ${translationService.name} doesn't support} {red.bold ${args.targetLng}}{yellow.bold.}`
     );
     console.log();
     process.exit(1);
   }
 
-  const existingFile = loadTranslations(path.resolve(args.dstFile)); // TODO: Rewrite
+  const existingFile = loadTranslations(path.resolve(args.targetFile)); // TODO: Rewrite
 
   console.log(
-    `💬 Translating strings from {green.bold ${args.srcLng}} to {green.bold ${args.dstLng}}...`
+    `💬 Translating strings from {green.bold ${args.srcLng}} to {green.bold ${args.targetLng}}...`
   );
 
   /*if (deleteUnusedStrings) { // TODO: Reimplement
@@ -200,7 +200,7 @@ export async function translateCli(args: CliArgs) {
   const translatedStrings = await translationService.translateStrings(
     stringsToTranslate,
     args.srcLng,
-    args.dstLng
+    args.targetLng
   );
 
   const newKeys = translatedStrings.reduce(
@@ -226,7 +226,7 @@ export async function translateCli(args: CliArgs) {
         2
       ) + `\n`;
 
-    fs.writeFileSync(path.resolve(args.dstFile), newContent);
+    fs.writeFileSync(path.resolve(args.targetFile), newContent);
 
     // TODO: Do we need output caches?
     /*const languageCachePath = path.resolve(resolvedCacheDir, dstFile); // TODO: Remove?

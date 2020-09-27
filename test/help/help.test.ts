@@ -28,20 +28,20 @@ test("-h", async () => {
 test("no arguments", async () => {
   const output = await runTranslateExpectFailure("");
   expect(output).toBe(
-    "error: required option '--src <sourceFile>' not specified\n"
+    "error: required option '--srcFile <sourceFile>' not specified\n"
   );
 });
 
 test("unknown command without options", async () => {
   const output = await runTranslateExpectFailure("fijsoijv");
   expect(output).toBe(
-    "error: required option '--src <sourceFile>' not specified\n"
+    "error: required option '--srcFile <sourceFile>' not specified\n"
   );
 });
 
 test("unknown command with options", async () => {
   const output = await runTranslateExpectFailure(
-    "jivduns --src=di --srcLng=en --dst=en --dstLng=zh"
+    "jivduns --srcFile=di --srcLng=en --targetFile=opjb --targetLng=zh --serviceConfig=sfjoij"
   );
   expect(output).toBe(
     "error: unknown command 'jivduns'. See 'attranslate --help'.\n"
@@ -51,13 +51,13 @@ test("unknown command with options", async () => {
 test("unknown option without valid options", async () => {
   const output = await runTranslateExpectFailure("--version");
   expect(output).toBe(
-    "error: required option '--src <sourceFile>' not specified\n"
+    "error: required option '--srcFile <sourceFile>' not specified\n"
   );
 });
 
 test("unknown option + valid options", async () => {
   const output = await runTranslateExpectFailure(
-    "--version --src=di --srcLng=de --dst=da --dstLng=en"
+    "--version --srcFile=di --srcLng=de --targetFile=da --targetLng=en --serviceConfig=jfrj"
   );
   expect(output).toBe("error: unknown option '--version'\n");
 });

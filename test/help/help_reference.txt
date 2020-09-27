@@ -1,32 +1,14 @@
 Usage: attranslate [options]
 
 Options:
-  --src <sourceFile>                   The source file to be translated
-  --srcLng <sourceLanguage>            A language code for the source language
-  --dst <destinationFile>              The destination file for the
-                                       translations
-  --dstLng <destinationLanguage>       A language code for the destination
-                                       language
-  -i, --input <inputDir>               the directory containing language
-                                       directories (default: ".")
-  --cache <cacheDir>                   set the cache directory (default:
-                                       ".json-autotranslate-cache")
-  -l, --source-language <sourceLang>   specify the source language (default:
-                                       "en")
-  -t, --type <key-based|natural|auto>  specify the file structure type
-                                       (default: "auto")
-  -s, --service <service>              selects the service to be used for
-                                       translation (default:
-                                       "google-translate")
-  --list-services                      outputs a list of available services
-  -m, --matcher <matcher>              selects the matcher to be used for
-                                       interpolations (default: "icu")
-  --list-matchers                      outputs a list of available matchers
-  -c, --config <value>                 supply a config parameter (e.g. path to
-                                       key file) to the translation service
-  -f, --fix-inconsistencies            automatically fixes inconsistent
-                                       key-value pairs by setting the value to
-                                       the key
-  -d, --delete-unused-strings          deletes strings in translation files
-                                       that don't exist in the template
-  -h, --help                           display help for command
+  --srcFile <sourceFile>           The source file to be translated
+  --srcLng <sourceLanguage>        A language code for the source language
+  --targetFile <targetFile>        The target file for the translations
+  --targetLng <targetLanguage>     A language code for the target language
+  --serviceConfig <pathToKeyFile>  supply configuration (e.g. path to key file)
+                                   for the translation service
+  --list-services                  outputs a list of available services
+  -m, --matcher <matcher>          selects the matcher to be used for
+                                   interpolations (default: "icu")
+  --list-matchers                  outputs a list of available matchers
+  -h, --help                       display help for command

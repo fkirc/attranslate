@@ -21,12 +21,12 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
       "A language code for the source language"
     )
     .requiredOption(
-      "--dstFile <destinationFile>",
-      "The destination file for the translations"
+      "--targetFile <targetFile>",
+      "The target file for the translations"
     )
     .requiredOption(
-      "--dstLng <destinationLanguage>",
-      "A language code for the destination language"
+      "--targetLng <targetLanguage>",
+      "A language code for the target language"
     )
     .requiredOption(
       "--serviceConfig <pathToKeyFile>",
@@ -61,8 +61,8 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
   const args: CliArgs = {
     srcFile: commander.srcFile,
     srcLng: commander.srcLng,
-    dstFile: commander.dstFile,
-    dstLng: commander.dstLng,
+    targetFile: commander.targetFile,
+    targetLng: commander.targetLng,
     serviceConfig: commander.serviceConfig,
   };
   translateCli(args).catch((e: Error) => {
