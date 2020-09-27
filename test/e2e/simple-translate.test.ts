@@ -8,12 +8,12 @@ const cacheMissingDir = "test-assets/cache-missing/";
 
 describe.each([
   {
-    src: "test-assets/flat-json/hello-en-flat.json",
-    target: "test-assets/flat-json/hello-de-flat.json",
+    src: "test-assets/flat-json/count-en.flat.json",
+    target: "test-assets/flat-json/count-de.flat.json",
   },
   {
-    src: "test-assets/nested-json/hello-en-nested.json",
-    target: "test-assets/nested-json/hello-de-nested.json",
+    src: "test-assets/nested-json/count-en.nested.json",
+    target: "test-assets/nested-json/count-de.nested.json",
   },
 ])("translate %p", (args) => {
   const commonArgs: E2EArgs = {
