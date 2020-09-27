@@ -77,9 +77,7 @@ describe.each([
     cacheDir: cacheMissingDir,
   };
   test("missing cache, missing target", async () => {
-    await runCommand(
-      `rm -f ${join(cacheMissingDir, "attranslate-cache*.json")}`
-    );
+    await runCommand(`rm -f ${join(cacheMissingDir, "*cache*.json")}`);
     await runCommand(`rm ${args.target}`);
     const output = await runTranslate(buildE2EArgs(missingCacheArgs));
     expect(output).toContain(
@@ -87,14 +85,11 @@ describe.each([
     );
     expect(output).toContain(`Add 3 new translations`);
     expect(output).toContain(`Write cache`);
-    expect(output).toContain(cacheMissingDir);
     expect(output).toContain(`Write target-file ${getDebugPath(args.target)}`);
   });
 
   test("missing cache, clean target", async () => {
-    await runCommand(
-      `rm -f ${join(cacheMissingDir, "attranslate-cache*.json")}`
-    );
+    await runCommand(`rm -f ${join(cacheMissingDir, "*cache*.json")}`);
     const output = await runTranslate(buildE2EArgs(missingCacheArgs));
     expect(output).toContain(
       `Cache not found -> Generate a new cache to enable selective translations.`
@@ -103,6 +98,19 @@ describe.each([
       "Skipped translations because we had to generate a new cache."
     );
     expect(output).toContain(`Write cache`);
-    expect(output).toContain(cacheMissingDir);
+  });
+
+  test("missing cache, modified target", async () => {
+    await runCommand(`rm -f ${join(cacheMissingDir, "*cache*.json")}`);
+    await runCommand(`cp ${modifiedTarget} ${args.target}`);
+    const output = await runTranslate(buildE2EArgs(missingCacheArgs));
+    expect(output).toContain(
+      `Cache not found -> Generate a new cache to enable selective translations.`
+    );
+    expect(output).toContain(
+      "Skipped translations because we had to generate a new cache."
+    );
+    expect(output).toContain(`Write cache`);
+    await runCommand(`git checkout ${args.target}`);
   });
 });
