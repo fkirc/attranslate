@@ -1,7 +1,7 @@
 import { runTranslate, runTranslateExpectFailure } from "../test-util";
 import { readUtf8File } from "../../src/util/util";
 
-const helpRef = "test/help/help_reference.txt";
+const helpRef = "test-assets/help_reference.txt";
 
 function getHelpReference(): string {
   return readUtf8File(helpRef);
