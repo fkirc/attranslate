@@ -15,9 +15,9 @@ export const enSrc: TSet = {
 
 export const commonArgs: Omit<CoreArgs, "oldTarget" | "srcCache"> = {
   src: enSrc,
-  service: "google-translate", // TODO: Type safety
+  service: "google-translate",
   serviceConfig: "gcloud/gcloud_service_account.json",
-  matcher: "icu", // TODO: Type safete
+  matcher: "icu",
   targetLng: "de",
 };
 

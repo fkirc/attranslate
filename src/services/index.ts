@@ -28,9 +28,7 @@ export interface TranslationService {
   ) => Promise<TranslationResult[]>;
 }
 
-export const serviceMap: {
-  [k: string]: TranslationService;
-} = {
+export const serviceMap = {
   "google-translate": new GoogleTranslate(),
   deepl: new DeepL(),
   azure: new AzureTranslator(),

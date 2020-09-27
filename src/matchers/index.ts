@@ -10,9 +10,7 @@ export type Matcher = (
   replacer: (index: number) => string
 ) => { from: string; to: string }[];
 
-export const matcherMap: {
-  [k: string]: Matcher;
-} = {
+export const matcherMap = {
   none: matchNothing,
   icu: matchIcu,
   i18next: matchI18Next,

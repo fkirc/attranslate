@@ -81,8 +81,6 @@ test("no cache, partial target", async () => {
   const expectRes: CoreResults = {
     ...commonResult,
     newTarget: germanTarget,
-    countNew: 6,
-    countUpdated: 0,
   };
   const res = await translateCore(args);
   expect(res).toStrictEqual(expectRes);

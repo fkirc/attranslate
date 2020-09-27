@@ -15,9 +15,9 @@ export interface CoreArgs {
   srcCache: TSet | null;
   oldTarget: TSet | null;
   targetLng: string;
-  service: keyof typeof serviceMap; // TODO: Type safety
+  service: keyof typeof serviceMap;
   serviceConfig: string;
-  matcher: keyof typeof matcherMap; // TODO: Type safety
+  matcher: keyof typeof matcherMap;
 }
 
 export interface CoreResults {
