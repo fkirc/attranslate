@@ -1,6 +1,9 @@
 import { runCommand, runTranslate } from "../test-util";
 import { buildE2EArgs, defaultE2EArgs, E2EArgs } from "./e2e-common";
 
+const outdatedCacheDir = "test-assets/outdated-cache/";
+const cacheDir = "test-assets/cache/";
+
 describe.each([
   {
     src: "test-assets/hello-en-flat.json",
@@ -15,6 +18,7 @@ describe.each([
     ...defaultE2EArgs,
     srcFile: args.src,
     targetFile: args.target,
+    cacheDir,
   };
   test("up-to-date cache, up-to-date target", async () => {
     const output = await runTranslate(buildE2EArgs(commonArgs));
@@ -26,5 +30,17 @@ describe.each([
     const output = await runTranslate(buildE2EArgs(commonArgs));
     expect(output).toContain("Add 3 new translations");
     expect(output).toContain("Write target-file");
+  });
+
+  const outdatedCacheArgs: E2EArgs = {
+    ...commonArgs,
+    cacheDir: outdatedCacheDir,
+  };
+  test("outdated cache, missing target", async () => {
+    const output = await runTranslate(buildE2EArgs(outdatedCacheArgs));
+    await runCommand(`rm ${args.target}`);
+    expect(output).toContain("Add 3 new translations");
+    expect(output).toContain("Write target-file");
+    await runCommand(`git checkout ${outdatedCacheDir}`);
   });
 });
