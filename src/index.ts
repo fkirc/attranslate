@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 import commander from "commander";
 import { serviceMap } from "./services";
 import { matcherMap } from "./matchers";
@@ -65,12 +63,16 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
     targetLng: commander.targetLng,
     serviceConfig: commander.serviceConfig,
   };
-  translateCli(args).catch((e: Error) => {
-    console.log();
-    console.error("An error occurred:");
-    console.error(e.message);
-    console.error(e.stack);
-    console.log();
-    process.exit(1);
-  });
+  translateCli(args)
+    .then(() => {
+      process.exit(0);
+    })
+    .catch((e: Error) => {
+      console.log();
+      console.error("An error occurred:");
+      console.error(e.message);
+      console.error(e.stack);
+      console.log();
+      process.exit(1);
+    });
 }
