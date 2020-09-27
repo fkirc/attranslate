@@ -4,7 +4,7 @@ import { readTFile, writeTFile } from "../serializers/nested-json";
 import { existsSync } from "fs";
 import { TSet } from "./core-definitions";
 import { areEqual } from "./tset-ops";
-import { getDebugPath } from "../util/util";
+import { checkDir, getDebugPath } from "../util/util";
 
 export interface CliArgs {
   srcFile: string;
@@ -12,10 +12,12 @@ export interface CliArgs {
   targetFile: string;
   targetLng: string;
   serviceConfig: string;
+  cacheDir: string;
 }
 
 function resolveCachePath(args: CliArgs): string {
-  const cacheDir = "."; // TODO: Config
+  const cacheDir = args.cacheDir;
+  checkDir(cacheDir);
   const baseName = path.basename(args.srcFile);
   const cacheName = `attranslate-cache-${args.srcLng}_${baseName}.json`;
   return path.resolve(process.cwd(), cacheDir, cacheName);

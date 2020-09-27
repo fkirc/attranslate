@@ -22,7 +22,7 @@ function isDirectory(path: string): boolean {
   }
 }
 
-function checkDir(dir: string): void {
+export function checkDir(dir: string): void {
   checkExists(dir);
   if (!isDirectory(dir)) {
     logFatal(`${getDebugPath(dir)} is not a directory.`);

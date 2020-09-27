@@ -30,6 +30,11 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
       "--serviceConfig <pathToKeyFile>",
       "supply configuration (e.g. path to key file) for the translation service"
     )
+    .option(
+      "--cacheDir <srcCacheDir>",
+      "The directory where the source-cache is expected to be found",
+      "."
+    )
     .option("--list-services", `outputs a list of available services`)
     .option(
       "-m, --matcher <matcher>",
@@ -62,6 +67,7 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
     targetFile: commander.targetFile,
     targetLng: commander.targetLng,
     serviceConfig: commander.serviceConfig,
+    cacheDir: commander.cacheDir,
   };
   translateCli(args)
     .then(() => {

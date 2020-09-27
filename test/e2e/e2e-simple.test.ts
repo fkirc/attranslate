@@ -10,7 +10,7 @@ describe.each([
     target: "test-assets/hello-de-nested.json",
   },
 ])("simple translate", (args) => {
-  const commonArgs = `--srcFile='${args.src}' --srcLng='en' --targetFile='${args.target}' --targetLng='de' --serviceConfig='gcloud/gcloud_service_account.json'`;
+  const commonArgs = `--srcFile='${args.src}' --srcLng='en' --targetFile='${args.target}' --targetLng='de' --serviceConfig='gcloud/gcloud_service_account.json' --cacheDir='test-assets/'`;
 
   test("up-to-date cache, up-to-date target", async () => {
     const output = await runTranslate(commonArgs);
