@@ -5,6 +5,10 @@ describe.each([
     src: "test-assets/hello-en-flat.json",
     target: "test-assets/hello-de-flat.json",
   },
+  {
+    src: "test-assets/hello-en-nested.json",
+    target: "test-assets/hello-de-nested.json",
+  },
 ])("simple translate", (args) => {
   const commonArgs = `--srcFile='${args.src}' --srcLng='en' --targetFile='${args.target}' --targetLng='de' --serviceConfig='gcloud/gcloud_service_account.json'`;
 

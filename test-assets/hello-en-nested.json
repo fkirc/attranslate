@@ -1,0 +1,9 @@
+{
+  "inner": {
+    "innerInner": {
+      "hello": "Hello"
+    },
+    "world": "World"
+  },
+  "translation": "Translation script"
+}
