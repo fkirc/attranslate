@@ -22,6 +22,7 @@ describe.each([
     targetFile: args.target,
     cacheDir,
   };
+  const modifiedTarget = args.target + ".modified.json";
   test("up-to-date cache, missing target", async () => {
     await runCommand(`rm ${args.target}`);
     const output = await runTranslate(buildE2EArgs(commonArgs));
@@ -29,9 +30,16 @@ describe.each([
     expect(output).toContain("Write target-file");
   });
 
-  test("up-to-date cache, up-to-date target", async () => {
+  test("up-to-date cache, clean target", async () => {
     const output = await runTranslate(buildE2EArgs(commonArgs));
     expect(output).toBe("Nothing changed, translations are up-to-date.\n");
+  });
+
+  test("up-to-date cache, modified target", async () => {
+    await runCommand(`cp ${modifiedTarget} ${args.target}`);
+    const output = await runTranslate(buildE2EArgs(commonArgs));
+    expect(output).toBe("Nothing changed, translations are up-to-date.\n");
+    await runCommand(`git checkout ${args.target}`);
   });
 
   const outdatedCacheArgs: E2EArgs = {
@@ -47,7 +55,7 @@ describe.each([
     await runCommand(`git checkout ${cacheOutdatedDir}`);
   });
 
-  test("outdated cache, up-to-date target", async () => {
+  test("outdated cache, clean target", async () => {
     const output = await runTranslate(buildE2EArgs(outdatedCacheArgs));
     expect(output).toContain(`Write cache`);
     expect(output).toContain(cacheOutdatedDir);
@@ -73,7 +81,7 @@ describe.each([
     expect(output).toContain(`Write target-file ${getDebugPath(args.target)}`);
   });
 
-  test("missing cache, up-to-date target", async () => {
+  test("missing cache, clean target", async () => {
     await runCommand(
       `rm -f ${join(cacheMissingDir, "attranslate-cache*.json")}`
     );
