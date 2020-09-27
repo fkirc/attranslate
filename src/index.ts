@@ -67,7 +67,7 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
   };
   translateCli(args).catch((e: Error) => {
     console.log();
-    console.error("An error has occured:");
+    console.error("An error occurred:");
     console.error(e.message);
     console.error(e.stack);
     console.log();
