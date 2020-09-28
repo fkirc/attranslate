@@ -29,8 +29,8 @@ function expectedTSet(nested: boolean): TSet {
 describe.each([
   { srcFile: "test-assets/flat-json/count-en.flat.json", nested: false },
   { srcFile: "test-assets/nested-json/count-en.nested.json", nested: true },
-])("Read - delete - write - git-diff", (args) => {
-  test("Read-write %p", async () => {
+])("Read/write %p", (args) => {
+  test("Read - delete - write - git-diff", async () => {
     const tSet = readTFile(args.srcFile, "en");
     expect(tSet).toStrictEqual(expectedTSet(args.nested));
     await runCommand(`rm ${args.srcFile}`);
