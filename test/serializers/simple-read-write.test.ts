@@ -2,8 +2,6 @@ import { readTFile, writeTFile } from "../../src/serializers/nested-json";
 import { TSet } from "../../src/core/core-definitions";
 import { runCommand } from "../test-util";
 
-// TODO: Fix output format to pass these tests.
-
 function expectedTSet(nested: boolean): TSet {
   if (nested) {
     return {
@@ -25,6 +23,7 @@ function expectedTSet(nested: boolean): TSet {
     };
   }
 }
+// TODO: Parameterize this test with file + serializer + nested
 
 describe.each([
   { srcFile: "test-assets/flat-json/count-en.flat.json", nested: false },
