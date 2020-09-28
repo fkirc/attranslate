@@ -4,13 +4,18 @@ import { runCommand } from "../test-util";
 
 // TODO: Fix output format to pass these tests.
 
-describe.each([
-  { srcFile: "test-assets/flat-json/count-en.flat.json" },
-  { srcFile: "test-assets/nested-json/count-en.nested.json" },
-])("Simple read-write", (args) => {
-  test("Read-write %p", async () => {
-    const tSet = readTFile(args.srcFile, "en");
-    const expectTSet: TSet = {
+function expectedTSet(nested: boolean): TSet {
+  if (nested) {
+    return {
+      lng: "en",
+      translations: new Map([
+        ["inner.innerInner.one", "One"],
+        ["inner.two", "Two"],
+        ["three", "Three"],
+      ]),
+    };
+  } else {
+    return {
       lng: "en",
       translations: new Map([
         ["one", "One"],
@@ -18,7 +23,17 @@ describe.each([
         ["three", "Three"],
       ]),
     };
-    expect(tSet).toStrictEqual(expectTSet);
+  }
+}
+
+describe.each([
+  { srcFile: "test-assets/flat-json/count-en.flat.json", nested: false },
+  { srcFile: "test-assets/nested-json/count-en.nested.json", nested: true },
+])("Read - delete - write - git-diff", (args) => {
+  test("Read-write %p", async () => {
+    const tSet = readTFile(args.srcFile, "en");
+    expect(tSet).toStrictEqual(expectedTSet(args.nested));
+    await runCommand(`rm ${args.srcFile}`);
     writeTFile(args.srcFile, tSet);
     await runCommand(`git diff --exit-code ${args.srcFile}`);
   });
