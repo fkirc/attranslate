@@ -8,9 +8,9 @@ export interface E2EArgs {
 }
 
 export const defaultE2EArgs: E2EArgs = {
-  srcFile: "some-invalid",
+  srcFile: "package.json",
   srcLng: "en",
-  targetFile: "some-invalid",
+  targetFile: "tsconfig.json",
   targetLng: "de",
   serviceConfig: "gcloud/gcloud_service_account.json",
   cacheDir: "test-assets",

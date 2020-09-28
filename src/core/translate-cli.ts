@@ -20,7 +20,18 @@ function resolveCachePath(args: CliArgs): string {
   checkDir(cacheDir);
   const baseName = path.basename(args.srcFile);
   const cacheName = `attranslate-cache-${args.srcLng}_${baseName}.json`;
-  return path.resolve(process.cwd(), cacheDir, cacheName);
+  return path.resolve(cacheDir, cacheName);
+}
+
+function resolveOldTarget(args: CliArgs): TSet | null {
+  const targetPath = path.resolve(args.targetFile);
+  const targetDir = path.dirname(targetPath);
+  checkDir(targetDir);
+  if (existsSync(targetPath)) {
+    return readTFile(targetPath, args.targetLng);
+  } else {
+    return null;
+  }
 }
 
 export async function translateCli(args: CliArgs) {
@@ -32,10 +43,7 @@ export async function translateCli(args: CliArgs) {
     srcCache = readTFile(cachePath, args.srcLng);
   }
 
-  let oldTarget: TSet | null = null;
-  if (existsSync(args.targetFile)) {
-    oldTarget = readTFile(args.targetFile, args.targetLng);
-  }
+  const oldTarget: TSet | null = resolveOldTarget(args);
 
   const coreArgs: CoreArgs = {
     src,
