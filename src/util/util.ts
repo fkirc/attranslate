@@ -58,7 +58,7 @@ export function deleteFile(path: string): void {
 }
 
 export function writeJsonFile(path: string, object: unknown): string {
-  const jsonString = JSON.stringify(object);
+  const jsonString = JSON.stringify(object, null, 2);
   writeFileSync(path, jsonString, { encoding: "utf8" });
   return jsonString;
 }
