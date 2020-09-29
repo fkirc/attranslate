@@ -4,7 +4,7 @@ import {
   reInsertInterpolations,
   Matcher,
 } from "../matchers/matcher-definitions";
-import { TResult, TranslationService, TString } from ".";
+import { TResult, TranslationService, TString } from "./service-definitions";
 import { google } from "@google-cloud/translate/build/protos/protos";
 import ITranslateTextRequest = google.cloud.translation.v3.ITranslateTextRequest;
 import { ClientOptions } from "google-gax";

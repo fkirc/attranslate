@@ -1,5 +1,5 @@
 import commander from "commander";
-import { serviceMap } from "./services";
+import { serviceMap } from "./services/service-definitions";
 import { matcherMap } from "./matchers/matcher-definitions";
 import { translateCli, CliArgs } from "./core/translate-cli";
 

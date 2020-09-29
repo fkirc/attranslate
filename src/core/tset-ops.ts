@@ -1,5 +1,5 @@
 import { TSet } from "./core-definitions";
-import { TResult, TString } from "../services";
+import { TResult, TString } from "../services/service-definitions";
 import { logFatal } from "../util/util";
 
 export type DiffStrategy =

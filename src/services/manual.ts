@@ -4,7 +4,7 @@ import {
   reInsertInterpolations,
   Matcher,
 } from "../matchers/matcher-definitions";
-import { TranslationService } from ".";
+import { TranslationService } from "./service-definitions";
 
 export class ManualTranslation implements TranslationService {
   private interpolationMatcher: Matcher | undefined;

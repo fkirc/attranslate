@@ -1,5 +1,5 @@
 import { TSet } from "./core-definitions";
-import { serviceMap } from "../services";
+import { serviceMap } from "../services/service-definitions";
 import { matcherMap } from "../matchers/matcher-definitions";
 import {
   convertFromServiceResults,

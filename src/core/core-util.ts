@@ -1,6 +1,9 @@
 import { CoreArgs } from "./translate-core";
 import { Matcher, matcherMap } from "../matchers/matcher-definitions";
-import { serviceMap, TranslationService } from "../services";
+import {
+  serviceMap,
+  TranslationService,
+} from "../services/service-definitions";
 
 export function getMatcherInstance(args: CoreArgs): Matcher {
   const matcher: keyof typeof matcherMap = args.matcher;

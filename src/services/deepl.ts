@@ -1,6 +1,6 @@
 import fetch from "node-fetch";
 
-import { TranslationService, TResult } from ".";
+import { TranslationService, TResult } from "./service-definitions";
 import {
   replaceInterpolations,
   reInsertInterpolations,
