@@ -1,6 +1,6 @@
 import { TSet } from "./core-definitions";
 import { serviceMap } from "../services";
-import { matcherMap } from "../matchers";
+import { matcherMap } from "../matchers/matcher-definitions";
 import {
   convertFromServiceResults,
   convertToTStringList,

@@ -1,4 +1,4 @@
-import { Matcher } from ".";
+import { Matcher } from "./matcher-definitions";
 
 export const matchI18Next: Matcher = (
   input: string,

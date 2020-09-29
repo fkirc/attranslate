@@ -1,4 +1,4 @@
-import { Matcher } from ".";
+import { Matcher } from "./matcher-definitions";
 
 export const matchSprintf: Matcher = (
   input: string,

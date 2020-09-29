@@ -3,7 +3,7 @@ import {
   replaceInterpolations,
   reInsertInterpolations,
   Matcher,
-} from "../matchers";
+} from "../matchers/matcher-definitions";
 import { TResult, TranslationService, TString } from ".";
 import { google } from "@google-cloud/translate/build/protos/protos";
 import ITranslateTextRequest = google.cloud.translation.v3.ITranslateTextRequest;

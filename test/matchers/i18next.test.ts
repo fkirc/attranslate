@@ -1,5 +1,5 @@
 import { matchI18Next } from "../../src/matchers/i18next";
-import { replaceInterpolations } from "../../src/matchers";
+import { replaceInterpolations } from "../../src/matchers/matcher-definitions";
 
 describe("i18next replacer", () => {
   it("should not error when no placeholders are present", () => {

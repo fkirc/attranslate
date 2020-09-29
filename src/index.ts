@@ -1,6 +1,6 @@
 import commander from "commander";
 import { serviceMap } from "./services";
-import { matcherMap } from "./matchers";
+import { matcherMap } from "./matchers/matcher-definitions";
 import { translateCli, CliArgs } from "./core/translate-cli";
 
 process.on("unhandledRejection", (error) => {

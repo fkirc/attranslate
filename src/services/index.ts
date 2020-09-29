@@ -2,7 +2,7 @@ import { GoogleTranslate } from "./google-translate";
 import { DeepL } from "./deepl";
 import { AzureTranslator } from "./azure-translator";
 import { ManualTranslation } from "./manual";
-import { Matcher } from "../matchers";
+import { Matcher } from "../matchers/matcher-definitions";
 
 export interface TResult {
   key: string;

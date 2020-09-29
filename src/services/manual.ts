@@ -3,7 +3,7 @@ import {
   replaceInterpolations,
   reInsertInterpolations,
   Matcher,
-} from "../matchers";
+} from "../matchers/matcher-definitions";
 import { TranslationService } from ".";
 
 export class ManualTranslation implements TranslationService {

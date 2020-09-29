@@ -1,5 +1,5 @@
 import { CoreArgs } from "./translate-core";
-import { Matcher, matcherMap } from "../matchers";
+import { Matcher, matcherMap } from "../matchers/matcher-definitions";
 import { serviceMap, TranslationService } from "../services";
 
 export function getMatcherInstance(args: CoreArgs): Matcher {

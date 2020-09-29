@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import { parse } from "messageformat-parser";
-import { Matcher } from ".";
+import { Matcher } from "./matcher-definitions";
 
 export const matchIcu: Matcher = (
   input: string,

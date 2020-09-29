@@ -6,7 +6,7 @@ import {
   Matcher,
   reInsertInterpolations,
   replaceInterpolations,
-} from "../matchers";
+} from "../matchers/matcher-definitions";
 
 interface TranslationResponse {
   translations: [
