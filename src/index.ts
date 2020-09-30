@@ -7,6 +7,10 @@ process.on("unhandledRejection", (error) => {
   console.error("[fatal]", error);
 });
 
+function formatOptions(options: string[]): string {
+  return `One of ${options.map((o) => `"${o}"`).join(", ")}`;
+}
+
 export function run(process: NodeJS.Process, cliBinDir: string): void {
   commander.addHelpCommand(false);
   commander
@@ -37,27 +41,19 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
     )
     .option("--list-services", `outputs a list of available services`)
     .option(
-      "-m, --matcher <matcher>",
-      `selects the matcher to be used for interpolations`,
+      "--matcher <matcher>",
+      formatOptions(Object.keys(matcherMap)),
       "icu"
     )
-    .option("--list-matchers", `outputs a list of available matchers`)
     .parse(process.argv);
 
   if (commander.args?.length) {
     // Args are not permitted, only work with options.
     commander.unknownCommand();
   }
-
   if (commander.listServices) {
     console.log("Available services:");
     console.log(Object.keys(serviceMap).join(", "));
-    process.exit(0);
-  }
-
-  if (commander.listMatchers) {
-    console.log("Available matchers:");
-    console.log(Object.keys(matcherMap).join(", "));
     process.exit(0);
   }
 
