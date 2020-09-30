@@ -25,6 +25,12 @@ const testArgs: {
     target: "test-assets/nested-json/count-de.nested.json",
     targetFormat: "nested-json",
   },
+  {
+    src: "test-assets/nested-json/count-en.nested.json",
+    srcFormat: "nested-json",
+    target: "test-assets/nested-json/count-de.flattened.json",
+    targetFormat: "flat-json",
+  },
 ];
 
 describe.each(testArgs)("translate %p", (args) => {
