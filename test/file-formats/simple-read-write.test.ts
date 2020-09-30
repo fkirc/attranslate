@@ -1,4 +1,4 @@
-import { readTFile, writeTFile } from "../../src/serializers/nested-json";
+import { readTFile, writeTFile } from "../../src/file-formats/nested-json";
 import { TSet } from "../../src/core/core-definitions";
 import { runCommand } from "../test-util";
 

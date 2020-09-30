@@ -1,6 +1,6 @@
 import * as path from "path";
 import { CoreArgs, translateCore } from "./translate-core";
-import { readTFile, writeTFile } from "../serializers/nested-json";
+import { readTFile, writeTFile } from "../file-formats/nested-json";
 import { existsSync } from "fs";
 import { TSet } from "./core-definitions";
 import { areEqual } from "./tset-ops";
