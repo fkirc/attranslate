@@ -53,6 +53,17 @@ test("target not a JSON", async () => {
   expect(output).toBe(`error: Failed to parse ${getDebugPath("README.md")}.\n`);
 });
 
+test("unknown service", async () => {
+  const args: E2EArgs = {
+    ...defaultE2EArgs,
+    service: ("some-invalid-service" as unknown) as never,
+  };
+  const output = await runTranslateExpectFailure(buildE2EArgs(args));
+  expect(output).toContain(
+    `error: Unknown service "some-invalid-service". Available services: "`
+  );
+});
+
 const requiredOptions: (keyof typeof defaultE2EArgs)[] = [
   "srcFile",
   "srcLng",

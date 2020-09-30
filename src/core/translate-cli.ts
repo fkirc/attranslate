@@ -43,9 +43,9 @@ export function formatCliOptions(options: string[]): string {
 export async function translateCli(cliArgs: CliArgs) {
   if (!(cliArgs.service in serviceMap)) {
     logFatal(
-      `Unknown service ${
+      `Unknown service "${
         cliArgs.service
-      }. Available services: ${formatCliOptions(Object.keys(serviceMap))}`
+      }". Available services: ${formatCliOptions(Object.keys(serviceMap))}`
     );
   }
 
