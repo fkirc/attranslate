@@ -85,6 +85,13 @@ export async function translateCli(cliArgs: CliArgs) {
     fileFormatMap[cliArgs.targetFormat as keyof typeof fileFormatMap];
   const cacheFileFormat = fileFormatMap["flat-json"];
   const src = srcFileFormat.readTFile(cliArgs.srcFile, cliArgs.srcLng);
+  if (!src.translations.size) {
+    logFatal(
+      `${getDebugPath(
+        cliArgs.srcFile
+      )} does not contain any translatable content`
+    );
+  }
 
   const cachePath = resolveCachePath(cliArgs);
   let srcCache: TSet | null = null;

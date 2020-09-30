@@ -120,7 +120,6 @@ export async function translateCore(args: CoreArgs): Promise<CoreResults> {
   }
 
   if (!args.srcCache) {
-    // TODO: Move message?
     console.info(
       `Cache not found -> Generate a new cache to enable selective translations.\n` +
         `To make selective translations, do one of the following:\n` +

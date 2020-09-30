@@ -73,6 +73,33 @@ test("src not a JSON", async () => {
   expect(output).toBe(`error: Failed to parse ${getDebugPath("README.md")}.\n`);
 });
 
+test("src empty JSON", async () => {
+  const args: E2EArgs = {
+    ...defaultE2EArgs,
+    srcFile: "test-assets/invalid/empty.json",
+  };
+  const output = await runTranslateExpectFailure(buildE2EArgs(args));
+  expect(output).toBe(
+    `error: ${getDebugPath(
+      args.srcFile
+    )} does not contain any translatable content\n`
+  );
+});
+
+test("src non-flat JSON", async () => {
+  const args: E2EArgs = {
+    ...defaultE2EArgs,
+    srcFile: "test-assets/nested-json/count-en.nested.json",
+    srcFormat: "flat-json",
+  };
+  const output = await runTranslateExpectFailure(buildE2EArgs(args));
+  expect(output).toBe(
+    `error: ${getDebugPath(
+      args.srcFile
+    )} is not a flat JSON-file - Property 'inner' is not a string\n`
+  );
+});
+
 test("target not a JSON", async () => {
   const args: E2EArgs = {
     ...defaultE2EArgs,
