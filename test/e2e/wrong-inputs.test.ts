@@ -13,6 +13,15 @@ test("srcFile not existing", async () => {
   );
 });
 
+test("srcFile not a file", async () => {
+  const args: E2EArgs = {
+    ...defaultE2EArgs,
+    srcFile: ".",
+  };
+  const output = await runTranslateExpectFailure(buildE2EArgs(args));
+  expect(output).toBe(`error: ${getDebugPath(".")} is a directory.\n`);
+});
+
 test("targetFile in dir not existing", async () => {
   const args: E2EArgs = {
     ...defaultE2EArgs,
@@ -22,6 +31,15 @@ test("targetFile in dir not existing", async () => {
   expect(output).toBe(
     `error: ${getDebugPath("not-existing-dir")} does not exist.\n`
   );
+});
+
+test("targetFile not a file", async () => {
+  const args: E2EArgs = {
+    ...defaultE2EArgs,
+    targetFile: "src",
+  };
+  const output = await runTranslateExpectFailure(buildE2EArgs(args));
+  expect(output).toBe(`error: ${getDebugPath("src")} is a directory.\n`);
 });
 
 test("cacheDir not existing", async () => {
