@@ -15,9 +15,9 @@ export interface E2EArgs {
 }
 
 export const defaultE2EArgs: E2EArgs = {
-  srcFile: "package.json",
+  srcFile: "test-assets/flat-json/count-en.flat.json",
   srcLng: "en",
-  srcFormat: "nested-json",
+  srcFormat: "flat-json",
   targetFile: "default-target.json",
   targetLng: "de",
   targetFormat: "nested-json",
