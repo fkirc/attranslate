@@ -2,24 +2,38 @@ import { runCommand, runTranslate } from "../test-util";
 import { buildE2EArgs, defaultE2EArgs, E2EArgs } from "./e2e-common";
 import { join } from "path";
 import { getDebugPath } from "../../src/util/util";
+import { fileFormatMap } from "../../src/file-formats/file-format-definitions";
 const cacheDir = "test-assets/cache/";
 const cacheOutdatedDir = "test-assets/cache-outdated/";
 const cacheMissingDir = "test-assets/cache-missing/";
 
-describe.each([
+const testArgs: {
+  src: string;
+  srcFormat: keyof typeof fileFormatMap;
+  target: string;
+  targetFormat: keyof typeof fileFormatMap;
+}[] = [
   {
     src: "test-assets/flat-json/count-en.flat.json",
+    srcFormat: "flat-json",
     target: "test-assets/flat-json/count-de.flat.json",
+    targetFormat: "flat-json",
   },
   {
     src: "test-assets/nested-json/count-en.nested.json",
+    srcFormat: "nested-json",
     target: "test-assets/nested-json/count-de.nested.json",
+    targetFormat: "nested-json",
   },
-])("translate %p", (args) => {
+];
+
+describe.each(testArgs)("translate %p", (args) => {
   const commonArgs: E2EArgs = {
     ...defaultE2EArgs,
     srcFile: args.src,
+    srcFormat: args.srcFormat,
     targetFile: args.target,
+    targetFormat: args.targetFormat,
     cacheDir,
   };
   const modifiedTarget = args.target + ".modified.json";
