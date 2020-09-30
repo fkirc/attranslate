@@ -1,5 +1,6 @@
 import { runTranslate, runTranslateExpectFailure } from "../test-util";
 import { readUtf8File } from "../../src/util/util";
+import { buildE2EArgs, defaultE2EArgs } from "./e2e-common";
 
 const helpRef = "test-assets/help_reference.txt";
 
@@ -40,9 +41,8 @@ test("unknown command without options", async () => {
 });
 
 test("unknown command with options", async () => {
-  const output = await runTranslateExpectFailure(
-    "jivduns --srcFile=di --srcLng=en --targetFile=opjb --targetLng=zh --serviceConfig=sfjoij"
-  );
+  const validOptions = buildE2EArgs(defaultE2EArgs);
+  const output = await runTranslateExpectFailure(`jivduns ${validOptions}`);
   expect(output).toBe(
     "error: unknown command 'jivduns'. See 'attranslate --help'.\n"
   );
@@ -56,8 +56,7 @@ test("unknown option without valid options", async () => {
 });
 
 test("unknown option + valid options", async () => {
-  const output = await runTranslateExpectFailure(
-    "--version --srcFile=di --srcLng=de --targetFile=da --targetLng=en --serviceConfig=jfrj"
-  );
+  const validOptions = buildE2EArgs(defaultE2EArgs);
+  const output = await runTranslateExpectFailure(`${validOptions} --version`);
   expect(output).toBe("error: unknown option '--version'\n");
 });

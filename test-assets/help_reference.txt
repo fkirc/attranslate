@@ -1,14 +1,18 @@
 Usage: attranslate [options]
 
 Options:
-  --srcFile <sourceFile>           The source file to be translated
-  --srcLng <sourceLanguage>        A language code for the source language
-  --targetFile <targetFile>        The target file for the translations
-  --targetLng <targetLanguage>     A language code for the target language
-  --serviceConfig <pathToKeyFile>  supply configuration (e.g. path to key file)
-                                   for the translation service
-  --list-services                  outputs a list of available services
-  -m, --matcher <matcher>          selects the matcher to be used for
-                                   interpolations (default: "icu")
-  --list-matchers                  outputs a list of available matchers
-  -h, --help                       display help for command
+  --srcFile <sourceFile>             The source file to be translated
+  --srcLng <sourceLanguage>          A language code for the source language
+  --srcFormat <sourceFileFormat>     One of "flat-json", "nested-json"
+  --targetFile <targetFile>          The target file for the translations
+  --targetLng <targetLanguage>       A language code for the target language
+  --targetFormat <targetFileFormat>  One of "flat-json", "nested-json"
+  --service <translationService>     One of "google-translate", "deepl",
+                                     "azure", "manual"
+  --serviceConfig <pathToKeyFile>    supply configuration (e.g. path to key
+                                     file) for the translation service
+  --cacheDir <srcCacheDir>           The directory where the source-cache is
+                                     expected to be found (default: ".")
+  --matcher <matcher>                One of "none", "icu", "i18next", "sprintf"
+                                     (default: "icu")
+  -h, --help                         display help for command

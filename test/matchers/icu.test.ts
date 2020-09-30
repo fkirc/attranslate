@@ -1,5 +1,5 @@
 import { matchIcu } from "../../src/matchers/icu";
-import { replaceInterpolations } from "../../src/matchers";
+import { replaceInterpolations } from "../../src/matchers/matcher-definitions";
 
 describe("ICU replacer", () => {
   it("should not error when no placeholders are present", () => {
