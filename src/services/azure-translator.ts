@@ -17,18 +17,6 @@ interface TranslationResponse {
   ];
 }
 
-interface SupportedLanguagesResponse {
-  translation: {
-    [code: string]: {
-      name: string;
-      nativeName: string;
-      direction: "ltr" | "rtl";
-    };
-  };
-}
-
-const LANGUAGE_ENDPOINT =
-  "https://api.cognitive.microsofttranslator.com/languages?api-version=3.0";
 const TRANSLATE_ENDPOINT =
   "https://api.cognitive.microsofttranslator.com/translate?api-version=3.0";
 
@@ -36,31 +24,13 @@ export class AzureTranslator implements TranslationService {
   public name = "Azure";
   private apiKey: string | undefined;
   private interpolationMatcher: Matcher | undefined;
-  private supportedLanguages: Set<string> | undefined;
 
+  // eslint-disable-next-line require-await
   async initialize(apiKey?: string, interpolationMatcher?: Matcher) {
     if (!apiKey) throw new Error(`Please provide an API key for Azure.`);
 
     this.apiKey = apiKey;
     this.interpolationMatcher = interpolationMatcher;
-    this.supportedLanguages = await this.getAvailableLanguages();
-  }
-
-  async getAvailableLanguages() {
-    const response = await fetch(LANGUAGE_ENDPOINT);
-    const supported = (await response.json()) as SupportedLanguagesResponse;
-    const keys = Object.keys(supported.translation).map((k) => k.toLowerCase());
-
-    // Some language codes can be simplified by using only the part before the dash
-    const simplified = keys
-      .filter((k) => k.includes("-"))
-      .map((l) => l.split("-")[0]);
-
-    return new Set(keys.concat(simplified));
-  }
-
-  supportsLanguage(language: string) {
-    return this.supportedLanguages?.has(language.toLowerCase()) ?? false;
   }
 
   async translateBatch(batch: TString[], from: string, to: string) {
@@ -113,6 +83,6 @@ export class AzureTranslator implements TranslationService {
       batches.map((batch) => this.translateBatch(batch, from, to))
     );
 
-    return flatten(results); // TODO: Adapt this batch structure for gcloud
+    return flatten(results);
   }
 }

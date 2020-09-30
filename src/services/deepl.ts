@@ -27,21 +27,6 @@ export class DeepL implements TranslationService {
     this.apiKey = config;
   }
 
-  supportsLanguage(language: string) {
-    return [
-      "en",
-      "de",
-      "fr",
-      "es",
-      "pt",
-      "it",
-      "nl",
-      "pl",
-      "ru",
-      "zh",
-    ].includes(language);
-  }
-
   // eslint-disable-next-line require-await
   async translateStrings(
     strings: { key: string; value: string }[],

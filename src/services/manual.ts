@@ -15,10 +15,6 @@ export class ManualTranslation implements TranslationService {
     this.interpolationMatcher = interpolationMatcher;
   }
 
-  supportsLanguage() {
-    return true;
-  }
-
   async translateStrings(
     strings: { key: string; value: string }[],
     from: string,

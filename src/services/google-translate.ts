@@ -29,10 +29,6 @@ export class GoogleTranslate implements TranslationService {
     this.serviceConfig = serviceConfig;
   }
 
-  supportsLanguage(language: string) {
-    return true; // TODO: Maybe re-implement
-  }
-
   // eslint-disable-next-line require-await
   async translateStrings(inputs: TString[], from: string, to: string) {
     const clientOptions: ClientOptions = {
