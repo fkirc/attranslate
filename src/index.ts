@@ -1,14 +1,14 @@
 import commander from "commander";
 import { serviceMap } from "./services/service-definitions";
 import { matcherMap } from "./matchers/matcher-definitions";
-import { translateCli, CliArgs } from "./core/translate-cli";
+import { translateCli, CliArgs, formatCliOptions } from "./core/translate-cli";
 
 process.on("unhandledRejection", (error) => {
   console.error("[fatal]", error);
 });
 
-function formatOptions(options: string[]): string {
-  return `One of ${options.map((o) => `"${o}"`).join(", ")}`;
+function formatOneOfOptions(options: string[]): string {
+  return `One of ${formatCliOptions(options)}`;
 }
 
 export function run(process: NodeJS.Process, cliBinDir: string): void {
@@ -31,6 +31,10 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
       "A language code for the target language"
     )
     .requiredOption(
+      "--service <translationService>",
+      formatOneOfOptions(Object.keys(serviceMap))
+    )
+    .requiredOption(
       "--serviceConfig <pathToKeyFile>",
       "supply configuration (e.g. path to key file) for the translation service"
     )
@@ -39,10 +43,9 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
       "The directory where the source-cache is expected to be found",
       "."
     )
-    .option("--list-services", `outputs a list of available services`)
     .option(
       "--matcher <matcher>",
-      formatOptions(Object.keys(matcherMap)),
+      formatOneOfOptions(Object.keys(matcherMap)),
       "icu"
     )
     .parse(process.argv);
@@ -51,17 +54,13 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
     // Args are not permitted, only work with options.
     commander.unknownCommand();
   }
-  if (commander.listServices) {
-    console.log("Available services:");
-    console.log(Object.keys(serviceMap).join(", "));
-    process.exit(0);
-  }
 
   const args: CliArgs = {
     srcFile: commander.srcFile,
     srcLng: commander.srcLng,
     targetFile: commander.targetFile,
     targetLng: commander.targetLng,
+    service: commander.service,
     serviceConfig: commander.serviceConfig,
     cacheDir: commander.cacheDir,
   };

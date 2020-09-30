@@ -4,13 +4,15 @@ import { readTFile, writeTFile } from "../serializers/nested-json";
 import { existsSync } from "fs";
 import { TSet } from "./core-definitions";
 import { areEqual } from "./tset-ops";
-import { checkDir, getDebugPath } from "../util/util";
+import { checkDir, getDebugPath, logFatal } from "../util/util";
+import { serviceMap } from "../services/service-definitions";
 
 export interface CliArgs {
   srcFile: string;
   srcLng: string;
   targetFile: string;
   targetLng: string;
+  service: string;
   serviceConfig: string;
   cacheDir: string;
 }
@@ -34,24 +36,36 @@ function resolveOldTarget(args: CliArgs): TSet | null {
   }
 }
 
-export async function translateCli(args: CliArgs) {
-  const src = readTFile(args.srcFile, args.srcLng);
+export function formatCliOptions(options: string[]): string {
+  return `${options.map((o) => `"${o}"`).join(", ")}`;
+}
 
-  const cachePath = resolveCachePath(args);
-  let srcCache: TSet | null = null;
-  if (existsSync(cachePath)) {
-    srcCache = readTFile(cachePath, args.srcLng);
+export async function translateCli(cliArgs: CliArgs) {
+  if (!(cliArgs.service in serviceMap)) {
+    logFatal(
+      `Unknown service ${
+        cliArgs.service
+      }. Available services: ${formatCliOptions(Object.keys(serviceMap))}`
+    );
   }
 
-  const oldTarget: TSet | null = resolveOldTarget(args);
+  const src = readTFile(cliArgs.srcFile, cliArgs.srcLng);
+
+  const cachePath = resolveCachePath(cliArgs);
+  let srcCache: TSet | null = null;
+  if (existsSync(cachePath)) {
+    srcCache = readTFile(cachePath, cliArgs.srcLng);
+  }
+
+  const oldTarget: TSet | null = resolveOldTarget(cliArgs);
 
   const coreArgs: CoreArgs = {
     src,
     srcCache,
     oldTarget,
-    targetLng: args.targetLng,
-    service: "google-translate", // TODO: config
-    serviceConfig: "gcloud/gcloud_service_account.json", // TODO: config
+    targetLng: cliArgs.targetLng,
+    service: cliArgs.service as keyof typeof serviceMap,
+    serviceConfig: cliArgs.serviceConfig,
     matcher: "icu", // TODO: Config,
   };
   const result = await translateCore(coreArgs);
@@ -60,8 +74,8 @@ export async function translateCli(args: CliArgs) {
     const countUpdated: number = result.updated?.size ?? 0;
     console.info(`Add ${countAdded} new translations`);
     console.info(`Update ${countUpdated} existing translations`);
-    console.info(`Write target-file ${getDebugPath(args.targetFile)}`);
-    writeTFile(args.targetFile, result.newTarget);
+    console.info(`Write target-file ${getDebugPath(cliArgs.targetFile)}`);
+    writeTFile(cliArgs.targetFile, result.newTarget);
   }
   if (!areEqual(src, srcCache)) {
     console.info(`Write cache ${getDebugPath(cachePath)}`);

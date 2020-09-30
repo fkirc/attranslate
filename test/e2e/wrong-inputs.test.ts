@@ -52,3 +52,26 @@ test("target not a JSON", async () => {
   const output = await runTranslateExpectFailure(buildE2EArgs(args));
   expect(output).toBe(`error: Failed to parse ${getDebugPath("README.md")}.\n`);
 });
+
+const requiredOptions: (keyof typeof defaultE2EArgs)[] = [
+  "srcFile",
+  "srcLng",
+  "targetFile",
+  "targetLng",
+  "service",
+  "serviceConfig",
+];
+
+describe.each(requiredOptions)("Missing required option %s", (option) => {
+  test(`Missing required option ${option}`, async () => {
+    const args: E2EArgs = {
+      ...defaultE2EArgs,
+    };
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    args[option] = undefined;
+    const output = await runTranslateExpectFailure(buildE2EArgs(args));
+    expect(output).toContain(`error: required option '--${option}`);
+    expect(output).toContain(`not specified`);
+  });
+});
