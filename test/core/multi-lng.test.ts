@@ -12,19 +12,19 @@ interface LngT {
 }
 
 describe.each([
-  { lng: "de", t: "Hallo {{name}}" },
-  { lng: "es", t: "Hola, {{name}}" },
-  { lng: "fr", t: "Bonjour {{name}}" },
-  { lng: "it", t: "Salve {{name}}" },
+  { lng: "de", t: "Hallo {{person.name}}" },
+  { lng: "es", t: "Hola {{person.name}}" },
+  { lng: "fr", t: "Bonjour {{person.name}}" },
+  { lng: "it", t: "Ciao {{person.name}}" },
 ])("Hello %s", (lngT: LngT) => {
   test("Hello international", async () => {
     const srcHello: TSet = {
       lng: "en",
-      translations: new Map([["hello", "Hello {{name}}"]]),
+      translations: new Map([["hello", "Hello {{person.name}}"]]),
     };
     const args: CoreArgs = {
       ...commonArgs,
-      matcher: "none",
+      matcher: "i18next",
       src: srcHello,
       oldTarget: null,
       srcCache: null,
