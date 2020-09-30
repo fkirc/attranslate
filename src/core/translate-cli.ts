@@ -6,13 +6,18 @@ import { areEqual } from "./tset-ops";
 import { checkDir, getDebugPath, logFatal } from "../util/util";
 import { serviceMap } from "../services/service-definitions";
 import { matcherMap } from "../matchers/matcher-definitions";
-import { fileFormatMap } from "../file-formats/file-format-definitions";
+import {
+  fileFormatMap,
+  TFileFormat,
+} from "../file-formats/file-format-definitions";
 
 export interface CliArgs {
   srcFile: string;
   srcLng: string;
+  srcFormat: string;
   targetFile: string;
   targetLng: string;
+  targetFormat: string;
   service: string;
   serviceConfig: string;
   cacheDir: string;
@@ -27,13 +32,15 @@ function resolveCachePath(args: CliArgs): string {
   return path.resolve(cacheDir, cacheName);
 }
 
-function resolveOldTarget(args: CliArgs): TSet | null {
-  const fileFormat = fileFormatMap["nested-json"]; // TODO: Config
+function resolveOldTarget(
+  args: CliArgs,
+  targetFileFormat: TFileFormat
+): TSet | null {
   const targetPath = path.resolve(args.targetFile);
   const targetDir = path.dirname(targetPath);
   checkDir(targetDir);
   if (existsSync(targetPath)) {
-    return fileFormat.readTFile(targetPath, args.targetLng);
+    return targetFileFormat.readTFile(targetPath, args.targetLng);
   } else {
     return null;
   }
@@ -58,17 +65,34 @@ export async function translateCli(cliArgs: CliArgs) {
       }". Available matchers: ${formatCliOptions(Object.keys(matcherMap))}`
     );
   }
-
-  const fileFormat = fileFormatMap["nested-json"]; // TODO: Config
-  const src = fileFormat.readTFile(cliArgs.srcFile, cliArgs.srcLng);
+  if (!(cliArgs.srcFormat in fileFormatMap)) {
+    logFatal(
+      `Unknown source format "${
+        cliArgs.srcFormat
+      }". Available formats: ${formatCliOptions(Object.keys(fileFormatMap))}`
+    );
+  }
+  const srcFileFormat =
+    fileFormatMap[cliArgs.srcFormat as keyof typeof fileFormatMap];
+  if (!(cliArgs.targetFormat in fileFormatMap)) {
+    logFatal(
+      `Unknown target format "${
+        cliArgs.targetFormat
+      }". Available formats: ${formatCliOptions(Object.keys(fileFormatMap))}`
+    );
+  }
+  const targetFileFormat =
+    fileFormatMap[cliArgs.targetFormat as keyof typeof fileFormatMap];
+  const cacheFileFormat = fileFormatMap["nested-json"]; // TODO: Change to flat-json
+  const src = srcFileFormat.readTFile(cliArgs.srcFile, cliArgs.srcLng);
 
   const cachePath = resolveCachePath(cliArgs);
   let srcCache: TSet | null = null;
   if (existsSync(cachePath)) {
-    srcCache = fileFormat.readTFile(cachePath, cliArgs.srcLng);
+    srcCache = cacheFileFormat.readTFile(cachePath, cliArgs.srcLng);
   }
 
-  const oldTarget: TSet | null = resolveOldTarget(cliArgs);
+  const oldTarget: TSet | null = resolveOldTarget(cliArgs, targetFileFormat);
 
   const coreArgs: CoreArgs = {
     src,
@@ -82,14 +106,18 @@ export async function translateCli(cliArgs: CliArgs) {
   const result = await translateCore(coreArgs);
   if (!areEqual(result.newTarget, oldTarget)) {
     const countAdded: number = result.added?.size ?? 0;
+    if (countAdded) {
+      console.info(`Add ${countAdded} new translations`);
+    }
     const countUpdated: number = result.updated?.size ?? 0;
-    console.info(`Add ${countAdded} new translations`);
-    console.info(`Update ${countUpdated} existing translations`);
+    if (countUpdated) {
+      console.info(`Update ${countUpdated} existing translations`);
+    }
     console.info(`Write target-file ${getDebugPath(cliArgs.targetFile)}`);
-    fileFormat.writeTFile(cliArgs.targetFile, result.newTarget);
+    targetFileFormat.writeTFile(cliArgs.targetFile, result.newTarget);
   }
   if (!areEqual(src, srcCache)) {
     console.info(`Write cache ${getDebugPath(cachePath)}`);
-    fileFormat.writeTFile(cachePath, src);
+    cacheFileFormat.writeTFile(cachePath, src);
   }
 }

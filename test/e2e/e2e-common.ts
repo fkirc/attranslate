@@ -1,10 +1,13 @@
 import { serviceMap } from "../../src/services/service-definitions";
+import { fileFormatMap } from "../../src/file-formats/file-format-definitions";
 
 export interface E2EArgs {
   srcFile: string;
   srcLng: string;
+  srcFormat: keyof typeof fileFormatMap;
   targetFile: string;
   targetLng: string;
+  targetFormat: keyof typeof fileFormatMap;
   service: keyof typeof serviceMap;
   serviceConfig: string;
   cacheDir: string;
@@ -14,8 +17,10 @@ export interface E2EArgs {
 export const defaultE2EArgs: E2EArgs = {
   srcFile: "package.json",
   srcLng: "en",
+  srcFormat: "nested-json",
   targetFile: "default-target.json",
   targetLng: "de",
+  targetFormat: "nested-json",
   service: "google-translate",
   serviceConfig: "gcloud/gcloud_service_account.json",
   cacheDir: "test-assets",

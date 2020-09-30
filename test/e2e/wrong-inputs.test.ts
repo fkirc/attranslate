@@ -35,6 +35,17 @@ test("cacheDir not existing", async () => {
   );
 });
 
+test("cacheDir not a dir", async () => {
+  const args: E2EArgs = {
+    ...defaultE2EArgs,
+    cacheDir: "README.md",
+  };
+  const output = await runTranslateExpectFailure(buildE2EArgs(args));
+  expect(output).toBe(
+    `error: ${getDebugPath("README.md")} is not a directory.\n`
+  );
+});
+
 test("src not a JSON", async () => {
   const args: E2EArgs = {
     ...defaultE2EArgs,
@@ -75,11 +86,35 @@ test("unknown matcher", async () => {
   );
 });
 
+test("unknown source file format", async () => {
+  const args: E2EArgs = {
+    ...defaultE2EArgs,
+    srcFormat: ("some-invalid-source" as unknown) as never,
+  };
+  const output = await runTranslateExpectFailure(buildE2EArgs(args));
+  expect(output).toContain(
+    `error: Unknown source format "some-invalid-source". Available formats: "`
+  );
+});
+
+test("unknown target file format", async () => {
+  const args: E2EArgs = {
+    ...defaultE2EArgs,
+    targetFormat: ("some-invalid-target" as unknown) as never,
+  };
+  const output = await runTranslateExpectFailure(buildE2EArgs(args));
+  expect(output).toContain(
+    `error: Unknown target format "some-invalid-target". Available formats: "`
+  );
+});
+
 const requiredOptions: (keyof typeof defaultE2EArgs)[] = [
   "srcFile",
   "srcLng",
+  "srcFormat",
   "targetFile",
   "targetLng",
+  "targetFormat",
   "service",
   "serviceConfig",
 ];
