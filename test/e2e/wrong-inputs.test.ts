@@ -56,11 +56,22 @@ test("target not a JSON", async () => {
 test("unknown service", async () => {
   const args: E2EArgs = {
     ...defaultE2EArgs,
-    service: ("some-invalid-service" as unknown) as never,
+    service: ("some-invalid-matcher" as unknown) as never,
   };
   const output = await runTranslateExpectFailure(buildE2EArgs(args));
   expect(output).toContain(
-    `error: Unknown service "some-invalid-service". Available services: "`
+    `error: Unknown service "some-invalid-matcher". Available services: "`
+  );
+});
+
+test("unknown matcher", async () => {
+  const args: E2EArgs = {
+    ...defaultE2EArgs,
+    matcher: ("some-invalid-matcher" as unknown) as never,
+  };
+  const output = await runTranslateExpectFailure(buildE2EArgs(args));
+  expect(output).toContain(
+    `error: Unknown matcher "some-invalid-matcher". Available matchers: "`
   );
 });
 

@@ -63,6 +63,7 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
     service: commander.service,
     serviceConfig: commander.serviceConfig,
     cacheDir: commander.cacheDir,
+    matcher: commander.matcher,
   };
   translateCli(args)
     .then(() => {

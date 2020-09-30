@@ -6,6 +6,7 @@ import { TSet } from "./core-definitions";
 import { areEqual } from "./tset-ops";
 import { checkDir, getDebugPath, logFatal } from "../util/util";
 import { serviceMap } from "../services/service-definitions";
+import { matcherMap } from "../matchers/matcher-definitions";
 
 export interface CliArgs {
   srcFile: string;
@@ -15,6 +16,7 @@ export interface CliArgs {
   service: string;
   serviceConfig: string;
   cacheDir: string;
+  matcher: string;
 }
 
 function resolveCachePath(args: CliArgs): string {
@@ -48,6 +50,13 @@ export async function translateCli(cliArgs: CliArgs) {
       }". Available services: ${formatCliOptions(Object.keys(serviceMap))}`
     );
   }
+  if (!(cliArgs.matcher in matcherMap)) {
+    logFatal(
+      `Unknown matcher "${
+        cliArgs.matcher
+      }". Available matchers: ${formatCliOptions(Object.keys(matcherMap))}`
+    );
+  }
 
   const src = readTFile(cliArgs.srcFile, cliArgs.srcLng);
 
@@ -66,7 +75,7 @@ export async function translateCli(cliArgs: CliArgs) {
     targetLng: cliArgs.targetLng,
     service: cliArgs.service as keyof typeof serviceMap,
     serviceConfig: cliArgs.serviceConfig,
-    matcher: "icu", // TODO: Config,
+    matcher: cliArgs.matcher as keyof typeof matcherMap,
   };
   const result = await translateCore(coreArgs);
   if (!areEqual(result.newTarget, oldTarget)) {

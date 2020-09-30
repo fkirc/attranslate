@@ -8,12 +8,13 @@ export interface E2EArgs {
   service: keyof typeof serviceMap;
   serviceConfig: string;
   cacheDir: string;
+  matcher?: string;
 }
 
 export const defaultE2EArgs: E2EArgs = {
   srcFile: "package.json",
   srcLng: "en",
-  targetFile: "tsconfig.json",
+  targetFile: "default-target.json",
   targetLng: "de",
   service: "google-translate",
   serviceConfig: "gcloud/gcloud_service_account.json",
