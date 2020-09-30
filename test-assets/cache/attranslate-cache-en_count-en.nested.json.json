@@ -1,1 +1,5 @@
-{"inner":{"innerInner":{"one":"One"},"two":"Two"},"three":"Three"}
+{
+  "inner.innerInner.one": "One",
+  "inner.two": "Two",
+  "three": "Three"
+}
