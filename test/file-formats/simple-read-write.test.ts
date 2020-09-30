@@ -23,15 +23,32 @@ function expectedTSet(nested: boolean): TSet {
     };
   }
 }
-// TODO: Parameterize this test with file + serializer + nested
 
-const fileFormat = fileFormatMap["nested-json"];
+const testArgs: {
+  srcFile: string;
+  fileFormat: keyof typeof fileFormatMap;
+  nested: boolean;
+}[] = [
+  {
+    srcFile: "test-assets/flat-json/count-en.flat.json",
+    fileFormat: "nested-json",
+    nested: false,
+  },
+  {
+    srcFile: "test-assets/nested-json/count-en.nested.json",
+    fileFormat: "nested-json",
+    nested: true,
+  },
+  {
+    srcFile: "test-assets/flat-json/count-en.flat.json",
+    fileFormat: "flat-json",
+    nested: false,
+  },
+];
 
-describe.each([
-  { srcFile: "test-assets/flat-json/count-en.flat.json", nested: false },
-  { srcFile: "test-assets/nested-json/count-en.nested.json", nested: true },
-])("Read/write %p", (args) => {
+describe.each(testArgs)("Read/write %p", (args) => {
   test("Read - delete - write - git-diff", async () => {
+    const fileFormat = fileFormatMap[args.fileFormat];
     const tSet = fileFormat.readTFile(args.srcFile, "en");
     expect(tSet).toStrictEqual(expectedTSet(args.nested));
     await runCommand(`rm ${args.srcFile}`);

@@ -1,10 +1,5 @@
 import { TSet } from "../core/core-definitions";
-import {
-  getDebugPath,
-  logFatal,
-  readJsonFile,
-  writeJsonFile,
-} from "../util/util";
+import { readJsonFile, writeJsonFile } from "../util/util";
 import { flatten, unflatten } from "../util/flatten";
 import { TFileFormat } from "./file-format-definitions";
 
@@ -14,9 +9,6 @@ export class NestedJson implements TFileFormat {
     const flatJson: Record<string, string> = flatten(nestedJson);
     const tMap = new Map<string, string>();
     Object.keys(flatJson).forEach((key, index) => {
-      if (tMap.get(key) !== undefined) {
-        logFatal(`Key '${key}' in ${getDebugPath(path)} is duplicated`);
-      }
       tMap.set(key, flatJson[key]);
     });
     return {
