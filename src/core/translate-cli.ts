@@ -1,12 +1,12 @@
 import * as path from "path";
 import { CoreArgs, translateCore } from "./translate-core";
-import { readTFile, writeTFile } from "../file-formats/nested-json";
 import { existsSync } from "fs";
 import { TSet } from "./core-definitions";
 import { areEqual } from "./tset-ops";
 import { checkDir, getDebugPath, logFatal } from "../util/util";
 import { serviceMap } from "../services/service-definitions";
 import { matcherMap } from "../matchers/matcher-definitions";
+import { fileFormatMap } from "../file-formats/file-format-definitions";
 
 export interface CliArgs {
   srcFile: string;
@@ -28,11 +28,12 @@ function resolveCachePath(args: CliArgs): string {
 }
 
 function resolveOldTarget(args: CliArgs): TSet | null {
+  const fileFormat = fileFormatMap["nested-json"]; // TODO: Config
   const targetPath = path.resolve(args.targetFile);
   const targetDir = path.dirname(targetPath);
   checkDir(targetDir);
   if (existsSync(targetPath)) {
-    return readTFile(targetPath, args.targetLng);
+    return fileFormat.readTFile(targetPath, args.targetLng);
   } else {
     return null;
   }
@@ -58,12 +59,13 @@ export async function translateCli(cliArgs: CliArgs) {
     );
   }
 
-  const src = readTFile(cliArgs.srcFile, cliArgs.srcLng);
+  const fileFormat = fileFormatMap["nested-json"]; // TODO: Config
+  const src = fileFormat.readTFile(cliArgs.srcFile, cliArgs.srcLng);
 
   const cachePath = resolveCachePath(cliArgs);
   let srcCache: TSet | null = null;
   if (existsSync(cachePath)) {
-    srcCache = readTFile(cachePath, cliArgs.srcLng);
+    srcCache = fileFormat.readTFile(cachePath, cliArgs.srcLng);
   }
 
   const oldTarget: TSet | null = resolveOldTarget(cliArgs);
@@ -84,10 +86,10 @@ export async function translateCli(cliArgs: CliArgs) {
     console.info(`Add ${countAdded} new translations`);
     console.info(`Update ${countUpdated} existing translations`);
     console.info(`Write target-file ${getDebugPath(cliArgs.targetFile)}`);
-    writeTFile(cliArgs.targetFile, result.newTarget);
+    fileFormat.writeTFile(cliArgs.targetFile, result.newTarget);
   }
   if (!areEqual(src, srcCache)) {
     console.info(`Write cache ${getDebugPath(cachePath)}`);
-    writeTFile(cachePath, src);
+    fileFormat.writeTFile(cachePath, src);
   }
 }
