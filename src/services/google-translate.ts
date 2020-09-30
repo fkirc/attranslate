@@ -16,13 +16,6 @@ export class GoogleTranslate implements TranslationService {
 
   public name = "Google Translate";
 
-  cleanResponse(response: string) {
-    return response.replace(
-      /\<(.+?)\s*\>\s*(.+?)\s*\<\/\s*(.+?)>/g,
-      "<$1>$2</$3>"
-    );
-  }
-
   // eslint-disable-next-line require-await
   async initialize(serviceConfig?: string, interpolationMatcher?: Matcher) {
     this.interpolationMatcher = interpolationMatcher;
