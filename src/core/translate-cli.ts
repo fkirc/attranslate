@@ -83,7 +83,7 @@ export async function translateCli(cliArgs: CliArgs) {
   }
   const targetFileFormat =
     fileFormatMap[cliArgs.targetFormat as keyof typeof fileFormatMap];
-  const cacheFileFormat = fileFormatMap["nested-json"]; // TODO: Change to flat-json
+  const cacheFileFormat = fileFormatMap["flat-json"];
   const src = srcFileFormat.readTFile(cliArgs.srcFile, cliArgs.srcLng);
 
   const cachePath = resolveCachePath(cliArgs);

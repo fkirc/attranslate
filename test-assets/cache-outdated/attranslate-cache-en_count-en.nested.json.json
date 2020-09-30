@@ -1,1 +1,5 @@
-{"inner":{"innerInner":{"one":"One outdated"},"two":"Two"},"three":"Three"}
+{
+  "inner.innerInner.one": "One outdated",
+  "inner.two": "Two",
+  "three": "Three"
+}
