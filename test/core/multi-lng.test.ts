@@ -11,7 +11,7 @@ describe.each([
   { lng: "de", t: "Hallo {{translator}}" },
   { lng: "es", t: "Hola {{translator}}" },
   { lng: "fr", t: "Bonjour {{translator}}" },
-  { lng: "it", t: "Ciao {{translator}}" },
+  { lng: "zh", t: "您好{{translator}}" },
 ])("Hello %s", (lngT: LngT) => {
   test("Hello international", async () => {
     const srcHello: TSet = {
@@ -29,7 +29,7 @@ describe.each([
     const expectRes: CoreResults = {
       added: new Map([["hello", lngT.t]]),
       updated: null,
-      skipped: null,
+      skipped: new Map(),
       serviceResults: new Map([["hello", lngT.t]]),
       newTarget: {
         lng: lngT.lng,
