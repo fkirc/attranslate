@@ -7,10 +7,6 @@ import {
   TString,
   TServiceArgs,
 } from "./service-definitions";
-import {
-  reInsertInterpolations,
-  replaceInterpolations,
-} from "../matchers/matcher-definitions";
 
 interface TranslationResponse {
   translations: [
@@ -25,16 +21,15 @@ const TRANSLATE_ENDPOINT =
   "https://api.cognitive.microsofttranslator.com/translate?api-version=3.0";
 
 export class AzureTranslator implements TService {
-  async translateBatch(batch: TString[], args: TServiceArgs) {
-    const toTranslate = batch.map(({ key, value }) => {
-      const { clean, replacements } = replaceInterpolations(
-        value,
-        args.interpolationMatcher
-      );
-
-      return { key, value, clean, replacements };
+  async translateBatch(
+    batch: TString[],
+    args: TServiceArgs
+  ): Promise<TResult[]> {
+    const azureBody: { Text: string }[] = batch.map((tString) => {
+      return {
+        Text: tString.value,
+      };
     });
-
     const response = await fetch(
       `${TRANSLATE_ENDPOINT}&from=${args.srcLng}&to=${args.targetLng}&textType=html`,
       {
@@ -44,29 +39,22 @@ export class AzureTranslator implements TService {
           "Ocp-Apim-Subscription-Key": args.serviceConfig,
           "Content-Type": "application/json; charset=UTF-8",
         },
-        body: JSON.stringify(toTranslate.map((c) => ({ Text: c.clean }))),
+        body: JSON.stringify(azureBody),
       }
     );
-
     if (!response.ok) {
       throw new Error("Azure Translation failed: " + (await response.text()));
     }
 
     const data = (await response.json()) as TranslationResponse[];
-
     return data.map((res, i) => ({
-      key: toTranslate[i].key,
-      value: toTranslate[i].value,
-      translated: reInsertInterpolations(
-        res.translations[0].text,
-        toTranslate[i].replacements
-      ),
+      key: batch[i].key,
+      translated: res.translations[i].text,
     }));
   }
 
   async translateStrings(args: TServiceArgs): Promise<TResult[]> {
     const batches = chunk(args.strings, 50);
-
     const results = await Promise.all(
       batches.map((batch) => this.translateBatch(batch, args))
     );

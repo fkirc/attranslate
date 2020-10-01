@@ -1,21 +1,13 @@
 import inquirer from "inquirer";
-import {
-  replaceInterpolations,
-  reInsertInterpolations,
-} from "../matchers/matcher-definitions";
-import { TService, TServiceArgs } from "./service-definitions";
+import { TResult, TService, TServiceArgs } from "./service-definitions";
 
 export class ManualTranslation implements TService {
   async translateStrings(args: TServiceArgs) {
-    const results: { key: string; value: string; translated: string }[] = [];
+    const results: TResult[] = [];
 
-    console.log(`├─┌── Translatable strings:`);
+    console.log(`Start manual translations`);
 
     for (const { key, value } of args.strings) {
-      const { replacements } = replaceInterpolations(
-        value,
-        args.interpolationMatcher
-      );
       process.stdout.write("│ ├── ");
 
       const result = await inquirer.prompt<{ result: string }>([
@@ -28,8 +20,7 @@ export class ManualTranslation implements TService {
       ]);
       results.push({
         key,
-        value,
-        translated: reInsertInterpolations(result.result, replacements),
+        translated: result.result,
       });
     }
     return results;
