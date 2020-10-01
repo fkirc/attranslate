@@ -3,7 +3,7 @@ import { matcherMap } from "../matchers/matcher-definitions";
 
 export interface TSet {
   lng: string;
-  translations: Map<string, string>;
+  translations: Map<string, string | null>;
 }
 
 export interface CoreArgs {
@@ -16,12 +16,13 @@ export interface CoreArgs {
   matcher: keyof typeof matcherMap;
 }
 
+// TODO: Use types
 export interface CoreResults {
   newTarget: TSet;
-  skipped: Map<string, string> | null;
-  added: Map<string, string> | null;
-  updated: Map<string, string> | null;
-  serviceResults: Map<string, string> | null;
+  skipped: Map<string, string | null> | null;
+  added: Map<string, string | null> | null;
+  updated: Map<string, string | null> | null;
+  serviceResults: Map<string, string | null> | null;
 }
 
 export interface CliArgs {

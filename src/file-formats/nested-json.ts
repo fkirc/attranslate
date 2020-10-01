@@ -18,7 +18,7 @@ export class NestedJson implements TFileFormat {
   }
 
   writeTFile(path: string, tSet: TSet): void {
-    const flatJson: Record<string, string> = {};
+    const flatJson: Record<string, string | null> = {}; // TODO: Use type
     tSet.translations.forEach((value, key) => {
       flatJson[key] = value;
     });

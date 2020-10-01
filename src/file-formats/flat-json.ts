@@ -15,11 +15,11 @@ export class FlatJson implements TFileFormat {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       const value = json[key];
-      if (typeof value !== "string") {
+      if (typeof value !== "string" && value !== null) {
         logFatal(
           `${getDebugPath(
             path
-          )} is not a flat JSON-file - Property '${key}' is not a string`
+          )} is not a flat JSON-file - Property '${key}' is not a string or null`
         );
       }
       tMap.set(key, value);
@@ -31,7 +31,7 @@ export class FlatJson implements TFileFormat {
   }
 
   writeTFile(path: string, tSet: TSet): void {
-    const flatJson: Record<string, string> = {};
+    const flatJson: Record<string, string | null> = {}; // TODO: Use type instead of record
     tSet.translations.forEach((value, key) => {
       flatJson[key] = value;
     });

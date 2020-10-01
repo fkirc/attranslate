@@ -40,10 +40,12 @@ export function convertFromServiceResults(
 export function convertToTStringList(tSet: TSet): TString[] {
   const tList: TString[] = [];
   tSet.translations.forEach((value, key) => {
-    tList.push({
-      key,
-      value,
-    });
+    if (value) {
+      tList.push({
+        key,
+        value,
+      });
+    }
   });
   return tList;
 }

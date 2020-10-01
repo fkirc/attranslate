@@ -2,7 +2,7 @@ import * as path from "path";
 import { translateCore } from "./translate-core";
 import { existsSync } from "fs";
 import { CliArgs, CoreArgs, TSet } from "./core-definitions";
-import { areEqual, leftMinusRight } from "./tset-ops";
+import { areEqual, leftMinusRightFillNull } from "./tset-ops";
 import { checkDir, getDebugPath, logFatal } from "../util/util";
 import { serviceMap } from "../services/service-definitions";
 import { matcherMap } from "../matchers/matcher-definitions";
@@ -113,8 +113,8 @@ export async function translateCli(cliArgs: CliArgs) {
   let newSrcCache: TSet;
   if (result.skipped?.size) {
     // TODO: Cleanup, maybe move logic to core
-    console.warn(`Skipped ${result.skipped.size} translations`);
-    newSrcCache = leftMinusRight(src, {
+    console.warn(`Warning: Skipped ${result.skipped.size} translations`);
+    newSrcCache = leftMinusRightFillNull(src, {
       translations: result.skipped,
       lng: src.lng,
     });

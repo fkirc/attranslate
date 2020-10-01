@@ -16,14 +16,14 @@ export function selectLeftDistinct(
       logFatal("Cannot compare values of different languages");
     }
   }
-  const leftDistinct = new Map<string, string>();
+  const leftDistinct = new Map<string, string | null>(); // TODO: Use type
   left.translations.forEach((value, key) => {
-    const rightT: string | undefined = right.translations.get(key);
+    const rightT = right.translations.get(key);
     let diff: boolean;
     if (strategy === "COMPARE_KEYS") {
       diff = !rightT;
     } else if (strategy === "COMPARE_VALUES") {
-      diff = !!rightT && rightT !== value;
+      diff = rightT !== undefined && rightT !== value;
     } else {
       diff = !rightT || rightT !== value;
     }
@@ -41,7 +41,7 @@ export function leftJoin(left: TSet, right: TSet): TSet {
   if (left.lng !== right.lng) {
     logFatal("Cannot join different languages");
   }
-  const leftJoin = new Map<string, string>();
+  const leftJoin = new Map<string, string | null>(); // TODO: Use type
   left.translations.forEach((value, key) => {
     leftJoin.set(key, value);
   });
@@ -56,11 +56,13 @@ export function leftJoin(left: TSet, right: TSet): TSet {
   };
 }
 
-export function leftMinusRight(left: TSet, right: TSet): TSet {
-  const leftRemaining = new Map<string, string>();
+export function leftMinusRightFillNull(left: TSet, right: TSet): TSet {
+  const leftRemaining = new Map<string, string | null>(); // TODO: Use type
   left.translations.forEach((value, key) => {
     if (!right.translations.get(key)) {
       leftRemaining.set(key, value);
+    } else {
+      leftRemaining.set(key, null);
     }
   });
   return {
