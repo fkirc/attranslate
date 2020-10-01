@@ -20,6 +20,7 @@ test("incomplete cache, up-do-date target", async () => {
     newTarget: deTarget,
     added: null,
     updated: null,
+    skipped: null,
     serviceResults: null,
   };
   const res = await translateCore(args);
@@ -36,6 +37,7 @@ test("outdated cache, up-do-date target", async () => {
     newTarget: deTarget,
     added: new Map(),
     updated: new Map(),
+    skipped: new Map(),
     serviceResults: new Map([["hello", "Hallo"]]),
   };
   const res = await translateCore(args);
@@ -87,6 +89,7 @@ test("outdated cache, outdated target", async () => {
       ["value", "Innerhalb von Sekunden übersetzen"],
       ["getStarted", "Beginnen Sie innerhalb von Minuten"],
     ]),
+    skipped: new Map(),
     updated: new Map([["hello", "Hallo"]]),
     serviceResults: new Map([
       ["hello", "Hallo"],

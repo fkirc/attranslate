@@ -21,6 +21,7 @@ test("no cache, no target", async () => {
     newTarget: deTarget,
     added: deTarget.translations,
     updated: null,
+    skipped: new Map(),
     serviceResults: deTarget.translations,
   };
   const res = await translateCore(args);
@@ -37,6 +38,7 @@ test("no cache, clean target", async () => {
     newTarget: deTarget,
     added: null,
     updated: null,
+    skipped: null,
     serviceResults: null,
   };
   const res = await translateCore(args);
@@ -58,6 +60,7 @@ test("no cache, partial target", async () => {
     newTarget: deTarget,
     added,
     updated: new Map(),
+    skipped: new Map(),
     serviceResults: added,
   };
   const res = await translateCore(args);

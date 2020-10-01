@@ -29,6 +29,7 @@ describe.each([
     const expectRes: CoreResults = {
       added: new Map([["hello", lngT.t]]),
       updated: null,
+      skipped: null,
       serviceResults: new Map([["hello", lngT.t]]),
       newTarget: {
         lng: lngT.lng,

@@ -25,6 +25,7 @@ test("up-to-date cache, no target", async () => {
     newTarget: deTarget,
     added: deTarget.translations,
     updated: null,
+    skipped: new Map(),
     serviceResults: deTarget.translations,
   };
   const res = await translateCore(args);
@@ -41,6 +42,7 @@ test("up-to-date cache, up-to-date target", async () => {
     newTarget: deTarget,
     added: null,
     updated: null,
+    skipped: null,
     serviceResults: null,
   };
   const res = await translateCore(args);
@@ -57,6 +59,7 @@ test("up-to-date cache, modified target", async () => {
     newTarget: modifiedTarget,
     added: null,
     updated: null,
+    skipped: null,
     serviceResults: null,
   };
   const res = await translateCore(args);
