@@ -1,6 +1,4 @@
-import { TSet } from "./core-definitions";
-import { serviceMap } from "../services/service-definitions";
-import { matcherMap } from "../matchers/matcher-definitions";
+import { CoreArgs, CoreResults, TSet } from "./core-definitions";
 import {
   convertFromServiceResults,
   convertToTStringList,
@@ -9,23 +7,6 @@ import {
 } from "./tset-ops";
 import { getMatcherInstance, getServiceInstance } from "./core-util";
 import { logFatal } from "../util/util";
-
-export interface CoreArgs {
-  src: TSet;
-  srcCache: TSet | null;
-  oldTarget: TSet | null;
-  targetLng: string;
-  service: keyof typeof serviceMap;
-  serviceConfig: string;
-  matcher: keyof typeof matcherMap;
-}
-
-export interface CoreResults {
-  newTarget: TSet;
-  added: Map<string, string> | null;
-  updated: Map<string, string> | null;
-  serviceResults: Map<string, string> | null;
-}
 
 function extractStringsToTranslate(args: CoreArgs): TSet {
   const src: TSet = args.src;

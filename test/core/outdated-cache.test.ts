@@ -1,10 +1,6 @@
-import {
-  CoreArgs,
-  CoreResults,
-  translateCore,
-} from "../../src/core/translate-core";
+import { translateCore } from "../../src/core/translate-core";
 import { commonArgs, deTarget } from "./core-test-util";
-import { TSet } from "../../src/core/core-definitions";
+import { CoreArgs, CoreResults, TSet } from "../../src/core/core-definitions";
 
 const incompleteCache: TSet = {
   lng: "en",

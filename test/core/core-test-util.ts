@@ -1,5 +1,4 @@
-import { TSet } from "../../src/core/core-definitions";
-import { CoreArgs } from "../../src/core/translate-core";
+import { CoreArgs, TSet } from "../../src/core/core-definitions";
 
 export const enSrc: TSet = {
   lng: "en",

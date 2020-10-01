@@ -1,9 +1,5 @@
-import { TSet } from "../../src/core/core-definitions";
-import {
-  CoreArgs,
-  CoreResults,
-  translateCore,
-} from "../../src/core/translate-core";
+import { CoreArgs, CoreResults, TSet } from "../../src/core/core-definitions";
+import { translateCore } from "../../src/core/translate-core";
 import { commonArgs } from "./core-test-util";
 
 interface LngT {

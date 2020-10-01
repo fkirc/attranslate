@@ -1,9 +1,5 @@
-import {
-  CoreArgs,
-  CoreResults,
-  translateCore,
-} from "../../src/core/translate-core";
-import { TSet } from "../../src/core/core-definitions";
+import { translateCore } from "../../src/core/translate-core";
+import { CoreArgs, CoreResults, TSet } from "../../src/core/core-definitions";
 import { commonArgs, deTarget } from "./core-test-util";
 
 const partialGermanTarget: TSet = {

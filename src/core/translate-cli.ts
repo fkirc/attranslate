@@ -1,7 +1,7 @@
 import * as path from "path";
-import { CoreArgs, translateCore } from "./translate-core";
+import { translateCore } from "./translate-core";
 import { existsSync } from "fs";
-import { TSet } from "./core-definitions";
+import { CoreArgs, TSet } from "./core-definitions";
 import { areEqual } from "./tset-ops";
 import { checkDir, getDebugPath, logFatal } from "../util/util";
 import { serviceMap } from "../services/service-definitions";
