@@ -25,7 +25,7 @@ export const deTarget: TSet = {
     ["one", "Inhalt Eins"],
     ["two", "Inhalt Zwei"],
     ["three", "Inhalt Drei"],
-    ["four", "Inhalt Vier"],
+    ["four", "Inhalt vier"],
     ["five", "Inhalt Fünf"],
     ["six", "Inhalt Sechs"],
   ]),

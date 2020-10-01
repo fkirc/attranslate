@@ -5,9 +5,9 @@ import { commonArgs, deTarget, enSrc } from "./core-test-util";
 const partialGermanTarget: TSet = {
   lng: "de",
   translations: new Map([
-    ["world", "Welt"],
-    ["attranslate", "Automatisierter Textübersetzer"],
-    ["getStarted", "Beginnen Sie innerhalb von Minuten"],
+    ["one", "Inhalt Eins"],
+    ["three", "Inhalt Drei"],
+    ["six", "Inhalt Sechs"],
   ]),
 };
 
@@ -55,9 +55,9 @@ test("no cache, partial target", async () => {
     oldTarget: partialGermanTarget,
   };
   const added = new Map<string, string>([
-    ["hello", "Hallo"],
-    ["value", "Innerhalb von Sekunden übersetzen"],
-    ["outcome", "Keine Verlangsamungen mehr"],
+    ["two", "Inhalt Zwei"],
+    ["four", "Inhalt vier"],
+    ["five", "Inhalt Fünf"],
   ]);
   const expectRes: CoreResults = {
     newTarget: deTarget,
@@ -75,15 +75,4 @@ test("no cache, partial target", async () => {
     ...germanTarget,
     translations: new Map([["stale stuff", "leftovers"]]),
   };
-  const args: CoreArgs = {
-    ...commonArgs,
-    oldTarget,
-    srcCache: null,
-  };
-  const expectRes: CoreResults = {
-    ...commonResult,
-    newTarget: germanTarget,
-  };
-  const res = await translateCore(args);
-  expect(res).toStrictEqual(expectRes);
 });*/

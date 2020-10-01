@@ -5,12 +5,12 @@ import { CoreArgs, CoreResults, TSet } from "../../src/core/core-definitions";
 const modifiedTarget: TSet = {
   lng: "de",
   translations: new Map([
-    ["hello", "fgebg"],
-    ["world", "Wdbhdelt"],
-    ["attranslate", "fwfsfs"],
-    ["value", "stsd"],
-    ["outcome", "sfsef"],
-    ["getStarted", "rrw"],
+    ["one", "fgebg"],
+    ["two", "Wdbhdelt"],
+    ["three", "fwfsfs"],
+    ["four", "stsd"],
+    ["five", "sfsef"],
+    ["six", "rrw"],
     ["leftover", "Outdated"], // TODO: Remove outdated leftovers via option?
   ]),
 };
