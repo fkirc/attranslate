@@ -1,8 +1,9 @@
 import commander from "commander";
 import { serviceMap } from "./services/service-definitions";
 import { matcherMap } from "./matchers/matcher-definitions";
-import { translateCli, CliArgs, formatCliOptions } from "./core/translate-cli";
+import { translateCli, formatCliOptions } from "./core/translate-cli";
 import { fileFormatMap } from "./file-formats/file-format-definitions";
+import { CliArgs } from "./core/core-definitions";
 
 process.on("unhandledRejection", (error) => {
   console.error("[fatal]", error);

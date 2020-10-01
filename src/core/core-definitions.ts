@@ -22,3 +22,16 @@ export interface CoreResults {
   updated: Map<string, string> | null;
   serviceResults: Map<string, string> | null;
 }
+
+export interface CliArgs {
+  srcFile: string;
+  srcLng: string;
+  srcFormat: string;
+  targetFile: string;
+  targetLng: string;
+  targetFormat: string;
+  service: string;
+  serviceConfig: string;
+  cacheDir: string;
+  matcher: string;
+}

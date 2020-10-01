@@ -1,7 +1,7 @@
 import * as path from "path";
 import { translateCore } from "./translate-core";
 import { existsSync } from "fs";
-import { CoreArgs, TSet } from "./core-definitions";
+import { CliArgs, CoreArgs, TSet } from "./core-definitions";
 import { areEqual } from "./tset-ops";
 import { checkDir, getDebugPath, logFatal } from "../util/util";
 import { serviceMap } from "../services/service-definitions";
@@ -10,19 +10,6 @@ import {
   fileFormatMap,
   TFileFormat,
 } from "../file-formats/file-format-definitions";
-
-export interface CliArgs {
-  srcFile: string;
-  srcLng: string;
-  srcFormat: string;
-  targetFile: string;
-  targetLng: string;
-  targetFormat: string;
-  service: string;
-  serviceConfig: string;
-  cacheDir: string;
-  matcher: string;
-}
 
 function resolveCachePath(args: CliArgs): string {
   const cacheDir = args.cacheDir;
