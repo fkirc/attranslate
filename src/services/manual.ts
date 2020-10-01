@@ -5,17 +5,16 @@ export class ManualTranslation implements TService {
   async translateStrings(args: TServiceArgs) {
     const results: TResult[] = [];
 
-    console.log(`Start manual translations`);
+    console.info(`Total number of questions: ${args.strings.length}`);
+    console.info(
+      `You can skip questions by pressing <ENTER> without any other character`
+    );
 
     for (const { key, value } of args.strings) {
-      process.stdout.write("│ ├── ");
-
       const result = await inquirer.prompt<{ result: string }>([
         {
           name: "result",
-          message: `[${args.srcLng} -> ${args.targetLng}] ${
-            key !== value ? `(${key}) ` : ""
-          }"${value}":`,
+          message: `(${key}) What is '${value}' in '${args.targetLng}'?`,
         },
       ]);
       results.push({
