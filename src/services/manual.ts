@@ -6,10 +6,10 @@ export class ManualTranslation implements TService {
     const results: TResult[] = [];
 
     console.info(`Total number of questions: ${args.strings.length}`);
-    console.info(
+    // Skipping doesn't work very well with the current cache-implementation, therefore we don't recommend it although it technically works.
+    /*console.info(
       `You can skip questions by pressing <ENTER> without any other character.`
-    );
-
+    );*/
     for (const { key, value } of args.strings) {
       const result = await inquirer.prompt<{ result: string }>([
         {
