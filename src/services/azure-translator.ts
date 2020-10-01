@@ -21,7 +21,6 @@ const TRANSLATE_ENDPOINT =
   "https://api.cognitive.microsofttranslator.com/translate?api-version=3.0";
 
 export class AzureTranslator implements TranslationService {
-  public name = "Azure";
   private apiKey: string | undefined;
   private interpolationMatcher: Matcher | undefined;
 

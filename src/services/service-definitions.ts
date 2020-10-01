@@ -15,7 +15,6 @@ export interface TString {
 }
 
 export interface TranslationService {
-  name: string;
   initialize: (
     config?: string,
     interpolationMatcher?: Matcher

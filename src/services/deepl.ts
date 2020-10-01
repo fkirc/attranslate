@@ -10,7 +10,6 @@ import {
 const API_ENDPOINT = "https://api.deepl.com/v2";
 
 export class DeepL implements TranslationService {
-  public name = "DeepL";
   private apiKey: string | undefined;
   private interpolationMatcher: Matcher | undefined;
 

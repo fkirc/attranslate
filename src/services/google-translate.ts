@@ -19,8 +19,6 @@ export class GoogleTranslate implements TranslationService {
   private interpolationMatcher: Matcher | undefined;
   private serviceConfig: string | undefined;
 
-  public name = "Google Translate";
-
   // eslint-disable-next-line require-await
   async initialize(serviceConfig?: string, interpolationMatcher?: Matcher) {
     this.interpolationMatcher = interpolationMatcher;
