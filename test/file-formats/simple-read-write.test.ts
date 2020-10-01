@@ -30,14 +30,14 @@ const testArgs: {
   nested: boolean;
 }[] = [
   {
-    srcFile: "test-assets/flat-json/count-en.flat.json",
-    fileFormat: "nested-json",
-    nested: false,
-  },
-  {
     srcFile: "test-assets/nested-json/count-en.nested.json",
     fileFormat: "nested-json",
     nested: true,
+  },
+  {
+    srcFile: "test-assets/flat-json/count-en.flat.json",
+    fileFormat: "nested-json",
+    nested: false,
   },
   {
     srcFile: "test-assets/flat-json/count-en.flat.json",

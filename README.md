@@ -1,9 +1,10 @@
-# attranslate - Automated Text Translator for Apps and Websites
+# attranslate - Automated Text Translator for Websites and Apps
 
-Automated translation services can speedup traditional workflows.
-For example, let's say that a translation service achieves 90% correct translations on the spot.
+Automated translation-services can speedup traditional workflows.
+For example, let's say that a translation-service achieves 90% correct translations on the spot.
 In this case, a quick fix of the remaining 10% is faster than doing everything by hand.
-`attranslate` makes it easy to integrate any translation services into your workflows.
+`attranslate` makes it easy to integrate translation-services into your workflows.
+Other than that, `attranslate` supports manual translations and even file-format-conversions without changing the language.
 
 ## Why attranslate?
 
@@ -17,7 +18,7 @@ Instead of re-inventing the wheel, `attranslate` integrates into existing transl
 
 ## Cross-platform Support
 
-`attranslate` is designed to translate any app or website with any toolchain.
+`attranslate` is designed to translate any website or app with any toolchain.
 `attranslate` works for Web/Android/iOS or any combination of platforms. To make this possible, attranslate supports the following file formats:
 - i18n/ICU JSON
 - Android XML
@@ -31,29 +32,29 @@ It is also possible to use attranslate for converting between different file for
 
 ## Allow Manual Overwrites
 
-attranslate recognizes that automated translations are not perfect.
-Therefore, whenever you are unhappy with the produced result, attranslate allows you to simply overwrite translations in your destination files.
+`attranslate` recognizes that automated translations are not perfect.
+Therefore, whenever you are unhappy with the produced results, `attranslate` allows you to simply overwrite texts in your target-files.
 
 ## Available Services
 
-Depending on your configuration, some translation services work better than others.
-attranslate supports the following translation services:
+Depending on your project, some translation-services work better than others.
+`attranslate` supports the following translation-services:
 
 - [Google Cloud Translate](https://translate.google.com)
 - [DeepL](https://deepl.com)
 - [Azure Translator](https://azure.microsoft.com/en-us/services/cognitive-services/translator-text-api/)
-- Manual: Allows you to translate strings manually by entering them into attranslate.
-- Sync Without Translations: Does not change the language; useful for converting between different file formats.
+- `manual`: Translate texts manually by entering them into `attranslate`.
+- `sync-without-translate`: Does not change the language; useful for converting between different file formats.
 
 ## High Performance
 
 If some texts have already been translated, then `attranslate` won't translate them again.
-This does not only speedup your workflow, but also saves cost for paid translation services.
+This does not only speedup your workflow, but also saves cost for paid translation-services.
 
 ## Fast Integration
 
-attranslate is designed for a quick integration into any app or website.
-Therefore, attranslate allows you to keep working on the same translation files that you used before.
+`attranslate` is designed for a quick integration into any website or app.
+Therefore, `attranslate` allows you to keep working on the very same translation files that you used before.
 
 # Usage Examples
 
@@ -136,21 +137,21 @@ translate the source strings manually in the console.
 
 ## Interpolations and Matchers
 
-Many apps/websites use _interpolations_  to insert dynamic values into translations.
+Many websites/apps use _interpolations_  to insert dynamic values into translations.
 For example, an interpolation like `Your name is {{name}}` might be replaced with `Your name is Felix`.
 
-To work with interpolations, attranslate provides so-called _matchers_.
+To work with interpolations, `attranslate` provides so-called _matchers_.
 A matcher replaces interpolations with placeholders before they are
 sent to a translation service. This ensures that interpolations don't get
 scrambled in the process.
-attranslate offers the following matchers for different styles of interpolations:
+`attranslate` offers the following matchers for different styles of interpolations:
 
 - **ICU**: Matches ICU interpolations like `{name}`.
 - **i18n**: Matches [i18next](https://www.i18next.com/translation-function/interpolation) interpolations like `{{name}}`.
 - **sprintf**: Matches sprintf-style interpolations like `%s`.
 - **None**: Doesn't match any interpolations.
 
-You should select a matcher using the `--matcher` option.
+You can select a matcher with the `--matcher` option.
 
 ## Translation Cache
 

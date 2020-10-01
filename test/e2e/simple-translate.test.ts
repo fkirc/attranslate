@@ -17,12 +17,6 @@ const testArgs: {
     src: "test-assets/flat-json/count-en.flat.json",
     srcFormat: "flat-json",
     target: "test-assets/flat-json/count-de.flat.json",
-    targetFormat: "flat-json",
-  },
-  {
-    src: "test-assets/nested-json/count-en.nested.json",
-    srcFormat: "nested-json",
-    target: "test-assets/nested-json/count-de.nested.json",
     targetFormat: "nested-json",
   },
   {
