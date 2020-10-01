@@ -2,9 +2,13 @@ import { TranslationServiceClient } from "@google-cloud/translate";
 import {
   replaceInterpolations,
   reInsertInterpolations,
-  Matcher,
 } from "../matchers/matcher-definitions";
-import { TResult, TranslationService, TString } from "./service-definitions";
+import {
+  TResult,
+  TService,
+  TServiceArgs,
+  TString,
+} from "./service-definitions";
 import { google } from "@google-cloud/translate/build/protos/protos";
 import ITranslateTextRequest = google.cloud.translation.v3.ITranslateTextRequest;
 import { ClientOptions } from "google-gax";
@@ -15,44 +19,33 @@ interface GCloudKeyFile {
   project_id: string;
 }
 
-export class GoogleTranslate implements TranslationService {
-  private interpolationMatcher: Matcher | undefined;
-  private serviceConfig: string | undefined;
-
+export class GoogleTranslate implements TService {
   // eslint-disable-next-line require-await
-  async initialize(serviceConfig?: string, interpolationMatcher?: Matcher) {
-    this.interpolationMatcher = interpolationMatcher;
-    this.serviceConfig = serviceConfig;
-  }
-
-  // eslint-disable-next-line require-await
-  async translateStrings(inputs: TString[], from: string, to: string) {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const keyFile = readJsonFile<GCloudKeyFile>(this.serviceConfig!);
+  async translateStrings(args: TServiceArgs) {
+    const keyFile = readJsonFile<GCloudKeyFile>(args.serviceConfig);
     if (!keyFile.project_id) {
       logFatal(
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        `${getDebugPath(this.serviceConfig!)} does not contain a project_id`
+        `${getDebugPath(args.serviceConfig)} does not contain a project_id`
       );
     }
     const projectId: string = keyFile.project_id;
     const location = "global";
 
     const clientOptions: ClientOptions = {
-      keyFile: this.serviceConfig,
+      keyFile: args.serviceConfig,
     };
     const client = new TranslationServiceClient(clientOptions);
 
-    const interpols = inputs.map((tString) => {
-      return replaceInterpolations(tString.value, this.interpolationMatcher);
+    const interpols = args.strings.map((tString) => {
+      return replaceInterpolations(tString.value, args.interpolationMatcher);
     });
     const cleanStrings = interpols.map((v) => v.clean);
     const request: ITranslateTextRequest = {
       parent: `projects/${projectId}/locations/${location}`,
       contents: cleanStrings,
       mimeType: "text/plain",
-      sourceLanguageCode: from,
-      targetLanguageCode: to,
+      sourceLanguageCode: args.srcLng,
+      targetLanguageCode: args.targetLng,
     };
     const [response] = await client.translateText(request);
 
@@ -61,7 +54,7 @@ export class GoogleTranslate implements TranslationService {
     return response.translations!.map((value, index) => {
       return this.transformGCloudResult(
         value,
-        inputs[index],
+        args.strings[index],
         interpols[index].replacements
       );
     });

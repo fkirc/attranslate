@@ -1,8 +1,5 @@
 import { Matcher, matcherMap } from "../matchers/matcher-definitions";
-import {
-  serviceMap,
-  TranslationService,
-} from "../services/service-definitions";
+import { serviceMap, TService } from "../services/service-definitions";
 import { CoreArgs } from "./core-definitions";
 
 export function getMatcherInstance(args: CoreArgs): Matcher {
@@ -13,7 +10,7 @@ export function getMatcherInstance(args: CoreArgs): Matcher {
   return matcherMap[matcher];
 }
 
-export function getServiceInstance(args: CoreArgs): TranslationService {
+export function getServiceInstance(args: CoreArgs): TService {
   const service: keyof typeof serviceMap = args.service;
   if (typeof serviceMap[service] === "undefined") {
     throw new Error(`The service ${service} doesn't exist.`);

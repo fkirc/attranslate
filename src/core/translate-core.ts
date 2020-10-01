@@ -7,6 +7,7 @@ import {
 } from "./tset-ops";
 import { getMatcherInstance, getServiceInstance } from "./core-util";
 import { logFatal } from "../util/util";
+import { TServiceArgs } from "../services/service-definitions";
 
 function extractStringsToTranslate(args: CoreArgs): TSet {
   const src: TSet = args.src;
@@ -84,15 +85,16 @@ export async function translateCore(args: CoreArgs): Promise<CoreResults> {
   let serviceResults: TSet | null = null;
   if (stringsToTranslate.translations.size >= 1) {
     const translationService = getServiceInstance(args);
-    // TODO: Remove init from service API
-    await translationService.initialize(
-      args.serviceConfig,
-      getMatcherInstance(args)
-    );
+
+    const serviceArgs: TServiceArgs = {
+      strings: convertToTStringList(stringsToTranslate),
+      srcLng: args.src.lng,
+      targetLng: args.targetLng,
+      serviceConfig: args.serviceConfig,
+      interpolationMatcher: getMatcherInstance(args),
+    };
     const rawServiceResults = await translationService.translateStrings(
-      convertToTStringList(stringsToTranslate),
-      args.src.lng,
-      args.targetLng
+      serviceArgs
     );
     serviceResults = convertFromServiceResults(
       rawServiceResults,

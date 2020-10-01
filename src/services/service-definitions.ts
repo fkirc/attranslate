@@ -14,16 +14,16 @@ export interface TString {
   value: string;
 }
 
-export interface TranslationService {
-  initialize: (
-    config?: string,
-    interpolationMatcher?: Matcher
-  ) => Promise<void>;
-  translateStrings: (
-    strings: TString[],
-    from: string,
-    to: string
-  ) => Promise<TResult[]>;
+export interface TServiceArgs {
+  strings: TString[];
+  srcLng: string;
+  targetLng: string;
+  serviceConfig: string;
+  interpolationMatcher?: Matcher;
+}
+
+export interface TService {
+  translateStrings: (args: TServiceArgs) => Promise<TResult[]>;
 }
 
 export const serviceMap = {

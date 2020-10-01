@@ -2,57 +2,36 @@ import inquirer from "inquirer";
 import {
   replaceInterpolations,
   reInsertInterpolations,
-  Matcher,
 } from "../matchers/matcher-definitions";
-import { TranslationService } from "./service-definitions";
+import { TService, TServiceArgs } from "./service-definitions";
 
-export class ManualTranslation implements TranslationService {
-  private interpolationMatcher: Matcher | undefined;
-
-  // eslint-disable-next-line require-await
-  async initialize(config?: string, interpolationMatcher?: Matcher) {
-    this.interpolationMatcher = interpolationMatcher;
-  }
-
-  async translateStrings(
-    strings: { key: string; value: string }[],
-    from: string,
-    to: string
-  ) {
+export class ManualTranslation implements TService {
+  async translateStrings(args: TServiceArgs) {
     const results: { key: string; value: string; translated: string }[] = [];
 
-    if (strings.length === 0) {
-      return [];
-    }
-
-    console.log();
     console.log(`├─┌── Translatable strings:`);
 
-    for (const { key, value } of strings) {
+    for (const { key, value } of args.strings) {
       const { replacements } = replaceInterpolations(
         value,
-        this.interpolationMatcher
+        args.interpolationMatcher
       );
       process.stdout.write("│ ├── ");
 
       const result = await inquirer.prompt<{ result: string }>([
         {
           name: "result",
-          message: `[${from} -> ${to}] ${
+          message: `[${args.srcLng} -> ${args.targetLng}] ${
             key !== value ? `(${key}) ` : ""
           }"${value}":`,
         },
       ]);
-
       results.push({
         key,
         value,
         translated: reInsertInterpolations(result.result, replacements),
       });
     }
-
-    process.stdout.write(`│ └── Done`);
-
     return results;
   }
 }
