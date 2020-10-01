@@ -56,6 +56,19 @@ export function leftJoin(left: TSet, right: TSet): TSet {
   };
 }
 
+export function leftMinusRight(left: TSet, right: TSet): TSet {
+  const leftRemaining = new Map<string, string>();
+  left.translations.forEach((value, key) => {
+    if (!right.translations.get(key)) {
+      leftRemaining.set(key, value);
+    }
+  });
+  return {
+    lng: left.lng,
+    translations: leftRemaining,
+  };
+}
+
 export function areEqual(set1: TSet, set2: TSet | null): boolean {
   if (!set2) {
     return false;

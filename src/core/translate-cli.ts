@@ -2,7 +2,7 @@ import * as path from "path";
 import { translateCore } from "./translate-core";
 import { existsSync } from "fs";
 import { CliArgs, CoreArgs, TSet } from "./core-definitions";
-import { areEqual } from "./tset-ops";
+import { areEqual, leftMinusRight } from "./tset-ops";
 import { checkDir, getDebugPath, logFatal } from "../util/util";
 import { serviceMap } from "../services/service-definitions";
 import { matcherMap } from "../matchers/matcher-definitions";
@@ -110,8 +110,19 @@ export async function translateCli(cliArgs: CliArgs) {
     console.info(`Write target-file ${getDebugPath(cliArgs.targetFile)}`);
     targetFileFormat.writeTFile(cliArgs.targetFile, result.newTarget);
   }
-  if (!areEqual(src, srcCache)) {
+  let newSrcCache: TSet;
+  if (result.skipped?.size) {
+    // TODO: Cleanup, maybe move logic to core
+    console.warn(`Skipped ${result.skipped.size} translations`);
+    newSrcCache = leftMinusRight(src, {
+      translations: result.skipped,
+      lng: src.lng,
+    });
+  } else {
+    newSrcCache = src;
+  }
+  if (!srcCache || !areEqual(srcCache, newSrcCache)) {
     console.info(`Write cache ${getDebugPath(cachePath)}`);
-    cacheFileFormat.writeTFile(cachePath, src);
+    cacheFileFormat.writeTFile(cachePath, newSrcCache);
   }
 }

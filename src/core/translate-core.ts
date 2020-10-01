@@ -86,7 +86,8 @@ async function invokeTranslationService(
 
 function mergeResults(
   args: CoreArgs,
-  serviceResults: TSet | null
+  serviceResults: TSet | null,
+  serviceInputs: TSet | null
 ): Omit<CoreResults, "serviceResults"> {
   if (!serviceResults) {
     if (!args.srcCache) {
@@ -103,16 +104,21 @@ function mergeResults(
       newTarget: args.oldTarget,
       added: null,
       updated: null,
+      skipped: null,
     };
   }
+  const skipped = serviceInputs
+    ? selectLeftDistinct(serviceInputs, serviceResults, "COMPARE_KEYS")
+        .translations
+    : null;
   if (!args.oldTarget) {
     return {
       newTarget: serviceResults,
       added: serviceResults.translations,
       updated: null,
+      skipped,
     };
   }
-
   const added = selectLeftDistinct(
     serviceResults,
     args.oldTarget,
@@ -128,6 +134,7 @@ function mergeResults(
     newTarget: leftJoin(serviceResults, args.oldTarget),
     added,
     updated,
+    skipped,
   };
 }
 
@@ -147,7 +154,7 @@ export async function translateCore(args: CoreArgs): Promise<CoreResults> {
         `Option 2: Delete parts of your target-file and then re-run this tool.\n`
     );
   }
-  const merge = mergeResults(args, serviceResults);
+  const merge = mergeResults(args, serviceResults, toTranslate);
   const serviceT = serviceResults?.translations ?? null;
   return { ...merge, serviceResults: serviceT };
 }

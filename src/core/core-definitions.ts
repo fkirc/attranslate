@@ -18,6 +18,7 @@ export interface CoreArgs {
 
 export interface CoreResults {
   newTarget: TSet;
+  skipped: Map<string, string> | null;
   added: Map<string, string> | null;
   updated: Map<string, string> | null;
   serviceResults: Map<string, string> | null;
