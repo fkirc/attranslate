@@ -7,7 +7,7 @@ export class ManualTranslation implements TService {
 
     console.info(`Total number of questions: ${args.strings.length}`);
     console.info(
-      `You can skip questions by pressing <ENTER> without any other character`
+      `You can skip questions by pressing <ENTER> without any other character.`
     );
 
     for (const { key, value } of args.strings) {
@@ -17,10 +17,13 @@ export class ManualTranslation implements TService {
           message: `(${key}) What is '${value}' in '${args.targetLng}'?`,
         },
       ]);
-      results.push({
-        key,
-        translated: result.result,
-      });
+      const userInput = result.result;
+      if (userInput.trim().length) {
+        results.push({
+          key,
+          translated: result.result,
+        });
+      }
     }
     return results;
   }
