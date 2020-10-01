@@ -1,6 +1,6 @@
 import { translateCore } from "../../src/core/translate-core";
 import { CoreArgs, CoreResults, TSet } from "../../src/core/core-definitions";
-import { commonArgs, deTarget } from "./core-test-util";
+import { commonArgs, deTarget, enSrc } from "./core-test-util";
 
 const partialGermanTarget: TSet = {
   lng: "de",
@@ -14,8 +14,9 @@ const partialGermanTarget: TSet = {
 test("no cache, no target", async () => {
   const args: CoreArgs = {
     ...commonArgs,
-    oldTarget: null,
+    src: enSrc,
     srcCache: null,
+    oldTarget: null,
   };
   const expectRes: CoreResults = {
     newTarget: deTarget,
@@ -31,8 +32,9 @@ test("no cache, no target", async () => {
 test("no cache, clean target", async () => {
   const args: CoreArgs = {
     ...commonArgs,
-    oldTarget: deTarget,
+    src: enSrc,
     srcCache: null,
+    oldTarget: deTarget,
   };
   const expectRes: CoreResults = {
     newTarget: deTarget,
@@ -48,8 +50,9 @@ test("no cache, clean target", async () => {
 test("no cache, partial target", async () => {
   const args: CoreArgs = {
     ...commonArgs,
-    oldTarget: partialGermanTarget,
+    src: enSrc,
     srcCache: null,
+    oldTarget: partialGermanTarget,
   };
   const added = new Map<string, string>([
     ["hello", "Hallo"],

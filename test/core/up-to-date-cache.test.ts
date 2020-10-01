@@ -18,8 +18,9 @@ const modifiedTarget: TSet = {
 test("up-to-date cache, no target", async () => {
   const args: CoreArgs = {
     ...commonArgs,
-    oldTarget: null,
+    src: enSrc,
     srcCache: enSrc,
+    oldTarget: null,
   };
   const expectRes: CoreResults = {
     newTarget: deTarget,
@@ -35,8 +36,9 @@ test("up-to-date cache, no target", async () => {
 test("up-to-date cache, up-to-date target", async () => {
   const args: CoreArgs = {
     ...commonArgs,
-    oldTarget: deTarget,
+    src: enSrc,
     srcCache: enSrc,
+    oldTarget: deTarget,
   };
   const expectRes: CoreResults = {
     newTarget: deTarget,
@@ -52,8 +54,9 @@ test("up-to-date cache, up-to-date target", async () => {
 test("up-to-date cache, modified target", async () => {
   const args: CoreArgs = {
     ...commonArgs,
-    oldTarget: modifiedTarget,
+    src: enSrc,
     srcCache: enSrc,
+    oldTarget: modifiedTarget,
   };
   const expectRes: CoreResults = {
     newTarget: modifiedTarget,
