@@ -1,6 +1,11 @@
 import { Matcher, matcherMap } from "../matchers/matcher-definitions";
-import { serviceMap, TService } from "../services/service-definitions";
-import { CoreArgs } from "./core-definitions";
+import {
+  serviceMap,
+  TResult,
+  TService,
+  TString,
+} from "../services/service-definitions";
+import { CoreArgs, TSet } from "./core-definitions";
 
 export function getMatcherInstance(args: CoreArgs): Matcher {
   const matcher: keyof typeof matcherMap = args.matcher;
@@ -16,4 +21,29 @@ export function getServiceInstance(args: CoreArgs): TService {
     throw new Error(`The service ${service} doesn't exist.`);
   }
   return serviceMap[service];
+}
+
+export function convertFromServiceResults(
+  serviceResults: TResult[],
+  lng: string
+): TSet {
+  const tSet = new Map<string, string>();
+  serviceResults.forEach((tResult) => {
+    tSet.set(tResult.key, tResult.translated);
+  });
+  return {
+    lng,
+    translations: tSet,
+  };
+}
+
+export function convertToTStringList(tSet: TSet): TString[] {
+  const tList: TString[] = [];
+  tSet.translations.forEach((value, key) => {
+    tList.push({
+      key,
+      value,
+    });
+  });
+  return tList;
 }

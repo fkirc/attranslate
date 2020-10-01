@@ -1,9 +1,5 @@
 import { TranslationServiceClient } from "@google-cloud/translate";
 import {
-  replaceInterpolations,
-  reInsertInterpolations,
-} from "../matchers/matcher-definitions";
-import {
   TResult,
   TService,
   TServiceArgs,
@@ -36,13 +32,10 @@ export class GoogleTranslate implements TService {
     };
     const client = new TranslationServiceClient(clientOptions);
 
-    const interpols = args.strings.map((tString) => {
-      return replaceInterpolations(tString.value, args.interpolationMatcher);
-    });
-    const cleanStrings = interpols.map((v) => v.clean);
+    const stringsToTranslate = args.strings.map((tString) => tString.value);
     const request: ITranslateTextRequest = {
       parent: `projects/${projectId}/locations/${location}`,
-      contents: cleanStrings,
+      contents: stringsToTranslate,
       mimeType: "text/plain",
       sourceLanguageCode: args.srcLng,
       targetLanguageCode: args.targetLng,
@@ -52,28 +45,16 @@ export class GoogleTranslate implements TService {
     // TODO: Error handling
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     return response.translations!.map((value, index) => {
-      return this.transformGCloudResult(
-        value,
-        args.strings[index],
-        interpols[index].replacements
-      );
+      return this.transformGCloudResult(value, args.strings[index]);
     });
   }
 
-  transformGCloudResult(
-    result: ITranslation,
-    input: TString,
-    replacements: { from: string; to: string }[]
-  ): TResult {
+  transformGCloudResult(result: ITranslation, input: TString): TResult {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const rawTranslation = result!.translatedText!; // TODO: Error handling
-    const cleanTranslation = reInsertInterpolations(
-      rawTranslation,
-      replacements
-    );
     return {
       key: input.key,
-      translated: cleanTranslation,
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      translated: result!.translatedText!, // TODO: Error handling
     };
   }
 }

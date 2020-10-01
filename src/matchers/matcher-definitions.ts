@@ -21,18 +21,22 @@ export const matcherMap = {
   sprintf: matchSprintf,
 };
 
+export type Replacer = {
+  clean: string;
+  replacements: { from: string; to: string }[];
+};
+
 export const replaceInterpolations = (
   input: string,
   matcher: Matcher = matchNothing,
   replacer: (index: number) => string = xmlStyleReplacer
-) => {
+): Replacer => {
   const replacements = matcher(input, replacer);
 
   const clean = replacements.reduce(
     (acc, cur) => acc.replace(cur.from, cur.to),
     input
   );
-
   return { clean, replacements };
 };
 

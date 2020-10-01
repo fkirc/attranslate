@@ -8,15 +8,15 @@ interface LngT {
 }
 
 describe.each([
-  { lng: "de", t: "Hallo {{person.name}}" },
-  { lng: "es", t: "Hola {{person.name}}" },
-  { lng: "fr", t: "Bonjour {{person.name}}" },
-  { lng: "it", t: "Ciao {{person.name}}" },
+  { lng: "de", t: "Hallo {{translator}}" },
+  { lng: "es", t: "Hola {{translator}}" },
+  { lng: "fr", t: "Bonjour {{translator}}" },
+  { lng: "it", t: "Ciao {{translator}}" },
 ])("Hello %s", (lngT: LngT) => {
   test("Hello international", async () => {
     const srcHello: TSet = {
       lng: "en",
-      translations: new Map([["hello", "Hello {{person.name}}"]]),
+      translations: new Map([["hello", "Hello {{translator}}"]]),
     };
     const args: CoreArgs = {
       ...commonArgs,

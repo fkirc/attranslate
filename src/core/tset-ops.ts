@@ -1,5 +1,4 @@
 import { TSet } from "./core-definitions";
-import { TResult, TString } from "../services/service-definitions";
 import { logFatal } from "../util/util";
 
 export type DiffStrategy =
@@ -57,17 +56,6 @@ export function leftJoin(left: TSet, right: TSet): TSet {
   };
 }
 
-export function convertToTStringList(tSet: TSet): TString[] {
-  const tList: TString[] = [];
-  tSet.translations.forEach((value, key) => {
-    tList.push({
-      key,
-      value,
-    });
-  });
-  return tList;
-}
-
 export function areEqual(set1: TSet, set2: TSet | null): boolean {
   if (!set2) {
     return false;
@@ -86,18 +74,4 @@ export function areEqual(set1: TSet, set2: TSet | null): boolean {
     }
   }
   return true;
-}
-
-export function convertFromServiceResults(
-  serviceResults: TResult[],
-  lng: string
-): TSet {
-  const tSet = new Map<string, string>();
-  serviceResults.forEach((tResult) => {
-    tSet.set(tResult.key, tResult.translated);
-  });
-  return {
-    lng,
-    translations: tSet,
-  };
 }
