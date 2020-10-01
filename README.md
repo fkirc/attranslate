@@ -91,23 +91,6 @@ If you are not a JavaScript-developer, then you can install `attranslate` global
 Next, you should write a project-specific script that invokes `attranslate` for your specific files.
 See sample scripts for a guidance on how to translate your project-specific files.
 
-### Key-Based
-
-If you pass use the `keybased` option (`--type keybased`), this tool will use
-the source file's values as the basis of translations. Keys can be nested, the
-structure will be transfered over to the translated files as well.
-
-```json
-{
-  "ERRORS": {
-    "USERNAME": "Your username doesn't exist.",
-    "EMAIL": "{email} is not a valid email address."
-  },
-  "LOGIN": "Login",
-  "FORGOT_PASSWORD": "Forgot password?"
-}
-```
-
 ### Google Translate
 
 To use this tool with Google Translate, you need to obtain valid credentials
@@ -131,20 +114,20 @@ You can specify the location of your downloaded JSON key file using the `-c` or
 ### DeepL
 
 To use this tool with DeepL, you need to obtain an API key from their website.
-API keys are only available to DeepL Pro API users. If you don't have a
+API-keys are only available to DeepL Pro API users. If you don't have a
 Developer account yet, you can create one
 [here](https://www.deepl.com/en/pro.html#developer).
 
-After you have completed the sign-up, you can pass the API key using the `--serviceConfig` option.
+Afterwards, pass your API-key to `attranslate` via the `--serviceConfig` flag.
 
 ### Azure Translator Text
 
-To use this tool with Azure's Translator Text, you need to obtain an API key
+To use `attranslate` with Azure's Translator Text, you need to obtain an API key
 from their website. [Sign Up](https://azure.microsoft.com/en-us/free/) for an
 Azure account if you don't have one already and
 [create a new translator instance](https://portal.azure.com/#create/Microsoft.CognitiveServicesTextTranslation).
-You'll get an API key that you can pass to `attranslate`
-using the `--serviceConfig` flag.
+
+Afterwards, pass your API-key to `attranslate` via the `--serviceConfig` flag.
 
 ### Manual
 
@@ -168,3 +151,16 @@ attranslate offers the following matchers for different styles of interpolations
 - **None**: Doesn't match any interpolations.
 
 You should select a matcher using the `--matcher` option.
+
+## Translation Cache
+
+The translation-cache is an essential part of `attranslate`.
+The purpose is twofold:
+
+- The translation-cache enables selective corrections if you are not happy with automatically generated translations.
+- The translation-cache saves time and cost because it prevents redundant re-translations.
+
+The translation-cache consists of `attranslate-cache`-files.
+To make it work, you should put your `attranslate-cache`-files under version control.
+Be aware that you should not manually edit any `attranslate-cache`-file.
+Instead, edit your source-files and re-run `attranslate` to re-generate the translation-cache.
