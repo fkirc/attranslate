@@ -19,16 +19,14 @@ Instead of re-inventing the wheel, `attranslate` integrates into existing transl
 ## Cross-platform Support
 
 `attranslate` is designed to translate any website or app with any toolchain.
-`attranslate` works for Web/Android/iOS or any combination of platforms. To make this possible, attranslate supports the following file formats:
-- i18n/ICU JSON
-- Android XML
-- iOS plist
+`attranslate` works for Web/Android/iOS or any combination of platforms.
+To make this possible, `attranslate` supports the following file formats:
 
-## Flexible Workflows
-
-`attranslate` does not enforce any specific workflow. 
-In particular, `attranslate` does not force you to use any translation service. 
-It is also possible to use attranslate for converting between different file formats without changing the language (e.g. from Android-XML to iOS-Localizable).
+- Nested JSON
+- Flat JSON
+- Android-XML
+- iOS-plist
+- Microsoft Excel
 
 ## Allow Manual Overwrites
 
