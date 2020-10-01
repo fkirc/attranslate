@@ -9,6 +9,11 @@ import { google } from "@google-cloud/translate/build/protos/protos";
 import ITranslateTextRequest = google.cloud.translation.v3.ITranslateTextRequest;
 import { ClientOptions } from "google-gax";
 import ITranslation = google.cloud.translation.v3.ITranslation;
+import { getDebugPath, logFatal, readJsonFile } from "../util/util";
+
+interface GCloudKeyFile {
+  project_id: string;
+}
 
 export class GoogleTranslate implements TranslationService {
   private interpolationMatcher: Matcher | undefined;
@@ -24,12 +29,21 @@ export class GoogleTranslate implements TranslationService {
 
   // eslint-disable-next-line require-await
   async translateStrings(inputs: TString[], from: string, to: string) {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const keyFile = readJsonFile<GCloudKeyFile>(this.serviceConfig!);
+    if (!keyFile.project_id) {
+      logFatal(
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        `${getDebugPath(this.serviceConfig!)} does not contain a project_id`
+      );
+    }
+    const projectId: string = keyFile.project_id;
+    const location = "global";
+
     const clientOptions: ClientOptions = {
       keyFile: this.serviceConfig,
     };
     const client = new TranslationServiceClient(clientOptions);
-    const projectId = "secure-zip-notes"; // TODO: Read this from service account json?
-    const location = "global";
 
     const interpols = inputs.map((tString) => {
       return replaceInterpolations(tString.value, this.interpolationMatcher);
