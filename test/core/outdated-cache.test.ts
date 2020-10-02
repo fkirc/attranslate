@@ -20,6 +20,7 @@ test("incomplete cache, up-do-date target", async () => {
   };
   const expectRes: CoreResults = {
     newTarget: deTarget,
+    newSrcCache: args.src,
     changeSet: {
       added: new Map(),
       updated: new Map(),
@@ -40,6 +41,7 @@ test("outdated cache, up-do-date target", async () => {
   };
   const expectRes: CoreResults = {
     newTarget: deTarget,
+    newSrcCache: args.src,
     changeSet: {
       added: new Map(),
       updated: new Map(),
@@ -86,6 +88,7 @@ test("outdated cache, outdated target", async () => {
   };
   const expectRes: CoreResults = {
     newTarget: mixedResult,
+    newSrcCache: args.src,
     changeSet: {
       added: new Map([
         ["four", "Inhalt vier"],

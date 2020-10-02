@@ -2,7 +2,7 @@ import * as path from "path";
 import { translateCore } from "./translate-core";
 import { existsSync } from "fs";
 import { CliArgs, CoreArgs, TSet } from "./core-definitions";
-import { areEqual, leftMinusRightFillNull } from "./tset-ops";
+import { areEqual } from "./tset-ops";
 import { checkDir, getDebugPath, logFatal } from "../util/util";
 import { serviceMap } from "../services/service-definitions";
 import { matcherMap } from "../matchers/matcher-definitions";
@@ -99,19 +99,13 @@ export async function translateCli(cliArgs: CliArgs) {
     matcher: cliArgs.matcher as keyof typeof matcherMap,
   };
   const result = await translateCore(coreArgs);
-  if (!areEqual(result.newTarget, oldTarget)) {
+
+  if (!oldTarget || !areEqual(oldTarget, result.newTarget)) {
     console.info(`Write target-file ${getDebugPath(cliArgs.targetFile)}`);
     targetFileFormat.writeTFile(cliArgs.targetFile, result.newTarget);
   }
-  let newSrcCache: TSet;
-  if (result.changeSet.skipped?.size) {
-    // TODO: Cleanup, maybe move logic to core
-    newSrcCache = leftMinusRightFillNull(src, result.changeSet.skipped);
-  } else {
-    newSrcCache = src;
-  }
-  if (!srcCache || !areEqual(srcCache, newSrcCache)) {
+  if (!srcCache || !areEqual(srcCache, result.newSrcCache)) {
     console.info(`Write cache ${getDebugPath(cachePath)}`);
-    cacheFileFormat.writeTFile(cachePath, newSrcCache);
+    cacheFileFormat.writeTFile(cachePath, result.newSrcCache);
   }
 }

@@ -33,6 +33,7 @@ describe.each([
         results: new Map([["hello", lngT.t]]),
       },
       newTarget: new Map([["hello", lngT.t]]),
+      newSrcCache: args.src,
     };
     const res = await translateCoreAssert(args);
     expect(res).toStrictEqual(expectRes);

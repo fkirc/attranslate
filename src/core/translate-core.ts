@@ -5,7 +5,11 @@ import {
   TServiceInvocation,
   TSet,
 } from "./core-definitions";
-import { leftJoin, selectLeftDistinct } from "./tset-ops";
+import {
+  leftJoin,
+  leftMinusRightFillNull,
+  selectLeftDistinct,
+} from "./tset-ops";
 import {
   convertFromServiceResults,
   convertToTStringList,
@@ -149,6 +153,14 @@ function computeNewTarget(
   return leftJoin(serviceInvocation.results, args.oldTarget);
 }
 
+function computeNewSrcCache(args: CoreArgs, changeSet: TChangeSet) {
+  if (changeSet.skipped.size) {
+    return leftMinusRightFillNull(args.src, changeSet.skipped);
+  } else {
+    return args.src;
+  }
+}
+
 function computeCoreResults(
   args: CoreArgs,
   serviceInvocation: TServiceInvocation | null,
@@ -158,6 +170,7 @@ function computeCoreResults(
     changeSet,
     serviceInvocation,
     newTarget: computeNewTarget(args, serviceInvocation),
+    newSrcCache: computeNewSrcCache(args, changeSet),
   };
 }
 

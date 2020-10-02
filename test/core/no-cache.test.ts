@@ -21,6 +21,7 @@ test("no cache, no target", async () => {
   };
   const expectRes: CoreResults = {
     newTarget: deTarget,
+    newSrcCache: args.src,
     changeSet: {
       added: deTarget,
       updated: new Map(),
@@ -44,6 +45,7 @@ test("no cache, clean target", async () => {
   };
   const expectRes: CoreResults = {
     newTarget: deTarget,
+    newSrcCache: args.src,
     changeSet: {
       added: new Map(),
       updated: new Map(),
@@ -76,6 +78,7 @@ test("no cache, partial target", async () => {
       ["three", "Inhalt Drei"],
       ["six", "Inhalt Sechs"],
     ]),
+    newSrcCache: args.src,
     changeSet: {
       added,
       updated: new Map(),
@@ -90,7 +93,6 @@ test("no cache, partial target", async () => {
       results: added,
     },
   };
-  // TODO: Assert translateCore invariants: serviceInvocation.inputs.size >= added.size + updated.size etc.
   const res = await translateCoreAssert(args);
   expect(res).toStrictEqual(expectRes);
 });

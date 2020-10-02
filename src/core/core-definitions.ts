@@ -29,6 +29,7 @@ export interface CoreResults {
   changeSet: TChangeSet;
   serviceInvocation: TServiceInvocation | null;
   newTarget: TSet;
+  newSrcCache: TSet;
 }
 
 export interface CliArgs {

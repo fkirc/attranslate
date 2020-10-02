@@ -30,6 +30,7 @@ test("up-to-date cache, no target", async () => {
       skipped: new Map(),
     },
     newTarget: deTarget,
+    newSrcCache: args.src,
     serviceInvocation: {
       inputs: enSrc,
       results: deTarget,
@@ -48,6 +49,7 @@ test("up-to-date cache, up-to-date target", async () => {
   };
   const expectRes: CoreResults = {
     newTarget: deTarget,
+    newSrcCache: args.src,
     changeSet: {
       added: new Map(),
       updated: new Map(),
@@ -68,6 +70,7 @@ test("up-to-date cache, modified target", async () => {
   };
   const expectRes: CoreResults = {
     newTarget: modifiedTarget,
+    newSrcCache: args.src,
     changeSet: {
       added: new Map(),
       updated: new Map(),
