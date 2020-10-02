@@ -14,13 +14,22 @@ export interface CoreArgs {
   matcher: keyof typeof matcherMap;
 }
 
-// TODO: Use types
+export interface TChangeSet {
+  // TODO: Make those properties non-null?
+  skipped: TSet | null;
+  added: TSet | null;
+  updated: TSet | null;
+}
+
+export interface TServiceInvocation {
+  inputs: TSet;
+  results: TSet;
+}
+
 export interface CoreResults {
+  changeSet: TChangeSet;
+  serviceInvocation: TServiceInvocation | null;
   newTarget: TSet;
-  skipped: Map<string, string | null> | null;
-  added: Map<string, string | null> | null;
-  updated: Map<string, string | null> | null;
-  serviceResults: Map<string, string | null> | null;
 }
 
 export interface CliArgs {

@@ -20,11 +20,16 @@ test("up-to-date cache, no target", async () => {
     oldTarget: null,
   };
   const expectRes: CoreResults = {
+    changeSet: {
+      added: deTarget,
+      updated: null,
+      skipped: new Map(),
+    },
     newTarget: deTarget,
-    added: deTarget,
-    updated: null,
-    skipped: new Map(),
-    serviceResults: deTarget,
+    serviceInvocation: {
+      inputs: enSrc,
+      results: deTarget,
+    },
   };
   const res = await translateCore(args);
   expect(res).toStrictEqual(expectRes);
@@ -39,10 +44,12 @@ test("up-to-date cache, up-to-date target", async () => {
   };
   const expectRes: CoreResults = {
     newTarget: deTarget,
-    added: null,
-    updated: null,
-    skipped: null,
-    serviceResults: null,
+    changeSet: {
+      added: null,
+      updated: null,
+      skipped: null,
+    },
+    serviceInvocation: null,
   };
   const res = await translateCore(args);
   expect(res).toStrictEqual(expectRes);
@@ -57,10 +64,12 @@ test("up-to-date cache, modified target", async () => {
   };
   const expectRes: CoreResults = {
     newTarget: modifiedTarget,
-    added: null,
-    updated: null,
-    skipped: null,
-    serviceResults: null,
+    changeSet: {
+      added: null,
+      updated: null,
+      skipped: null,
+    },
+    serviceInvocation: null,
   };
   const res = await translateCore(args);
   expect(res).toStrictEqual(expectRes);

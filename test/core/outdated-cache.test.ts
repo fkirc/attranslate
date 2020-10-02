@@ -16,10 +16,12 @@ test("incomplete cache, up-do-date target", async () => {
   };
   const expectRes: CoreResults = {
     newTarget: deTarget,
-    added: null,
-    updated: null,
-    skipped: null,
-    serviceResults: null,
+    changeSet: {
+      added: null,
+      updated: null,
+      skipped: null,
+    },
+    serviceInvocation: null,
   };
   const res = await translateCore(args);
   expect(res).toStrictEqual(expectRes);
@@ -34,10 +36,15 @@ test("outdated cache, up-do-date target", async () => {
   };
   const expectRes: CoreResults = {
     newTarget: deTarget,
-    added: new Map(),
-    updated: new Map(),
-    skipped: new Map(),
-    serviceResults: new Map([["one", "Inhalt Eins"]]),
+    changeSet: {
+      added: new Map(),
+      updated: new Map(),
+      skipped: new Map(),
+    },
+    serviceInvocation: {
+      inputs: new Map([["one", "Content One"]]),
+      results: new Map([["one", "Inhalt Eins"]]),
+    },
   };
   const res = await translateCore(args);
   expect(res).toStrictEqual(expectRes);
@@ -75,17 +82,26 @@ test("outdated cache, outdated target", async () => {
   };
   const expectRes: CoreResults = {
     newTarget: mixedResult,
-    added: new Map([
-      ["four", "Inhalt vier"],
-      ["six", "Inhalt Sechs"],
-    ]),
-    skipped: new Map(),
-    updated: new Map([["one", "Inhalt Eins"]]),
-    serviceResults: new Map([
-      ["one", "Inhalt Eins"],
-      ["four", "Inhalt vier"],
-      ["six", "Inhalt Sechs"],
-    ]),
+    changeSet: {
+      added: new Map([
+        ["four", "Inhalt vier"],
+        ["six", "Inhalt Sechs"],
+      ]),
+      skipped: new Map(),
+      updated: new Map([["one", "Inhalt Eins"]]),
+    },
+    serviceInvocation: {
+      inputs: new Map([
+        ["one", "Content One"],
+        ["four", "Content Four"],
+        ["six", "Content Six"],
+      ]),
+      results: new Map([
+        ["one", "Inhalt Eins"],
+        ["four", "Inhalt vier"],
+        ["six", "Inhalt Sechs"],
+      ]),
+    },
   };
   const res = await translateCore(args);
   expect(res).toStrictEqual(expectRes);

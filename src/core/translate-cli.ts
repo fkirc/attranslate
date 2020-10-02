@@ -100,11 +100,11 @@ export async function translateCli(cliArgs: CliArgs) {
   };
   const result = await translateCore(coreArgs);
   if (!areEqual(result.newTarget, oldTarget)) {
-    const countAdded: number = result.added?.size ?? 0;
+    const countAdded: number = result.changeSet.added?.size ?? 0;
     if (countAdded) {
       console.info(`Add ${countAdded} new translations`);
     }
-    const countUpdated: number = result.updated?.size ?? 0;
+    const countUpdated: number = result.changeSet.updated?.size ?? 0;
     if (countUpdated) {
       console.info(`Update ${countUpdated} existing translations`);
     }
@@ -112,10 +112,12 @@ export async function translateCli(cliArgs: CliArgs) {
     targetFileFormat.writeTFile(cliArgs.targetFile, result.newTarget);
   }
   let newSrcCache: TSet;
-  if (result.skipped?.size) {
+  if (result.changeSet.skipped?.size) {
     // TODO: Cleanup, maybe move logic to core
-    console.warn(`Warning: Skipped ${result.skipped.size} translations`);
-    newSrcCache = leftMinusRightFillNull(src, result.skipped);
+    console.warn(
+      `Warning: Skipped ${result.changeSet.skipped.size} translations`
+    );
+    newSrcCache = leftMinusRightFillNull(src, result.changeSet.skipped);
   } else {
     newSrcCache = src;
   }

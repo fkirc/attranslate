@@ -1,4 +1,10 @@
-import { CoreArgs, CoreResults, TSet } from "./core-definitions";
+import {
+  CoreArgs,
+  CoreResults,
+  TChangeSet,
+  TServiceInvocation,
+  TSet,
+} from "./core-definitions";
 import { leftJoin, selectLeftDistinct } from "./tset-ops";
 import {
   convertFromServiceResults,
@@ -84,14 +90,14 @@ async function invokeTranslationService(
   return convertFromServiceResults(results);
 }
 
-function mergeResults(
+function computeChangeSet(
   args: CoreArgs,
-  serviceResults: TSet | null,
-  serviceInputs: TSet | null
-): Omit<CoreResults, "serviceResults"> {
-  if (!serviceResults) {
+  serviceInvocation: TServiceInvocation | null
+): TChangeSet {
+  if (!serviceInvocation) {
     if (!args.srcCache) {
       console.info(
+        // TODO: Move console infos into core-util or something
         `Skipped translations because we had to generate a new cache.`
       );
     } else {
@@ -101,39 +107,64 @@ function mergeResults(
       logFatal("Missing both serviceResults and oldTarget");
     }
     return {
-      newTarget: args.oldTarget,
       added: null,
       updated: null,
       skipped: null,
     };
   }
-  const skipped = serviceInputs
-    ? selectLeftDistinct(serviceInputs, serviceResults, "COMPARE_KEYS")
-    : null;
+  const skipped = selectLeftDistinct(
+    serviceInvocation.inputs,
+    serviceInvocation.results,
+    "COMPARE_KEYS"
+  );
   if (!args.oldTarget) {
     return {
-      newTarget: serviceResults,
-      added: serviceResults,
+      added: serviceInvocation.results,
       updated: null,
       skipped,
     };
   }
   const added = selectLeftDistinct(
-    serviceResults,
+    serviceInvocation.results,
     args.oldTarget,
     "COMPARE_KEYS"
   );
   const updated = selectLeftDistinct(
-    serviceResults,
+    serviceInvocation.results,
     args.oldTarget,
     "COMPARE_VALUES"
   );
-  // TODO: Delete stale keys from target?
+  // TODO: Delete stale keys from target, optionally
   return {
-    newTarget: leftJoin(serviceResults, args.oldTarget),
     added,
     updated,
     skipped,
+  };
+}
+
+function computeNewTarget(
+  args: CoreArgs,
+  serviceInvocation: TServiceInvocation | null
+): TSet {
+  if (!serviceInvocation) {
+    // TODO: Remove stale keys (optionally)
+    return args.oldTarget ?? new Map<string, string | null>();
+  }
+  if (!args.oldTarget) {
+    return serviceInvocation.results;
+  }
+  return leftJoin(serviceInvocation.results, args.oldTarget);
+}
+
+function computeCoreResults(
+  args: CoreArgs,
+  serviceInvocation: TServiceInvocation | null,
+  changeSet: TChangeSet
+): CoreResults {
+  return {
+    changeSet,
+    serviceInvocation,
+    newTarget: computeNewTarget(args, serviceInvocation),
   };
 }
 
@@ -144,7 +175,6 @@ export async function translateCore(args: CoreArgs): Promise<CoreResults> {
   if (toTranslate.size >= 1) {
     serviceResults = await invokeTranslationService(toTranslate, args);
   }
-
   if (!args.srcCache) {
     console.info(
       `Cache not found -> Generate a new cache to enable selective translations.\n` +
@@ -153,7 +183,12 @@ export async function translateCore(args: CoreArgs): Promise<CoreResults> {
         `Option 2: Delete parts of your target-file and then re-run this tool.\n`
     );
   }
-  const merge = mergeResults(args, serviceResults, toTranslate);
-  const serviceT = serviceResults ?? null;
-  return { ...merge, serviceResults: serviceT };
+  const serviceInvocation: TServiceInvocation | null = serviceResults
+    ? {
+        inputs: toTranslate,
+        results: serviceResults,
+      }
+    : null;
+  const changeSet = computeChangeSet(args, serviceInvocation);
+  return computeCoreResults(args, serviceInvocation, changeSet);
 }

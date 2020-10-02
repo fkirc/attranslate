@@ -17,10 +17,15 @@ test("no cache, no target", async () => {
   };
   const expectRes: CoreResults = {
     newTarget: deTarget,
-    added: deTarget,
-    updated: null,
-    skipped: new Map(),
-    serviceResults: deTarget,
+    changeSet: {
+      added: deTarget,
+      updated: null,
+      skipped: new Map(),
+    },
+    serviceInvocation: {
+      inputs: enSrc,
+      results: deTarget,
+    },
   };
   const res = await translateCore(args);
   expect(res).toStrictEqual(expectRes);
@@ -35,10 +40,12 @@ test("no cache, clean target", async () => {
   };
   const expectRes: CoreResults = {
     newTarget: deTarget,
-    added: null,
-    updated: null,
-    skipped: null,
-    serviceResults: null,
+    changeSet: {
+      added: null,
+      updated: null,
+      skipped: null,
+    },
+    serviceInvocation: null,
   };
   const res = await translateCore(args);
   expect(res).toStrictEqual(expectRes);
@@ -57,12 +64,29 @@ test("no cache, partial target", async () => {
     ["five", "Inhalt Fünf"],
   ]);
   const expectRes: CoreResults = {
-    newTarget: deTarget,
-    added,
-    updated: new Map(),
-    skipped: new Map(),
-    serviceResults: added,
+    newTarget: new Map([
+      ["two", "Inhalt Zwei"],
+      ["four", "Inhalt vier"],
+      ["five", "Inhalt Fünf"],
+      ["one", "Inhalt Eins"],
+      ["three", "Inhalt Drei"],
+      ["six", "Inhalt Sechs"],
+    ]),
+    changeSet: {
+      added,
+      updated: new Map(),
+      skipped: new Map(),
+    },
+    serviceInvocation: {
+      inputs: new Map([
+        ["two", "Content Two"],
+        ["four", "Content Four"],
+        ["five", "Content Five"],
+      ]),
+      results: added,
+    },
   };
+  // TODO: Assert translateCore invariants: serviceInvocation.inputs.size >= added.size + updated.size etc.
   const res = await translateCore(args);
   expect(res).toStrictEqual(expectRes);
 });

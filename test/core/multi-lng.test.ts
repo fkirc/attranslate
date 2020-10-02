@@ -24,10 +24,15 @@ describe.each([
       targetLng: lngT.lng,
     };
     const expectRes: CoreResults = {
-      added: new Map([["hello", lngT.t]]),
-      updated: null,
-      skipped: new Map(),
-      serviceResults: new Map([["hello", lngT.t]]),
+      changeSet: {
+        added: new Map([["hello", lngT.t]]),
+        updated: null,
+        skipped: new Map(),
+      },
+      serviceInvocation: {
+        inputs: srcHello,
+        results: new Map([["hello", lngT.t]]),
+      },
       newTarget: new Map([["hello", lngT.t]]),
     };
     const res = await translateCore(args);
