@@ -45,11 +45,10 @@ jobs:
         with:
           path: '**/node_modules'
           key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
-      - run: npm cache verify
       - run: yarn install --frozen-lockfile
-      - run: npm run lint
-      - run: npm run build
-      - run: npm run test
+      - run: yarn run lint
+      - run: yarn run build
+      - run: yarn run test
       - run: git diff --exit-code
       - name: Release
         if: ${{ github.event.inputs.release == 'true' }}
