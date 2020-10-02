@@ -17,9 +17,9 @@ test("incomplete cache, up-do-date target", async () => {
   const expectRes: CoreResults = {
     newTarget: deTarget,
     changeSet: {
-      added: null,
-      updated: null,
-      skipped: null,
+      added: new Map(),
+      updated: new Map(),
+      skipped: new Map(),
     },
     serviceInvocation: null,
   };

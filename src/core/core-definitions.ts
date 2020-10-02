@@ -15,10 +15,9 @@ export interface CoreArgs {
 }
 
 export interface TChangeSet {
-  // TODO: Make those properties non-null?
-  skipped: TSet | null;
-  added: TSet | null;
-  updated: TSet | null;
+  skipped: TSet;
+  added: TSet;
+  updated: TSet;
 }
 
 export interface TServiceInvocation {

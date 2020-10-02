@@ -19,7 +19,7 @@ test("no cache, no target", async () => {
     newTarget: deTarget,
     changeSet: {
       added: deTarget,
-      updated: null,
+      updated: new Map(),
       skipped: new Map(),
     },
     serviceInvocation: {
@@ -41,9 +41,9 @@ test("no cache, clean target", async () => {
   const expectRes: CoreResults = {
     newTarget: deTarget,
     changeSet: {
-      added: null,
-      updated: null,
-      skipped: null,
+      added: new Map(),
+      updated: new Map(),
+      skipped: new Map(),
     },
     serviceInvocation: null,
   };

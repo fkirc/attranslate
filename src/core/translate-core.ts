@@ -107,9 +107,9 @@ function computeChangeSet(
       logFatal("Missing both serviceResults and oldTarget");
     }
     return {
-      added: null,
-      updated: null,
-      skipped: null,
+      added: new Map(),
+      updated: new Map(),
+      skipped: new Map(),
     };
   }
   const skipped = selectLeftDistinct(
@@ -120,7 +120,7 @@ function computeChangeSet(
   if (!args.oldTarget) {
     return {
       added: serviceInvocation.results,
-      updated: null,
+      updated: new Map(),
       skipped,
     };
   }

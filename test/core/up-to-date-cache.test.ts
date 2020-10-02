@@ -22,7 +22,7 @@ test("up-to-date cache, no target", async () => {
   const expectRes: CoreResults = {
     changeSet: {
       added: deTarget,
-      updated: null,
+      updated: new Map(),
       skipped: new Map(),
     },
     newTarget: deTarget,
@@ -45,9 +45,9 @@ test("up-to-date cache, up-to-date target", async () => {
   const expectRes: CoreResults = {
     newTarget: deTarget,
     changeSet: {
-      added: null,
-      updated: null,
-      skipped: null,
+      added: new Map(),
+      updated: new Map(),
+      skipped: new Map(),
     },
     serviceInvocation: null,
   };
@@ -65,9 +65,9 @@ test("up-to-date cache, modified target", async () => {
   const expectRes: CoreResults = {
     newTarget: modifiedTarget,
     changeSet: {
-      added: null,
-      updated: null,
-      skipped: null,
+      added: new Map(),
+      updated: new Map(),
+      skipped: new Map(),
     },
     serviceInvocation: null,
   };

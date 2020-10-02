@@ -26,7 +26,7 @@ describe.each([
     const expectRes: CoreResults = {
       changeSet: {
         added: new Map([["hello", lngT.t]]),
-        updated: null,
+        updated: new Map(),
         skipped: new Map(),
       },
       serviceInvocation: {
