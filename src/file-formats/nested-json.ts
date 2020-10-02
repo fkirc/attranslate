@@ -11,15 +11,12 @@ export class NestedJson implements TFileFormat {
     Object.keys(flatJson).forEach((key, index) => {
       tMap.set(key, flatJson[key]);
     });
-    return {
-      translations: tMap,
-      lng,
-    };
+    return tMap;
   }
 
   writeTFile(path: string, tSet: TSet): void {
-    const flatJson: Record<string, string | null> = {}; // TODO: Use type
-    tSet.translations.forEach((value, key) => {
+    const flatJson: Record<string, string | null> = {};
+    tSet.forEach((value, key) => {
       flatJson[key] = value;
     });
     const nestedJson = unflatten(flatJson);

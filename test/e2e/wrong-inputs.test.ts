@@ -96,7 +96,7 @@ test("src non-flat JSON", async () => {
   expect(output).toBe(
     `error: ${getDebugPath(
       args.srcFile
-    )} is not a flat JSON-file - Property 'inner' is not a string\n`
+    )} is not a flat JSON-file - Property 'inner' is not a string or null\n`
   );
 });
 

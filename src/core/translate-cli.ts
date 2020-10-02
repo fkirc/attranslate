@@ -72,7 +72,7 @@ export async function translateCli(cliArgs: CliArgs) {
     fileFormatMap[cliArgs.targetFormat as keyof typeof fileFormatMap];
   const cacheFileFormat = fileFormatMap["flat-json"];
   const src = srcFileFormat.readTFile(cliArgs.srcFile, cliArgs.srcLng);
-  if (!src.translations.size) {
+  if (!src.size) {
     logFatal(
       `${getDebugPath(
         cliArgs.srcFile
@@ -91,6 +91,7 @@ export async function translateCli(cliArgs: CliArgs) {
   const coreArgs: CoreArgs = {
     src,
     srcCache,
+    srcLng: cliArgs.srcLng,
     oldTarget,
     targetLng: cliArgs.targetLng,
     service: cliArgs.service as keyof typeof serviceMap,
@@ -114,10 +115,7 @@ export async function translateCli(cliArgs: CliArgs) {
   if (result.skipped?.size) {
     // TODO: Cleanup, maybe move logic to core
     console.warn(`Warning: Skipped ${result.skipped.size} translations`);
-    newSrcCache = leftMinusRightFillNull(src, {
-      translations: result.skipped,
-      lng: src.lng,
-    });
+    newSrcCache = leftMinusRightFillNull(src, result.skipped);
   } else {
     newSrcCache = src;
   }

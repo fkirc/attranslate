@@ -1,5 +1,4 @@
 import { TSet } from "./core-definitions";
-import { logFatal } from "../util/util";
 
 export type DiffStrategy =
   | "COMPARE_KEYS"
@@ -11,14 +10,9 @@ export function selectLeftDistinct(
   right: TSet,
   strategy: DiffStrategy
 ): TSet {
-  if (strategy !== "COMPARE_KEYS") {
-    if (left.lng !== right.lng) {
-      logFatal("Cannot compare values of different languages");
-    }
-  }
-  const leftDistinct = new Map<string, string | null>(); // TODO: Use type
-  left.translations.forEach((value, key) => {
-    const rightT = right.translations.get(key);
+  const leftDistinct = new Map<string, string | null>();
+  left.forEach((value, key) => {
+    const rightT = right.get(key);
     let diff: boolean;
     if (strategy === "COMPARE_KEYS") {
       diff = !rightT;
@@ -31,59 +25,44 @@ export function selectLeftDistinct(
       leftDistinct.set(key, value);
     }
   });
-  return {
-    lng: left.lng,
-    translations: leftDistinct,
-  };
+  return leftDistinct;
 }
 
 export function leftJoin(left: TSet, right: TSet): TSet {
-  if (left.lng !== right.lng) {
-    logFatal("Cannot join different languages");
-  }
-  const leftJoin = new Map<string, string | null>(); // TODO: Use type
-  left.translations.forEach((value, key) => {
+  const leftJoin = new Map<string, string | null>();
+  left.forEach((value, key) => {
     leftJoin.set(key, value);
   });
-  right.translations.forEach((value, key) => {
+  right.forEach((value, key) => {
     if (leftJoin.get(key) === undefined) {
       leftJoin.set(key, value);
     }
   });
-  return {
-    lng: left.lng,
-    translations: leftJoin,
-  };
+  return leftJoin;
 }
 
 export function leftMinusRightFillNull(left: TSet, right: TSet): TSet {
-  const leftRemaining = new Map<string, string | null>(); // TODO: Use type
-  left.translations.forEach((value, key) => {
-    if (!right.translations.get(key)) {
+  const leftRemaining = new Map<string, string | null>();
+  left.forEach((value, key) => {
+    if (!right.get(key)) {
       leftRemaining.set(key, value);
     } else {
       leftRemaining.set(key, null);
     }
   });
-  return {
-    lng: left.lng,
-    translations: leftRemaining,
-  };
+  return leftRemaining;
 }
 
 export function areEqual(set1: TSet, set2: TSet | null): boolean {
   if (!set2) {
     return false;
   }
-  if (set1.lng !== set2.lng) {
+  if (set1.size !== set2.size) {
     return false;
   }
-  if (set1.translations.size !== set2.translations.size) {
-    return false;
-  }
-  for (const key1 of set1.translations.keys()) {
-    const value1 = set1.translations.get(key1);
-    const value2 = set2.translations.get(key1);
+  for (const key1 of set1.keys()) {
+    const value1 = set1.get(key1);
+    const value2 = set2.get(key1);
     if (value1 !== value2) {
       return false;
     }

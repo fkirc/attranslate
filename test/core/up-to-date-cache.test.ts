@@ -2,18 +2,15 @@ import { translateCore } from "../../src/core/translate-core";
 import { commonArgs, enSrc, deTarget } from "./core-test-util";
 import { CoreArgs, CoreResults, TSet } from "../../src/core/core-definitions";
 
-const modifiedTarget: TSet = {
-  lng: "de",
-  translations: new Map([
-    ["one", "fgebg"],
-    ["two", "Wdbhdelt"],
-    ["three", "fwfsfs"],
-    ["four", "stsd"],
-    ["five", "sfsef"],
-    ["six", "rrw"],
-    ["leftover", "Outdated"], // TODO: Remove outdated leftovers via option?
-  ]),
-};
+const modifiedTarget: TSet = new Map([
+  ["one", "fgebg"],
+  ["two", "Wdbhdelt"],
+  ["three", "fwfsfs"],
+  ["four", "stsd"],
+  ["five", "sfsef"],
+  ["six", "rrw"],
+  ["leftover", "Outdated"], // TODO: Remove outdated leftovers via option?
+]);
 
 test("up-to-date cache, no target", async () => {
   const args: CoreArgs = {
@@ -24,10 +21,10 @@ test("up-to-date cache, no target", async () => {
   };
   const expectRes: CoreResults = {
     newTarget: deTarget,
-    added: deTarget.translations,
+    added: deTarget,
     updated: null,
     skipped: new Map(),
-    serviceResults: deTarget.translations,
+    serviceResults: deTarget,
   };
   const res = await translateCore(args);
   expect(res).toStrictEqual(expectRes);

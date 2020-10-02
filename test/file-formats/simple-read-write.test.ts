@@ -4,23 +4,17 @@ import { fileFormatMap } from "../../src/file-formats/file-format-definitions";
 
 function expectedTSet(nested: boolean): TSet {
   if (nested) {
-    return {
-      lng: "en",
-      translations: new Map([
-        ["inner.innerInner.one", "One"],
-        ["inner.two", "Two"],
-        ["three", "Three"],
-      ]),
-    };
+    return new Map([
+      ["inner.innerInner.one", "One"],
+      ["inner.two", "Two"],
+      ["three", "Three"],
+    ]);
   } else {
-    return {
-      lng: "en",
-      translations: new Map([
-        ["one", "One"],
-        ["two", "Two"],
-        ["three", "Three"],
-      ]),
-    };
+    return new Map([
+      ["one", "One"],
+      ["two", "Two"],
+      ["three", "Three"],
+    ]);
   }
 }
 

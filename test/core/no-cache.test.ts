@@ -2,14 +2,11 @@ import { translateCore } from "../../src/core/translate-core";
 import { CoreArgs, CoreResults, TSet } from "../../src/core/core-definitions";
 import { commonArgs, deTarget, enSrc } from "./core-test-util";
 
-const partialGermanTarget: TSet = {
-  lng: "de",
-  translations: new Map([
-    ["one", "Inhalt Eins"],
-    ["three", "Inhalt Drei"],
-    ["six", "Inhalt Sechs"],
-  ]),
-};
+const partialGermanTarget: TSet = new Map([
+  ["one", "Inhalt Eins"],
+  ["three", "Inhalt Drei"],
+  ["six", "Inhalt Sechs"],
+]);
 
 test("no cache, no target", async () => {
   const args: CoreArgs = {
@@ -20,10 +17,10 @@ test("no cache, no target", async () => {
   };
   const expectRes: CoreResults = {
     newTarget: deTarget,
-    added: deTarget.translations,
+    added: deTarget,
     updated: null,
     skipped: new Map(),
-    serviceResults: deTarget.translations,
+    serviceResults: deTarget,
   };
   const res = await translateCore(args);
   expect(res).toStrictEqual(expectRes);

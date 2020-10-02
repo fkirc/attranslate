@@ -14,10 +14,7 @@ describe.each([
   { lng: "zh", t: "您好{{translator}}" },
 ])("Hello %s", (lngT: LngT) => {
   test("Hello international", async () => {
-    const srcHello: TSet = {
-      lng: "en",
-      translations: new Map([["hello", "Hello {{translator}}"]]),
-    };
+    const srcHello: TSet = new Map([["hello", "Hello {{translator}}"]]);
     const args: CoreArgs = {
       ...commonArgs,
       matcher: "i18next",
@@ -31,10 +28,7 @@ describe.each([
       updated: null,
       skipped: new Map(),
       serviceResults: new Map([["hello", lngT.t]]),
-      newTarget: {
-        lng: lngT.lng,
-        translations: new Map([["hello", lngT.t]]),
-      },
+      newTarget: new Map([["hello", lngT.t]]),
     };
     const res = await translateCore(args);
     expect(res).toStrictEqual(expectRes);

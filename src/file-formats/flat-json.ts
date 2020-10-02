@@ -24,15 +24,12 @@ export class FlatJson implements TFileFormat {
       }
       tMap.set(key, value);
     }
-    return {
-      translations: tMap,
-      lng,
-    };
+    return tMap;
   }
 
   writeTFile(path: string, tSet: TSet): void {
-    const flatJson: Record<string, string | null> = {}; // TODO: Use type instead of record
-    tSet.translations.forEach((value, key) => {
+    const flatJson: Record<string, string | null> = {};
+    tSet.forEach((value, key) => {
       flatJson[key] = value;
     });
     writeJsonFile(path, flatJson);

@@ -1,14 +1,12 @@
 import { serviceMap } from "../services/service-definitions";
 import { matcherMap } from "../matchers/matcher-definitions";
 
-export interface TSet {
-  lng: string;
-  translations: Map<string, string | null>;
-}
+export type TSet = Map<string, string | null>;
 
 export interface CoreArgs {
   src: TSet;
   srcCache: TSet | null;
+  srcLng: string;
   oldTarget: TSet | null;
   targetLng: string;
   service: keyof typeof serviceMap;

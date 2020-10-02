@@ -20,7 +20,7 @@ import {
 
 function extractStringsToTranslate(args: CoreArgs): TSet {
   const src: TSet = args.src;
-  if (!src.translations.size) {
+  if (!src.size) {
     logFatal("Did not find any source translations");
   }
   const oldSrcCache: TSet | null = args.srcCache;
@@ -62,7 +62,7 @@ async function invokeTranslationService(
 
   const serviceArgs: TServiceArgs = {
     strings: replacedInputs,
-    srcLng: args.src.lng,
+    srcLng: args.srcLng,
     targetLng: args.targetLng,
     serviceConfig: args.serviceConfig,
     interpolationMatcher: getMatcherInstance(args),
@@ -81,7 +81,7 @@ async function invokeTranslationService(
       translated: cleanResult,
     };
   });
-  return convertFromServiceResults(results, args.targetLng);
+  return convertFromServiceResults(results);
 }
 
 function mergeResults(
@@ -109,12 +109,11 @@ function mergeResults(
   }
   const skipped = serviceInputs
     ? selectLeftDistinct(serviceInputs, serviceResults, "COMPARE_KEYS")
-        .translations
     : null;
   if (!args.oldTarget) {
     return {
       newTarget: serviceResults,
-      added: serviceResults.translations,
+      added: serviceResults,
       updated: null,
       skipped,
     };
@@ -123,12 +122,12 @@ function mergeResults(
     serviceResults,
     args.oldTarget,
     "COMPARE_KEYS"
-  ).translations;
+  );
   const updated = selectLeftDistinct(
     serviceResults,
     args.oldTarget,
     "COMPARE_VALUES"
-  ).translations;
+  );
   // TODO: Delete stale keys from target?
   return {
     newTarget: leftJoin(serviceResults, args.oldTarget),
@@ -142,7 +141,7 @@ export async function translateCore(args: CoreArgs): Promise<CoreResults> {
   const toTranslate = extractStringsToTranslate(args);
 
   let serviceResults: TSet | null = null;
-  if (toTranslate.translations.size >= 1) {
+  if (toTranslate.size >= 1) {
     serviceResults = await invokeTranslationService(toTranslate, args);
   }
 
@@ -155,6 +154,6 @@ export async function translateCore(args: CoreArgs): Promise<CoreResults> {
     );
   }
   const merge = mergeResults(args, serviceResults, toTranslate);
-  const serviceT = serviceResults?.translations ?? null;
+  const serviceT = serviceResults ?? null;
   return { ...merge, serviceResults: serviceT };
 }

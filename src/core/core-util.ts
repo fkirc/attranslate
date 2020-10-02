@@ -23,23 +23,17 @@ export function getServiceInstance(args: CoreArgs): TService {
   return serviceMap[service];
 }
 
-export function convertFromServiceResults(
-  serviceResults: TResult[],
-  lng: string
-): TSet {
+export function convertFromServiceResults(serviceResults: TResult[]): TSet {
   const tSet = new Map<string, string>();
   serviceResults.forEach((tResult) => {
     tSet.set(tResult.key, tResult.translated);
   });
-  return {
-    lng,
-    translations: tSet,
-  };
+  return tSet;
 }
 
 export function convertToTStringList(tSet: TSet): TString[] {
   const tList: TString[] = [];
-  tSet.translations.forEach((value, key) => {
+  tSet.forEach((value, key) => {
     if (value) {
       tList.push({
         key,
