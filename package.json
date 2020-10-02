@@ -29,13 +29,13 @@
     "dist/"
   ],
   "scripts": {
-    "build": "npm run clean && tsc",
+    "build": "yarn run clean && tsc",
     "clean": "rimraf ./dist",
-    "lint": "npm run eslint",
-    "reformat": "npm run eslint -- --fix",
+    "lint": "yarn run eslint",
+    "reformat": "yarn run eslint -- --fix",
     "eslint": "./node_modules/.bin/eslint '**/*.{js,ts,tsx}' --ignore-path=.gitignore",
     "test": "jest",
-    "test:generate_refs": "GENERATE_REFS=True npm run test",
+    "test:generate_refs": "GENERATE_REFS=True yarn run test",
     "prepublishOnly": "git diff --exit-code"
   },
   "dependencies": {
