@@ -30,5 +30,17 @@ export const deTarget: TSet = new Map([
 export async function translateCoreAssert(
   args: CoreArgs
 ): Promise<CoreResults> {
-  return await translateCore(args);
+  const res = await translateCore(args);
+  const changeSet = res.changeSet;
+  const serviceInvocation = res.serviceInvocation;
+  expect(serviceInvocation?.inputs.size ?? 0).toBeLessThanOrEqual(
+    serviceInvocation?.results.size ?? 0
+  );
+  expect(changeSet.added.size + changeSet.updated.size).toBeLessThanOrEqual(
+    serviceInvocation?.results.size ?? 0
+  );
+  expect(
+    changeSet.added.size + changeSet.updated.size + changeSet.skipped.size
+  ).toBeLessThanOrEqual(serviceInvocation?.inputs.size ?? 0);
+  return res;
 }
