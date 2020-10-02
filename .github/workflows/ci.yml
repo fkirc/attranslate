@@ -18,7 +18,20 @@ on:
         default: 'one of <newversion> | major | minor | patch | premajor | preminor | prepatch | prerelease'
 
 jobs:
+  pre_job:
+    runs-on: ubuntu-latest
+    outputs:
+      should_skip: ${{ steps.skip_check.outputs.should_skip }}
+    steps:
+      - id: skip_check
+        uses: fkirc/skip-duplicate-actions@master
+        with:
+          github_token: ${{ github.token }}
+          paths_ignore: '["**/*.md"]'
+
   ci:
+    needs: pre_job
+    if: ${{ needs.pre_job.outputs.should_skip == 'false' }}
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
