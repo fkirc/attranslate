@@ -1,5 +1,9 @@
-import { translateCore } from "../../src/core/translate-core";
-import { commonArgs, enSrc, deTarget } from "./core-test-util";
+import {
+  commonArgs,
+  enSrc,
+  deTarget,
+  translateCoreAssert,
+} from "./core-test-util";
 import { CoreArgs, CoreResults, TSet } from "../../src/core/core-definitions";
 
 const modifiedTarget: TSet = new Map([
@@ -31,7 +35,7 @@ test("up-to-date cache, no target", async () => {
       results: deTarget,
     },
   };
-  const res = await translateCore(args);
+  const res = await translateCoreAssert(args);
   expect(res).toStrictEqual(expectRes);
 });
 
@@ -51,7 +55,7 @@ test("up-to-date cache, up-to-date target", async () => {
     },
     serviceInvocation: null,
   };
-  const res = await translateCore(args);
+  const res = await translateCoreAssert(args);
   expect(res).toStrictEqual(expectRes);
 });
 
@@ -71,6 +75,6 @@ test("up-to-date cache, modified target", async () => {
     },
     serviceInvocation: null,
   };
-  const res = await translateCore(args);
+  const res = await translateCoreAssert(args);
   expect(res).toStrictEqual(expectRes);
 });

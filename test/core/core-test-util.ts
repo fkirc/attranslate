@@ -1,4 +1,5 @@
-import { CoreArgs, TSet } from "../../src/core/core-definitions";
+import { CoreArgs, CoreResults, TSet } from "../../src/core/core-definitions";
+import { translateCore } from "../../src/core/translate-core";
 
 export const enSrc: TSet = new Map([
   ["one", "Content One"],
@@ -25,3 +26,9 @@ export const deTarget: TSet = new Map([
   ["five", "Inhalt Fünf"],
   ["six", "Inhalt Sechs"],
 ]);
+
+export async function translateCoreAssert(
+  args: CoreArgs
+): Promise<CoreResults> {
+  return await translateCore(args);
+}

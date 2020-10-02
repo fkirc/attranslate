@@ -1,5 +1,9 @@
-import { translateCore } from "../../src/core/translate-core";
-import { commonArgs, deTarget, enSrc } from "./core-test-util";
+import {
+  commonArgs,
+  deTarget,
+  enSrc,
+  translateCoreAssert,
+} from "./core-test-util";
 import { CoreArgs, CoreResults, TSet } from "../../src/core/core-definitions";
 
 const incompleteCache: TSet = new Map([
@@ -23,7 +27,7 @@ test("incomplete cache, up-do-date target", async () => {
     },
     serviceInvocation: null,
   };
-  const res = await translateCore(args);
+  const res = await translateCoreAssert(args);
   expect(res).toStrictEqual(expectRes);
 });
 
@@ -46,7 +50,7 @@ test("outdated cache, up-do-date target", async () => {
       results: new Map([["one", "Inhalt Eins"]]),
     },
   };
-  const res = await translateCore(args);
+  const res = await translateCoreAssert(args);
   expect(res).toStrictEqual(expectRes);
 });
 
@@ -103,6 +107,6 @@ test("outdated cache, outdated target", async () => {
       ]),
     },
   };
-  const res = await translateCore(args);
+  const res = await translateCoreAssert(args);
   expect(res).toStrictEqual(expectRes);
 });

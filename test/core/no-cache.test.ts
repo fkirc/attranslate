@@ -1,6 +1,10 @@
-import { translateCore } from "../../src/core/translate-core";
 import { CoreArgs, CoreResults, TSet } from "../../src/core/core-definitions";
-import { commonArgs, deTarget, enSrc } from "./core-test-util";
+import {
+  commonArgs,
+  deTarget,
+  enSrc,
+  translateCoreAssert,
+} from "./core-test-util";
 
 const partialGermanTarget: TSet = new Map([
   ["one", "Inhalt Eins"],
@@ -27,7 +31,7 @@ test("no cache, no target", async () => {
       results: deTarget,
     },
   };
-  const res = await translateCore(args);
+  const res = await translateCoreAssert(args);
   expect(res).toStrictEqual(expectRes);
 });
 
@@ -47,7 +51,7 @@ test("no cache, clean target", async () => {
     },
     serviceInvocation: null,
   };
-  const res = await translateCore(args);
+  const res = await translateCoreAssert(args);
   expect(res).toStrictEqual(expectRes);
 });
 
@@ -87,7 +91,7 @@ test("no cache, partial target", async () => {
     },
   };
   // TODO: Assert translateCore invariants: serviceInvocation.inputs.size >= added.size + updated.size etc.
-  const res = await translateCore(args);
+  const res = await translateCoreAssert(args);
   expect(res).toStrictEqual(expectRes);
 });
 
