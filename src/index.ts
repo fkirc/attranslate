@@ -82,11 +82,9 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
       process.exit(0);
     })
     .catch((e: Error) => {
-      console.log();
       console.error("An error occurred:");
       console.error(e.message);
       console.error(e.stack);
-      console.log();
       process.exit(1);
     });
 }

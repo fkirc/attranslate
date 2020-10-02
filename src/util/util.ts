@@ -54,18 +54,13 @@ export function logFatal(msg: string): never {
 export function deleteFile(path: string): void {
   checkExists(path);
   unlinkSync(path);
-  console.log(`Deleted ${getDebugPath(path)}`);
+  console.info(`Deleted ${getDebugPath(path)}`);
 }
 
 export function writeJsonFile(path: string, object: unknown): string {
   const jsonString = JSON.stringify(object, null, 2);
   writeFileSync(path, jsonString, { encoding: "utf8" });
   return jsonString;
-}
-
-export function writeJsonFileVerbose(path: string, object: unknown): void {
-  const jsonString = writeJsonFile(path, object);
-  console.log(`Wrote ${jsonString} to ${getDebugPath(path)}`);
 }
 
 export function readJsonFile<T>(path: string): Partial<T> {

@@ -12,7 +12,7 @@ test("reGenerateHelp", async () => {
   if (process.env.GENERATE_REFS) {
     await runTranslate(`--help > ${helpRef}`);
   } else {
-    console.log("Skipped");
+    console.info("Skipped");
   }
 });
 

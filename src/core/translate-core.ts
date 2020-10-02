@@ -11,6 +11,7 @@ import {
   convertToTStringList,
   getMatcherInstance,
   getServiceInstance,
+  logCoreResults,
 } from "./core-util";
 import { logFatal } from "../util/util";
 import {
@@ -48,10 +49,10 @@ function extractStringsToTranslate(args: CoreArgs): TSet {
 }
 
 async function invokeTranslationService(
-  toTranslate: TSet,
+  serviceInputs: TSet,
   args: CoreArgs
-): Promise<TSet> {
-  const rawInputs = convertToTStringList(toTranslate);
+): Promise<TServiceInvocation> {
+  const rawInputs = convertToTStringList(serviceInputs);
   const matcher = getMatcherInstance(args);
   const replacers = new Map<string, Replacer>();
   rawInputs.forEach((rawString) => {
@@ -87,7 +88,10 @@ async function invokeTranslationService(
       translated: cleanResult,
     };
   });
-  return convertFromServiceResults(results);
+  return {
+    inputs: serviceInputs,
+    results: convertFromServiceResults(results),
+  };
 }
 
 function computeChangeSet(
@@ -95,17 +99,6 @@ function computeChangeSet(
   serviceInvocation: TServiceInvocation | null
 ): TChangeSet {
   if (!serviceInvocation) {
-    if (!args.srcCache) {
-      console.info(
-        // TODO: Move console infos into core-util or something
-        `Skipped translations because we had to generate a new cache.`
-      );
-    } else {
-      console.info(`Nothing changed, translations are up-to-date.`);
-    }
-    if (!args.oldTarget) {
-      logFatal("Missing both serviceResults and oldTarget");
-    }
     return {
       added: new Map(),
       updated: new Map(),
@@ -169,26 +162,13 @@ function computeCoreResults(
 }
 
 export async function translateCore(args: CoreArgs): Promise<CoreResults> {
-  const toTranslate = extractStringsToTranslate(args);
-
-  let serviceResults: TSet | null = null;
-  if (toTranslate.size >= 1) {
-    serviceResults = await invokeTranslationService(toTranslate, args);
+  const serviceInputs = extractStringsToTranslate(args);
+  let serviceInvocation: TServiceInvocation | null = null;
+  if (serviceInputs.size >= 1) {
+    serviceInvocation = await invokeTranslationService(serviceInputs, args);
   }
-  if (!args.srcCache) {
-    console.info(
-      `Cache not found -> Generate a new cache to enable selective translations.\n` +
-        `To make selective translations, do one of the following:\n` +
-        `Option 1: Change your source-file and then re-run this tool.\n` +
-        `Option 2: Delete parts of your target-file and then re-run this tool.\n`
-    );
-  }
-  const serviceInvocation: TServiceInvocation | null = serviceResults
-    ? {
-        inputs: toTranslate,
-        results: serviceResults,
-      }
-    : null;
   const changeSet = computeChangeSet(args, serviceInvocation);
-  return computeCoreResults(args, serviceInvocation, changeSet);
+  const results = computeCoreResults(args, serviceInvocation, changeSet);
+  logCoreResults(args, results);
+  return results;
 }

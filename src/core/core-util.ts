@@ -5,7 +5,45 @@ import {
   TService,
   TString,
 } from "../services/service-definitions";
-import { CoreArgs, TSet } from "./core-definitions";
+import { CoreArgs, CoreResults, TSet } from "./core-definitions";
+
+export function logCoreResults(args: CoreArgs, results: CoreResults) {
+  if (results.serviceInvocation) {
+    console.info(
+      `Received ${results.serviceInvocation.results.size} results from '${args.service}'...`
+    );
+  }
+  if (!args.srcCache) {
+    console.info(
+      `Cache not found -> Generate a new cache to enable selective translations.\n` +
+        `To make selective translations, do one of the following:\n` +
+        `Option 1: Change your source-file and then re-run this tool.\n` +
+        `Option 2: Delete parts of your target-file and then re-run this tool.\n`
+    );
+  }
+  const changeSet = results.changeSet;
+  const countAdded: number = changeSet.added.size;
+  if (countAdded) {
+    console.info(`Add ${countAdded} new translations`);
+  }
+  const countUpdated: number = changeSet.updated.size;
+  if (countUpdated) {
+    console.info(`Update ${countUpdated} existing translations`);
+  }
+  const countSkipped: number = changeSet.skipped.size;
+  if (countSkipped) {
+    console.info(`Warning: Skipped ${countSkipped} translations`);
+  }
+  if (!results.serviceInvocation) {
+    if (!args.srcCache) {
+      console.info(
+        `Skipped translations because we had to generate a new cache.`
+      );
+    } else if (!countAdded && !countUpdated && !countSkipped) {
+      console.info(`Nothing changed, translations are up-to-date.`);
+    }
+  }
+}
 
 export function getMatcherInstance(args: CoreArgs): Matcher {
   const matcher: keyof typeof matcherMap = args.matcher;
