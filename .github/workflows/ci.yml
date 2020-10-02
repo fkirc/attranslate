@@ -41,12 +41,10 @@ jobs:
       - uses: actions/checkout@v2
       - run: git config --global user.email "mail@felixkirchengast.at"
       - run: git config --global user.name "Felix Kirchengast (GitHub Action)"
-      - name: Cache dependencies
-        uses: actions/cache@v2
+      - uses: actions/cache@v2
         with:
-          # npm cache files are stored in `~/.npm` on Linux/macOS
-          path: ~/.npm
-          key: ${{ runner.os }}-cache-node-modules-${{ hashFiles('**/package-lock.json') }}
+          path: '**/node_modules'
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
       - run: npm cache verify
       - run: yarn install --frozen-lockfile
       - run: npm run lint
