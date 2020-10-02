@@ -48,7 +48,7 @@ jobs:
           path: ~/.npm
           key: ${{ runner.os }}-cache-node-modules-${{ hashFiles('**/package-lock.json') }}
       - run: npm cache verify
-      - run: npm ci
+      - run: yarn install --frozen-lockfile
       - run: npm run lint
       - run: npm run build
       - run: npm run test
