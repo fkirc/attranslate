@@ -11,15 +11,23 @@ const incompleteCache: TSet = new Map([
   ["two", "Content Two"],
 ]);
 
-test("incomplete cache, up-do-date target", async () => {
+test("incomplete cache, up-do-date target with scrambled order", async () => {
+  const scrambledOrderTarget = new Map([
+    ["six", "Inhalt Sechs"],
+    ["four", "Inhalt vier"],
+    ["one", "Inhalt Eins"],
+    ["three", "Inhalt Drei"],
+    ["two", "Inhalt Zwei"],
+    ["five", "Inhalt Fünf"],
+  ]);
   const args: CoreArgs = {
     ...commonArgs,
     src: enSrc,
     srcCache: incompleteCache,
-    oldTarget: deTarget,
+    oldTarget: scrambledOrderTarget,
   };
   const expectRes: CoreResults = {
-    newTarget: deTarget,
+    newTarget: deTarget, // TODO: scrambledOrderTarget
     newSrcCache: args.src,
     changeSet: {
       added: new Map(),
