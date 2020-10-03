@@ -1,5 +1,10 @@
 import { CoreArgs, CoreResults, TSet } from "../../src/core/core-definitions";
 import { translateCore } from "../../src/core/translate-core";
+import { serviceMap, TService } from "../../src/services/service-definitions";
+
+export function injectFakeService(serviceName: string, service: TService) {
+  serviceMap[serviceName as keyof typeof serviceMap] = service as never;
+}
 
 export const enSrc: TSet = new Map([
   ["one", "Content One"],
@@ -33,8 +38,8 @@ export async function translateCoreAssert(
   const res = await translateCore(args);
   const changeSet = res.changeSet;
   const serviceInvocation = res.serviceInvocation;
-  expect(serviceInvocation?.inputs.size ?? 0).toBeLessThanOrEqual(
-    serviceInvocation?.results.size ?? 0
+  expect(serviceInvocation?.results.size ?? 0).toBeLessThanOrEqual(
+    serviceInvocation?.inputs.size ?? 0
   );
   expect(changeSet.added.size + changeSet.updated.size).toBeLessThanOrEqual(
     serviceInvocation?.results.size ?? 0
