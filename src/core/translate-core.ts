@@ -7,6 +7,7 @@ import {
 } from "./core-definitions";
 import {
   leftJoin,
+  leftJoinPreserveRightOrder,
   leftMinusRightFillNull,
   selectLeftDistinct,
 } from "./tset-ops";
@@ -150,7 +151,7 @@ function computeNewTarget(
   if (!args.oldTarget) {
     return serviceInvocation.results;
   }
-  return leftJoin(serviceInvocation.results, args.oldTarget);
+  return leftJoinPreserveRightOrder(serviceInvocation.results, args.oldTarget);
 }
 
 function computeNewSrcCache(args: CoreArgs, changeSet: TChangeSet) {

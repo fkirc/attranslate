@@ -5,6 +5,7 @@ import {
   translateCoreAssert,
 } from "./core-test-util";
 import { CoreArgs, CoreResults, TSet } from "../../src/core/core-definitions";
+import { toStrictEqualMapOrder } from "../test-util/to-strict-equal-map-order";
 
 const incompleteCache: TSet = new Map([
   ["1", "One"],
@@ -48,7 +49,7 @@ test("outdated cache, up-do-date target with scrambled order", async () => {
     oldTarget: scrambledOrderTarget,
   };
   const expectRes: CoreResults = {
-    newTarget: deTarget, // TODO: scrambledOrderTarget
+    newTarget: scrambledOrderTarget,
     newSrcCache: args.src,
     changeSet: {
       added: new Map(),
@@ -61,7 +62,7 @@ test("outdated cache, up-do-date target with scrambled order", async () => {
     },
   };
   const res = await translateCoreAssert(args);
-  expect(res).toStrictEqual(expectRes);
+  toStrictEqualMapOrder(res, expectRes);
 });
 
 const outdatedCache: TSet = new Map([

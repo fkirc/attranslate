@@ -29,16 +29,34 @@ export function selectLeftDistinct(
 }
 
 export function leftJoin(left: TSet, right: TSet): TSet {
-  const leftJoin = new Map<string, string | null>();
+  const join = new Map<string, string | null>();
   left.forEach((value, key) => {
-    leftJoin.set(key, value);
+    join.set(key, value);
   });
   right.forEach((value, key) => {
-    if (leftJoin.get(key) === undefined) {
-      leftJoin.set(key, value);
+    if (join.get(key) === undefined) {
+      join.set(key, value);
     }
   });
-  return leftJoin;
+  return join;
+}
+
+export function leftJoinPreserveRightOrder(left: TSet, right: TSet): TSet {
+  const join = new Map<string, string | null>();
+  right.forEach((rightValue, key) => {
+    const leftValue = left.get(key);
+    if (leftValue === undefined) {
+      join.set(key, rightValue);
+    } else {
+      join.set(key, leftValue);
+    }
+  });
+  left.forEach((value, key) => {
+    if (join.get(key) === undefined) {
+      join.set(key, value);
+    }
+  });
+  return join;
 }
 
 export function leftMinusRightFillNull(left: TSet, right: TSet): TSet {
