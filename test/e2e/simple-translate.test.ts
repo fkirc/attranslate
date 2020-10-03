@@ -90,8 +90,12 @@ describe.each(testArgs)("translate %p", (args) => {
     ...commonArgs,
     cacheDir: cacheMissingDir,
   };
+  const cacheMissingFile = `${join(
+    cacheMissingDir,
+    "attranslate-cache-*.json"
+  )}`;
   test("missing cache, missing target", async () => {
-    await runCommand(`rm -f ${join(cacheMissingDir, "*cache*.json")}`);
+    await runCommand(`rm ${cacheMissingFile}`);
     await runCommand(`rm ${args.target}`);
     const output = await runTranslate(buildE2EArgs(missingCacheArgs));
     expect(output).toContain(
@@ -103,7 +107,7 @@ describe.each(testArgs)("translate %p", (args) => {
   });
 
   test("missing cache, clean target", async () => {
-    await runCommand(`rm -f ${join(cacheMissingDir, "*cache*.json")}`);
+    await runCommand(`rm ${cacheMissingFile}`);
     const output = await runTranslate(buildE2EArgs(missingCacheArgs));
     expect(output).toContain(
       `Cache not found -> Generate a new cache to enable selective translations.`
@@ -115,7 +119,7 @@ describe.each(testArgs)("translate %p", (args) => {
   });
 
   test("missing cache, modified target", async () => {
-    await runCommand(`rm -f ${join(cacheMissingDir, "*cache*.json")}`);
+    await runCommand(`rm ${cacheMissingFile}`);
     await runCommand(`cp ${modifiedTarget} ${args.target}`);
     const output = await runTranslate(buildE2EArgs(missingCacheArgs));
     expect(output).toContain(
