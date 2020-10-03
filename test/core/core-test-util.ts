@@ -8,23 +8,39 @@ import {
 } from "../../src/services/service-definitions";
 import { logFatal } from "../../src/util/util";
 
+export const enSrc: TSet = new Map([
+  ["1", "One"],
+  ["2", "Two"],
+  ["3", "Three"],
+  ["4", "Four"],
+  ["5", "Five"],
+  ["6", "Six"],
+]);
+
+export const deTarget: TSet = new Map([
+  ["1", "Eins"],
+  ["2", "Zwei"],
+  ["3", "Drei"],
+  ["4", "Vier"],
+  ["5", "Fünf"],
+  ["6", "Sechs"],
+]);
+
+const enToDe: TSet = new Map([
+  ["One", "Eins"],
+  ["Two", "Zwei"],
+  ["Three", "Drei"],
+  ["Four", "Vier"],
+  ["Five", "Fünf"],
+  ["Six", "Sechs"],
+]);
+
 const bogusTranslate = "bogus-translate";
 class BogusService implements TService {
-  germanNumbers: Map<string, string> = new Map([
-    ["One", "Eins"],
-    ["Two", "Zwei"],
-    ["Three", "Drei"],
-    ["Four", "vier"],
-    ["Five", "Fünf"],
-    ["Six", "Sechs"],
-    ["Seven", "Sieben"],
-  ]);
   bogusTranslate(english: string): string {
-    for (const englishNumber of this.germanNumbers.keys()) {
-      if (english.toLowerCase().includes(englishNumber.toLowerCase())) {
-        const germanNumber = this.germanNumbers.get(englishNumber);
-        return `Inhalt ${germanNumber}`;
-      }
+    const de = enToDe.get(english);
+    if (de) {
+      return de;
     }
     logFatal(`Failed to bogus-translate ${english}`);
   }
@@ -43,15 +59,6 @@ export function injectFakeService(serviceName: string, service: TService) {
   serviceMap[serviceName as keyof typeof serviceMap] = service as never;
 }
 
-export const enSrc: TSet = new Map([
-  ["one", "Content One"],
-  ["two", "Content Two"],
-  ["three", "Content Three"],
-  ["four", "Content Four"],
-  ["five", "Content Five"],
-  ["six", "Content Six"],
-]);
-
 export const commonArgs: Omit<CoreArgs, "oldTarget" | "src" | "srcCache"> = {
   service: bogusTranslate as keyof typeof serviceMap,
   serviceConfig: "gcloud/gcloud_service_account.json",
@@ -59,15 +66,6 @@ export const commonArgs: Omit<CoreArgs, "oldTarget" | "src" | "srcCache"> = {
   srcLng: "en",
   targetLng: "de",
 };
-
-export const deTarget: TSet = new Map([
-  ["one", "Inhalt Eins"],
-  ["two", "Inhalt Zwei"],
-  ["three", "Inhalt Drei"],
-  ["four", "Inhalt vier"],
-  ["five", "Inhalt Fünf"],
-  ["six", "Inhalt Sechs"],
-]);
 
 export async function translateCoreAssert(
   args: CoreArgs

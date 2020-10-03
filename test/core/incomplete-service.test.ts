@@ -37,12 +37,12 @@ test("up-to-date cache, no target, empty service", async () => {
     },
     newTarget: new Map(),
     newSrcCache: new Map([
-      ["one", null],
-      ["two", null],
-      ["three", null],
-      ["four", null],
-      ["five", null],
-      ["six", null],
+      ["1", null],
+      ["2", null],
+      ["3", null],
+      ["4", null],
+      ["5", null],
+      ["6", null],
     ]),
     serviceInvocation: {
       inputs: enSrc,
@@ -54,13 +54,13 @@ test("up-to-date cache, no target, empty service", async () => {
 });
 
 const modifiedTarget: TSet = new Map([
-  ["one", "Content One"],
-  ["two", "Content Two"],
-  ["three", "fwfsfs"],
-  ["four", "stsd"],
-  ["five", "sfsef"],
-  ["six", "rrw"],
-  ["seven", "Content Seven"],
+  ["1", "One"],
+  ["2", "Two"],
+  ["3", "fwfsfs"],
+  ["4", "stsd"],
+  ["5", "sfsef"],
+  ["6", "rrw"],
+  ["7", "Seven"],
 ]);
 
 class PartialResultsService implements TService {
@@ -90,43 +90,43 @@ test("bogus cache, modified target, partial service", async () => {
   // TODO: Fix order
   const expectRes: CoreResults = {
     newTarget: new Map([
-      ["five", "Content Five"],
-      ["six", "Content Six"],
-      ["one", "Content One"],
-      ["two", "Content Two"],
-      ["three", "fwfsfs"],
-      ["four", "stsd"],
-      ["seven", "Content Seven"],
+      ["5", "Five"],
+      ["6", "Six"],
+      ["1", "One"],
+      ["2", "Two"],
+      ["3", "fwfsfs"],
+      ["4", "stsd"],
+      ["7", "Seven"],
     ]),
     newSrcCache: new Map([
-      ["one", "Content One"],
-      ["two", "Content Two"],
-      ["three", null],
-      ["four", null],
-      ["five", "Content Five"],
-      ["six", "Content Six"],
+      ["1", "One"],
+      ["2", "Two"],
+      ["3", null],
+      ["4", null],
+      ["5", "Five"],
+      ["6", "Six"],
     ]),
     changeSet: {
       added: new Map(),
       updated: new Map([
-        ["five", "Content Five"],
-        ["six", "Content Six"],
+        ["5", "Five"],
+        ["6", "Six"],
       ]),
       skipped: new Map([
-        ["three", "Content Three"],
-        ["four", "Content Four"],
+        ["3", "Three"],
+        ["4", "Four"],
       ]),
     },
     serviceInvocation: {
       inputs: new Map([
-        ["three", "Content Three"],
-        ["four", "Content Four"],
-        ["five", "Content Five"],
-        ["six", "Content Six"],
+        ["3", "Three"],
+        ["4", "Four"],
+        ["5", "Five"],
+        ["6", "Six"],
       ]),
       results: new Map([
-        ["five", "Content Five"],
-        ["six", "Content Six"],
+        ["5", "Five"],
+        ["6", "Six"],
       ]),
     },
   };

@@ -7,9 +7,9 @@ import {
 } from "./core-test-util";
 
 const partialGermanTarget: TSet = new Map([
-  ["one", "Inhalt Eins"],
-  ["three", "Inhalt Drei"],
-  ["six", "Inhalt Sechs"],
+  ["1", "Eins"],
+  ["3", "Drei"],
+  ["6", "Sechs"],
 ]);
 
 test("no cache, no target", async () => {
@@ -65,18 +65,18 @@ test("no cache, partial target", async () => {
     oldTarget: partialGermanTarget,
   };
   const added = new Map<string, string>([
-    ["two", "Inhalt Zwei"],
-    ["four", "Inhalt vier"],
-    ["five", "Inhalt Fünf"],
+    ["2", "Zwei"],
+    ["4", "Vier"],
+    ["5", "Fünf"],
   ]);
   const expectRes: CoreResults = {
     newTarget: new Map([
-      ["two", "Inhalt Zwei"],
-      ["four", "Inhalt vier"],
-      ["five", "Inhalt Fünf"],
-      ["one", "Inhalt Eins"],
-      ["three", "Inhalt Drei"],
-      ["six", "Inhalt Sechs"],
+      ["2", "Zwei"],
+      ["4", "Vier"],
+      ["5", "Fünf"],
+      ["1", "Eins"],
+      ["3", "Drei"],
+      ["6", "Sechs"],
     ]),
     newSrcCache: args.src,
     changeSet: {
@@ -86,9 +86,9 @@ test("no cache, partial target", async () => {
     },
     serviceInvocation: {
       inputs: new Map([
-        ["two", "Content Two"],
-        ["four", "Content Four"],
-        ["five", "Content Five"],
+        ["2", "Two"],
+        ["4", "Four"],
+        ["5", "Five"],
       ]),
       results: added,
     },
