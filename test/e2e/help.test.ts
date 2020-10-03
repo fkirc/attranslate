@@ -1,4 +1,7 @@
-import { runTranslate, runTranslateExpectFailure } from "../test-util";
+import {
+  runTranslate,
+  runTranslateExpectFailure,
+} from "../test-util/test-util";
 import { readUtf8File } from "../../src/util/util";
 import { buildE2EArgs, defaultE2EArgs } from "./e2e-common";
 

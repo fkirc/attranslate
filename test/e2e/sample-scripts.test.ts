@@ -1,4 +1,4 @@
-import { runCommand } from "../test-util";
+import { runCommand } from "../test-util/test-util";
 
 const sampleDir = "sample-scripts";
 

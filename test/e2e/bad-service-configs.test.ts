@@ -1,5 +1,5 @@
 import { buildE2EArgs, defaultE2EArgs, E2EArgs } from "./e2e-common";
-import { runTranslateExpectFailure } from "../test-util";
+import { runTranslateExpectFailure } from "../test-util/test-util";
 import { getDebugPath } from "../../src/util/util";
 
 test("non existing gcloud-config", async () => {

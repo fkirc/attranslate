@@ -1,5 +1,5 @@
 import { TSet } from "../../src/core/core-definitions";
-import { runCommand } from "../test-util";
+import { runCommand } from "../test-util/test-util";
 import { fileFormatMap } from "../../src/file-formats/file-format-definitions";
 
 function expectedTSet(nested: boolean): TSet {
