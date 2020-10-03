@@ -13,7 +13,19 @@ test("correct order", () => {
   );
 });
 
-test("incorrect order parent object", () => {
+test("compare nulls", () => {
+  toStrictEqualMapOrder(null, null);
+});
+
+test("compare nulls child", () => {
+  toStrictEqualMapOrder({ child: null }, { child: null });
+});
+
+test("compare undefined", () => {
+  toStrictEqualMapOrder(undefined, undefined);
+});
+
+test("incorrect order parent", () => {
   try {
     toStrictEqualMapOrder(
       new Map([
@@ -32,7 +44,7 @@ test("incorrect order parent object", () => {
   fail("Did not detect map order");
 });
 
-test("incorrect order child object", () => {
+test("incorrect order child", () => {
   try {
     toStrictEqualMapOrder(
       {

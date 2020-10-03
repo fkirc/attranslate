@@ -20,7 +20,7 @@ export function toStrictEqualMapOrder(received: any, expected: any) {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function recursiveMapCheck(received: any, expected: any): "CORRECT" | "ERROR" {
   // Jest's toStrictEqual should ensure that received and expected have the same type
-  if (typeof received !== "object") {
+  if (typeof received !== "object" || received === null) {
     return "CORRECT";
   }
   if (received instanceof Map) {
