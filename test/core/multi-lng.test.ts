@@ -1,5 +1,6 @@
 import { CoreArgs, CoreResults, TSet } from "../../src/core/core-definitions";
 import { commonArgs, translateCoreAssert } from "./core-test-util";
+import { toStrictEqualMapOrder } from "../test-util/to-strict-equal-map-order";
 
 interface LngT {
   lng: string;
@@ -37,6 +38,6 @@ describe.each([
       newSrcCache: args.src,
     };
     const res = await translateCoreAssert(args);
-    expect(res).toStrictEqual(expectRes);
+    toStrictEqualMapOrder(res, expectRes);
   });
 });

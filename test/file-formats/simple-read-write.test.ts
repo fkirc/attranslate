@@ -1,6 +1,7 @@
 import { TSet } from "../../src/core/core-definitions";
 import { runCommand } from "../test-util/test-util";
 import { fileFormatMap } from "../../src/file-formats/file-format-definitions";
+import { toStrictEqualMapOrder } from "../test-util/to-strict-equal-map-order";
 
 function expectedTSet(nested: boolean): TSet {
   if (nested) {
@@ -44,7 +45,7 @@ describe.each(testArgs)("Read/write %p", (args) => {
   test("Read - delete - write - git-diff", async () => {
     const fileFormat = fileFormatMap[args.fileFormat];
     const tSet = fileFormat.readTFile(args.srcFile, "en");
-    expect(tSet).toStrictEqual(expectedTSet(args.nested));
+    toStrictEqualMapOrder(tSet, expectedTSet(args.nested));
     await runCommand(`rm ${args.srcFile}`);
     fileFormat.writeTFile(args.srcFile, tSet);
     await runCommand(`git diff --exit-code ${args.srcFile}`);

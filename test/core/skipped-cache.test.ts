@@ -5,6 +5,7 @@ import {
   translateCoreAssert,
 } from "./core-test-util";
 import { CoreArgs, CoreResults, TSet } from "../../src/core/core-definitions";
+import { toStrictEqualMapOrder } from "../test-util/to-strict-equal-map-order";
 
 const incompleteSkippedCache: TSet = new Map([
   ["1", "One"],
@@ -39,7 +40,7 @@ test("incomplete skipped cache, up-do-date target", async () => {
     },
   };
   const res = await translateCoreAssert(args);
-  expect(res).toStrictEqual(expectRes);
+  toStrictEqualMapOrder(res, expectRes);
 });
 
 test("outdated skipped cache, up-do-date target", async () => {
@@ -77,7 +78,7 @@ test("outdated skipped cache, up-do-date target", async () => {
     },
   };
   const res = await translateCoreAssert(args);
-  expect(res).toStrictEqual(expectRes);
+  toStrictEqualMapOrder(res, expectRes);
 });
 
 const outdatedSkippedCache: TSet = new Map([
@@ -141,5 +142,5 @@ test("outdated skipped cache, outdated target", async () => {
     },
   };
   const res = await translateCoreAssert(args);
-  expect(res).toStrictEqual(expectRes);
+  toStrictEqualMapOrder(res, expectRes);
 });

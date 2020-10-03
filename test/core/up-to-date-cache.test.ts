@@ -5,6 +5,7 @@ import {
   translateCoreAssert,
 } from "./core-test-util";
 import { CoreArgs, CoreResults, TSet } from "../../src/core/core-definitions";
+import { toStrictEqualMapOrder } from "../test-util/to-strict-equal-map-order";
 
 const modifiedTarget: TSet = new Map([
   ["1", "fgebg"],
@@ -37,7 +38,7 @@ test("up-to-date cache, no target", async () => {
     },
   };
   const res = await translateCoreAssert(args);
-  expect(res).toStrictEqual(expectRes);
+  toStrictEqualMapOrder(res, expectRes);
 });
 
 test("up-to-date cache, up-to-date target", async () => {
@@ -58,7 +59,7 @@ test("up-to-date cache, up-to-date target", async () => {
     serviceInvocation: null,
   };
   const res = await translateCoreAssert(args);
-  expect(res).toStrictEqual(expectRes);
+  toStrictEqualMapOrder(res, expectRes);
 });
 
 test("up-to-date cache, modified target", async () => {
@@ -79,5 +80,5 @@ test("up-to-date cache, modified target", async () => {
     serviceInvocation: null,
   };
   const res = await translateCoreAssert(args);
-  expect(res).toStrictEqual(expectRes);
+  toStrictEqualMapOrder(res, expectRes);
 });

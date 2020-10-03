@@ -30,7 +30,7 @@ test("incomplete cache, up-do-date target", async () => {
     serviceInvocation: null,
   };
   const res = await translateCoreAssert(args);
-  expect(res).toStrictEqual(expectRes);
+  toStrictEqualMapOrder(res, expectRes);
 });
 
 test("outdated cache, up-do-date target with scrambled order", async () => {
@@ -120,5 +120,5 @@ test("outdated cache, outdated target", async () => {
     },
   };
   const res = await translateCoreAssert(args);
-  expect(res).toStrictEqual(expectRes);
+  toStrictEqualMapOrder(res, expectRes);
 });

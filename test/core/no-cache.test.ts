@@ -5,6 +5,7 @@ import {
   enSrc,
   translateCoreAssert,
 } from "./core-test-util";
+import { toStrictEqualMapOrder } from "../test-util/to-strict-equal-map-order";
 
 const partialGermanTarget: TSet = new Map([
   ["1", "Eins"],
@@ -33,7 +34,7 @@ test("no cache, no target", async () => {
     },
   };
   const res = await translateCoreAssert(args);
-  expect(res).toStrictEqual(expectRes);
+  toStrictEqualMapOrder(res, expectRes);
 });
 
 test("no cache, clean target", async () => {
@@ -54,7 +55,7 @@ test("no cache, clean target", async () => {
     serviceInvocation: null,
   };
   const res = await translateCoreAssert(args);
-  expect(res).toStrictEqual(expectRes);
+  toStrictEqualMapOrder(res, expectRes);
 });
 
 test("no cache, partial target", async () => {
@@ -94,7 +95,7 @@ test("no cache, partial target", async () => {
     },
   };
   const res = await translateCoreAssert(args);
-  expect(res).toStrictEqual(expectRes);
+  toStrictEqualMapOrder(res, expectRes);
 });
 
 /*test("no cache, target with stale translation", async () => {

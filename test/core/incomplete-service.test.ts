@@ -11,6 +11,7 @@ import {
   TService,
   TServiceArgs,
 } from "../../src/services/service-definitions";
+import { toStrictEqualMapOrder } from "../test-util/to-strict-equal-map-order";
 
 class EmptyResultsService implements TService {
   translateStrings(): Promise<TResult[]> {
@@ -50,7 +51,7 @@ test("up-to-date cache, no target, empty service", async () => {
     },
   };
   const res = await translateCoreAssert(args);
-  expect(res).toStrictEqual(expectRes);
+  toStrictEqualMapOrder(res, expectRes);
 });
 
 const modifiedTarget: TSet = new Map([
@@ -131,5 +132,5 @@ test("bogus cache, modified target, partial service", async () => {
     },
   };
   const res = await translateCoreAssert(args);
-  expect(res).toStrictEqual(expectRes);
+  toStrictEqualMapOrder(res, expectRes);
 });
