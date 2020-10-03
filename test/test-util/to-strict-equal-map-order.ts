@@ -1,10 +1,21 @@
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function toStrictEqualMapOrder(received: any, expected: any) {
+export interface MatcherResult {
+  message?: () => string;
+  pass: boolean;
+}
+
+export function toStrictEqualMapOrder(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  received: any,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  expected: any
+): MatcherResult {
   // Firstly, run toStrictEqual to ensure that the recursive map-check does not go haywire.
   expect(received).toStrictEqual(expected);
   const res = recursiveMapCheck(received, expected);
   if (res === "CORRECT") {
-    return;
+    return {
+      pass: true,
+    };
   }
   // Error: Inject a bogus property and then re-run toStrictEqual to get a usable error message that shows the differences.
   if (received instanceof Map) {
