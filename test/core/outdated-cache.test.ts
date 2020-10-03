@@ -11,23 +11,15 @@ const incompleteCache: TSet = new Map([
   ["two", "Content Two"],
 ]);
 
-test("incomplete cache, up-do-date target with scrambled order", async () => {
-  const scrambledOrderTarget = new Map([
-    ["six", "Inhalt Sechs"],
-    ["four", "Inhalt vier"],
-    ["one", "Inhalt Eins"],
-    ["three", "Inhalt Drei"],
-    ["two", "Inhalt Zwei"],
-    ["five", "Inhalt Fünf"],
-  ]);
+test("incomplete cache, up-do-date target", async () => {
   const args: CoreArgs = {
     ...commonArgs,
     src: enSrc,
     srcCache: incompleteCache,
-    oldTarget: scrambledOrderTarget,
+    oldTarget: deTarget,
   };
   const expectRes: CoreResults = {
-    newTarget: deTarget, // TODO: scrambledOrderTarget
+    newTarget: deTarget,
     newSrcCache: args.src,
     changeSet: {
       added: new Map(),
@@ -40,15 +32,23 @@ test("incomplete cache, up-do-date target with scrambled order", async () => {
   expect(res).toStrictEqual(expectRes);
 });
 
-test("outdated cache, up-do-date target", async () => {
+test("outdated cache, up-do-date target with scrambled order", async () => {
+  const scrambledOrderTarget = new Map([
+    ["six", "Inhalt Sechs"],
+    ["four", "Inhalt vier"],
+    ["one", "Inhalt Eins"],
+    ["three", "Inhalt Drei"],
+    ["two", "Inhalt Zwei"],
+    ["five", "Inhalt Fünf"],
+  ]);
   const args: CoreArgs = {
     ...commonArgs,
     src: enSrc,
     srcCache: outdatedCache,
-    oldTarget: deTarget,
+    oldTarget: scrambledOrderTarget,
   };
   const expectRes: CoreResults = {
-    newTarget: deTarget,
+    newTarget: deTarget, // TODO: scrambledOrderTarget
     newSrcCache: args.src,
     changeSet: {
       added: new Map(),
