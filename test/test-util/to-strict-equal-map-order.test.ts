@@ -13,6 +13,17 @@ test("correct order", () => {
   );
 });
 
+test("incorrect set order", () => {
+  toStrictEqualMapOrder(
+    {
+      set: new Set([1, 2]),
+    },
+    {
+      set: new Set([2, 1]),
+    }
+  );
+});
+
 test("compare nulls", () => {
   toStrictEqualMapOrder(null, null);
 });
