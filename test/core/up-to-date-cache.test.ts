@@ -7,12 +7,12 @@ import {
 import { CoreArgs, CoreResults, TSet } from "../../src/core/core-definitions";
 
 const modifiedTarget: TSet = new Map([
-  ["one", "fgebg"],
-  ["two", "Wdbhdelt"],
-  ["three", "fwfsfs"],
-  ["four", "stsd"],
-  ["five", "sfsef"],
-  ["six", "rrw"],
+  ["1", "fgebg"],
+  ["2", "Wdbhdelt"],
+  ["3", "fwfsfs"],
+  ["4", "stsd"],
+  ["5", "sfsef"],
+  ["6", "rrw"],
   ["leftover", "Outdated"], // TODO: Remove outdated leftovers via option?
 ]);
 

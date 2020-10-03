@@ -7,8 +7,8 @@ import {
 import { CoreArgs, CoreResults, TSet } from "../../src/core/core-definitions";
 
 const incompleteCache: TSet = new Map([
-  ["one", "Content One"],
-  ["two", "Content Two"],
+  ["1", "One"],
+  ["2", "Two"],
 ]);
 
 test("incomplete cache, up-do-date target", async () => {
@@ -34,12 +34,12 @@ test("incomplete cache, up-do-date target", async () => {
 
 test("outdated cache, up-do-date target with scrambled order", async () => {
   const scrambledOrderTarget = new Map([
-    ["six", "Inhalt Sechs"],
-    ["four", "Inhalt vier"],
-    ["one", "Inhalt Eins"],
-    ["three", "Inhalt Drei"],
-    ["two", "Inhalt Zwei"],
-    ["five", "Inhalt Fünf"],
+    ["6", "Sechs"],
+    ["4", "Vier"],
+    ["1", "Eins"],
+    ["3", "Drei"],
+    ["2", "Zwei"],
+    ["5", "Fünf"],
   ]);
   const args: CoreArgs = {
     ...commonArgs,
@@ -56,8 +56,8 @@ test("outdated cache, up-do-date target with scrambled order", async () => {
       skipped: new Map(),
     },
     serviceInvocation: {
-      inputs: new Map([["one", "Content One"]]),
-      results: new Map([["one", "Inhalt Eins"]]),
+      inputs: new Map([["1", "One"]]),
+      results: new Map([["1", "Eins"]]),
     },
   };
   const res = await translateCoreAssert(args);
@@ -65,26 +65,26 @@ test("outdated cache, up-do-date target with scrambled order", async () => {
 });
 
 const outdatedCache: TSet = new Map([
-  ["one", "Content One - cache broken"],
-  ["two", "Content Two"],
-  ["five", "Content Five"],
-  ["six", "Content Six"],
+  ["1", "One - cache broken"],
+  ["2", "Two"],
+  ["5", "Five"],
+  ["6", "Six"],
 ]);
 
 const outdatedTarget: TSet = new Map([
-  ["one", "Content One - both cache and target broken"],
-  ["two", "Content Two - target broken"],
-  ["three", "Content Three - missing cache"],
-  ["five", "Content Five"],
+  ["1", "One - both cache and target broken"],
+  ["2", "Two - target broken"],
+  ["3", "Three - missing cache"],
+  ["5", "Five"],
 ]);
 
 const mixedResult: TSet = new Map([
-  ["one", "Inhalt Eins"],
-  ["two", "Content Two - target broken"],
-  ["three", "Content Three - missing cache"],
-  ["four", "Inhalt vier"],
-  ["six", "Inhalt Sechs"], // TODO: Fix wrong order
-  ["five", "Content Five"],
+  ["1", "Eins"],
+  ["2", "Two - target broken"],
+  ["3", "Three - missing cache"],
+  ["4", "Vier"],
+  ["6", "Sechs"], // TODO: Fix wrong order
+  ["5", "Five"],
 ]);
 
 test("outdated cache, outdated target", async () => {
@@ -99,22 +99,22 @@ test("outdated cache, outdated target", async () => {
     newSrcCache: args.src,
     changeSet: {
       added: new Map([
-        ["four", "Inhalt vier"],
-        ["six", "Inhalt Sechs"],
+        ["4", "Vier"],
+        ["6", "Sechs"],
       ]),
       skipped: new Map(),
-      updated: new Map([["one", "Inhalt Eins"]]),
+      updated: new Map([["1", "Eins"]]),
     },
     serviceInvocation: {
       inputs: new Map([
-        ["one", "Content One"],
-        ["four", "Content Four"],
-        ["six", "Content Six"],
+        ["1", "One"],
+        ["4", "Four"],
+        ["6", "Six"],
       ]),
       results: new Map([
-        ["one", "Inhalt Eins"],
-        ["four", "Inhalt vier"],
-        ["six", "Inhalt Sechs"],
+        ["1", "Eins"],
+        ["4", "Vier"],
+        ["6", "Sechs"],
       ]),
     },
   };

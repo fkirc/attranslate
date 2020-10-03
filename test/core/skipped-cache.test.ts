@@ -7,8 +7,8 @@ import {
 import { CoreArgs, CoreResults, TSet } from "../../src/core/core-definitions";
 
 const incompleteSkippedCache: TSet = new Map([
-  ["one", "Content One"],
-  ["two", null],
+  ["1", "One"],
+  ["2", null],
 ]);
 
 test("incomplete skipped cache, up-do-date target", async () => {
@@ -20,12 +20,12 @@ test("incomplete skipped cache, up-do-date target", async () => {
   };
   const expectRes: CoreResults = {
     newTarget: new Map([
-      ["two", "Inhalt Zwei"],
-      ["one", "Inhalt Eins"], // TODO: Fix wrong order, then change to deTarget
-      ["three", "Inhalt Drei"],
-      ["four", "Inhalt vier"],
-      ["five", "Inhalt Fünf"],
-      ["six", "Inhalt Sechs"],
+      ["2", "Zwei"],
+      ["1", "Eins"], // TODO: Fix wrong order, then change to deTarget
+      ["3", "Drei"],
+      ["4", "Vier"],
+      ["5", "Fünf"],
+      ["6", "Sechs"],
     ]),
     newSrcCache: args.src,
     changeSet: {
@@ -34,8 +34,8 @@ test("incomplete skipped cache, up-do-date target", async () => {
       skipped: new Map(),
     },
     serviceInvocation: {
-      inputs: new Map([["two", "Content Two"]]),
-      results: new Map([["two", "Inhalt Zwei"]]),
+      inputs: new Map([["2", "Two"]]),
+      results: new Map([["2", "Zwei"]]),
     },
   };
   const res = await translateCoreAssert(args);
@@ -52,12 +52,12 @@ test("outdated skipped cache, up-do-date target", async () => {
   // TODO: Fix wrong order, then change to deTarget
   const expectRes: CoreResults = {
     newTarget: new Map([
-      ["one", "Inhalt Eins"],
-      ["five", "Inhalt Fünf"],
-      ["two", "Inhalt Zwei"],
-      ["three", "Inhalt Drei"],
-      ["four", "Inhalt vier"],
-      ["six", "Inhalt Sechs"],
+      ["1", "Eins"],
+      ["5", "Fünf"],
+      ["2", "Zwei"],
+      ["3", "Drei"],
+      ["4", "Vier"],
+      ["6", "Sechs"],
     ]),
     newSrcCache: args.src,
     changeSet: {
@@ -67,12 +67,12 @@ test("outdated skipped cache, up-do-date target", async () => {
     },
     serviceInvocation: {
       inputs: new Map([
-        ["one", "Content One"],
-        ["five", "Content Five"],
+        ["1", "One"],
+        ["5", "Five"],
       ]),
       results: new Map([
-        ["one", "Inhalt Eins"],
-        ["five", "Inhalt Fünf"],
+        ["1", "Eins"],
+        ["5", "Fünf"],
       ]),
     },
   };
@@ -81,27 +81,27 @@ test("outdated skipped cache, up-do-date target", async () => {
 });
 
 const outdatedSkippedCache: TSet = new Map([
-  ["one", "Content One - cache broken"],
-  ["two", "Content Two"],
-  ["five", null],
-  ["six", "Content Six"],
+  ["1", "One - cache broken"],
+  ["2", "Two"],
+  ["5", null],
+  ["6", "Six"],
 ]);
 
 const outdatedTarget: TSet = new Map([
-  ["one", "Content One - both cache and target broken"],
-  ["two", "Content Two - target broken"],
-  ["three", "Content Three - missing cache"],
-  ["five", "Content Five"],
+  ["1", "One - both cache and target broken"],
+  ["2", "Two - target broken"],
+  ["3", "Three - missing cache"],
+  ["5", "Five"],
 ]);
 
 // TODO: Fix wrong order
 const mixedResult: TSet = new Map([
-  ["one", "Inhalt Eins"],
-  ["five", "Inhalt Fünf"],
-  ["four", "Inhalt vier"],
-  ["six", "Inhalt Sechs"],
-  ["two", "Content Two - target broken"],
-  ["three", "Content Three - missing cache"],
+  ["1", "Eins"],
+  ["5", "Fünf"],
+  ["4", "Vier"],
+  ["6", "Sechs"],
+  ["2", "Two - target broken"],
+  ["3", "Three - missing cache"],
 ]);
 
 test("outdated skipped cache, outdated target", async () => {
@@ -116,27 +116,27 @@ test("outdated skipped cache, outdated target", async () => {
     newSrcCache: args.src,
     changeSet: {
       added: new Map([
-        ["four", "Inhalt vier"],
-        ["six", "Inhalt Sechs"],
+        ["4", "Vier"],
+        ["6", "Sechs"],
       ]),
       skipped: new Map(),
       updated: new Map([
-        ["one", "Inhalt Eins"],
-        ["five", "Inhalt Fünf"],
+        ["1", "Eins"],
+        ["5", "Fünf"],
       ]),
     },
     serviceInvocation: {
       inputs: new Map([
-        ["one", "Content One"],
-        ["five", "Content Five"],
-        ["four", "Content Four"],
-        ["six", "Content Six"],
+        ["1", "One"],
+        ["5", "Five"],
+        ["4", "Four"],
+        ["6", "Six"],
       ]),
       results: new Map([
-        ["one", "Inhalt Eins"],
-        ["five", "Inhalt Fünf"],
-        ["four", "Inhalt vier"],
-        ["six", "Inhalt Sechs"],
+        ["1", "Eins"],
+        ["5", "Fünf"],
+        ["4", "Vier"],
+        ["6", "Sechs"],
       ]),
     },
   };
