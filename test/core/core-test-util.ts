@@ -1,6 +1,43 @@
 import { CoreArgs, CoreResults, TSet } from "../../src/core/core-definitions";
 import { translateCore } from "../../src/core/translate-core";
-import { serviceMap, TService } from "../../src/services/service-definitions";
+import {
+  serviceMap,
+  TResult,
+  TService,
+  TServiceArgs,
+} from "../../src/services/service-definitions";
+import { logFatal } from "../../src/util/util";
+
+const bogusTranslate = "bogus-translate";
+class BogusService implements TService {
+  germanNumbers: Map<string, string> = new Map([
+    ["One", "Eins"],
+    ["Two", "Zwei"],
+    ["Three", "Drei"],
+    ["Four", "vier"],
+    ["Five", "Fünf"],
+    ["Six", "Sechs"],
+    ["Seven", "Sieben"],
+  ]);
+  bogusTranslate(english: string): string {
+    for (const englishNumber of this.germanNumbers.keys()) {
+      if (english.toLowerCase().includes(englishNumber.toLowerCase())) {
+        const germanNumber = this.germanNumbers.get(englishNumber);
+        return `Inhalt ${germanNumber}`;
+      }
+    }
+    logFatal(`Failed to bogus-translate ${english}`);
+  }
+  translateStrings(args: TServiceArgs): Promise<TResult[]> {
+    const results: TResult[] = args.strings.map((v) => {
+      return {
+        key: v.key,
+        translated: this.bogusTranslate(v.value),
+      };
+    });
+    return Promise.resolve(results);
+  }
+}
 
 export function injectFakeService(serviceName: string, service: TService) {
   serviceMap[serviceName as keyof typeof serviceMap] = service as never;
@@ -16,7 +53,7 @@ export const enSrc: TSet = new Map([
 ]);
 
 export const commonArgs: Omit<CoreArgs, "oldTarget" | "src" | "srcCache"> = {
-  service: "google-translate",
+  service: bogusTranslate as keyof typeof serviceMap,
   serviceConfig: "gcloud/gcloud_service_account.json",
   matcher: "icu",
   srcLng: "en",
@@ -35,6 +72,7 @@ export const deTarget: TSet = new Map([
 export async function translateCoreAssert(
   args: CoreArgs
 ): Promise<CoreResults> {
+  injectFakeService(bogusTranslate, new BogusService());
   const res = await translateCore(args);
   const changeSet = res.changeSet;
   const serviceInvocation = res.serviceInvocation;

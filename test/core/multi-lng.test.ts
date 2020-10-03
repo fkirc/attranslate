@@ -16,6 +16,7 @@ describe.each([
     const srcHello: TSet = new Map([["hello", "Hello {{translator}}"]]);
     const args: CoreArgs = {
       ...commonArgs,
+      service: "google-translate",
       matcher: "i18next",
       src: srcHello,
       oldTarget: null,
