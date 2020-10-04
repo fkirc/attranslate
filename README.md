@@ -78,7 +78,7 @@ Options:
 
 # Integration Guide
 
-Firstly, ensure that [npm](https://nodejs.org/) is installed on your machine.
+Firstly, ensure that [nodejs](https://nodejs.org/) is installed on your machine.
 If you are a JavaScript-developer, then you can install `attranslate` to your package.json:
 
 `npm install --save-dev attranslate`
