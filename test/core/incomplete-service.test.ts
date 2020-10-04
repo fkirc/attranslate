@@ -3,6 +3,7 @@ import {
   enSrc,
   translateCoreAssert,
   injectFakeService,
+  deTarget,
 } from "./core-test-util";
 import { CoreArgs, CoreResults, TSet } from "../../src/core/core-definitions";
 import {
@@ -55,13 +56,12 @@ test("up-to-date cache, no target, empty service", async () => {
 });
 
 const modifiedTarget: TSet = new Map([
-  ["1", "One"],
-  ["2", "Two"],
-  ["3", "fwfsfs"],
+  ["1", "Eins"],
+  ["2", "Zwei"],
+  ["3", "Drei modified"],
   ["4", "stsd"],
   ["5", "sfsef"],
   ["6", "rrw"],
-  ["7", "Seven"],
 ]);
 
 class PartialResultsService implements TService {
@@ -91,41 +91,38 @@ test("bogus cache, modified target, partial service", async () => {
   // TODO: Fix order
   const expectRes: CoreResults = {
     newTarget: new Map([
+      ["1", "Eins"],
+      ["2", "Zwei"],
+      ["3", "Drei modified"],
+      ["4", "Four"],
       ["5", "Five"],
       ["6", "Six"],
-      ["1", "One"],
-      ["2", "Two"],
-      ["3", "fwfsfs"],
-      ["4", "stsd"],
-      ["7", "Seven"],
     ]),
     newSrcCache: new Map([
-      ["1", "One"],
-      ["2", "Two"],
+      ["1", null],
+      ["2", null],
       ["3", null],
-      ["4", null],
+      ["4", "Four"],
       ["5", "Five"],
       ["6", "Six"],
     ]),
     changeSet: {
       added: new Map(),
       updated: new Map([
+        ["4", "Four"],
         ["5", "Five"],
         ["6", "Six"],
       ]),
       skipped: new Map([
+        ["1", "One"],
+        ["2", "Two"],
         ["3", "Three"],
-        ["4", "Four"],
       ]),
     },
     serviceInvocation: {
-      inputs: new Map([
-        ["3", "Three"],
-        ["4", "Four"],
-        ["5", "Five"],
-        ["6", "Six"],
-      ]),
+      inputs: enSrc,
       results: new Map([
+        ["4", "Four"],
         ["5", "Five"],
         ["6", "Six"],
       ]),
