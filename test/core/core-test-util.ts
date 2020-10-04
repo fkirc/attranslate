@@ -35,17 +35,25 @@ const enToDe: TSet = new Map([
   ["Six", "Sechs"],
 ]);
 
-export function filterTSet(tSet: TSet, filter: Set<string>): TSet {
+export function filterTSet(tSet: TSet, filterSet: TSet): TSet {
   const filtered = new Map<string, string | null>();
   tSet.forEach((value, key) => {
-    if (!filter.has(key)) {
+    if (filterSet.get(key) === undefined) {
       filtered.set(key, value);
     }
   });
   return filtered;
 }
 
-export function bogusTranslate(english: string): string {
+export function bogusTranslateTSet(tSet: TSet): TSet {
+  const resultSet: TSet = new Map<string, string | null>();
+  tSet.forEach((value, key) => {
+    resultSet.set(key, value ? bogusTranslate(value) : null);
+  });
+  return resultSet;
+}
+
+function bogusTranslate(english: string): string {
   const de = enToDe.get(english);
   if (de) {
     return de;

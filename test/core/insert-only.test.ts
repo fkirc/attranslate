@@ -1,6 +1,6 @@
 import { CoreArgs, CoreResults, TSet } from "../../src/core/core-definitions";
 import {
-  bogusTranslate,
+  bogusTranslateTSet,
   commonArgs,
   deTarget,
   enSrc,
@@ -19,17 +19,12 @@ describe.each(insertSets)("insert %p", (insertSet: TSet) => {
 });
 
 async function insertOnlyTest(insertEn: Map<string, string | null>) {
-  const insertKeys = new Set<string>();
-  const insertDe = new Map<string, string | null>();
-  insertEn.forEach((value, key) => {
-    insertKeys.add(key);
-    insertDe.set(key, value ? bogusTranslate(value) : null);
-  });
+  const insertDe = bogusTranslateTSet(insertEn);
   const args: CoreArgs = {
     ...commonArgs,
     src: enSrc,
-    srcCache: filterTSet(enSrc, insertKeys),
-    oldTarget: filterTSet(deTarget, insertKeys),
+    srcCache: filterTSet(enSrc, insertEn),
+    oldTarget: filterTSet(deTarget, insertEn),
   };
   const expectRes: CoreResults = {
     newTarget: deTarget,
