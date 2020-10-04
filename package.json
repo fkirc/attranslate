@@ -83,6 +83,7 @@
     "access": "public"
   },
   "jest": {
-    "preset": "ts-jest"
+    "preset": "ts-jest",
+    "roots": ["test"]
   }
 }
