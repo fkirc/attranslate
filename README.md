@@ -140,8 +140,7 @@ For example, an interpolation like `Your name is {{name}}` might be replaced wit
 
 To work with interpolations, `attranslate` provides so-called _matchers_.
 A matcher replaces interpolations with placeholders before they are
-sent to a translation service. This ensures that interpolations don't get
-scrambled in the process.
+sent to a translation service.
 `attranslate` offers the following matchers for different styles of interpolations:
 
 - **ICU**: Matches ICU interpolations like `{name}`.
