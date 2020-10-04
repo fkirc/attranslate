@@ -10,7 +10,7 @@ import {
 import { toStrictEqualMapOrder } from "../test-util/to-strict-equal-map-order";
 import { enumerateSubsets } from "../test-util/test-util";
 
-const insertSets = generateInsertSets();
+const insertSets = generateSubTSets(enSrc);
 
 describe.each(insertSets)("insert %p", (insertSet: TSet) => {
   test("insert elements", async () => {
@@ -50,23 +50,21 @@ async function insertOnlyTest(insertEn: Map<string, string | null>) {
   toStrictEqualMapOrder(res, expectRes);
 }
 
-function generateInsertSets(): TSet[] {
-  const insertSets: TSet[] = [];
+function generateSubTSets(fullTSet: TSet): TSet[] {
+  const subTSets: TSet[] = [];
   const fullSet: string[] = [];
-  enSrc.forEach((value, key) => {
+  fullTSet.forEach((value, key) => {
     fullSet.push(key);
   });
   for (const subset of enumerateSubsets(fullSet)) {
-    const sortedSubSet = subset
-      .slice()
-      .sort((a, b) => parseInt(a) - parseInt(b));
-    const subInsertSet = new Map<string, string | null>();
+    const sortedSubSet = subset.reverse();
+    const subTSet = new Map<string, string | null>();
     sortedSubSet.forEach((key) => {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      subInsertSet.set(key, enSrc.get(key)!);
+      subTSet.set(key, fullTSet.get(key)!);
     });
-    insertSets.push(subInsertSet);
+    subTSets.push(subTSet);
   }
-  expect(insertSets.length).toBe(64);
-  return insertSets;
+  expect(subTSets.length).toBe(Math.pow(2, fullSet.length));
+  return subTSets;
 }
