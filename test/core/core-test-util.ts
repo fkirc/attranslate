@@ -130,3 +130,7 @@ export function generateSubTSets(fullTSet: TSet): TSet[] {
   expect(subTSets.length).toBe(Math.pow(2, fullSet.length));
   return subTSets;
 }
+
+export function getRandomBoolean(): boolean {
+  return Math.random() >= 0.5;
+}
