@@ -71,14 +71,7 @@ test("no cache, partial target", async () => {
     ["5", "Fünf"],
   ]);
   const expectRes: CoreResults = {
-    newTarget: new Map([
-      ["2", "Zwei"],
-      ["4", "Vier"],
-      ["5", "Fünf"],
-      ["1", "Eins"],
-      ["3", "Drei"],
-      ["6", "Sechs"],
-    ]),
+    newTarget: deTarget,
     newSrcCache: args.src,
     changeSet: {
       added,

@@ -84,8 +84,8 @@ const mixedResult: TSet = new Map([
   ["2", "Two - target broken"],
   ["3", "Three - missing cache"],
   ["4", "Vier"],
-  ["6", "Sechs"], // TODO: Fix wrong order
   ["5", "Five"],
+  ["6", "Sechs"],
 ]);
 
 test("outdated cache, outdated target", async () => {

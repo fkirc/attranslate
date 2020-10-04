@@ -81,3 +81,20 @@ export function convertToTStringList(tSet: TSet): TString[] {
   });
   return tList;
 }
+
+export function insertAt<T>(array: T[], index: number, ...elementsArray: T[]) {
+  array.splice(index, 0, ...elementsArray);
+}
+
+export function insertAfterElement(args: {
+  array: string[];
+  elementBeforeInsert: string;
+  newElement: string;
+}) {
+  for (let idx = 0; idx < args.array.length - 1; idx++) {
+    if (args.array[idx] === args.elementBeforeInsert) {
+      insertAt(args.array, idx + 1, args.newElement);
+      return;
+    }
+  }
+}

@@ -20,14 +20,7 @@ test("incomplete skipped cache, up-do-date target", async () => {
     oldTarget: deTarget,
   };
   const expectRes: CoreResults = {
-    newTarget: new Map([
-      ["2", "Zwei"],
-      ["1", "Eins"], // TODO: Fix wrong order, then change to deTarget
-      ["3", "Drei"],
-      ["4", "Vier"],
-      ["5", "Fünf"],
-      ["6", "Sechs"],
-    ]),
+    newTarget: deTarget,
     newSrcCache: args.src,
     changeSet: {
       added: new Map(),
@@ -50,16 +43,8 @@ test("outdated skipped cache, up-do-date target", async () => {
     srcCache: outdatedSkippedCache,
     oldTarget: deTarget,
   };
-  // TODO: Fix wrong order, then change to deTarget
   const expectRes: CoreResults = {
-    newTarget: new Map([
-      ["1", "Eins"],
-      ["5", "Fünf"],
-      ["2", "Zwei"],
-      ["3", "Drei"],
-      ["4", "Vier"],
-      ["6", "Sechs"],
-    ]),
+    newTarget: deTarget,
     newSrcCache: args.src,
     changeSet: {
       added: new Map(),
@@ -95,14 +80,13 @@ const outdatedTarget: TSet = new Map([
   ["5", "Five"],
 ]);
 
-// TODO: Fix wrong order
 const mixedResult: TSet = new Map([
   ["1", "Eins"],
-  ["5", "Fünf"],
-  ["4", "Vier"],
-  ["6", "Sechs"],
   ["2", "Two - target broken"],
   ["3", "Three - missing cache"],
+  ["4", "Vier"],
+  ["5", "Fünf"],
+  ["6", "Sechs"],
 ]);
 
 test("outdated skipped cache, outdated target", async () => {

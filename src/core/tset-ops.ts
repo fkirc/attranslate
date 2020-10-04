@@ -1,4 +1,6 @@
 import { TSet } from "./core-definitions";
+import { logFatal } from "../util/util";
+import { insertAfterElement } from "./core-util";
 
 export type DiffStrategy =
   | "COMPARE_KEYS"
@@ -41,22 +43,73 @@ export function leftJoin(left: TSet, right: TSet): TSet {
   return join;
 }
 
-export function leftJoinPreserveRightOrder(left: TSet, right: TSet): TSet {
-  const join = new Map<string, string | null>();
-  right.forEach((rightValue, key) => {
-    const leftValue = left.get(key);
-    if (leftValue === undefined) {
-      join.set(key, rightValue);
+export function leftJoinPreserveOldTargetOrder(args: {
+  translateResults: TSet;
+  oldTarget: TSet;
+  src: TSet;
+}): TSet {
+  // To prevent file-scrambling, we have to preserve the order of the old target.
+  const targetOrder: string[] = [];
+  args.oldTarget.forEach((value, key) => {
+    targetOrder.push(key);
+  });
+
+  const newlyAdded = extractNewlyAddedTranslations({
+    translateResults: args.translateResults,
+    oldTarget: args.oldTarget,
+  });
+
+  // Newly added translations are more flexible in its position.
+  // Therefore, we try to mimic the order of src.
+  let srcToTargetMatch: string | undefined = undefined;
+  args.src.forEach((srcValue, srcKey) => {
+    if (args.oldTarget.get(srcKey) !== undefined) {
+      srcToTargetMatch = srcKey;
+    }
+    if (newlyAdded.get(srcKey) !== undefined && srcToTargetMatch) {
+      insertAfterElement({
+        array: targetOrder,
+        elementBeforeInsert: srcToTargetMatch,
+        newElement: srcKey,
+      });
+      srcToTargetMatch = srcKey;
+    }
+  });
+
+  // Create an in-order map out of the determined targetOrder
+  const joinResult = new Map<string, string | null>();
+  targetOrder.forEach((key) => {
+    const freshResult = args.translateResults.get(key);
+    const oldResult = args.oldTarget.get(key);
+    if (freshResult) {
+      joinResult.set(key, freshResult);
+    } else if (oldResult) {
+      joinResult.set(key, oldResult);
     } else {
-      join.set(key, leftValue);
+      logFatal(`Invalid targetOrder for key ${key}`);
     }
   });
-  left.forEach((value, key) => {
-    if (join.get(key) === undefined) {
-      join.set(key, value);
+
+  // Add any remaining newly added translations whose target order was not determined.
+  newlyAdded.forEach((value, key) => {
+    if (joinResult.get(key) === undefined) {
+      joinResult.set(key, value);
     }
   });
-  return join;
+  return joinResult;
+}
+
+function extractNewlyAddedTranslations(args: {
+  translateResults: TSet;
+  oldTarget: TSet;
+}): TSet {
+  const newlyAdded = new Map<string, string | null>();
+  args.translateResults.forEach((value, key) => {
+    if (args.oldTarget.get(key) === undefined) {
+      newlyAdded.set(key, value);
+    }
+  });
+  return newlyAdded;
 }
 
 export function leftMinusRightFillNull(left: TSet, right: TSet): TSet {
