@@ -1,5 +1,6 @@
 import { exec } from "child_process";
 import { join } from "path";
+import { logFatal } from "../../src/util/util";
 
 function buildTranslateCommand(args: string) {
   return `${join(process.cwd(), "bin", "attranslate")} ${args}`;
@@ -66,4 +67,18 @@ function buildFinalCommand(cmd: string, pwd?: string) {
   } else {
     return cmd;
   }
+}
+
+export function* enumerateSubsets<T>(set: T[], offset = 0): Generator<T[]> {
+  if (set.length >= 7) {
+    logFatal("Too many subsets");
+  }
+  while (offset < set.length) {
+    const first = set[offset++];
+    for (const subset of enumerateSubsets(set, offset)) {
+      subset.push(first);
+      yield subset;
+    }
+  }
+  yield [];
 }
