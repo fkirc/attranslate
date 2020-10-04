@@ -35,20 +35,31 @@ const enToDe: TSet = new Map([
   ["Six", "Sechs"],
 ]);
 
-const bogusTranslate = "bogus-translate";
-class BogusService implements TService {
-  bogusTranslate(english: string): string {
-    const de = enToDe.get(english);
-    if (de) {
-      return de;
+export function filterTSet(tSet: TSet, filter: Set<string>): TSet {
+  const filtered = new Map<string, string | null>();
+  tSet.forEach((value, key) => {
+    if (!filter.has(key)) {
+      filtered.set(key, value);
     }
-    logFatal(`Failed to bogus-translate ${english}`);
+  });
+  return filtered;
+}
+
+export function bogusTranslate(english: string): string {
+  const de = enToDe.get(english);
+  if (de) {
+    return de;
   }
+  logFatal(`Failed to bogus-translate ${english}`);
+}
+
+const bogusTranslateName = "bogus-translate";
+class BogusService implements TService {
   translateStrings(args: TServiceArgs): Promise<TResult[]> {
     const results: TResult[] = args.strings.map((v) => {
       return {
         key: v.key,
-        translated: this.bogusTranslate(v.value),
+        translated: bogusTranslate(v.value),
       };
     });
     return Promise.resolve(results);
@@ -60,7 +71,7 @@ export function injectFakeService(serviceName: string, service: TService) {
 }
 
 export const commonArgs: Omit<CoreArgs, "oldTarget" | "src" | "srcCache"> = {
-  service: bogusTranslate as keyof typeof serviceMap,
+  service: bogusTranslateName as keyof typeof serviceMap,
   serviceConfig: "gcloud/gcloud_service_account.json",
   matcher: "icu",
   srcLng: "en",
@@ -70,7 +81,7 @@ export const commonArgs: Omit<CoreArgs, "oldTarget" | "src" | "srcCache"> = {
 export async function translateCoreAssert(
   args: CoreArgs
 ): Promise<CoreResults> {
-  injectFakeService(bogusTranslate, new BogusService());
+  injectFakeService(bogusTranslateName, new BogusService());
   const res = await translateCore(args);
   const changeSet = res.changeSet;
   const serviceInvocation = res.serviceInvocation;

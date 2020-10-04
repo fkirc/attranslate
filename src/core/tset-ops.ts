@@ -61,19 +61,11 @@ export function leftJoinPreserveOldTargetOrder(args: {
 
   // Newly added translations are more flexible in its position.
   // Therefore, we try to mimic the order of src.
-  let srcToTargetMatch: string | undefined = undefined;
-  args.src.forEach((srcValue, srcKey) => {
-    if (args.oldTarget.get(srcKey) !== undefined) {
-      srcToTargetMatch = srcKey;
-    }
-    if (newlyAdded.get(srcKey) !== undefined && srcToTargetMatch) {
-      insertAfterElement({
-        array: targetOrder,
-        elementBeforeInsert: srcToTargetMatch,
-        newElement: srcKey,
-      });
-      srcToTargetMatch = srcKey;
-    }
+  injectNewKeysIntoTargetOrder({
+    targetOrder,
+    newlyAdded,
+    oldTarget: args.oldTarget,
+    src: args.src,
   });
 
   // Create an in-order map out of the determined targetOrder
@@ -89,7 +81,6 @@ export function leftJoinPreserveOldTargetOrder(args: {
       logFatal(`Invalid targetOrder for key ${key}`);
     }
   });
-
   // Add any remaining newly added translations whose target order was not determined.
   newlyAdded.forEach((value, key) => {
     if (joinResult.get(key) === undefined) {
@@ -97,6 +88,28 @@ export function leftJoinPreserveOldTargetOrder(args: {
     }
   });
   return joinResult;
+}
+
+function injectNewKeysIntoTargetOrder(args: {
+  targetOrder: string[];
+  newlyAdded: TSet;
+  oldTarget: TSet;
+  src: TSet;
+}) {
+  let srcToTargetMatch: string | undefined = undefined;
+  args.src.forEach((srcValue, srcKey) => {
+    if (args.oldTarget.get(srcKey) !== undefined) {
+      srcToTargetMatch = srcKey;
+    }
+    if (args.newlyAdded.get(srcKey) !== undefined && srcToTargetMatch) {
+      insertAfterElement({
+        array: args.targetOrder,
+        elementBeforeInsert: srcToTargetMatch,
+        newElement: srcKey,
+      });
+      srcToTargetMatch = srcKey;
+    }
+  });
 }
 
 function extractNewlyAddedTranslations(args: {
