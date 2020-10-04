@@ -88,7 +88,6 @@ test("bogus cache, modified target, partial service", async () => {
     srcCache: modifiedTarget,
     oldTarget: modifiedTarget,
   };
-  // TODO: Fix order
   const expectRes: CoreResults = {
     newTarget: new Map([
       ["1", "Eins"],
