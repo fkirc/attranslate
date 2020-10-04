@@ -39,7 +39,7 @@ async function insertOnlyTest(insertEn: Map<string, string | null>) {
   toStrictEqualMapOrder(res, expectRes);
 }
 
-test("single insert in the middle", async () => {
+test("insert in the middle", async () => {
   await insertOnlyTest(new Map([["3", "Three"]]));
 });
 
@@ -110,6 +110,57 @@ test("insert everything except of last", async () => {
   );
 });
 
-test("insert only first", async () => {
+test("insert first", async () => {
   await insertOnlyTest(new Map([["1", "One"]]));
+});
+
+test("insert last", async () => {
+  await insertOnlyTest(new Map([["6", "Six"]]));
+});
+
+test("insert first and last", async () => {
+  await insertOnlyTest(
+    new Map([
+      ["1", "One"],
+      ["6", "Six"],
+    ])
+  );
+});
+
+test("insert double first and double last", async () => {
+  await insertOnlyTest(
+    new Map([
+      ["1", "One"],
+      ["2", "Two"],
+      ["5", "Five"],
+      ["6", "Six"],
+    ])
+  );
+});
+
+test("insert first and middle", async () => {
+  await insertOnlyTest(
+    new Map([
+      ["1", "One"],
+      ["3", "Three"],
+    ])
+  );
+});
+
+test("insert last and middle", async () => {
+  await insertOnlyTest(
+    new Map([
+      ["3", "Three"],
+      ["6", "Six"],
+    ])
+  );
+});
+
+test("insert 4 5", async () => {
+  await insertOnlyTest(
+    new Map([
+      ["4", "Four"],
+      ["5", "Five"],
+    ])
+  );
 });

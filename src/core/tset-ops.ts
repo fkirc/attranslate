@@ -1,6 +1,6 @@
 import { TSet } from "./core-definitions";
 import { logFatal } from "../util/util";
-import { insertAfterElement } from "./core-util";
+import { getElementPosition, insertAt } from "./core-util";
 
 export type DiffStrategy =
   | "COMPARE_KEYS"
@@ -96,18 +96,19 @@ function injectNewKeysIntoTargetOrder(args: {
   oldTarget: TSet;
   src: TSet;
 }) {
-  let srcToTargetMatch: string | undefined = undefined;
+  let injectPosition = 0;
   args.src.forEach((srcValue, srcKey) => {
     if (args.oldTarget.get(srcKey) !== undefined) {
-      srcToTargetMatch = srcKey;
+      injectPosition =
+        1 +
+        getElementPosition({
+          array: args.targetOrder,
+          element: srcKey,
+        });
     }
-    if (args.newlyAdded.get(srcKey) !== undefined && srcToTargetMatch) {
-      insertAfterElement({
-        array: args.targetOrder,
-        elementBeforeInsert: srcToTargetMatch,
-        newElement: srcKey,
-      });
-      srcToTargetMatch = srcKey;
+    if (args.newlyAdded.get(srcKey) !== undefined) {
+      insertAt(args.targetOrder, injectPosition, srcKey);
+      injectPosition++;
     }
   });
 }
