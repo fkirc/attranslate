@@ -12,32 +12,32 @@ import { toStrictEqualMapOrder } from "../test-util/to-strict-equal-map-order";
 
 const subsets = generateSubTSets(enSrc);
 
-describe.each(subsets)("insert %p", (insertSet: TSet) => {
-  test("insert elements", async () => {
-    await insertOnlyTest(insertSet);
+describe.each(subsets)("update %p", (updateSet: TSet) => {
+  test("update elements", async () => {
+    await updateOnlyTest(updateSet);
   });
 });
 
-async function insertOnlyTest(insertEn: Map<string, string | null>) {
-  const insertDe = bogusTranslateTSet(insertEn);
+async function updateOnlyTest(updateEn: Map<string, string | null>) {
+  const updateDe = bogusTranslateTSet(updateEn);
   const args: CoreArgs = {
     ...commonArgs,
     src: enSrc,
-    srcCache: filterTSet(enSrc, insertEn),
-    oldTarget: filterTSet(deTarget, insertEn),
+    srcCache: filterTSet(enSrc, updateEn, "cache garbage"),
+    oldTarget: filterTSet(deTarget, updateEn, "target garbage"),
   };
   const expectRes: CoreResults = {
     newTarget: deTarget,
     newSrcCache: args.src,
     changeSet: {
-      added: insertDe,
-      updated: new Map(),
+      added: new Map(),
+      updated: updateDe,
       skipped: new Map(),
     },
-    serviceInvocation: insertEn.size
+    serviceInvocation: updateEn.size
       ? {
-          inputs: insertEn,
-          results: insertDe,
+          inputs: updateEn,
+          results: updateDe,
         }
       : null,
   };

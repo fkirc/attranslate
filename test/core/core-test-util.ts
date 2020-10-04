@@ -7,6 +7,7 @@ import {
   TServiceArgs,
 } from "../../src/services/service-definitions";
 import { logFatal } from "../../src/util/util";
+import { enumerateSubsets } from "../test-util/test-util";
 
 export const enSrc: TSet = new Map([
   ["1", "One"],
@@ -35,11 +36,17 @@ const enToDe: TSet = new Map([
   ["Six", "Sechs"],
 ]);
 
-export function filterTSet(tSet: TSet, filterSet: TSet): TSet {
+export function filterTSet(
+  tSet: TSet,
+  filterSet: TSet,
+  replacement?: string | null
+): TSet {
   const filtered = new Map<string, string | null>();
   tSet.forEach((value, key) => {
     if (filterSet.get(key) === undefined) {
       filtered.set(key, value);
+    } else if (replacement !== undefined) {
+      filtered.set(key, replacement);
     }
   });
   return filtered;
@@ -103,4 +110,23 @@ export async function translateCoreAssert(
     changeSet.added.size + changeSet.updated.size + changeSet.skipped.size
   ).toBeLessThanOrEqual(serviceInvocation?.inputs.size ?? 0);
   return res;
+}
+
+export function generateSubTSets(fullTSet: TSet): TSet[] {
+  const subTSets: TSet[] = [];
+  const fullSet: string[] = [];
+  fullTSet.forEach((value, key) => {
+    fullSet.push(key);
+  });
+  for (const subset of enumerateSubsets(fullSet)) {
+    const sortedSubSet = subset.reverse();
+    const subTSet = new Map<string, string | null>();
+    sortedSubSet.forEach((key) => {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      subTSet.set(key, fullTSet.get(key)!);
+    });
+    subTSets.push(subTSet);
+  }
+  expect(subTSets.length).toBe(Math.pow(2, fullSet.length));
+  return subTSets;
 }
