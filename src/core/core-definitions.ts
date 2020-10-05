@@ -12,6 +12,7 @@ export interface CoreArgs {
   service: keyof typeof serviceMap;
   serviceConfig: string;
   matcher: keyof typeof matcherMap;
+  deleteStale: boolean;
 }
 
 export interface TChangeSet {
@@ -44,4 +45,5 @@ export interface CliArgs {
   serviceConfig: string;
   cacheDir: string;
   matcher: string;
+  deleteStale: string;
 }

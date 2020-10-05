@@ -97,6 +97,7 @@ export async function translateCli(cliArgs: CliArgs) {
     service: cliArgs.service as keyof typeof serviceMap,
     serviceConfig: cliArgs.serviceConfig,
     matcher: cliArgs.matcher as keyof typeof matcherMap,
+    deleteStale: parseBooleanOption(cliArgs.deleteStale),
   };
   const result = await translateCore(coreArgs);
 
@@ -107,5 +108,16 @@ export async function translateCli(cliArgs: CliArgs) {
   if (!srcCache || !areEqual(srcCache, result.newSrcCache)) {
     console.info(`Write cache ${getDebugPath(cachePath)}`);
     cacheFileFormat.writeTFile(cachePath, result.newSrcCache);
+  }
+}
+
+function parseBooleanOption(rawOption: string): boolean {
+  const option = rawOption.trim().toLocaleLowerCase();
+  if (option === "true") {
+    return true;
+  } else if (option === "false") {
+    return false;
+  } else {
+    logFatal(`Invalid option '${rawOption}'. Must be either true or false.`);
   }
 }

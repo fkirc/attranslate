@@ -14,5 +14,8 @@ Options:
   --cacheDir <srcCacheDir>           The directory where the source-cache is
                                      expected to be found (default: ".")
   --matcher <matcher>                One of "none", "icu", "i18next", "sprintf"
-                                     (default: "icu")
+                                     (default: "none")
+  --deleteStale <true | false>       If true, delete translations that exist in
+                                     the target file but not in the source file
+                                     (default: "true")
   -h, --help                         display help for command

@@ -56,7 +56,12 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
     .option(
       "--matcher <matcher>",
       formatOneOfOptions(Object.keys(matcherMap)),
-      "icu"
+      "none"
+    )
+    .option(
+      "--deleteStale <true | false>",
+      "If true, delete translations that exist in the target file but not in the source file",
+      "true"
     )
     .parse(process.argv);
 
@@ -76,6 +81,7 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
     serviceConfig: commander.serviceConfig,
     cacheDir: commander.cacheDir,
     matcher: commander.matcher,
+    deleteStale: commander.deleteStale,
   };
   translateCli(args)
     .then(() => {
