@@ -18,6 +18,7 @@ export interface TChangeSet {
   skipped: TSet;
   added: TSet;
   updated: TSet;
+  removed: TSet | null;
 }
 
 export interface TServiceInvocation {

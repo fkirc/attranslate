@@ -26,6 +26,7 @@ test("incomplete skipped cache, up-do-date target", async () => {
       added: new Map(),
       updated: new Map(),
       skipped: new Map(),
+      removed: new Map(),
     },
     serviceInvocation: {
       inputs: new Map([["2", "Two"]]),
@@ -50,6 +51,7 @@ test("outdated skipped cache, up-do-date target", async () => {
       added: new Map(),
       updated: new Map(),
       skipped: new Map(),
+      removed: new Map(),
     },
     serviceInvocation: {
       inputs: new Map([
@@ -109,6 +111,7 @@ test("outdated skipped cache, outdated target", async () => {
         ["1", "Eins"],
         ["5", "Fünf"],
       ]),
+      removed: new Map(),
     },
     serviceInvocation: {
       inputs: new Map([

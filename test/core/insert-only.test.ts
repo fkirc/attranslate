@@ -33,6 +33,7 @@ async function insertOnlyTest(insertEn: Map<string, string | null>) {
       added: insertDe,
       updated: new Map(),
       skipped: new Map(),
+      removed: new Map(),
     },
     serviceInvocation: insertEn.size
       ? {

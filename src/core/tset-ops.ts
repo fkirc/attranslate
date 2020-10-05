@@ -138,6 +138,16 @@ export function leftMinusRightFillNull(left: TSet, right: TSet): TSet {
   return leftRemaining;
 }
 
+export function leftMinusRight(left: TSet, right: TSet): TSet {
+  const leftRemaining = new Map<string, string | null>();
+  left.forEach((value, key) => {
+    if (!right.get(key)) {
+      leftRemaining.set(key, value);
+    }
+  });
+  return leftRemaining;
+}
+
 export function areEqual(set1: TSet, set2: TSet): boolean {
   for (const key1 of set1.keys()) {
     const value1 = set1.get(key1);

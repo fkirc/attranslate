@@ -8,6 +8,7 @@ import {
 import {
   leftJoin,
   leftJoinPreserveOldTargetOrder,
+  leftMinusRight,
   leftMinusRightFillNull,
   selectLeftDistinct,
 } from "./tset-ops";
@@ -99,15 +100,25 @@ async function invokeTranslationService(
   };
 }
 
+function extractStaleTranslations(args: CoreArgs): TSet | null {
+  if (args.oldTarget) {
+    return leftMinusRight(args.oldTarget, args.src);
+  } else {
+    return null;
+  }
+}
+
 function computeChangeSet(
   args: CoreArgs,
   serviceInvocation: TServiceInvocation | null
 ): TChangeSet {
+  const removed = extractStaleTranslations(args);
   if (!serviceInvocation) {
     return {
       added: new Map(),
       updated: new Map(),
       skipped: new Map(),
+      removed,
     };
   }
   const skipped = selectLeftDistinct(
@@ -120,6 +131,7 @@ function computeChangeSet(
       added: serviceInvocation.results,
       updated: new Map(),
       skipped,
+      removed,
     };
   }
   const added = selectLeftDistinct(
@@ -132,28 +144,33 @@ function computeChangeSet(
     args.oldTarget,
     "COMPARE_VALUES"
   );
-  // TODO: Delete stale keys from target, optionally
   return {
     added,
     updated,
     skipped,
+    removed,
   };
 }
 
 function computeNewTarget(
   args: CoreArgs,
+  changeSet: TChangeSet,
   serviceInvocation: TServiceInvocation | null
 ): TSet {
+  const oldTargetRef: TSet | null =
+    args.oldTarget && changeSet.removed
+      ? leftMinusRight(args.oldTarget, changeSet.removed)
+      : args.oldTarget;
+
   if (!serviceInvocation) {
-    // TODO: Remove stale keys (optionally)
-    return args.oldTarget ?? new Map<string, string | null>();
+    return oldTargetRef ?? new Map<string, string | null>();
   }
-  if (!args.oldTarget) {
+  if (!oldTargetRef) {
     return serviceInvocation.results;
   }
   return leftJoinPreserveOldTargetOrder({
     translateResults: serviceInvocation.results,
-    oldTarget: args.oldTarget,
+    oldTarget: oldTargetRef,
     src: args.src,
   });
 }
@@ -174,7 +191,7 @@ function computeCoreResults(
   return {
     changeSet,
     serviceInvocation,
-    newTarget: computeNewTarget(args, serviceInvocation),
+    newTarget: computeNewTarget(args, changeSet, serviceInvocation),
     newSrcCache: computeNewSrcCache(args, changeSet),
   };
 }

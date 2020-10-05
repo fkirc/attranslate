@@ -14,7 +14,7 @@ const modifiedTarget: TSet = new Map([
   ["4", "stsd"],
   ["5", "sfsef"],
   ["6", "rrw"],
-  ["leftover", "Outdated"], // TODO: Remove outdated leftovers via option?
+  ["leftover", "Outdated"],
 ]);
 
 test("up-to-date cache, no target", async () => {
@@ -29,6 +29,7 @@ test("up-to-date cache, no target", async () => {
       added: deTarget,
       updated: new Map(),
       skipped: new Map(),
+      removed: null,
     },
     newTarget: deTarget,
     newSrcCache: args.src,
@@ -55,6 +56,7 @@ test("up-to-date cache, up-to-date target", async () => {
       added: new Map(),
       updated: new Map(),
       skipped: new Map(),
+      removed: new Map(),
     },
     serviceInvocation: null,
   };
@@ -76,6 +78,7 @@ test("up-to-date cache, modified target", async () => {
       added: new Map(),
       updated: new Map(),
       skipped: new Map(),
+      removed: new Map(),
     },
     serviceInvocation: null,
   };
