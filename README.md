@@ -11,7 +11,7 @@ Other than that, `attranslate` supports manual translations and even file-format
 In contrast to paid services, `attranslate` does not need any account-registration.
 A single developer can integrate `attranslate` in a matter of minutes.
 
-Instead of re-inventing the wheel, `attranslate` integrates into existing translation systems.
+In contrast to many other tools, `attranslate` can operate on the very same translations-files that you are already using.
 `attranslate` has you covered, regardless of whether you use i18n, ICU, JavaScript-frameworks, Android-XML, iOS-Localizables or other systems. 
 
 # Features
@@ -48,11 +48,6 @@ Depending on your project, some translation-services work better than others.
 
 If some texts have already been translated, then `attranslate` won't translate them again.
 This does not only speedup your workflow, but also saves cost for paid translation-services.
-
-## Fast Integration
-
-`attranslate` is designed for a quick integration into any website or app.
-Therefore, `attranslate` allows you to keep working on the very same translation files that you used before.
 
 # Usage Examples
 
