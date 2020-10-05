@@ -112,7 +112,7 @@ export async function translateCli(cliArgs: CliArgs) {
 }
 
 function parseBooleanOption(rawOption: string): boolean {
-  const option = rawOption.trim().toLocaleLowerCase();
+  const option = rawOption.trim().toLowerCase();
   if (option === "true") {
     return true;
   } else if (option === "false") {

@@ -31,6 +31,10 @@ export function logCoreResults(args: CoreArgs, results: CoreResults) {
   if (countUpdated) {
     console.info(`Update ${countUpdated} existing translations`);
   }
+  const countDeleted: number = changeSet.deleted?.size ?? 0;
+  if (countDeleted) {
+    console.info(`Deleted ${countDeleted} stale translations`);
+  }
   const countSkipped: number = changeSet.skipped.size;
   if (countSkipped) {
     console.info(`Warning: Skipped ${countSkipped} translations`);
@@ -40,7 +44,7 @@ export function logCoreResults(args: CoreArgs, results: CoreResults) {
       console.info(
         `Skipped translations because we had to generate a new cache.`
       );
-    } else if (!countAdded && !countUpdated && !countSkipped) {
+    } else if (!countAdded && !countUpdated && !countSkipped && !countDeleted) {
       console.info(`Nothing changed, translations are up-to-date.`);
     }
   }
