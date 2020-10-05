@@ -1,20 +1,6 @@
-import { serviceMap } from "../../src/services/service-definitions";
-import { fileFormatMap } from "../../src/file-formats/file-format-definitions";
+import { CliArgs } from "../../src/core/core-definitions";
 
-export interface E2EArgs {
-  srcFile: string;
-  srcLng: string;
-  srcFormat: keyof typeof fileFormatMap;
-  targetFile: string;
-  targetLng: string;
-  targetFormat: keyof typeof fileFormatMap;
-  service: keyof typeof serviceMap;
-  serviceConfig: string;
-  cacheDir: string;
-  matcher?: string;
-}
-
-export const defaultE2EArgs: E2EArgs = {
+export const defaultE2EArgs: CliArgs = {
   srcFile: "test-assets/flat-json/count-en.flat.json",
   srcLng: "en",
   srcFormat: "flat-json",
@@ -24,9 +10,11 @@ export const defaultE2EArgs: E2EArgs = {
   service: "google-translate",
   serviceConfig: "gcloud/gcloud_service_account.json",
   cacheDir: "test-assets",
+  matcher: "none",
+  deleteStale: "true",
 };
 
-export function buildE2EArgs(args: E2EArgs): string {
+export function buildE2EArgs(args: CliArgs): string {
   const cmdArgs: string[] = [];
   for (const argKey of Object.keys(args)) {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment

@@ -1,9 +1,10 @@
-import { buildE2EArgs, defaultE2EArgs, E2EArgs } from "./e2e-common";
+import { buildE2EArgs, defaultE2EArgs } from "./e2e-common";
 import { runTranslateExpectFailure } from "../test-util/test-util";
 import { getDebugPath } from "../../src/util/util";
+import { CliArgs } from "../../src/core/core-definitions";
 
 test("non existing gcloud-config", async () => {
-  const args: E2EArgs = {
+  const args: CliArgs = {
     ...defaultE2EArgs,
     serviceConfig: "not-existing-config",
   };
@@ -14,7 +15,7 @@ test("non existing gcloud-config", async () => {
 });
 
 test("invalid azure-config", async () => {
-  const args: E2EArgs = {
+  const args: CliArgs = {
     ...defaultE2EArgs,
     service: "azure",
     serviceConfig: "invalid-api-key",
@@ -27,7 +28,7 @@ test("invalid azure-config", async () => {
 });
 
 test("invalid deepl-config", async () => {
-  const args: E2EArgs = {
+  const args: CliArgs = {
     ...defaultE2EArgs,
     service: "deepl",
     serviceConfig: "invalid-api-key",
@@ -38,7 +39,7 @@ test("invalid deepl-config", async () => {
 });
 
 test("invalid gcloud-config", async () => {
-  const args: E2EArgs = {
+  const args: CliArgs = {
     ...defaultE2EArgs,
     serviceConfig: "test-assets/invalid/empty.json",
   };

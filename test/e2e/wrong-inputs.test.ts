@@ -1,9 +1,10 @@
-import { buildE2EArgs, defaultE2EArgs, E2EArgs } from "./e2e-common";
+import { buildE2EArgs, defaultE2EArgs } from "./e2e-common";
 import { runTranslateExpectFailure } from "../test-util/test-util";
 import { getDebugPath } from "../../src/util/util";
+import { CliArgs } from "../../src/core/core-definitions";
 
 test("srcFile not existing", async () => {
-  const args: E2EArgs = {
+  const args: CliArgs = {
     ...defaultE2EArgs,
     srcFile: "not-existing-source",
   };
@@ -14,7 +15,7 @@ test("srcFile not existing", async () => {
 });
 
 test("srcFile not a file", async () => {
-  const args: E2EArgs = {
+  const args: CliArgs = {
     ...defaultE2EArgs,
     srcFile: ".",
   };
@@ -23,7 +24,7 @@ test("srcFile not a file", async () => {
 });
 
 test("targetFile in dir not existing", async () => {
-  const args: E2EArgs = {
+  const args: CliArgs = {
     ...defaultE2EArgs,
     targetFile: "not-existing-dir/target",
   };
@@ -34,7 +35,7 @@ test("targetFile in dir not existing", async () => {
 });
 
 test("targetFile not a file", async () => {
-  const args: E2EArgs = {
+  const args: CliArgs = {
     ...defaultE2EArgs,
     targetFile: "src",
   };
@@ -43,7 +44,7 @@ test("targetFile not a file", async () => {
 });
 
 test("cacheDir not existing", async () => {
-  const args: E2EArgs = {
+  const args: CliArgs = {
     ...defaultE2EArgs,
     cacheDir: "not-existing-cache",
   };
@@ -54,7 +55,7 @@ test("cacheDir not existing", async () => {
 });
 
 test("cacheDir not a dir", async () => {
-  const args: E2EArgs = {
+  const args: CliArgs = {
     ...defaultE2EArgs,
     cacheDir: "README.md",
   };
@@ -65,7 +66,7 @@ test("cacheDir not a dir", async () => {
 });
 
 test("src not a JSON", async () => {
-  const args: E2EArgs = {
+  const args: CliArgs = {
     ...defaultE2EArgs,
     srcFile: "README.md",
   };
@@ -74,7 +75,7 @@ test("src not a JSON", async () => {
 });
 
 test("src empty JSON", async () => {
-  const args: E2EArgs = {
+  const args: CliArgs = {
     ...defaultE2EArgs,
     srcFile: "test-assets/invalid/empty.json",
   };
@@ -87,7 +88,7 @@ test("src empty JSON", async () => {
 });
 
 test("src non-flat JSON", async () => {
-  const args: E2EArgs = {
+  const args: CliArgs = {
     ...defaultE2EArgs,
     srcFile: "test-assets/nested-json/count-en.nested.json",
     srcFormat: "flat-json",
@@ -101,7 +102,7 @@ test("src non-flat JSON", async () => {
 });
 
 test("target not a JSON", async () => {
-  const args: E2EArgs = {
+  const args: CliArgs = {
     ...defaultE2EArgs,
     targetFile: "README.md",
   };
@@ -110,7 +111,7 @@ test("target not a JSON", async () => {
 });
 
 test("unknown service", async () => {
-  const args: E2EArgs = {
+  const args: CliArgs = {
     ...defaultE2EArgs,
     service: ("some-invalid-matcher" as unknown) as never,
   };
@@ -121,7 +122,7 @@ test("unknown service", async () => {
 });
 
 test("unknown matcher", async () => {
-  const args: E2EArgs = {
+  const args: CliArgs = {
     ...defaultE2EArgs,
     matcher: ("some-invalid-matcher" as unknown) as never,
   };
@@ -132,7 +133,7 @@ test("unknown matcher", async () => {
 });
 
 test("unknown source file format", async () => {
-  const args: E2EArgs = {
+  const args: CliArgs = {
     ...defaultE2EArgs,
     srcFormat: ("some-invalid-source" as unknown) as never,
   };
@@ -143,7 +144,18 @@ test("unknown source file format", async () => {
 });
 
 test("unknown target file format", async () => {
-  const args: E2EArgs = {
+  const args: CliArgs = {
+    ...defaultE2EArgs,
+    targetFormat: ("some-invalid-target" as unknown) as never,
+  };
+  const output = await runTranslateExpectFailure(buildE2EArgs(args));
+  expect(output).toContain(
+    `error: Unknown target format "some-invalid-target". Available formats: "`
+  );
+});
+
+test("bad delete stale", async () => {
+  const args: CliArgs = {
     ...defaultE2EArgs,
     targetFormat: ("some-invalid-target" as unknown) as never,
   };
@@ -166,7 +178,7 @@ const requiredOptions: (keyof typeof defaultE2EArgs)[] = [
 
 describe.each(requiredOptions)("Missing required option %s", (option) => {
   test(`Missing required option ${option}`, async () => {
-    const args: E2EArgs = {
+    const args: CliArgs = {
       ...defaultE2EArgs,
     };
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment

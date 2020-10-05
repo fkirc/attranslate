@@ -1,12 +1,13 @@
 import { runCommand, runTranslate } from "../test-util/test-util";
-import { buildE2EArgs, defaultE2EArgs, E2EArgs } from "./e2e-common";
+import { buildE2EArgs, defaultE2EArgs } from "./e2e-common";
 import { join } from "path";
 import { getDebugPath } from "../../src/util/util";
+import { CliArgs } from "../../src/core/core-definitions";
 const cacheDir = "test-assets/cache/";
 const cacheOutdatedDir = "test-assets/cache-outdated/";
 const cacheMissingDir = "test-assets/cache-missing/";
 
-const testArgs: Partial<E2EArgs>[] = [
+const testArgs: Partial<CliArgs>[] = [
   {
     srcFile: "test-assets/flat-json/count-en.flat.json",
     srcFormat: "flat-json",
@@ -22,7 +23,7 @@ const testArgs: Partial<E2EArgs>[] = [
 ];
 
 describe.each(testArgs)("translate %p", (args) => {
-  const commonArgs: E2EArgs = {
+  const commonArgs: CliArgs = {
     ...defaultE2EArgs,
     ...args,
     cacheDir,
@@ -47,7 +48,7 @@ describe.each(testArgs)("translate %p", (args) => {
     await runCommand(`git checkout ${args.targetFile}`);
   });
 
-  const outdatedCacheArgs: E2EArgs = {
+  const outdatedCacheArgs: CliArgs = {
     ...commonArgs,
     cacheDir: cacheOutdatedDir,
   };
@@ -79,7 +80,7 @@ describe.each(testArgs)("translate %p", (args) => {
     await runCommand(`git checkout ${commonArgs.targetFile}`);
   });
 
-  const missingCacheArgs: E2EArgs = {
+  const missingCacheArgs: CliArgs = {
     ...commonArgs,
     cacheDir: cacheMissingDir,
   };
