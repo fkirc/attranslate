@@ -157,11 +157,11 @@ test("unknown target file format", async () => {
 test("bad delete stale", async () => {
   const args: CliArgs = {
     ...defaultE2EArgs,
-    targetFormat: ("some-invalid-target" as unknown) as never,
+    deleteStale: "not-true-false",
   };
   const output = await runTranslateExpectFailure(buildE2EArgs(args));
-  expect(output).toContain(
-    `error: Unknown target format "some-invalid-target". Available formats: "`
+  expect(output).toBe(
+    `error: Invalid option 'not-true-false'. Must be either true or false.\n`
   );
 });
 
