@@ -33,7 +33,7 @@ export function logCoreResults(args: CoreArgs, results: CoreResults) {
   }
   const countDeleted: number = changeSet.deleted?.size ?? 0;
   if (countDeleted) {
-    console.info(`Deleted ${countDeleted} stale translations`);
+    console.info(`Delete ${countDeleted} stale translations`);
   }
   const countSkipped: number = changeSet.skipped.size;
   if (countSkipped) {
