@@ -35,7 +35,7 @@ test("up-to-date cache, no target, empty service", async () => {
       added: new Map(),
       updated: new Map(),
       skipped: args.src,
-      removed: null,
+      deleted: null,
     },
     newTarget: new Map(),
     newSrcCache: new Map([
@@ -117,7 +117,7 @@ test("bogus cache, modified target, partial service", async () => {
         ["2", "Two"],
         ["3", "Three"],
       ]),
-      removed: new Map(),
+      deleted: new Map(),
     },
     serviceInvocation: {
       inputs: enSrc,

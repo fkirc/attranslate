@@ -7,16 +7,6 @@ import {
 import { CoreArgs, CoreResults, TSet } from "../../src/core/core-definitions";
 import { toStrictEqualMapOrder } from "../test-util/to-strict-equal-map-order";
 
-const modifiedTarget: TSet = new Map([
-  ["1", "fgebg"],
-  ["2", "Wdbhdelt"],
-  ["3", "fwfsfs"],
-  ["4", "stsd"],
-  ["5", "sfsef"],
-  ["6", "rrw"],
-  ["leftover", "Outdated"],
-]);
-
 test("up-to-date cache, no target", async () => {
   const args: CoreArgs = {
     ...commonArgs,
@@ -29,7 +19,7 @@ test("up-to-date cache, no target", async () => {
       added: deTarget,
       updated: new Map(),
       skipped: new Map(),
-      removed: null,
+      deleted: null,
     },
     newTarget: deTarget,
     newSrcCache: args.src,
@@ -56,7 +46,7 @@ test("up-to-date cache, up-to-date target", async () => {
       added: new Map(),
       updated: new Map(),
       skipped: new Map(),
-      removed: new Map(),
+      deleted: new Map(),
     },
     serviceInvocation: null,
   };
@@ -64,21 +54,32 @@ test("up-to-date cache, up-to-date target", async () => {
   toStrictEqualMapOrder(res, expectRes);
 });
 
-test("up-to-date cache, modified target", async () => {
+const staleTarget: TSet = new Map([
+  ["1", "fgebg"],
+  ["2", "Wdbhdelt"],
+  ["3", "fwfsfs"],
+  ["4", "stsd"],
+  ["5", "sfsef"],
+  ["6", "rrw"],
+  ["leftover", "Outdated"],
+]);
+
+test("up-to-date cache, do not delete stale", async () => {
   const args: CoreArgs = {
     ...commonArgs,
     src: enSrc,
     srcCache: enSrc,
-    oldTarget: modifiedTarget,
+    oldTarget: staleTarget,
+    deleteStale: false,
   };
   const expectRes: CoreResults = {
-    newTarget: modifiedTarget,
+    newTarget: staleTarget,
     newSrcCache: args.src,
     changeSet: {
       added: new Map(),
       updated: new Map(),
       skipped: new Map(),
-      removed: new Map(),
+      deleted: null,
     },
     serviceInvocation: null,
   };

@@ -37,7 +37,7 @@ async function updateOnlyTest(updateEn: Map<string, string | null>) {
       added: new Map(),
       updated: targetOutdated ? updateDe : new Map(),
       skipped: new Map(),
-      removed: new Map(),
+      deleted: new Map(),
     },
     serviceInvocation: updateEn.size
       ? {

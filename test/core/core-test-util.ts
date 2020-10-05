@@ -91,6 +91,7 @@ export const commonArgs: Omit<CoreArgs, "oldTarget" | "src" | "srcCache"> = {
   matcher: "icu",
   srcLng: "en",
   targetLng: "de",
+  deleteStale: true,
 };
 
 export async function translateCoreAssert(

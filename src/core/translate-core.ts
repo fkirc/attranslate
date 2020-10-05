@@ -101,7 +101,7 @@ async function invokeTranslationService(
 }
 
 function extractStaleTranslations(args: CoreArgs): TSet | null {
-  if (args.oldTarget) {
+  if (args.oldTarget && args.deleteStale) {
     return leftMinusRight(args.oldTarget, args.src);
   } else {
     return null;
@@ -112,13 +112,13 @@ function computeChangeSet(
   args: CoreArgs,
   serviceInvocation: TServiceInvocation | null
 ): TChangeSet {
-  const removed = extractStaleTranslations(args);
+  const deleted = extractStaleTranslations(args);
   if (!serviceInvocation) {
     return {
       added: new Map(),
       updated: new Map(),
       skipped: new Map(),
-      removed,
+      deleted,
     };
   }
   const skipped = selectLeftDistinct(
@@ -131,7 +131,7 @@ function computeChangeSet(
       added: serviceInvocation.results,
       updated: new Map(),
       skipped,
-      removed,
+      deleted,
     };
   }
   const added = selectLeftDistinct(
@@ -148,7 +148,7 @@ function computeChangeSet(
     added,
     updated,
     skipped,
-    removed,
+    deleted,
   };
 }
 
@@ -158,8 +158,8 @@ function computeNewTarget(
   serviceInvocation: TServiceInvocation | null
 ): TSet {
   const oldTargetRef: TSet | null =
-    args.oldTarget && changeSet.removed
-      ? leftMinusRight(args.oldTarget, changeSet.removed)
+    args.oldTarget && changeSet.deleted
+      ? leftMinusRight(args.oldTarget, changeSet.deleted)
       : args.oldTarget;
 
   if (!serviceInvocation) {

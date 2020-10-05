@@ -29,7 +29,7 @@ describe.each([
         added: new Map([["hello", lngT.t]]),
         updated: new Map(),
         skipped: new Map(),
-        removed: null,
+        deleted: null,
       },
       serviceInvocation: {
         inputs: srcHello,

@@ -27,7 +27,7 @@ test("no cache, no target", async () => {
       added: deTarget,
       updated: new Map(),
       skipped: new Map(),
-      removed: null,
+      deleted: null,
     },
     serviceInvocation: {
       inputs: enSrc,
@@ -52,7 +52,7 @@ test("no cache, clean target", async () => {
       added: new Map(),
       updated: new Map(),
       skipped: new Map(),
-      removed: new Map(),
+      deleted: new Map(),
     },
     serviceInvocation: null,
   };
@@ -79,7 +79,7 @@ test("no cache, partial target", async () => {
       added,
       updated: new Map(),
       skipped: new Map(),
-      removed: new Map(),
+      deleted: new Map(),
     },
     serviceInvocation: {
       inputs: new Map([
