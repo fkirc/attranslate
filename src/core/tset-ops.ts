@@ -1,4 +1,4 @@
-import { TSet } from "./core-definitions";
+import { TChangeSet, TSet } from "./core-definitions";
 import { logFatal } from "../util/util";
 import { getElementPosition, insertAt } from "./core-util";
 
@@ -43,8 +43,9 @@ export function leftJoin(left: TSet, right: TSet): TSet {
   return join;
 }
 
-export function leftJoinPreserveOldTargetOrder(args: {
+export function joinResultsPreserveOrder(args: {
   translateResults: TSet;
+  changeSet: TChangeSet;
   oldTarget: TSet;
   src: TSet;
 }): TSet {
@@ -54,16 +55,11 @@ export function leftJoinPreserveOldTargetOrder(args: {
     targetOrder.push(key);
   });
 
-  const newlyAdded = extractNewlyAddedTranslations({
-    translateResults: args.translateResults,
-    oldTarget: args.oldTarget,
-  });
-
   // Newly added translations are more flexible in its position.
   // Therefore, we try to mimic the order of src.
   injectNewKeysIntoTargetOrder({
     targetOrder,
-    newlyAdded,
+    newlyAdded: args.changeSet.added,
     oldTarget: args.oldTarget,
     src: args.src,
   });
@@ -82,7 +78,7 @@ export function leftJoinPreserveOldTargetOrder(args: {
     }
   });
   // Add any remaining newly added translations whose target order was not determined.
-  newlyAdded.forEach((value, key) => {
+  args.changeSet.added.forEach((value, key) => {
     if (joinResult.get(key) === undefined) {
       joinResult.set(key, value);
     }
@@ -111,19 +107,6 @@ function injectNewKeysIntoTargetOrder(args: {
       injectPosition++;
     }
   });
-}
-
-function extractNewlyAddedTranslations(args: {
-  translateResults: TSet;
-  oldTarget: TSet;
-}): TSet {
-  const newlyAdded = new Map<string, string | null>();
-  args.translateResults.forEach((value, key) => {
-    if (args.oldTarget.get(key) === undefined) {
-      newlyAdded.set(key, value);
-    }
-  });
-  return newlyAdded;
 }
 
 export function leftMinusRightFillNull(left: TSet, right: TSet): TSet {

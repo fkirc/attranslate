@@ -7,7 +7,7 @@ import {
 } from "./core-definitions";
 import {
   leftJoin,
-  leftJoinPreserveOldTargetOrder,
+  joinResultsPreserveOrder,
   leftMinusRight,
   leftMinusRightFillNull,
   selectLeftDistinct,
@@ -168,8 +168,9 @@ function computeNewTarget(
   if (!oldTargetRef) {
     return serviceInvocation.results;
   }
-  return leftJoinPreserveOldTargetOrder({
+  return joinResultsPreserveOrder({
     translateResults: serviceInvocation.results,
+    changeSet,
     oldTarget: oldTargetRef,
     src: args.src,
   });
