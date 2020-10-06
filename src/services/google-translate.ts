@@ -11,8 +11,9 @@ import { ClientOptions } from "google-gax";
 import ITranslation = google.cloud.translation.v3.ITranslation;
 import { getDebugPath, logFatal, readJsonFile } from "../util/util";
 
-interface GCloudKeyFile {
+export interface GCloudKeyFile {
   project_id: string;
+  private_key: string;
 }
 
 export class GoogleTranslate implements TService {

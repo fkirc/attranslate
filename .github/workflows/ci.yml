@@ -48,6 +48,7 @@ jobs:
       - run: yarn install --frozen-lockfile
       - run: yarn run lint
       - run: yarn run build
+      - run: yarn run preTest
       - run: yarn run test
       - run: git diff --exit-code
       - name: Release

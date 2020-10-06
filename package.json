@@ -34,6 +34,7 @@
     "lint": "yarn run eslint",
     "reformat": "yarn run eslint -- --fix",
     "eslint": "./node_modules/.bin/eslint '**/*.{js,ts,tsx}' --ignore-path=.gitignore",
+    "preTest": "jest --runTestsByPath test/setup/prepare-gcloud-keys.test.ts",
     "test": "jest",
     "test:generate_refs": "GENERATE_REFS=True yarn run test",
     "prepublishOnly": "git diff --exit-code"
