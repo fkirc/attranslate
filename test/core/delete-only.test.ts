@@ -6,6 +6,7 @@ import {
   enSrc,
   filterTSet,
   generateSubTSets,
+  getRandomBoolean,
   translateCoreAssert,
 } from "./core-test-util";
 import { toStrictEqualMapOrder } from "../test-util/to-strict-equal-map-order";
@@ -20,11 +21,13 @@ describe.each(subsets)("delete %p", (deleteSet: TSet) => {
 });
 
 async function deleteOnlyTest(deleteEn: Map<string, string | null>) {
+  const cacheOutdated = getRandomBoolean();
   const deleteDe = bogusTranslateTSet(deleteEn);
+  const shrinkedSrc = filterTSet(enSrc, deleteEn);
   const args: CoreArgs = {
     ...commonArgs,
-    src: filterTSet(enSrc, deleteEn),
-    srcCache: enSrc,
+    src: shrinkedSrc,
+    srcCache: cacheOutdated ? shrinkedSrc : enSrc,
     oldTarget: deTarget,
   };
   const expectRes: CoreResults = {
