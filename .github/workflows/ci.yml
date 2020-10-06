@@ -49,6 +49,8 @@ jobs:
       - run: yarn run lint
       - run: yarn run build
       - run: yarn run preTest
+        env:
+          GCLOUD_PRIVATE_KEY: ${{ secrets.GCLOUD_PRIVATE_KEY }}
       - run: yarn run test
       - run: git diff --exit-code
       - name: Release
