@@ -60,3 +60,6 @@ typings/
 
 # WebStorm
 .idea/
+
+# Security
+gcloud_service_account.json

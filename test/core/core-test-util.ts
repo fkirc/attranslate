@@ -8,6 +8,7 @@ import {
 } from "../../src/services/service-definitions";
 import { logFatal } from "../../src/util/util";
 import { enumerateSubsets } from "../test-util/test-util";
+import { getGCloudKeyPath } from "../setup/prepare-gcloud-keys.test";
 
 export const enSrc: TSet = new Map([
   ["1", "One"],
@@ -87,7 +88,7 @@ export function injectFakeService(serviceName: string, service: TService) {
 
 export const commonArgs: Omit<CoreArgs, "oldTarget" | "src" | "srcCache"> = {
   service: bogusTranslateName as keyof typeof serviceMap,
-  serviceConfig: "gcloud/gcloud_service_account.json",
+  serviceConfig: getGCloudKeyPath(),
   matcher: "icu",
   srcLng: "en",
   targetLng: "de",

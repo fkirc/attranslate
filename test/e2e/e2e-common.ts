@@ -1,4 +1,5 @@
 import { CliArgs } from "../../src/core/core-definitions";
+import { getGCloudKeyPath } from "../setup/prepare-gcloud-keys.test";
 
 export const defaultE2EArgs: CliArgs = {
   srcFile: "test-assets/flat-json/count-en.flat.json",
@@ -8,7 +9,7 @@ export const defaultE2EArgs: CliArgs = {
   targetLng: "de",
   targetFormat: "nested-json",
   service: "google-translate",
-  serviceConfig: "gcloud/gcloud_service_account.json",
+  serviceConfig: getGCloudKeyPath(),
   cacheDir: "test-assets",
   matcher: "none",
   deleteStale: "true",
