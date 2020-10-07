@@ -107,27 +107,18 @@ test("src duplicate nested JSON", async () => {
   expect(output).toBe(`error: ${getDebugPath(args.srcFile)} -dup--\n`); // TODO: Pass
 });*/
 
-test("src non-flat JSON", async () => {
+test("target non-flat JSON", async () => {
   const args: CliArgs = {
     ...defaultE2EArgs,
-    srcFile: "test-assets/nested-json/count-en.nested.json",
-    srcFormat: "flat-json",
+    targetFile: "test-assets/nested-json/count-en.nested.json",
+    targetFormat: "flat-json",
   };
   const output = await runTranslateExpectFailure(buildE2EArgs(args));
   expect(output).toBe(
     `error: ${getDebugPath(
-      args.srcFile
+      args.targetFile
     )} is not a flat JSON-file - Property 'inner' is not a string or null\n`
   );
-});
-
-test("target not a JSON", async () => {
-  const args: CliArgs = {
-    ...defaultE2EArgs,
-    targetFile: "README.md",
-  };
-  const output = await runTranslateExpectFailure(buildE2EArgs(args));
-  expect(output).toBe(`error: Failed to parse ${getDebugPath("README.md")}.\n`);
 });
 
 test("unknown service", async () => {
