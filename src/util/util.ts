@@ -68,6 +68,7 @@ export function readJsonFile<T>(path: string): Partial<T> {
     const jsonString = readUtf8File(path);
     return JSON.parse(jsonString) as Partial<T>;
   } catch (e) {
+    console.error(e.message);
     logFatal(`Failed to parse ${getDebugPath(path)}.`);
   }
 }

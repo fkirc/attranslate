@@ -68,10 +68,13 @@ test("cacheDir not a dir", async () => {
 test("src not a JSON", async () => {
   const args: CliArgs = {
     ...defaultE2EArgs,
-    srcFile: "README.md",
+    srcFile: "test-assets/invalid/not-a-json",
   };
   const output = await runTranslateExpectFailure(buildE2EArgs(args));
-  expect(output).toBe(`error: Failed to parse ${getDebugPath("README.md")}.\n`);
+  expect(output).toContain("Unexpected token # in JSON at position 13");
+  expect(output).toContain(
+    `error: Failed to parse ${getDebugPath(args.srcFile)}.\n`
+  );
 });
 
 test("src empty JSON", async () => {
