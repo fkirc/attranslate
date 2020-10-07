@@ -82,3 +82,12 @@ export function* enumerateSubsets<T>(set: T[], offset = 0): Generator<T[]> {
   }
   yield [];
 }
+
+export async function assertPathChanged(path: string) {
+  await runCommand(`ls ${path}`);
+  await runCommandExpectFailure(`git diff --exit-code ${path}`);
+}
+
+export async function assertPathNotChanged(path: string) {
+  await runCommand(`git diff --exit-code ${path}`);
+}

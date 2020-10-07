@@ -1,5 +1,5 @@
 import { TSet } from "../../src/core/core-definitions";
-import { runCommand } from "../test-util/test-util";
+import { assertPathNotChanged, runCommand } from "../test-util/test-util";
 import { fileFormatMap } from "../../src/file-formats/file-format-definitions";
 import { toStrictEqualMapOrder } from "../test-util/to-strict-equal-map-order";
 
@@ -48,6 +48,6 @@ describe.each(testArgs)("Read/write %p", (args) => {
     toStrictEqualMapOrder(tSet, expectedTSet(args.nested));
     await runCommand(`rm ${args.srcFile}`);
     fileFormat.writeTFile(args.srcFile, tSet);
-    await runCommand(`git diff --exit-code ${args.srcFile}`);
+    await assertPathNotChanged(args.srcFile);
   });
 });

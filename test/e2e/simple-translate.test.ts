@@ -1,6 +1,7 @@
 import {
+  assertPathChanged,
+  assertPathNotChanged,
   runCommand,
-  runCommandExpectFailure,
   runTranslate,
 } from "../test-util/test-util";
 import { buildE2EArgs, defaultE2EArgs } from "./e2e-common";
@@ -36,7 +37,7 @@ describe.each(testArray)("outdated cache %p", (commonArgs) => {
   async function runWithOutdatedCache(): Promise<string> {
     const output = await runTranslate(buildE2EArgs(args));
     expect(output).toContain(`Write cache`);
-    await runCommandExpectFailure(`git diff --exit-code ${args.cacheDir}`);
+    await assertPathChanged(args.cacheDir);
     await runCommand(`git checkout ${args.cacheDir}`);
     return output;
   }
@@ -87,7 +88,7 @@ describe.each(testArray)("clean cache %p", (commonArgs) => {
     await preModifiedTarget(args);
     const output = await runTranslate(buildE2EArgs(args));
     expect(output).toBe("Nothing changed, translations are up-to-date.\n");
-    await runCommandExpectFailure(`git diff --exit-code ${args.targetFile}`);
+    await assertPathChanged(args.targetFile);
     await postModifiedTarget(args);
   });
 });
@@ -147,20 +148,20 @@ async function postMissingTarget(args: CliArgs, output: string) {
   expect(output).toContain(
     `Write target-file ${getDebugPath(args.targetFile)}`
   );
-  await runCommand(`git diff --exit-code ${args.targetFile}`);
+  await assertPathNotChanged(args.targetFile);
 }
 
 async function preCleanTarget(args: CliArgs) {
-  await runCommand(`git diff --exit-code ${args.targetFile}`);
+  await assertPathNotChanged(args.targetFile);
 }
 
 async function postCleanTarget(args: CliArgs) {
-  await runCommand(`git diff --exit-code ${args.targetFile}`);
+  await assertPathNotChanged(args.targetFile);
 }
 
 async function preModifiedTarget(args: CliArgs) {
   modifyFirstTwoProperties(args.targetFile);
-  await runCommandExpectFailure(`git diff --exit-code ${args.targetFile}`);
+  await assertPathChanged(args.targetFile);
 }
 
 async function postModifiedTarget(args: CliArgs) {
