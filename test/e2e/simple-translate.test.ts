@@ -7,9 +7,10 @@ import { buildE2EArgs, defaultE2EArgs } from "./e2e-common";
 import { join } from "path";
 import { getDebugPath, readJsonFile, writeJsonFile } from "../../src/util/util";
 import { CliArgs } from "../../src/core/core-definitions";
-const cacheDir = "test-assets/cache/";
-const cacheDirOutdated = "test-assets/cache-outdated/";
-const cacheMissingDir = "test-assets/cache-missing/";
+
+const cacheDirClean = join("test-assets", "cache");
+const cacheDirOutdated = join("test-assets", "cache-outdated");
+const cacheMissingDir = join("test-assets", "cache-missing");
 
 const testArray: Partial<CliArgs>[] = [
   {
@@ -26,42 +27,12 @@ const testArray: Partial<CliArgs>[] = [
   },
 ];
 
-async function preMissingTarget(args: CliArgs) {
-  await runCommand(`rm ${args.targetFile}`);
-}
-
-async function postMissingTarget(args: CliArgs, output: string) {
-  expect(output).toContain(`Add 3 new translations`);
-  expect(output).toContain(
-    `Write target-file ${getDebugPath(args.targetFile)}`
-  );
-  await runCommand(`git diff --exit-code ${args.targetFile}`);
-}
-
-async function preCleanTarget(args: CliArgs) {
-  await runCommand(`git diff --exit-code ${args.targetFile}`);
-}
-
-async function postCleanTarget(args: CliArgs) {
-  await runCommand(`git diff --exit-code ${args.targetFile}`);
-}
-
-async function preModifiedTarget(args: CliArgs) {
-  modifyFirstTwoProperties(args.targetFile);
-  await runCommandExpectFailure(`git diff --exit-code ${args.targetFile}`);
-}
-
-async function postModifiedTarget(args: CliArgs) {
-  await runCommand(`git checkout ${args.targetFile}`);
-}
-
 describe.each(testArray)("outdated cache %p", (commonArgs) => {
   const args: CliArgs = {
     ...defaultE2EArgs,
     ...commonArgs,
     cacheDir: cacheDirOutdated,
   };
-
   async function runWithOutdatedCache(): Promise<string> {
     const output = await runTranslate(buildE2EArgs(args));
     expect(output).toContain(`Write cache`);
@@ -93,32 +64,37 @@ describe.each(testArray)("outdated cache %p", (commonArgs) => {
   });
 });
 
-describe.each(testArray)("translate %p", (args) => {
-  const commonArgs: CliArgs = {
+describe.each(testArray)("clean cache %p", (commonArgs) => {
+  const args: CliArgs = {
     ...defaultE2EArgs,
-    ...args,
-    cacheDir,
+    ...commonArgs,
+    cacheDir: cacheDirClean,
   };
-  test("up-to-date cache, missing target", async () => {
-    await runCommand(`rm ${args.targetFile}`);
-    const output = await runTranslate(buildE2EArgs(commonArgs));
-    expect(output).toContain("Add 3 new translations");
-    expect(output).toContain("Write target-file");
+  test("missing target", async () => {
+    await preMissingTarget(args);
+    const output = await runTranslate(buildE2EArgs(args));
+    await postMissingTarget(args, output);
   });
 
-  test("up-to-date cache, clean target", async () => {
-    const output = await runTranslate(buildE2EArgs(commonArgs));
+  test("clean target", async () => {
+    await preCleanTarget(args);
+    const output = await runTranslate(buildE2EArgs(args));
     expect(output).toBe("Nothing changed, translations are up-to-date.\n");
+    await postCleanTarget(args);
   });
 
-  test("up-to-date cache, modified target", async () => {
-    modifyFirstTwoProperties(commonArgs.targetFile);
-    const output = await runTranslate(buildE2EArgs(commonArgs));
+  test("modified target", async () => {
+    await preModifiedTarget(args);
+    const output = await runTranslate(buildE2EArgs(args));
     expect(output).toBe("Nothing changed, translations are up-to-date.\n");
-    await runCommand(`git checkout ${args.targetFile}`);
+    await runCommandExpectFailure(`git diff --exit-code ${args.targetFile}`);
+    await postModifiedTarget(args);
   });
+});
 
-  const missingCacheArgs: CliArgs = {
+describe.each(testArray)("missing cache %p", (commonArgs) => {
+  const args: CliArgs = {
+    ...defaultE2EArgs,
     ...commonArgs,
     cacheDir: cacheMissingDir,
   };
@@ -126,46 +102,70 @@ describe.each(testArray)("translate %p", (args) => {
     cacheMissingDir,
     "attranslate-cache-*.json"
   )}`;
-  test("missing cache, missing target", async () => {
+
+  async function runWithMissingCache(): Promise<string> {
     await runCommand(`rm ${cacheMissingFile}`);
-    await runCommand(`rm ${commonArgs.targetFile}`);
-    const output = await runTranslate(buildE2EArgs(missingCacheArgs));
+    const output = await runTranslate(buildE2EArgs(args));
     expect(output).toContain(
       `Cache not found -> Generate a new cache to enable selective translations.`
     );
-    expect(output).toContain(`Add 3 new translations`);
     expect(output).toContain(`Write cache`);
-    expect(output).toContain(
-      `Write target-file ${getDebugPath(commonArgs.targetFile)}`
-    );
+    return output;
+  }
+
+  test("missing target", async () => {
+    await preMissingTarget(args);
+    const output = await runWithMissingCache();
+    await postMissingTarget(args, output);
   });
 
-  test("missing cache, clean target", async () => {
-    await runCommand(`rm ${cacheMissingFile}`);
-    const output = await runTranslate(buildE2EArgs(missingCacheArgs));
-    expect(output).toContain(
-      `Cache not found -> Generate a new cache to enable selective translations.`
-    );
+  test("clean target", async () => {
+    await preCleanTarget(args);
+    const output = await runWithMissingCache();
     expect(output).toContain(
       "Skipped translations because we had to generate a new cache."
     );
-    expect(output).toContain(`Write cache`);
+    await postCleanTarget(args);
   });
 
-  test("missing cache, modified target", async () => {
-    await runCommand(`rm ${cacheMissingFile}`);
-    modifyFirstTwoProperties(commonArgs.targetFile);
-    const output = await runTranslate(buildE2EArgs(missingCacheArgs));
-    expect(output).toContain(
-      `Cache not found -> Generate a new cache to enable selective translations.`
-    );
+  test("modified target", async () => {
+    await preModifiedTarget(args);
+    const output = await runWithMissingCache();
     expect(output).toContain(
       "Skipped translations because we had to generate a new cache."
     );
-    expect(output).toContain(`Write cache`);
-    await runCommand(`git checkout ${commonArgs.targetFile}`);
+    await postModifiedTarget(args);
   });
 });
+
+async function preMissingTarget(args: CliArgs) {
+  await runCommand(`rm ${args.targetFile}`);
+}
+
+async function postMissingTarget(args: CliArgs, output: string) {
+  expect(output).toContain(`Add 3 new translations`);
+  expect(output).toContain(
+    `Write target-file ${getDebugPath(args.targetFile)}`
+  );
+  await runCommand(`git diff --exit-code ${args.targetFile}`);
+}
+
+async function preCleanTarget(args: CliArgs) {
+  await runCommand(`git diff --exit-code ${args.targetFile}`);
+}
+
+async function postCleanTarget(args: CliArgs) {
+  await runCommand(`git diff --exit-code ${args.targetFile}`);
+}
+
+async function preModifiedTarget(args: CliArgs) {
+  modifyFirstTwoProperties(args.targetFile);
+  await runCommandExpectFailure(`git diff --exit-code ${args.targetFile}`);
+}
+
+async function postModifiedTarget(args: CliArgs) {
+  await runCommand(`git checkout ${args.targetFile}`);
+}
 
 function modifyFirstTwoProperties(jsonPath: string) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
