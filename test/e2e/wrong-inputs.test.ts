@@ -87,6 +87,23 @@ test("src empty JSON", async () => {
   );
 });
 
+/*test("src duplicate JSON", async () => {
+  const args: CliArgs = {
+    ...defaultE2EArgs,
+    srcFile: "test-assets/invalid/duplicate-property.json",
+  };
+  const output = await runTranslateExpectFailure(buildE2EArgs(args));
+  expect(output).toBe(`error: ${getDebugPath(args.srcFile)} -dup--\n`); // TODO: Pass
+});
+test("src duplicate nested JSON", async () => {
+  const args: CliArgs = {
+    ...defaultE2EArgs,
+    srcFile: "test-assets/invalid/duplicate-nested-property.json",
+  };
+  const output = await runTranslateExpectFailure(buildE2EArgs(args));
+  expect(output).toBe(`error: ${getDebugPath(args.srcFile)} -dup--\n`); // TODO: Pass
+});*/
+
 test("src non-flat JSON", async () => {
   const args: CliArgs = {
     ...defaultE2EArgs,

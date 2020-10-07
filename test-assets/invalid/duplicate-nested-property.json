@@ -1,0 +1,6 @@
+{
+  "nested": {
+    "prop": "Nested duplicate 1",
+    "prop": "Nested duplicate 2"
+  }
+}
