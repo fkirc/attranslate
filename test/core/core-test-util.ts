@@ -8,7 +8,7 @@ import {
 } from "../../src/services/service-definitions";
 import { logFatal } from "../../src/util/util";
 import { enumerateSubsets } from "../test-util/test-util";
-import { getGCloudKeyPath } from "../setup/prepare-gcloud-keys.test";
+import { getGCloudKeyPath } from "../setup/key-exports";
 
 export const enSrc: TSet = new Map([
   ["1", "One"],

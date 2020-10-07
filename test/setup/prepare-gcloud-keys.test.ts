@@ -1,7 +1,6 @@
 import { getDebugPath, readJsonFile, writeJsonFile } from "../../src/util/util";
 import { GCloudKeyFile } from "../../src/services/google-translate";
-
-export const getGCloudKeyPath = () => "gcloud/gcloud_service_account.json";
+import { getGCloudKeyPath } from "./key-exports";
 
 test("setupGcloudPrivateKey", () => {
   const gcloudTemplatePath = "gcloud/gcloud_service_account_template.json";

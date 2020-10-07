@@ -1,5 +1,5 @@
 import { CliArgs } from "../../src/core/core-definitions";
-import { getGCloudKeyPath } from "../setup/prepare-gcloud-keys.test";
+import { getGCloudKeyPath } from "../setup/key-exports";
 
 export const defaultE2EArgs: CliArgs = {
   srcFile: "test-assets/flat-json/count-en.flat.json",
