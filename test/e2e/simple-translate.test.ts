@@ -1,7 +1,7 @@
 import { runCommand, runTranslate } from "../test-util/test-util";
 import { buildE2EArgs, defaultE2EArgs } from "./e2e-common";
 import { join } from "path";
-import { getDebugPath } from "../../src/util/util";
+import { getDebugPath, readJsonFile, writeJsonFile } from "../../src/util/util";
 import { CliArgs } from "../../src/core/core-definitions";
 const cacheDir = "test-assets/cache/";
 const cacheOutdatedDir = "test-assets/cache-outdated/";
@@ -28,7 +28,6 @@ describe.each(testArgs)("translate %p", (args) => {
     ...args,
     cacheDir,
   };
-  const modifiedTarget = args.targetFile + ".modified.json";
   test("up-to-date cache, missing target", async () => {
     await runCommand(`rm ${args.targetFile}`);
     const output = await runTranslate(buildE2EArgs(commonArgs));
@@ -42,7 +41,7 @@ describe.each(testArgs)("translate %p", (args) => {
   });
 
   test("up-to-date cache, modified target", async () => {
-    await runCommand(`cp ${modifiedTarget} ${args.targetFile}`);
+    modifyFirstTwoProperties(commonArgs.targetFile);
     const output = await runTranslate(buildE2EArgs(commonArgs));
     expect(output).toBe("Nothing changed, translations are up-to-date.\n");
     await runCommand(`git checkout ${args.targetFile}`);
@@ -69,7 +68,7 @@ describe.each(testArgs)("translate %p", (args) => {
   });
 
   test("outdated cache, modified target", async () => {
-    await runCommand(`cp ${modifiedTarget} ${args.targetFile}`);
+    modifyFirstTwoProperties(commonArgs.targetFile);
     const output = await runTranslate(buildE2EArgs(outdatedCacheArgs));
     expect(output).toContain("Update 1 existing translations\n");
     expect(output).toContain(
@@ -116,7 +115,7 @@ describe.each(testArgs)("translate %p", (args) => {
 
   test("missing cache, modified target", async () => {
     await runCommand(`rm ${cacheMissingFile}`);
-    await runCommand(`cp ${modifiedTarget} ${commonArgs.targetFile}`);
+    modifyFirstTwoProperties(commonArgs.targetFile);
     const output = await runTranslate(buildE2EArgs(missingCacheArgs));
     expect(output).toContain(
       `Cache not found -> Generate a new cache to enable selective translations.`
@@ -128,3 +127,12 @@ describe.each(testArgs)("translate %p", (args) => {
     await runCommand(`git checkout ${commonArgs.targetFile}`);
   });
 });
+
+function modifyFirstTwoProperties(jsonPath: string) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const json: any = readJsonFile(jsonPath);
+  const keys = Object.keys(json);
+  json[keys[0]] += " modified 1";
+  json[keys[1]] += " modified 2";
+  writeJsonFile(jsonPath, json);
+}
