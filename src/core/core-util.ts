@@ -77,7 +77,7 @@ export function convertFromServiceResults(serviceResults: TResult[]): TSet {
 export function convertToTStringList(tSet: TSet): TString[] {
   const tList: TString[] = [];
   tSet.forEach((value, key) => {
-    if (value) {
+    if (value !== null) {
       tList.push({
         key,
         value,
