@@ -109,7 +109,7 @@ function injectNewKeysIntoTargetOrder(args: {
 export function leftMinusRightFillNull(left: TSet, right: TSet): TSet {
   const leftRemaining = new Map<string, string | null>();
   left.forEach((value, key) => {
-    if (!right.get(key)) {
+    if (right.get(key) === undefined) {
       leftRemaining.set(key, value);
     } else {
       leftRemaining.set(key, null);
@@ -121,7 +121,7 @@ export function leftMinusRightFillNull(left: TSet, right: TSet): TSet {
 export function leftMinusRight(left: TSet, right: TSet): TSet {
   const leftRemaining = new Map<string, string | null>();
   left.forEach((value, key) => {
-    if (!right.get(key)) {
+    if (right.get(key) === undefined) {
       leftRemaining.set(key, value);
     }
   });
