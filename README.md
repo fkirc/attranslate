@@ -3,7 +3,7 @@
 Automated translation-services can speedup traditional workflows.
 For example, let's say that a translation-service achieves 90% correct translations on the spot.
 In this case, a quick fix of the remaining 10% is faster than doing everything by hand.
-`attranslate` makes it easy to integrate translation-services into your workflows.
+`attranslate` makes it easy to setup a _semi-automated_ translation-workflow.
 Other than that, `attranslate` supports manual translations and even file-format-conversions without changing the language.
 
 ## Why attranslate?
