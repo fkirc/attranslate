@@ -10,14 +10,7 @@ import {
   fileFormatMap,
   TFileFormat,
 } from "../file-formats/file-format-definitions";
-
-function resolveCachePath(args: CliArgs): string {
-  const cacheDir = args.cacheDir;
-  checkDir(cacheDir);
-  const baseName = path.basename(args.srcFile);
-  const cacheName = `attranslate-cache-${args.srcLng}_${baseName}.json`;
-  return path.resolve(cacheDir, cacheName);
-}
+import { resolveCachePath, resolveTCache, writeTCache } from "./cache-layer";
 
 function resolveOldTarget(
   args: CliArgs,
@@ -70,7 +63,6 @@ export async function translateCli(cliArgs: CliArgs) {
   }
   const targetFileFormat =
     fileFormatMap[cliArgs.targetFormat as keyof typeof fileFormatMap];
-  const cacheFileFormat = fileFormatMap["flat-json"];
   const src = srcFileFormat.readTFile(cliArgs.srcFile, cliArgs.srcLng);
   if (!src.size) {
     logFatal(
@@ -80,12 +72,7 @@ export async function translateCli(cliArgs: CliArgs) {
     );
   }
 
-  const cachePath = resolveCachePath(cliArgs);
-  let srcCache: TSet | null = null;
-  if (existsSync(cachePath)) {
-    srcCache = cacheFileFormat.readTFile(cachePath, cliArgs.srcLng);
-  }
-
+  const srcCache: TSet | null = resolveTCache(cliArgs);
   const oldTarget: TSet | null = resolveOldTarget(cliArgs, targetFileFormat);
 
   const coreArgs: CoreArgs = {
@@ -106,8 +93,9 @@ export async function translateCli(cliArgs: CliArgs) {
     targetFileFormat.writeTFile(cliArgs.targetFile, result.newTarget);
   }
   if (!srcCache || !areEqual(srcCache, result.newSrcCache)) {
+    const cachePath = resolveCachePath(cliArgs);
     console.info(`Write cache ${getDebugPath(cachePath)}`);
-    cacheFileFormat.writeTFile(cachePath, result.newSrcCache);
+    writeTCache(cachePath, result);
   }
 }
 
