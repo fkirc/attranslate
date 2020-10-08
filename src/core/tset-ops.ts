@@ -1,5 +1,4 @@
 import { TChangeSet, TSet } from "./core-definitions";
-import { logFatal } from "../util/util";
 import { getElementPosition, insertAt } from "./core-util";
 
 export type DiffStrategy =
@@ -73,8 +72,6 @@ export function joinResultsPreserveOrder(args: {
       joinResult.set(key, freshResult);
     } else if (oldResult) {
       joinResult.set(key, oldResult);
-    } else {
-      logFatal(`Invalid targetOrder for key ${key}`);
     }
   });
   // Add any remaining newly added translations whose target order was not determined.
