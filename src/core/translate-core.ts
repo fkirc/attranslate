@@ -54,6 +54,18 @@ function extractStringsToTranslate(args: CoreArgs): TSet {
   }
 }
 
+function preprocessServiceInputs(rawInputs: TSet) {
+  const serviceInputs: TSet = new Map();
+  rawInputs.forEach((value, key) => {
+    if (!value || !value.trim().length) {
+      console.info(`Warning: Skip '${key}' because it is empty`);
+    } else {
+      serviceInputs.set(key, value);
+    }
+  });
+  return serviceInputs;
+}
+
 async function invokeTranslationService(
   serviceInputs: TSet,
   args: CoreArgs
@@ -198,7 +210,8 @@ function computeCoreResults(
 }
 
 export async function translateCore(args: CoreArgs): Promise<CoreResults> {
-  const serviceInputs = extractStringsToTranslate(args);
+  const rawInputs = extractStringsToTranslate(args);
+  const serviceInputs = preprocessServiceInputs(rawInputs);
   let serviceInvocation: TServiceInvocation | null = null;
   if (serviceInputs.size >= 1) {
     serviceInvocation = await invokeTranslationService(serviceInputs, args);
