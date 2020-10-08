@@ -16,11 +16,11 @@ export function selectLeftDistinct(
     const rightT = right.get(key);
     let diff: boolean;
     if (strategy === "COMPARE_KEYS") {
-      diff = !rightT;
+      diff = rightT === undefined;
     } else if (strategy === "COMPARE_VALUES") {
       diff = rightT !== undefined && rightT !== value;
     } else {
-      diff = !rightT || rightT !== value;
+      diff = rightT === undefined || rightT !== value;
     }
     if (diff) {
       leftDistinct.set(key, value);
