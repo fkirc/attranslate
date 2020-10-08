@@ -10,7 +10,7 @@ import {
   fileFormatMap,
   TFileFormat,
 } from "../file-formats/file-format-definitions";
-import { resolveCachePath, resolveTCache, writeTCache } from "./cache-layer";
+import { resolveTCache, writeTCache } from "./cache-layer";
 
 function resolveOldTarget(
   args: CliArgs,
@@ -93,9 +93,7 @@ export async function translateCli(cliArgs: CliArgs) {
     targetFileFormat.writeTFile(cliArgs.targetFile, result.newTarget);
   }
   if (!srcCache || !areEqual(srcCache, result.newSrcCache)) {
-    const cachePath = resolveCachePath(cliArgs);
-    console.info(`Write cache ${getDebugPath(cachePath)}`);
-    writeTCache(cachePath, result);
+    writeTCache(result, cliArgs);
   }
 }
 
