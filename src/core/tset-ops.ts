@@ -139,5 +139,12 @@ export function areEqual(set1: TSet, set2: TSet): boolean {
       return false;
     }
   }
+  for (const key2 of set2.keys()) {
+    const value1 = set1.get(key2);
+    const value2 = set2.get(key2);
+    if (value1 !== value2) {
+      return false;
+    }
+  }
   return true;
 }
