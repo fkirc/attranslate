@@ -74,7 +74,7 @@ export async function translateCli(cliArgs: CliArgs) {
     );
   }
 
-  const srcCache: TSet | null = resolveTCache(cliArgs);
+  const srcCache: TSet | null = resolveTCache(src, cliArgs);
   const oldTarget: TSet | null = resolveOldTarget(cliArgs, targetFileFormat);
 
   const coreArgs: CoreArgs = {
