@@ -9,7 +9,6 @@ import { join } from "path";
 import { getDebugPath, readJsonFile, writeJsonFile } from "../../src/util/util";
 import { CliArgs } from "../../src/core/core-definitions";
 
-const cacheDirClean = join("test-assets", "cache");
 const cacheDirOutdated = join("test-assets", "cache-outdated");
 const cacheMissingDir = join("test-assets", "cache-missing");
 
@@ -69,7 +68,6 @@ describe.each(testArray)("clean cache %p", (commonArgs) => {
   const args: CliArgs = {
     ...defaultE2EArgs,
     ...commonArgs,
-    cacheDir: cacheDirClean,
   };
   test("missing target", async () => {
     await preMissingTarget(args);

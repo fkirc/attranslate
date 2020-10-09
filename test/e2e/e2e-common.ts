@@ -11,7 +11,7 @@ export const defaultE2EArgs: CliArgs = {
   targetFormat: "nested-json",
   service: "google-translate",
   serviceConfig: getGCloudKeyPath(),
-  cacheDir: "test-assets",
+  cacheDir: "test-assets/cache",
   matcher: "none",
   deleteStale: "true",
 };
