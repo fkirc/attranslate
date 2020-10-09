@@ -41,8 +41,8 @@ function validateTCacheEntry(
   context: CParseContext
 ): TCacheEntry {
   const { value, targets } = entry;
-  if (!value) {
-    logCacheError(`value is falsy`, context);
+  if (value === undefined) {
+    logCacheError(`value is undefined`, context);
   }
   if (!targets || !Array.isArray(targets) || !targets.length) {
     logCacheError(`targets are invalid`, context);
