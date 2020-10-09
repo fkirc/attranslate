@@ -90,7 +90,9 @@ export async function translateCli(cliArgs: CliArgs) {
   };
   const result = await translateCore(coreArgs);
 
-  if (!oldTarget || !areEqual(oldTarget, result.newTarget)) {
+  const flushTarget: boolean =
+    !oldTarget || !areEqual(oldTarget, result.newTarget);
+  if (flushTarget) {
     console.info(`Write target ${getDebugPath(cliArgs.targetFile)}`);
     writeTFileCore(targetFileFormat, {
       path: cliArgs.targetFile,
@@ -98,7 +100,9 @@ export async function translateCli(cliArgs: CliArgs) {
       lng: cliArgs.targetLng,
     });
   }
-  if (!srcCache || !areEqual(srcCache, result.newSrcCache)) {
+  const flushCache =
+    flushTarget || !srcCache || !areEqual(srcCache, result.newSrcCache);
+  if (flushCache) {
     writeTCache(result, cliArgs);
   }
 }

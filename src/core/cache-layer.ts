@@ -47,12 +47,7 @@ export function resolveTCache(src: TSet, args: CliArgs): TSet | null {
   const internalCache: TSet = new Map();
   Object.keys(tCache.entries).forEach((key: string) => {
     const entry = tCache.entries[key];
-    const internalEntry = convertTCacheEntryToInternalEntry(
-      key,
-      entry,
-      src,
-      args
-    );
+    const internalEntry = cacheEntryToInternalEntry(key, entry, src, args);
     internalCache.set(key, internalEntry);
   });
   return internalCache;
@@ -69,7 +64,7 @@ export function writeTCache(results: CoreResults, args: CliArgs) {
     entries: {},
   };
   results.newSrcCache.forEach((value, key) => {
-    cache.entries[key] = convertInternalEntryToTCacheEntry(key, value, args);
+    cache.entries[key] = internalEntryToCacheEntry(key, value, args);
   });
 
   writeJsonFile(cachePath, cache);
@@ -79,7 +74,7 @@ function getTargetId(args: CliArgs) {
   return args.targetLng;
 }
 
-function convertTCacheEntryToInternalEntry(
+function cacheEntryToInternalEntry(
   key: string,
   entry: TCacheEntry,
   src: TSet,
@@ -100,28 +95,36 @@ function convertTCacheEntryToInternalEntry(
   }
 }
 
-function convertInternalEntryToTCacheEntry(
+function internalEntryToCacheEntry(
   key: string,
   internalEntry: string | null,
   args: CliArgs
 ): TCacheEntry {
   const oldEntry: TCacheEntry | undefined = lastReadCache?.entries[key];
-  const newState: TCacheTargetState =
-    internalEntry !== null ? "frozen" : "needs_update";
+  const valueChanged: boolean = oldEntry
+    ? oldEntry.value !== internalEntry
+    : false;
   const targetId = getTargetId(args);
   const newTarget: TCacheTarget = {
     id: targetId,
-    state: newState,
+    state: internalEntry !== null ? "frozen" : "needs_update",
   };
-  const newTargets = oldEntry
+  let oldTargetIncluded = false;
+  const newTargets: TCacheTarget[] = !!oldEntry
     ? oldEntry.targets.map((oldTarget: TCacheTarget) => {
         if (oldTarget.id === targetId) {
+          oldTargetIncluded = true;
           return newTarget;
+        } else if (valueChanged) {
+          return { ...oldTarget, state: "needs_update" };
         } else {
           return oldTarget;
         }
       })
-    : [newTarget];
+    : [];
+  if (!oldTargetIncluded) {
+    newTargets.push(newTarget);
+  }
   return {
     value: internalEntry,
     targets: newTargets,

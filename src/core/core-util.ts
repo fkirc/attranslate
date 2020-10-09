@@ -24,7 +24,7 @@ export function logCoreResults(args: CoreArgs, results: CoreResults) {
       `Cache not found -> Generate a new cache to enable selective translations.\n` +
         `To make selective translations, do one of the following:\n` +
         `Option 1: Change your source-file and then re-run this tool.\n` +
-        `Option 2: Delete parts of your target-file and then re-run this tool.\n`
+        `Option 2: Delete parts of your target-file and then re-run this tool.`
     );
   }
   const changeSet = results.changeSet;
