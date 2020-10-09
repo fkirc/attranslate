@@ -44,3 +44,28 @@ async function deleteOnlyTest(deleteEn: Map<string, string | null>) {
   const res = await translateCoreAssert(args);
   toStrictEqualMapOrder(res, expectRes);
 }
+
+test("delete single - keep modified", async () => {
+  const args: CoreArgs = {
+    ...commonArgs,
+    src: new Map([["1", "One"]]),
+    srcCache: null,
+    oldTarget: new Map([
+      ["1", "Modified"],
+      ["stale", ""],
+    ]),
+  };
+  const expectRes: CoreResults = {
+    newTarget: new Map([["1", "Modified"]]),
+    newSrcCache: new Map([["1", "One"]]),
+    changeSet: {
+      added: new Map(),
+      updated: new Map(),
+      skipped: new Map(),
+      deleted: new Map([["stale", ""]]),
+    },
+    serviceInvocation: null,
+  };
+  const res = await translateCoreAssert(args);
+  toStrictEqualMapOrder(res, expectRes);
+});
