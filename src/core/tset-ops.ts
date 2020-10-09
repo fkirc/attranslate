@@ -4,7 +4,7 @@ import { getElementPosition, insertAt } from "./core-util";
 export type DiffStrategy =
   | "COMPARE_KEYS"
   | "COMPARE_VALUES"
-  | "COMPARE_KEYS_AND_VALUES";
+  | "COMPARE_KEYS_AND_NULL_VALUES";
 
 export function selectLeftDistinct(
   left: TSet,
@@ -12,21 +12,31 @@ export function selectLeftDistinct(
   strategy: DiffStrategy
 ): TSet {
   const leftDistinct = new Map<string, string | null>();
-  left.forEach((value, key) => {
-    const rightT = right.get(key);
-    let diff: boolean;
-    if (strategy === "COMPARE_KEYS") {
-      diff = rightT === undefined;
-    } else if (strategy === "COMPARE_VALUES") {
-      diff = rightT !== undefined && rightT !== value;
-    } else {
-      diff = rightT === undefined || rightT !== value;
-    }
-    if (diff) {
-      leftDistinct.set(key, value);
+  left.forEach((leftValue, key) => {
+    const rightValue = right.get(key);
+    const distinct = compareLeftRight({ leftValue, rightValue, strategy });
+    if (distinct) {
+      leftDistinct.set(key, leftValue);
     }
   });
   return leftDistinct;
+}
+
+function compareLeftRight(args: {
+  leftValue: string | null;
+  rightValue: string | null | undefined;
+  strategy: DiffStrategy;
+}): boolean {
+  switch (args.strategy) {
+    case "COMPARE_KEYS":
+      return args.rightValue === undefined;
+    case "COMPARE_KEYS_AND_NULL_VALUES":
+      return args.rightValue === undefined || args.rightValue === null;
+    case "COMPARE_VALUES":
+      return (
+        args.rightValue !== undefined && args.leftValue !== args.rightValue
+      );
+  }
 }
 
 export function leftJoin(left: TSet, right: TSet): TSet {

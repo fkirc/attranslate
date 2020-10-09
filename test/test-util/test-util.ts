@@ -91,3 +91,7 @@ export async function assertPathChanged(path: string) {
 export async function assertPathNotChanged(path: string) {
   await runCommand(`git diff --exit-code ${path}`);
 }
+
+export function joinLines(lines: string[]) {
+  return lines.join(`\n`) + "\n";
+}

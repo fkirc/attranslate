@@ -48,7 +48,11 @@ function extractStringsToTranslate(args: CoreArgs): TSet {
     } else {
       // Translate values that are either different to the cache or missing in the target.
       const cacheDiffs = selectLeftDistinct(src, oldSrcCache, "COMPARE_VALUES");
-      const targetMisses = selectLeftDistinct(src, oldTarget, "COMPARE_KEYS");
+      const targetMisses = selectLeftDistinct(
+        src,
+        oldTarget,
+        "COMPARE_KEYS_AND_NULL_VALUES"
+      );
       return leftJoin(cacheDiffs, targetMisses);
     }
   }
