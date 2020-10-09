@@ -32,4 +32,11 @@ describe.each(testArray)("inject empty %p", (commonArgs) => {
     );
     expect(output).toContain("Nothing changed, translations are up-to-date.");
   });
+
+  test("inject spaces into srcFile", async () => {
+    injectJsonProperties(args.srcFile, { spacesProp: "   " });
+    const output = await runTranslate(buildE2EArgs(args));
+    expect(output).toContain(`Warning: Skip 'spacesProp' because it is empty.`);
+    expect(output).toContain("Nothing changed, translations are up-to-date.");
+  });
 });
