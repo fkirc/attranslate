@@ -1,11 +1,15 @@
 import { TSet } from "../core/core-definitions";
 import { readJsonFile, writeJsonFile } from "../util/util";
 import { flatten, unflatten } from "../util/flatten";
-import { TFileFormat } from "./file-format-definitions";
+import {
+  ReadTFileArgs,
+  TFileFormat,
+  WriteTFileArgs,
+} from "./file-format-definitions";
 
 export class NestedJson implements TFileFormat {
-  readTFile(path: string, lng: string): TSet {
-    const nestedJson = readJsonFile(path);
+  readTFile(args: ReadTFileArgs): TSet {
+    const nestedJson = readJsonFile(args.path);
     const flatJson: Record<string, string> = flatten(nestedJson);
     const tMap = new Map<string, string>();
     Object.keys(flatJson).forEach((key, index) => {
@@ -14,12 +18,12 @@ export class NestedJson implements TFileFormat {
     return tMap;
   }
 
-  writeTFile(path: string, tSet: TSet): void {
+  writeTFile(args: WriteTFileArgs): void {
     const flatJson: Record<string, string | null> = {};
-    tSet.forEach((value, key) => {
+    args.tSet.forEach((value, key) => {
       flatJson[key] = value;
     });
     const nestedJson = unflatten(flatJson);
-    writeJsonFile(path, nestedJson);
+    writeJsonFile(args.path, nestedJson);
   }
 }

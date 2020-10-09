@@ -20,7 +20,10 @@ function resolveOldTarget(
   const targetDir = path.dirname(targetPath);
   checkDir(targetDir);
   if (existsSync(targetPath)) {
-    return targetFileFormat.readTFile(targetPath, args.targetLng);
+    return targetFileFormat.readTFile({
+      path: targetPath,
+      lng: args.targetLng,
+    });
   } else {
     return null;
   }
@@ -63,7 +66,10 @@ export async function translateCli(cliArgs: CliArgs) {
   }
   const targetFileFormat =
     fileFormatMap[cliArgs.targetFormat as keyof typeof fileFormatMap];
-  const src = srcFileFormat.readTFile(cliArgs.srcFile, cliArgs.srcLng);
+  const src = srcFileFormat.readTFile({
+    path: cliArgs.srcFile,
+    lng: cliArgs.srcLng,
+  });
   if (!src.size) {
     logFatal(
       `${getDebugPath(
@@ -90,7 +96,11 @@ export async function translateCli(cliArgs: CliArgs) {
 
   if (!oldTarget || !areEqual(oldTarget, result.newTarget)) {
     console.info(`Write target-file ${getDebugPath(cliArgs.targetFile)}`);
-    targetFileFormat.writeTFile(cliArgs.targetFile, result.newTarget);
+    targetFileFormat.writeTFile({
+      path: cliArgs.targetFile,
+      tSet: result.newTarget,
+      lng: cliArgs.targetLng,
+    });
   }
   if (!srcCache || !areEqual(srcCache, result.newSrcCache)) {
     writeTCache(result, cliArgs);

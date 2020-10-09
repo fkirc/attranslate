@@ -21,7 +21,10 @@ export function resolveTCache(args: CliArgs): TSet | null {
   if (!existsSync(cachePath)) {
     return null;
   }
-  const rawCache = cacheFileFormat.readTFile(cachePath, args.srcLng);
+  const rawCache = cacheFileFormat.readTFile({
+    path: cachePath,
+    lng: args.srcLng,
+  });
   if (rawCache.get(cacheMarkingKey)) {
     rawCache.delete(cacheMarkingKey);
   }
@@ -41,5 +44,9 @@ export function writeTCache(results: CoreResults, args: CliArgs) {
   results.newSrcCache.forEach((value, key) => {
     rawCache.set(key, value);
   });
-  cacheFileFormat.writeTFile(cachePath, rawCache);
+  cacheFileFormat.writeTFile({
+    path: cachePath,
+    tSet: rawCache,
+    lng: args.srcLng,
+  });
 }

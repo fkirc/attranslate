@@ -2,11 +2,20 @@ import { TSet } from "../core/core-definitions";
 import { NestedJson } from "./nested-json";
 import { FlatJson } from "./flat-json";
 
-// TODO: Introduce args
+export interface WriteTFileArgs {
+  path: string;
+  tSet: TSet;
+  lng: string;
+}
+
+export interface ReadTFileArgs {
+  path: string;
+  lng: string;
+}
 
 export interface TFileFormat {
-  writeTFile: (path: string, tSet: TSet) => void;
-  readTFile: (path: string, lng: string) => TSet;
+  writeTFile: (args: WriteTFileArgs) => void;
+  readTFile: (args: ReadTFileArgs) => TSet;
 }
 
 export const fileFormatMap = {

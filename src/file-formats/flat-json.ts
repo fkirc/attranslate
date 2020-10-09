@@ -1,4 +1,8 @@
-import { TFileFormat } from "./file-format-definitions";
+import {
+  ReadTFileArgs,
+  TFileFormat,
+  WriteTFileArgs,
+} from "./file-format-definitions";
 import { TSet } from "../core/core-definitions";
 import {
   getDebugPath,
@@ -8,8 +12,8 @@ import {
 } from "../util/util";
 
 export class FlatJson implements TFileFormat {
-  readTFile(path: string, lng: string): TSet {
-    const json = readJsonFile(path);
+  readTFile(args: ReadTFileArgs): TSet {
+    const json = readJsonFile(args.path);
     const tMap = new Map<string, string>();
     for (const key of Object.keys(json)) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -18,7 +22,7 @@ export class FlatJson implements TFileFormat {
       if (typeof value !== "string" && value !== null) {
         logFatal(
           `${getDebugPath(
-            path
+            args.path
           )} is not a flat JSON-file - Property '${key}' is not a string or null`
         );
       }
@@ -27,11 +31,11 @@ export class FlatJson implements TFileFormat {
     return tMap;
   }
 
-  writeTFile(path: string, tSet: TSet): void {
+  writeTFile(args: WriteTFileArgs): void {
     const flatJson: Record<string, string | null> = {};
-    tSet.forEach((value, key) => {
+    args.tSet.forEach((value, key) => {
       flatJson[key] = value;
     });
-    writeJsonFile(path, flatJson);
+    writeJsonFile(args.path, flatJson);
   }
 }

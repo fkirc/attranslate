@@ -44,10 +44,17 @@ const testArgs: {
 describe.each(testArgs)("Read/write %p", (args) => {
   test("Read - delete - write - git-diff", async () => {
     const fileFormat = fileFormatMap[args.fileFormat];
-    const tSet = fileFormat.readTFile(args.srcFile, "en");
+    const tSet = fileFormat.readTFile({
+      path: args.srcFile,
+      lng: "en",
+    });
     toStrictEqualMapOrder(tSet, expectedTSet(args.nested));
     await runCommand(`rm ${args.srcFile}`);
-    fileFormat.writeTFile(args.srcFile, tSet);
+    fileFormat.writeTFile({
+      path: args.srcFile,
+      tSet,
+      lng: "en",
+    });
     await assertPathNotChanged(args.srcFile);
   });
 });
