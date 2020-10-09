@@ -46,4 +46,5 @@ export interface CliArgs {
   cacheDir: string;
   matcher: string;
   deleteStale: string;
+  refTargetFile?: string;
 }
