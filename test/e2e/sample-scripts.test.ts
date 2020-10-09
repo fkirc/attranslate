@@ -10,6 +10,8 @@ test("simple_translate", async () => {
 
 test("multi_translate", async () => {
   const output = await runCommand(`./multi_translate.sh`, sampleDir);
-  expect(output).toBe("Nothing changed, translations are up-to-date.\n");
+  expect(output).toBe(
+    "Nothing changed, translations are up-to-date.\nNothing changed, translations are up-to-date.\nNothing changed, translations are up-to-date.\n"
+  );
   await assertPathNotChanged(sampleDir);
 });
