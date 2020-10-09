@@ -1,6 +1,5 @@
 import {
   assertPathChanged,
-  assertPathNotChanged,
   generateId,
   runCommand,
   runTranslate,
@@ -49,10 +48,12 @@ describe.each(testArray)("outdated cache %p", (commonArgs) => {
     await postMissingTarget(args, output);
   });
 
-  test("clean target", async () => {
+  test("modified target", async () => {
     const args = { ...argsTemplate };
-    await runWithOutdatedCache(args);
-    await postCleanTarget(args);
+    await preModifiedTarget(args);
+    const output = await runWithOutdatedCache(args);
+    expect(output).toContain("Update 1 existing translations");
+    await postModifiedTarget(args);
   });
 });
 
@@ -102,13 +103,14 @@ describe.each(testArray)("missing cache %p", (commonArgs) => {
     await postMissingTarget(args, output);
   });
 
-  test("clean target", async () => {
+  test("modified target", async () => {
     const args = { ...argsTemplate };
+    await preModifiedTarget(args);
     const output = await runWithMissingCache(args);
     expect(output).toContain(
       "Skipped translations because we had to generate a new cache."
     );
-    await postCleanTarget(args);
+    await postModifiedTarget(args);
   });
 });
 
@@ -140,10 +142,6 @@ async function postMissingTarget(args: CliArgs, output: string) {
   expect(output).toContain(`Add 3 new translations`);
   expect(output).toContain(`Write target ${getDebugPath(args.targetFile)}`);
   await removeRandomTargetFile(args);
-}
-
-async function postCleanTarget(args: CliArgs) {
-  await assertPathNotChanged(args.targetFile);
 }
 
 function modifyFirstTwoProperties(jsonPath: string) {
