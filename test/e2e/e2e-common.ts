@@ -37,3 +37,15 @@ export function injectJsonProperties(
   const injectJson = { ...json, ...inject };
   writeJsonFile(jsonPath, injectJson);
 }
+
+export function modifyJsonProperty(args: {
+  jsonPath: string;
+  index: number;
+  newValue: unknown;
+}) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const json: any = readJsonFile(args.jsonPath);
+  const keys = Object.keys(json);
+  json[keys[args.index]] = args.newValue;
+  writeJsonFile(args.jsonPath, json);
+}
