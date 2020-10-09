@@ -45,7 +45,7 @@ async function deleteOnlyTest(deleteEn: Map<string, string | null>) {
   toStrictEqualMapOrder(res, expectRes);
 }
 
-test("delete single - keep modified", async () => {
+test("delete empty string - keep modified", async () => {
   const args: CoreArgs = {
     ...commonArgs,
     src: new Map([["1", "One"]]),

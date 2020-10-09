@@ -1,5 +1,6 @@
 import { CliArgs } from "../../src/core/core-definitions";
 import { getGCloudKeyPath } from "../setup/key-exports";
+import { readJsonFile, writeJsonFile } from "../../src/util/util";
 
 export const defaultE2EArgs: CliArgs = {
   srcFile: "test-assets/flat-json/count-en.flat.json",
@@ -26,4 +27,13 @@ export function buildE2EArgs(args: CliArgs): string {
     }
   }
   return cmdArgs.join(" ");
+}
+
+export function injectJsonProperties(
+  jsonPath: string,
+  inject: Record<string, unknown>
+) {
+  const json = readJsonFile(jsonPath);
+  const injectJson = { ...json, ...inject };
+  writeJsonFile(jsonPath, injectJson);
 }

@@ -1,5 +1,6 @@
 {
   "one": "One",
   "two": "Two",
-  "three": "Three"
+  "three": "Three",
+  "emptyProp": ""
 }

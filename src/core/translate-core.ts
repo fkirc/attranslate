@@ -58,7 +58,7 @@ function preprocessServiceInputs(rawInputs: TSet) {
   const serviceInputs: TSet = new Map();
   rawInputs.forEach((value, key) => {
     if (!value || !value.trim().length) {
-      console.info(`Warning: Skip '${key}' because it is empty`);
+      console.info(`Warning: Skip '${key}' because it is empty.`);
     } else {
       serviceInputs.set(key, value);
     }

@@ -6,7 +6,7 @@ import {
   TString,
 } from "../services/service-definitions";
 import { CoreArgs, CoreResults, TSet } from "./core-definitions";
-import { logFatal } from "../util/util";
+import { getDebugPath, logFatal } from "../util/util";
 import {
   fileFormatMap,
   ReadTFileArgs,
@@ -66,7 +66,20 @@ export function readTFileCore(
   fileFormat: keyof typeof fileFormatMap,
   args: ReadTFileArgs
 ): TSet {
-  return fileFormatMap[fileFormat].readTFile(args);
+  const rawTSet = fileFormatMap[fileFormat].readTFile(args);
+  const cleanTSet: TSet = new Map();
+  rawTSet.forEach((value, key) => {
+    if (value !== null && !value) {
+      /**
+       * Empty JavaScript-strings evaluate to false, which is a serious source of bugs throughout this codebase.
+       * To mitigate such bugs, we eliminate empty strings as early as possible.
+       */
+      console.info(`Warning: '${key}' in ${getDebugPath(args.path)} is empty.`);
+    } else {
+      cleanTSet.set(key, value);
+    }
+  });
+  return cleanTSet;
 }
 
 export function getMatcherInstance(args: CoreArgs): Matcher {
