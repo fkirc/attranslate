@@ -1,5 +1,5 @@
 #!/bin/bash
-set -xe # Print everything, abort if anything fails
+set -e # Abort if anything fails
 
 attranslate='../bin/attranslate'
 
