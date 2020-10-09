@@ -95,3 +95,15 @@ export async function assertPathNotChanged(path: string) {
 export function joinLines(lines: string[]) {
   return lines.join(`\n`) + "\n";
 }
+
+export function generateId(): string {
+  const id: string[] = [];
+  const chars =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  const idLength = 16;
+  for (let i = 0; i < idLength; i++) {
+    const randomIndex = Math.floor(Math.random() * chars.length);
+    id.push(chars.charAt(randomIndex));
+  }
+  return id.join("");
+}
