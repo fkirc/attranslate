@@ -7,7 +7,7 @@ import {
 } from "../test-util/test-util";
 import { buildE2EArgs, defaultE2EArgs } from "./e2e-common";
 import { join } from "path";
-import { getDebugPath } from "../../src/util/util";
+import { getDebugPath, readJsonFile, writeJsonFile } from "../../src/util/util";
 import { CliArgs } from "../../src/core/core-definitions";
 
 const cacheDirOutdated = join("test-assets", "cache-outdated");
@@ -51,7 +51,6 @@ describe.each(testArray)("outdated cache %p", (commonArgs) => {
 
   test("clean target", async () => {
     const args = { ...argsTemplate };
-    await preCleanTarget(args);
     await runWithOutdatedCache(args);
     await postCleanTarget(args);
   });
@@ -69,12 +68,12 @@ describe.each(testArray)("clean cache %p", (commonArgs) => {
     await postMissingTarget(args, output);
   });
 
-  test("clean target", async () => {
+  test("modified target", async () => {
     const args = { ...argsTemplate };
-    await preCleanTarget(args);
+    await preModifiedTarget(args);
     const output = await runTranslate(buildE2EArgs(args));
     expect(output).toBe("Target is up-to-date.\n");
-    await postCleanTarget(args);
+    await postModifiedTarget(args);
   });
 });
 
@@ -105,7 +104,6 @@ describe.each(testArray)("missing cache %p", (commonArgs) => {
 
   test("clean target", async () => {
     const args = { ...argsTemplate };
-    await preCleanTarget(args);
     const output = await runWithMissingCache(args);
     expect(output).toContain(
       "Skipped translations because we had to generate a new cache."
@@ -121,8 +119,17 @@ function switchToRandomTargetFile(args: CliArgs) {
 }
 
 async function removeRandomTargetFile(args: CliArgs) {
-  await runCommand(`diff ${args.targetFile} ${args.refTargetFile}`);
   await runCommand(`rm ${args.targetFile}`);
+}
+
+async function preModifiedTarget(args: CliArgs) {
+  switchToRandomTargetFile(args);
+  await runCommand(`cp ${args.refTargetFile} ${args.targetFile}`);
+  modifyFirstTwoProperties(args.targetFile);
+}
+
+async function postModifiedTarget(args: CliArgs) {
+  await removeRandomTargetFile(args);
 }
 
 function preMissingTarget(args: CliArgs) {
@@ -135,10 +142,14 @@ async function postMissingTarget(args: CliArgs, output: string) {
   await removeRandomTargetFile(args);
 }
 
-async function preCleanTarget(args: CliArgs) {
+async function postCleanTarget(args: CliArgs) {
   await assertPathNotChanged(args.targetFile);
 }
 
-async function postCleanTarget(args: CliArgs) {
-  await assertPathNotChanged(args.targetFile);
+function modifyFirstTwoProperties(jsonPath: string) {
+  const json: Record<string, unknown> = readJsonFile(jsonPath);
+  const keys = Object.keys(json);
+  json[keys[0]] += " modified 1";
+  json[keys[1]] += " modified 2";
+  writeJsonFile(jsonPath, json);
 }
