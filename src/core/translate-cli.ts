@@ -91,7 +91,7 @@ export async function translateCli(cliArgs: CliArgs) {
   const result = await translateCore(coreArgs);
 
   if (!oldTarget || !areEqual(oldTarget, result.newTarget)) {
-    console.info(`Write target-file ${getDebugPath(cliArgs.targetFile)}`);
+    console.info(`Write target ${getDebugPath(cliArgs.targetFile)}`);
     writeTFileCore(targetFileFormat, {
       path: cliArgs.targetFile,
       tSet: result.newTarget,

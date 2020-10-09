@@ -64,7 +64,7 @@ function getExpectedUpdateOutput(args: {
   const lines: string[] = [
     "Received 1 results from 'google-translate'...",
     "Update 1 existing translations",
-    `Write target-file ${getDebugPath(args.targetPath)}`,
+    `Write target ${getDebugPath(args.targetPath)}`,
     `Write cache ${getDebugPath(args.cachePath)}`,
     `Nothing changed, translations are up-to-date.`, // TODO: Remove, concat multiple "received 1 results" instead
     `Nothing changed, translations are up-to-date.`, // TODO: Remove, concat multiple "received 1 results" instead

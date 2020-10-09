@@ -57,9 +57,7 @@ describe.each(testArray)("outdated cache %p", (commonArgs) => {
     await preModifiedTarget(args);
     const output = await runWithOutdatedCache();
     expect(output).toContain("Update 1 existing translations\n");
-    expect(output).toContain(
-      `Write target-file ${getDebugPath(args.targetFile)}`
-    );
+    expect(output).toContain(`Write target ${getDebugPath(args.targetFile)}`);
     await postModifiedTarget(args);
   });
 });
@@ -143,9 +141,7 @@ async function preMissingTarget(args: CliArgs) {
 
 async function postMissingTarget(args: CliArgs, output: string) {
   expect(output).toContain(`Add 3 new translations`);
-  expect(output).toContain(
-    `Write target-file ${getDebugPath(args.targetFile)}`
-  );
+  expect(output).toContain(`Write target ${getDebugPath(args.targetFile)}`);
   await assertPathNotChanged(args.targetFile);
 }
 
