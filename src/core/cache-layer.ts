@@ -3,6 +3,7 @@ import { CliArgs, CoreResults, TSet } from "./core-definitions";
 import { existsSync } from "fs";
 import { checkDir, getDebugPath } from "../util/util";
 import path from "path";
+import { readTFileCore, writeTFileCore } from "./core-util";
 
 function resolveCachePath(args: CliArgs): string {
   const cacheDir = args.cacheDir;
@@ -12,7 +13,7 @@ function resolveCachePath(args: CliArgs): string {
   return path.resolve(cacheDir, cacheName);
 }
 
-const cacheFileFormat = fileFormatMap["flat-json"];
+const cacheFileFormat: keyof typeof fileFormatMap = "flat-json";
 
 const cacheMarkingKey = "generated-by-attranslate";
 
@@ -21,7 +22,7 @@ export function resolveTCache(args: CliArgs): TSet | null {
   if (!existsSync(cachePath)) {
     return null;
   }
-  const rawCache = cacheFileFormat.readTFile({
+  const rawCache = readTFileCore(cacheFileFormat, {
     path: cachePath,
     lng: args.srcLng,
   });
@@ -44,7 +45,7 @@ export function writeTCache(results: CoreResults, args: CliArgs) {
   results.newSrcCache.forEach((value, key) => {
     rawCache.set(key, value);
   });
-  cacheFileFormat.writeTFile({
+  writeTFileCore(cacheFileFormat, {
     path: cachePath,
     tSet: rawCache,
     lng: args.srcLng,

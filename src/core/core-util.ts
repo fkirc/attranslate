@@ -7,6 +7,11 @@ import {
 } from "../services/service-definitions";
 import { CoreArgs, CoreResults, TSet } from "./core-definitions";
 import { logFatal } from "../util/util";
+import {
+  fileFormatMap,
+  ReadTFileArgs,
+  WriteTFileArgs,
+} from "../file-formats/file-format-definitions";
 
 export function logCoreResults(args: CoreArgs, results: CoreResults) {
   if (results.serviceInvocation) {
@@ -48,6 +53,20 @@ export function logCoreResults(args: CoreArgs, results: CoreResults) {
       console.info(`Nothing changed, translations are up-to-date.`);
     }
   }
+}
+
+export function writeTFileCore(
+  fileFormat: keyof typeof fileFormatMap,
+  args: WriteTFileArgs
+) {
+  fileFormatMap[fileFormat].writeTFile(args);
+}
+
+export function readTFileCore(
+  fileFormat: keyof typeof fileFormatMap,
+  args: ReadTFileArgs
+): TSet {
+  return fileFormatMap[fileFormat].readTFile(args);
 }
 
 export function getMatcherInstance(args: CoreArgs): Matcher {

@@ -6,21 +6,19 @@ import { areEqual } from "./tset-ops";
 import { checkDir, getDebugPath, logFatal } from "../util/util";
 import { serviceMap } from "../services/service-definitions";
 import { matcherMap } from "../matchers/matcher-definitions";
-import {
-  fileFormatMap,
-  TFileFormat,
-} from "../file-formats/file-format-definitions";
+import { fileFormatMap } from "../file-formats/file-format-definitions";
 import { resolveTCache, writeTCache } from "./cache-layer";
+import { readTFileCore, writeTFileCore } from "./core-util";
 
 function resolveOldTarget(
   args: CliArgs,
-  targetFileFormat: TFileFormat
+  targetFileFormat: keyof typeof fileFormatMap
 ): TSet | null {
   const targetPath = path.resolve(args.targetFile);
   const targetDir = path.dirname(targetPath);
   checkDir(targetDir);
   if (existsSync(targetPath)) {
-    return targetFileFormat.readTFile({
+    return readTFileCore(targetFileFormat, {
       path: targetPath,
       lng: args.targetLng,
     });
@@ -55,8 +53,7 @@ export async function translateCli(cliArgs: CliArgs) {
       }". Available formats: ${formatCliOptions(Object.keys(fileFormatMap))}`
     );
   }
-  const srcFileFormat =
-    fileFormatMap[cliArgs.srcFormat as keyof typeof fileFormatMap];
+  const srcFileFormat: keyof typeof fileFormatMap = cliArgs.srcFormat as keyof typeof fileFormatMap;
   if (!(cliArgs.targetFormat in fileFormatMap)) {
     logFatal(
       `Unknown target format "${
@@ -64,9 +61,8 @@ export async function translateCli(cliArgs: CliArgs) {
       }". Available formats: ${formatCliOptions(Object.keys(fileFormatMap))}`
     );
   }
-  const targetFileFormat =
-    fileFormatMap[cliArgs.targetFormat as keyof typeof fileFormatMap];
-  const src = srcFileFormat.readTFile({
+  const targetFileFormat = cliArgs.targetFormat as keyof typeof fileFormatMap;
+  const src = readTFileCore(srcFileFormat, {
     path: cliArgs.srcFile,
     lng: cliArgs.srcLng,
   });
@@ -96,7 +92,7 @@ export async function translateCli(cliArgs: CliArgs) {
 
   if (!oldTarget || !areEqual(oldTarget, result.newTarget)) {
     console.info(`Write target-file ${getDebugPath(cliArgs.targetFile)}`);
-    targetFileFormat.writeTFile({
+    writeTFileCore(targetFileFormat, {
       path: cliArgs.targetFile,
       tSet: result.newTarget,
       lng: cliArgs.targetLng,
