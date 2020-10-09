@@ -73,7 +73,7 @@ describe.each(testArray)("clean cache %p", (commonArgs) => {
     const args = { ...argsTemplate };
     await preCleanTarget(args);
     const output = await runTranslate(buildE2EArgs(args));
-    expect(output).toBe("Nothing changed, translations are up-to-date.\n");
+    expect(output).toBe("Target is up-to-date.\n");
     await postCleanTarget(args);
   });
 });

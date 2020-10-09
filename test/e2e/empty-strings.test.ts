@@ -24,6 +24,6 @@ describe.each(testArray)("empty props %p", (commonArgs) => {
     );
     expect(output).toContain(`Warning: Skip 'nullProp' because it is empty.`);
     expect(output).toContain(`Warning: Skip 'spacesProp' because it is empty.`);
-    expect(output).toContain("Nothing changed, translations are up-to-date.");
+    expect(output).toContain("Target is up-to-date.");
   });
 });

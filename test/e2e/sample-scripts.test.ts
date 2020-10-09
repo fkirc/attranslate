@@ -23,7 +23,7 @@ function getTargetPaths(): string[] {
 
 test("simple_translate", async () => {
   const output = await runCommand(`./simple_translate.sh`, sampleDir);
-  expect(output).toBe("Nothing changed, translations are up-to-date.\n");
+  expect(output).toBe("Target is up-to-date.\n");
   await assertPathNotChanged(sampleDir);
 });
 
@@ -31,9 +31,9 @@ test("multi_translate clean", async () => {
   const output = await runCommand(`./multi_translate.sh`, sampleDir);
   expect(output).toBe(
     joinLines([
-      "Nothing changed, translations are up-to-date.",
-      "Nothing changed, translations are up-to-date.",
-      "Nothing changed, translations are up-to-date.",
+      "Target is up-to-date.",
+      "Target is up-to-date.",
+      "Target is up-to-date.",
     ])
   );
   await assertPathNotChanged(sampleDir);

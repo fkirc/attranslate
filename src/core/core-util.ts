@@ -50,7 +50,7 @@ export function logCoreResults(args: CoreArgs, results: CoreResults) {
         `Skipped translations because we had to generate a new cache.`
       );
     } else if (!countAdded && !countUpdated && !countSkipped && !countDeleted) {
-      console.info(`Nothing changed, translations are up-to-date.`);
+      console.info(`Target is up-to-date.`);
     }
   }
 }
