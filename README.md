@@ -3,7 +3,7 @@
 Automated translation-services can speedup traditional workflows.
 For example, let's say that a translation-service achieves 90% correct translations on the spot.
 In this case, a quick fix of the remaining 10% is faster than doing everything by hand.
-`attranslate` makes it easy to setup a _semi-automated_ translation-workflow.
+`attranslate` makes it easy to setup _semi-automated_ translation-workflows.
 Other than that, `attranslate` supports manual translations and even file-format-conversions without changing the language.
 
 ## Why attranslate?
@@ -12,7 +12,9 @@ In contrast to paid services, `attranslate` does not need any account-registrati
 A single developer can integrate `attranslate` in a matter of minutes.
 
 In contrast to many other tools, `attranslate` can operate on the very same translations-files that you are already using.
-`attranslate` has you covered, regardless of whether you use i18n, ICU, JavaScript-frameworks, Android-XML, iOS-Localizables or other systems. 
+This is possible because `attranslate` does not apply unnecessary changes to already existing translation-files.
+`attranslate` has you covered, regardless of whether you use i18n, ICU, JavaScript-frameworks, Android-XML, iOS-Localizables or other systems.
+See [tools comparison](/TOOL_COMPARISON.md) for an overview about translation-tools.
 
 # Features
 
@@ -24,9 +26,6 @@ To make this possible, `attranslate` supports the following file formats:
 
 - Nested JSON
 - Flat JSON
-- Android-XML
-- iOS-plist
-- Microsoft Excel
 
 ## Allow Manual Overwrites
 
@@ -155,5 +154,3 @@ The purpose is twofold:
 
 The translation-cache consists of `attranslate-cache`-files.
 To make it work, you should put your `attranslate-cache`-files under version control.
-Be aware that you should not manually edit any `attranslate-cache`-file.
-Instead, edit your source-files and re-run `attranslate` to re-generate the translation-cache.
