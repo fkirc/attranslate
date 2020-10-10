@@ -131,7 +131,7 @@ const requiredOptions: (keyof typeof defaultE2EArgs)[] = [
   "serviceConfig",
 ];
 
-describe.each(requiredOptions)("Missing required option %s", (option) => {
+describe.each(requiredOptions)("Bad options %s", (option) => {
   test(`Missing required option ${option}`, async () => {
     const args: CliArgs = {
       ...defaultE2EArgs,
