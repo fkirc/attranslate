@@ -21,14 +21,19 @@ function getTargetPaths(): string[] {
   });
 }
 
-test("simple_translate", async () => {
-  const output = await runCommand(`./simple_translate.sh`, sampleDir);
-  expect(output).toBe("Target is up-to-date.\n");
+async function runSampleScript(command: string): Promise<string> {
+  const output = await runCommand(command, sampleDir);
   await assertPathNotChanged(sampleDir);
+  return output;
+}
+
+test("simple_translate", async () => {
+  const output = await runSampleScript(`./simple_translate.sh`);
+  expect(output).toBe("Target is up-to-date.\n");
 });
 
 test("multi_translate clean", async () => {
-  const output = await runCommand(`./multi_translate.sh`, sampleDir);
+  const output = await runSampleScript(`./multi_translate.sh`);
   expect(output).toBe(
     joinLines([
       "Target is up-to-date.",
@@ -36,8 +41,43 @@ test("multi_translate clean", async () => {
       "Target is up-to-date.",
     ])
   );
-  await assertPathNotChanged(sampleDir);
 });
+
+test("multi_translate create new cache", async () => {
+  await runCommand(`rm ${cachePath}`);
+
+  const targetPaths = getTargetPaths();
+  const expectOutput = getExpectedCreateOutput({
+    targetPaths,
+    cachePath,
+  });
+  const output = await runSampleScript(`./multi_translate.sh`);
+  expect(output).toBe(expectOutput);
+});
+
+function getExpectedCreateOutput(args: {
+  targetPaths: string[];
+  cachePath: string;
+}): string {
+  const lines: string[] = [];
+  args.targetPaths.forEach((targetPath, index) => {
+    if (index === 0) {
+      lines.push(
+        ...[
+          `Cache not found -> Generate a new cache to enable selective translations.`,
+          `To make selective translations, do one of the following:`,
+          "Option 1: Change your source-file and then re-run this tool.",
+          "Option 2: Delete parts of your target-file and then re-run this tool.",
+          "Skipped translations because we had to generate a new cache.",
+        ]
+      );
+    } else {
+      lines.push(...["Target is up-to-date."]);
+    }
+    lines.push(`Write cache ${getDebugPath(args.cachePath)}`);
+  });
+  return joinLines(lines);
+}
 
 test("multi_translate propagate updates", async () => {
   const targetPaths = getTargetPaths();
@@ -53,9 +93,8 @@ test("multi_translate propagate updates", async () => {
     targetPaths,
     cachePath,
   });
-  const output = await runCommand(`./multi_translate.sh`, sampleDir);
+  const output = await runSampleScript(`./multi_translate.sh`);
   expect(output).toBe(expectOutput);
-  await assertPathNotChanged(sampleDir);
 });
 
 function getExpectedUpdateOutput(args: {

@@ -7,7 +7,7 @@ import { checkDir, getDebugPath, logFatal } from "../util/util";
 import { serviceMap } from "../services/service-definitions";
 import { matcherMap } from "../matchers/matcher-definitions";
 import { fileFormatMap } from "../file-formats/file-format-definitions";
-import { resolveTCache, writeTCache } from "./cache-layer";
+import { missingTCacheTarget, resolveTCache, writeTCache } from "./cache-layer";
 import { readTFileCore, writeTFileCore } from "./core-util";
 
 function resolveOldTarget(
@@ -101,7 +101,10 @@ export async function translateCli(cliArgs: CliArgs) {
     });
   }
   const flushCache =
-    flushTarget || !srcCache || !areEqual(srcCache, result.newSrcCache);
+    flushTarget ||
+    missingTCacheTarget() ||
+    !srcCache ||
+    !areEqual(srcCache, result.newSrcCache);
   if (flushCache) {
     writeTCache(result, cliArgs);
   }
