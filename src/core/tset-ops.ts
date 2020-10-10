@@ -31,7 +31,10 @@ function compareLeftRight(args: {
     case "COMPARE_KEYS":
       return args.rightValue === undefined;
     case "COMPARE_KEYS_AND_NULL_VALUES":
-      return args.rightValue === undefined || args.rightValue === null;
+      return (
+        args.rightValue === undefined ||
+        (args.rightValue === null && args.leftValue !== null)
+      );
     case "COMPARE_VALUES":
       return (
         args.rightValue !== undefined && args.leftValue !== args.rightValue
