@@ -113,7 +113,7 @@ function internalEntryToCacheEntry(
   const targetId = getTargetId(args);
   const newTarget: TCacheTarget = {
     id: targetId,
-    state: internalEntry !== null ? "frozen" : "needs_update",
+    state: "frozen",
   };
   let oldTargetIncluded = false;
   const newTargets: TCacheTarget[] = !!oldEntry

@@ -38,7 +38,16 @@
       "targets": [
         {
           "id": "de",
-          "state": "needs_update"
+          "state": "frozen"
+        }
+      ]
+    },
+    "emptyProp": {
+      "value": null,
+      "targets": [
+        {
+          "id": "de",
+          "state": "frozen"
         }
       ]
     },
