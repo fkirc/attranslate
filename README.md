@@ -73,13 +73,13 @@ Options:
 # Integration Guide
 
 Firstly, ensure that [nodejs](https://nodejs.org/) is installed on your machine.
-Afterwards, if you are a JavaScript-developer, then you can install `attranslate` to your package.json:
-
-`npm install --save-dev attranslate`
-
-If you are not a JavaScript-developer, then you can install `attranslate` globally:
+Once you have `nodejs`, you can install `attranslate` via:
 
 `npm install --global attranslate`
+
+Alternatively, if you are a JavaScript-developer, then you should install `attranslate` via:
+
+`npm install --save-dev attranslate`
 
 Next, you should write a project-specific script that invokes `attranslate` for your specific files.
 See sample scripts for a guidance on how to translate your project-specific files.
