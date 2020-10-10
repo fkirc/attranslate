@@ -45,8 +45,7 @@
     "deep-object-diff": "^1.1.0",
     "inquirer": "^6.2.2",
     "lodash": "^4.17.11",
-    "messageformat-parser": "^4.1.0",
-    "ncp": "^2.0.0"
+    "messageformat-parser": "^4.1.0"
   },
   "devDependencies": {
     "@types/inquirer": "^0.0.44",
@@ -85,6 +84,8 @@
   },
   "jest": {
     "preset": "ts-jest",
-    "roots": ["test"]
+    "roots": [
+      "test"
+    ]
   }
 }
