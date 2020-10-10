@@ -10,8 +10,8 @@ Options:
   --service <translationService>     One of "google-translate", "deepl",
                                      "azure", "manual"
   --serviceConfig <pathToKeyFile>    supply configuration (e.g. path to key
-                                     file) for the translation service
-  --cacheDir <srcCacheDir>           The directory where the source-cache is
+                                     file) for a translation service
+  --cacheDir <cacheDir>              The directory where a translation-cache is
                                      expected to be found (default: ".")
   --matcher <matcher>                One of "none", "icu", "i18next", "sprintf"
                                      (default: "none")

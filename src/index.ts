@@ -46,11 +46,11 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
     )
     .requiredOption(
       "--serviceConfig <pathToKeyFile>",
-      "supply configuration (e.g. path to key file) for the translation service"
+      "supply configuration for a translation service (e.g. a path to a key-file)"
     )
     .option(
-      "--cacheDir <srcCacheDir>",
-      "The directory where the source-cache is expected to be found",
+      "--cacheDir <cacheDir>",
+      "The directory where a translation-cache is expected to be found",
       "."
     )
     .option(
