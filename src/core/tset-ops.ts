@@ -78,9 +78,9 @@ export function joinResultsPreserveOrder(args: {
   targetOrder.forEach((key) => {
     const freshResult = args.translateResults.get(key);
     const oldResult = args.oldTarget.get(key);
-    if (freshResult) {
+    if (freshResult !== undefined) {
       joinResult.set(key, freshResult);
-    } else if (oldResult) {
+    } else if (oldResult !== undefined) {
       joinResult.set(key, oldResult);
     }
   });
