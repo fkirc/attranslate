@@ -46,12 +46,12 @@ jobs:
           path: '**/node_modules'
           key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
       - run: yarn install --frozen-lockfile
-      - run: yarn run lint
-      - run: yarn run build
-      - run: yarn run preTest
+      - run: yarn lint
+      - run: yarn build
+      - run: yarn preTest
         env:
           GCLOUD_PRIVATE_KEY: ${{ secrets.GCLOUD_PRIVATE_KEY }}
-      - run: yarn run test
+      - run: yarn test
       - run: git diff --exit-code
       - name: Release
         if: ${{ github.event.inputs.release == 'true' }}
