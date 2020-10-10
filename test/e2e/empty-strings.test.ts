@@ -19,9 +19,6 @@ describe.each(testArray)("empty props %p", (commonArgs) => {
   };
   test("different empty props", async () => {
     const output = await runTranslate(buildE2EArgs(args));
-    expect(output).toContain(
-      `Warning: 'emptyProp' in ${getDebugPath(args.srcFile)} is empty.`
-    );
     expect(output).toContain(`Warning: Skip 'nullProp' because it is empty.`);
     expect(output).toContain(`Warning: Skip 'spacesProp' because it is empty.`);
     expect(output).toContain("Target is up-to-date.");

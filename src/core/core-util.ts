@@ -6,7 +6,7 @@ import {
   TString,
 } from "../services/service-definitions";
 import { CoreArgs, CoreResults, TSet } from "./core-definitions";
-import { getDebugPath, logFatal } from "../util/util";
+import { logFatal } from "../util/util";
 import {
   fileFormatMap,
   ReadTFileArgs,
@@ -59,6 +59,15 @@ export function writeTFileCore(
   fileFormat: keyof typeof fileFormatMap,
   args: WriteTFileArgs
 ) {
+  const rawTSet: TSet = new Map();
+  args.tSet.forEach((value, key) => {
+    if (value === null) {
+      rawTSet.set(key, "");
+    } else {
+      rawTSet.set(key, value);
+    }
+  });
+  args.tSet = rawTSet;
   fileFormatMap[fileFormat].writeTFile(args);
 }
 
@@ -69,12 +78,12 @@ export function readTFileCore(
   const rawTSet = fileFormatMap[fileFormat].readTFile(args);
   const cleanTSet: TSet = new Map();
   rawTSet.forEach((value, key) => {
-    if (value !== null && !value) {
+    if (value === "") {
       /**
        * Empty JavaScript-strings evaluate to false, which is a serious source of bugs throughout this codebase.
        * To mitigate such bugs, we eliminate empty strings as early as possible.
        */
-      console.info(`Warning: '${key}' in ${getDebugPath(args.path)} is empty.`);
+      cleanTSet.set(key, null);
     } else {
       cleanTSet.set(key, value);
     }
