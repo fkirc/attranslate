@@ -27,7 +27,7 @@ export function parseTCache(context: CParseContext): TCache {
 
 function logCacheError(rawMsg: string, context: CParseContext): never {
   const msg = context.key
-    ? `An error occurred in cache-entry ${context.key}: ${rawMsg}`
+    ? `An error occurred in cache-entry '${context.key}': ${rawMsg}`
     : `A cache error occurred: ${rawMsg}`;
   logFatal(
     `${msg}. You may try to delete ${getDebugPath(

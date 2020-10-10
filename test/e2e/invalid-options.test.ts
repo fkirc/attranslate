@@ -143,4 +143,26 @@ describe.each(requiredOptions)("Missing required option %s", (option) => {
     expect(output).toContain(`error: required option '--${option}`);
     expect(output).toContain(`not specified`);
   });
+
+  test(`Empty string option ${option}`, async () => {
+    const args: CliArgs = {
+      ...defaultE2EArgs,
+    };
+    args[option] = "";
+    const output = await runTranslateExpectFailure(buildE2EArgs(args));
+    expect(output).toBe(
+      `error: option '--${option}' is empty -> Either omit it or provide a value\n`
+    );
+  });
+
+  test(`Empty trim option ${option}`, async () => {
+    const args: CliArgs = {
+      ...defaultE2EArgs,
+    };
+    args[option] = "    ";
+    const output = await runTranslateExpectFailure(buildE2EArgs(args));
+    expect(output).toBe(
+      `error: option '--${option}' is empty -> Either omit it or provide a value\n`
+    );
+  });
 });

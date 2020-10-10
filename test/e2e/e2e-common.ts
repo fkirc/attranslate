@@ -22,7 +22,7 @@ export function buildE2EArgs(args: CliArgs): string {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const argValue: string | undefined = args[argKey];
-    if (argValue && argKey !== "refTargetFile") {
+    if (argValue !== undefined && argKey !== "refTargetFile") {
       cmdArgs.push(`--${argKey}='${argValue}'`);
     }
   }

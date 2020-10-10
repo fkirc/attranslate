@@ -34,7 +34,7 @@ export interface CoreResults {
   newSrcCache: TSet;
 }
 
-export interface CliArgs {
+export interface CliArgs extends Record<string, string | undefined> {
   srcFile: string;
   srcLng: string;
   srcFormat: string;

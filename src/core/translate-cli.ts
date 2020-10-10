@@ -32,6 +32,7 @@ export function formatCliOptions(options: string[]): string {
 }
 
 export async function translateCli(cliArgs: CliArgs) {
+  checkForEmptyStringOptions(cliArgs);
   if (!(cliArgs.service in serviceMap)) {
     logFatal(
       `Unknown service "${
@@ -119,4 +120,15 @@ function parseBooleanOption(rawOption: string): boolean {
   } else {
     logFatal(`Invalid option '${rawOption}'. Must be either true or false.`);
   }
+}
+
+function checkForEmptyStringOptions(args: CliArgs) {
+  Object.keys(args).forEach((key) => {
+    const arg: string | undefined = args[key];
+    if (typeof arg === "string" && (arg === "" || !arg.trim().length)) {
+      logFatal(
+        `option '--${key}' is empty -> Either omit it or provide a value`
+      );
+    }
+  });
 }
