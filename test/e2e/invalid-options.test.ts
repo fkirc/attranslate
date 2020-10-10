@@ -65,62 +65,6 @@ test("cacheDir not a dir", async () => {
   );
 });
 
-test("src not a JSON", async () => {
-  const args: CliArgs = {
-    ...defaultE2EArgs,
-    srcFile: "test-assets/invalid/not-a-json",
-  };
-  const output = await runTranslateExpectFailure(buildE2EArgs(args));
-  expect(output).toContain("Unexpected token # in JSON at position 13");
-  expect(output).toContain(
-    `error: Failed to parse ${getDebugPath(args.srcFile)}.\n`
-  );
-});
-
-test("src empty JSON", async () => {
-  const args: CliArgs = {
-    ...defaultE2EArgs,
-    srcFile: "test-assets/invalid/empty.json",
-  };
-  const output = await runTranslateExpectFailure(buildE2EArgs(args));
-  expect(output).toBe(
-    `error: ${getDebugPath(
-      args.srcFile
-    )} does not contain any translatable content\n`
-  );
-});
-
-/*test("src duplicate JSON", async () => {
-  const args: CliArgs = {
-    ...defaultE2EArgs,
-    srcFile: "test-assets/invalid/duplicate-property.json",
-  };
-  const output = await runTranslateExpectFailure(buildE2EArgs(args));
-  expect(output).toBe(`error: ${getDebugPath(args.srcFile)} -dup--\n`); // TODO: Pass
-});
-test("src duplicate nested JSON", async () => {
-  const args: CliArgs = {
-    ...defaultE2EArgs,
-    srcFile: "test-assets/invalid/duplicate-nested-property.json",
-  };
-  const output = await runTranslateExpectFailure(buildE2EArgs(args));
-  expect(output).toBe(`error: ${getDebugPath(args.srcFile)} -dup--\n`); // TODO: Pass
-});*/
-
-test("target non-flat JSON", async () => {
-  const args: CliArgs = {
-    ...defaultE2EArgs,
-    targetFile: "test-assets/nested-json/count-en.nested.json",
-    targetFormat: "flat-json",
-  };
-  const output = await runTranslateExpectFailure(buildE2EArgs(args));
-  expect(output).toBe(
-    `error: ${getDebugPath(
-      args.targetFile
-    )} is not a flat JSON-file - Property 'inner' is not a string or null\n`
-  );
-});
-
 test("unknown service", async () => {
   const args: CliArgs = {
     ...defaultE2EArgs,
