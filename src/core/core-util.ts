@@ -49,15 +49,11 @@ export function writeTFileCore(
   fileFormat: keyof typeof fileFormatMap,
   args: WriteTFileArgs
 ) {
-  const rawTSet: TSet = new Map();
   args.tSet.forEach((value, key) => {
     if (value === null) {
-      rawTSet.set(key, "");
-    } else {
-      rawTSet.set(key, value);
+      args.tSet.set(key, "");
     }
   });
-  args.tSet = rawTSet;
   fileFormatMap[fileFormat].writeTFile(args);
 }
 
@@ -66,19 +62,16 @@ export function readTFileCore(
   args: ReadTFileArgs
 ): TSet {
   const rawTSet = fileFormatMap[fileFormat].readTFile(args);
-  const cleanTSet: TSet = new Map();
   rawTSet.forEach((value, key) => {
     if (value === "") {
       /**
        * Empty JavaScript-strings evaluate to false, which is a serious source of bugs throughout this codebase.
        * To mitigate such bugs, we eliminate empty strings as early as possible.
        */
-      cleanTSet.set(key, null);
-    } else {
-      cleanTSet.set(key, value);
+      rawTSet.set(key, null);
     }
   });
-  return cleanTSet;
+  return rawTSet;
 }
 
 export function getMatcherInstance(args: CoreArgs): Matcher {
