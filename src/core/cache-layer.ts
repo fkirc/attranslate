@@ -91,13 +91,15 @@ function cacheEntryToInternalEntry(
     tCacheTargetMiss = true;
     return entry.value;
   }
-  if (src.get(key) !== entry.value) {
+  const srcEntry = src.get(key);
+  if (srcEntry !== entry.value) {
     return entry.value;
   }
   if (target.state !== "needs_update") {
     return entry.value;
   } else {
-    return null;
+    // This is a case where we want to enforce an update even if the cache value is up-to-date.
+    return srcEntry !== null ? null : " ";
   }
 }
 

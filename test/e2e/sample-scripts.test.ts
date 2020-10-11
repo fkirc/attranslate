@@ -1,4 +1,5 @@
 import {
+  assertPathChanged,
   assertPathNotChanged,
   joinLines,
   runCommand,
@@ -9,6 +10,7 @@ import { getDebugPath } from "../../src/util/util";
 
 const sampleDir = "sample-scripts";
 const targetLngs = ["es", "zh", "de"];
+const sourcePath = join(sampleDir, "en", "fruits.json");
 const cachePath = join(
   sampleDir,
   "translate-cache",
@@ -21,9 +23,17 @@ function getTargetPaths(): string[] {
   });
 }
 
-async function runSampleScript(command: string): Promise<string> {
+async function runSampleScript(
+  command: string,
+  expectModified?: boolean
+): Promise<string> {
   const output = await runCommand(command, sampleDir);
-  await assertPathNotChanged(sampleDir);
+  if (expectModified) {
+    await assertPathChanged(sampleDir);
+    await runCommand(`git checkout ${sampleDir}`);
+  } else {
+    await assertPathNotChanged(sampleDir);
+  }
   return output;
 }
 
@@ -79,7 +89,7 @@ function getExpectedCreateOutput(args: {
   return joinLines(lines);
 }
 
-test("multi_translate propagate updates", async () => {
+test("multi_translate propagate updates to null-targets", async () => {
   const targetPaths = getTargetPaths();
   targetPaths.forEach((targetPath) => {
     modifyJsonProperty({
@@ -92,20 +102,44 @@ test("multi_translate propagate updates", async () => {
   const expectOutput = getExpectedUpdateOutput({
     targetPaths,
     cachePath,
+    bypassEmpty: false,
   });
   const output = await runSampleScript(`./multi_translate.sh`);
+  expect(output).toBe(expectOutput);
+});
+
+test("multi_translate propagate empty string from source", async () => {
+  const targetPaths = getTargetPaths();
+
+  targetPaths.forEach((targetPath) => {
+    modifyJsonProperty({
+      jsonPath: sourcePath,
+      index: 0,
+      newValue: "",
+    });
+  });
+  const expectOutput = getExpectedUpdateOutput({
+    targetPaths,
+    cachePath,
+    bypassEmpty: true,
+  });
+  const output = await runSampleScript(`./multi_translate.sh`, true);
   expect(output).toBe(expectOutput);
 });
 
 function getExpectedUpdateOutput(args: {
   targetPaths: string[];
   cachePath: string;
+  bypassEmpty: boolean;
 }): string {
   const lines: string[] = [];
+  const recv = args.bypassEmpty
+    ? "Bypass 1 strings because they are empty..."
+    : "Received 1 results from 'google-translate'...";
   args.targetPaths.forEach((targetPath) => {
     lines.push(
       ...[
-        "Received 1 results from 'google-translate'...",
+        recv,
         "Update 1 existing translations",
         `Write target ${getDebugPath(targetPath)}`,
         `Write cache ${getDebugPath(args.cachePath)}`,
