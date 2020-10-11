@@ -16,29 +16,40 @@ import { CliArgs } from "../../src/core/core-definitions";
 const cacheDirOutdated = join("test-assets", "cache-outdated");
 const cacheMissingDir = join("test-assets", "cache-missing");
 
-const testArray: Partial<CliArgs>[] = [
+const offlineMaxTime = 200;
+const onlineMaxTime = 2000;
+
+const testArray: { cliArgs: Partial<CliArgs>; maxTime: number }[] = [
   {
-    srcFile: "test-assets/flat-json/count-empty-null.flat.json",
-    srcFormat: "flat-json",
-    targetFile: "test-assets/flat-json/count-empty.flat.json",
-    targetFormat: "nested-json",
+    cliArgs: {
+      srcFile: "test-assets/flat-json/count-empty-null.flat.json",
+      srcFormat: "flat-json",
+      targetFile: "test-assets/flat-json/count-empty.flat.json",
+      targetFormat: "nested-json",
+    },
+    maxTime: offlineMaxTime,
   },
   {
-    srcFile: "test-assets/nested-json/count-en.nested.json",
-    srcFormat: "nested-json",
-    targetFile: "test-assets/nested-json/count-de.flattened.json",
-    targetFormat: "flat-json",
+    cliArgs: {
+      srcFile: "test-assets/nested-json/count-en.nested.json",
+      srcFormat: "nested-json",
+      targetFile: "test-assets/nested-json/count-de.flattened.json",
+      targetFormat: "flat-json",
+    },
+    maxTime: onlineMaxTime,
   },
 ];
 
 describe.each(testArray)("outdated cache %p", (commonArgs) => {
   const argsTemplate: CliArgs = {
     ...defaultE2EArgs,
-    ...commonArgs,
+    ...commonArgs.cliArgs,
     cacheDir: cacheDirOutdated,
   };
   async function runWithOutdatedCache(args: CliArgs): Promise<string> {
-    const output = await runTranslate(buildE2EArgs(args));
+    const output = await runTranslate(buildE2EArgs(args), {
+      maxTime: commonArgs.maxTime,
+    });
     expect(output).toContain(`Write cache`);
     await assertPathChanged(args.cacheDir);
     await runCommand(`git checkout ${args.cacheDir}`);
@@ -64,19 +75,23 @@ describe.each(testArray)("outdated cache %p", (commonArgs) => {
 describe.each(testArray)("clean cache %p", (commonArgs) => {
   const argsTemplate: CliArgs = {
     ...defaultE2EArgs,
-    ...commonArgs,
+    ...commonArgs.cliArgs,
   };
   test("missing target", async () => {
     const args = { ...argsTemplate };
     await preMissingTarget(args);
-    const output = await runTranslate(buildE2EArgs(args));
+    const output = await runTranslate(buildE2EArgs(args), {
+      maxTime: commonArgs.maxTime,
+    });
     await postMissingTarget(args, output);
   });
 
   test("modified target", async () => {
     const args = { ...argsTemplate };
     await preModifiedTarget(args);
-    const output = await runTranslate(buildE2EArgs(args));
+    const output = await runTranslate(buildE2EArgs(args), {
+      maxTime: offlineMaxTime,
+    });
     expect(output).toBe(`Target is up-to-date: '${args.targetFile}'\n`);
     await postModifiedTarget(args);
   });
@@ -85,14 +100,17 @@ describe.each(testArray)("clean cache %p", (commonArgs) => {
 describe.each(testArray)("missing cache %p", (commonArgs) => {
   const argsTemplate: CliArgs = {
     ...defaultE2EArgs,
-    ...commonArgs,
+    ...commonArgs.cliArgs,
     cacheDir: cacheMissingDir,
   };
   const cacheMissingFile = `${join(cacheMissingDir, "attranslate-cache-*")}`;
 
-  async function runWithMissingCache(args: CliArgs): Promise<string> {
+  async function runWithMissingCache(
+    args: CliArgs,
+    maxTime: number
+  ): Promise<string> {
     await runCommand(`rm -f ${cacheMissingFile}`);
-    const output = await runTranslate(buildE2EArgs(args));
+    const output = await runTranslate(buildE2EArgs(args), { maxTime });
     expect(output).toContain(
       `Cache not found -> Generate a new cache to enable selective translations.`
     );
@@ -104,14 +122,14 @@ describe.each(testArray)("missing cache %p", (commonArgs) => {
   test("missing target", async () => {
     const args = { ...argsTemplate };
     await preMissingTarget(args);
-    const output = await runWithMissingCache(args);
+    const output = await runWithMissingCache(args, commonArgs.maxTime);
     await postMissingTarget(args, output);
   });
 
   test("modified target", async () => {
     const args = { ...argsTemplate };
     await preModifiedTarget(args);
-    const output = await runWithMissingCache(args);
+    const output = await runWithMissingCache(args, offlineMaxTime);
     expect(output).toContain(
       "Skipped translations because we had to generate a new cache."
     );
