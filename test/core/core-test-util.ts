@@ -1,6 +1,7 @@
 import { CoreArgs, CoreResults, TSet } from "../../src/core/core-definitions";
 import { translateCore } from "../../src/core/translate-core";
 import {
+  injectFakeService,
   serviceMap,
   TResult,
   TService,
@@ -80,10 +81,6 @@ class BogusService implements TService {
     });
     return Promise.resolve(results);
   }
-}
-
-export function injectFakeService(serviceName: string, service: TService) {
-  serviceMap[serviceName as keyof typeof serviceMap] = service as never;
 }
 
 export const commonArgs: Omit<CoreArgs, "oldTarget" | "src" | "srcCache"> = {

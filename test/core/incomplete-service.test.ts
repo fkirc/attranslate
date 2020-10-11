@@ -1,11 +1,7 @@
-import {
-  commonArgs,
-  enSrc,
-  translateCoreAssert,
-  injectFakeService,
-} from "./core-test-util";
+import { commonArgs, enSrc, translateCoreAssert } from "./core-test-util";
 import { CoreArgs, CoreResults, TSet } from "../../src/core/core-definitions";
 import {
+  injectFakeService,
   serviceMap,
   TResult,
   TService,

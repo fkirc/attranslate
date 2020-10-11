@@ -1,11 +1,12 @@
 import { CoreArgs, TServiceInvocation, TSet } from "./core-definitions";
-import { getMatcherInstance, getServiceInstance } from "./core-util";
+import { getMatcherInstance } from "./core-util";
 import {
   reInsertInterpolations,
   replaceInterpolations,
   Replacer,
 } from "../matchers/matcher-definitions";
 import {
+  instantiateTService,
   TResult,
   TServiceArgs,
   TString,
@@ -72,7 +73,7 @@ async function runTranslationService(
     serviceConfig: args.serviceConfig,
     interpolationMatcher: getMatcherInstance(args),
   };
-  const translationService = getServiceInstance(args);
+  const translationService = instantiateTService(args.service);
   const rawResults = await translationService.translateStrings(serviceArgs);
   console.info(
     `Received ${rawResults.length} results from '${args.service}'...`

@@ -1,5 +1,4 @@
 import { Matcher, matcherMap } from "../matchers/matcher-definitions";
-import { serviceMap, TService } from "../services/service-definitions";
 import { CoreArgs, CoreResults, TSet } from "./core-definitions";
 import { logFatal } from "../util/util";
 import {
@@ -80,14 +79,6 @@ export function getMatcherInstance(args: CoreArgs): Matcher {
     throw new Error(`The matcher ${matcher} doesn't exist.`);
   }
   return matcherMap[matcher];
-}
-
-export function getServiceInstance(args: CoreArgs): TService {
-  const service: keyof typeof serviceMap = args.service;
-  if (typeof serviceMap[service] === "undefined") {
-    throw new Error(`The service ${service} doesn't exist.`);
-  }
-  return serviceMap[service];
 }
 
 export function insertAt<T>(array: T[], index: number, ...elementsArray: T[]) {

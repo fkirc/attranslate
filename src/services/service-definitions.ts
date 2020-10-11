@@ -1,7 +1,3 @@
-import { GoogleTranslate } from "./google-translate";
-import { DeepL } from "./deepl";
-import { AzureTranslator } from "./azure-translator";
-import { ManualTranslation } from "./manual";
 import { Matcher } from "../matchers/matcher-definitions";
 
 export interface TResult {
@@ -27,8 +23,40 @@ export interface TService {
 }
 
 export const serviceMap = {
-  "google-translate": new GoogleTranslate(),
-  deepl: new DeepL(),
-  azure: new AzureTranslator(),
-  manual: new ManualTranslation(),
+  "google-translate": null,
+  deepl: null,
+  azure: null,
+  manual: null,
 };
+
+export function injectFakeService(serviceName: string, service: TService) {
+  fakeServiceMap[serviceName] = service;
+}
+
+const fakeServiceMap: Record<string, TService> = {};
+
+export function instantiateTService(
+  service: keyof typeof serviceMap
+): TService {
+  const fakeService = fakeServiceMap[service];
+  if (fakeService) {
+    return fakeService;
+  }
+  /**
+   * For performance reasons, we require services dynamically instead of using static imports.
+   */
+  switch (service) {
+    case "azure":
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      return new (require("./azure-translator").AzureTranslator)();
+    case "deepl":
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      return new (require("./deepl").DeepL)();
+    case "google-translate":
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      return new (require("./google-translate").GoogleTranslate)();
+    case "manual":
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      return new (require("./manual").ManualTranslation)();
+  }
+}

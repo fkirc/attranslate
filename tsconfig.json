@@ -23,6 +23,10 @@
     "strictBindCallApply": true
   },
   "files": [
-    "src/index.ts"
+    "src/index.ts",
+    "src/services/google-translate.ts",
+    "src/services/deepl.ts",
+    "src/services/azure-translator.ts",
+    "src/services/manual.ts"
   ]
 }
