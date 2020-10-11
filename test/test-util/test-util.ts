@@ -1,6 +1,7 @@
 import { exec } from "child_process";
 import { join } from "path";
 import { logFatal } from "../../src/util/util";
+import { existsSync } from "fs";
 
 function buildTranslateCommand(args: string) {
   return `${join(process.cwd(), "bin", "attranslate")} ${args}`;
@@ -83,8 +84,12 @@ export function* enumerateSubsets<T>(set: T[], offset = 0): Generator<T[]> {
   yield [];
 }
 
+export function assertExists(path: string) {
+  expect(existsSync(path)).toBe(true);
+}
+
 export async function assertPathChanged(path: string) {
-  await runCommand(`ls ${path}`);
+  assertExists(path);
   await runCommandExpectFailure(`git diff --exit-code ${path}`);
 }
 

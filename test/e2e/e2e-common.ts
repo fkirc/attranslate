@@ -1,6 +1,12 @@
 import { CliArgs } from "../../src/core/core-definitions";
 import { getGCloudKeyPath } from "../setup/key-exports";
 import { readJsonFile, writeJsonFile } from "../../src/util/util";
+import {
+  assertExists,
+  generateId,
+  runCommand,
+  runCommandExpectFailure,
+} from "../test-util/test-util";
 
 export const defaultE2EArgs: CliArgs = {
   srcFile: "test-assets/flat-json/count-en.flat.json",
@@ -15,6 +21,24 @@ export const defaultE2EArgs: CliArgs = {
   matcher: "none",
   deleteStale: "true",
 };
+
+export async function switchToRandomTarget(args: CliArgs) {
+  const randomTargetFile = `${args.targetFile}_${generateId()}`;
+  args.refTargetFile = args.targetFile;
+  args.targetFile = randomTargetFile;
+  await runCommand(`cp ${args.refTargetFile} ${args.targetFile}`);
+}
+
+export async function removeTargetFile(args: CliArgs, expectModified: boolean) {
+  const diffCmd = `git diff --exit-code ${args.targetFile} ${args.refTargetFile}`;
+  assertExists(args.targetFile);
+  if (expectModified) {
+    await runCommandExpectFailure(diffCmd);
+  } else {
+    await runCommand(diffCmd);
+  }
+  await runCommand(`rm ${args.targetFile}`);
+}
 
 export function buildE2EArgs(args: CliArgs): string {
   const cmdArgs: string[] = [];

@@ -1,10 +1,14 @@
 import {
   assertPathChanged,
-  generateId,
   runCommand,
   runTranslate,
 } from "../test-util/test-util";
-import { buildE2EArgs, defaultE2EArgs } from "./e2e-common";
+import {
+  buildE2EArgs,
+  defaultE2EArgs,
+  removeTargetFile,
+  switchToRandomTarget,
+} from "./e2e-common";
 import { join } from "path";
 import { getDebugPath, readJsonFile, writeJsonFile } from "../../src/util/util";
 import { CliArgs } from "../../src/core/core-definitions";
@@ -114,34 +118,23 @@ describe.each(testArray)("missing cache %p", (commonArgs) => {
   });
 });
 
-function switchToRandomTargetFile(args: CliArgs) {
-  const randomTargetFile = `${args.targetFile}_${generateId()}`;
-  args.refTargetFile = args.targetFile;
-  args.targetFile = randomTargetFile;
-}
-
-async function removeRandomTargetFile(args: CliArgs) {
-  await runCommand(`rm ${args.targetFile}`);
-}
-
 async function preModifiedTarget(args: CliArgs) {
-  switchToRandomTargetFile(args);
-  await runCommand(`cp ${args.refTargetFile} ${args.targetFile}`);
+  await switchToRandomTarget(args);
   modifyFirstTwoProperties(args.targetFile);
 }
 
 async function postModifiedTarget(args: CliArgs) {
-  await removeRandomTargetFile(args);
+  await removeTargetFile(args, true);
 }
 
-function preMissingTarget(args: CliArgs) {
-  switchToRandomTargetFile(args);
+async function preMissingTarget(args: CliArgs) {
+  await switchToRandomTarget(args);
 }
 
 async function postMissingTarget(args: CliArgs, output: string) {
   expect(output).toContain(`Add 3 new translations`);
   expect(output).toContain(`Write target ${getDebugPath(args.targetFile)}`);
-  await removeRandomTargetFile(args);
+  await removeTargetFile(args, false);
 }
 
 function modifyFirstTwoProperties(jsonPath: string) {

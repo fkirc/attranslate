@@ -1,7 +1,6 @@
 import { runTranslate } from "../test-util/test-util";
 import { buildE2EArgs, defaultE2EArgs } from "./e2e-common";
 import { CliArgs } from "../../src/core/core-definitions";
-import { getDebugPath } from "../../src/util/util";
 
 const testArray: Partial<CliArgs>[] = [
   {
