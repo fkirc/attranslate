@@ -97,6 +97,7 @@ describe.each(testArray)("missing cache %p", (commonArgs) => {
       `Cache not found -> Generate a new cache to enable selective translations.`
     );
     expect(output).toContain(`Write cache`);
+    await runCommand(`rm ${cacheMissingFile}`);
     return output;
   }
 
