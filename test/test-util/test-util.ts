@@ -27,7 +27,7 @@ async function runMaxTime<T>(
   const res = await runnable();
   const passed = window.performance.now() - before;
   if (passed > maxMillis) {
-    logFatal(
+    fail(
       `Took ${passed} milliseconds - maximum is ${maxMillis} milliseconds: '${cmd}'`
     );
   }
