@@ -119,7 +119,7 @@ describe.each(testArray)("missing cache %p", (commonArgs) => {
 });
 
 async function preModifiedTarget(args: CliArgs) {
-  await switchToRandomTarget(args);
+  await switchToRandomTarget(args, true);
   modifyFirstTwoProperties(args.targetFile);
 }
 
@@ -128,7 +128,7 @@ async function postModifiedTarget(args: CliArgs) {
 }
 
 async function preMissingTarget(args: CliArgs) {
-  await switchToRandomTarget(args);
+  await switchToRandomTarget(args, false);
 }
 
 async function postMissingTarget(args: CliArgs, output: string) {

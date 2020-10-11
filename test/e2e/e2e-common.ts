@@ -22,15 +22,17 @@ export const defaultE2EArgs: CliArgs = {
   deleteStale: "true",
 };
 
-export async function switchToRandomTarget(args: CliArgs) {
+export async function switchToRandomTarget(args: CliArgs, copy: boolean) {
   const randomTargetFile = `${args.targetFile}_${generateId()}`;
   args.refTargetFile = args.targetFile;
   args.targetFile = randomTargetFile;
-  await runCommand(`cp ${args.refTargetFile} ${args.targetFile}`);
+  if (copy) {
+    await runCommand(`cp ${args.refTargetFile} ${args.targetFile}`);
+  }
 }
 
 export async function removeTargetFile(args: CliArgs, expectModified: boolean) {
-  const diffCmd = `git diff --exit-code ${args.targetFile} ${args.refTargetFile}`;
+  const diffCmd = `diff ${args.targetFile} ${args.refTargetFile}`;
   assertExists(args.targetFile);
   if (expectModified) {
     await runCommandExpectFailure(diffCmd);
