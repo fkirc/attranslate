@@ -84,55 +84,20 @@ Alternatively, if you are a JavaScript-developer, then you should install `attra
 Next, you should write a project-specific script that invokes `attranslate` for your specific files.
 See sample scripts for a guidance on how to translate your project-specific files.
 
-### Google Translate
+## Service Configuration
 
-To use this tool with Google Translate, you need to obtain valid credentials
-from Google. Follow these steps to get them:
+If you use `attranslate` with an automated translation-service, then you need to configure an API-key.
+API-keys can be obtained for free, but you might need to register an account.
+See [service config](/SERVICE_CONFIG.md) for guidance on how to obtain API-keys for specific services.
 
-1.  [Select or create a Cloud Platform project][projects]
-2.  [Enable billing for your project][billing] (optional, I think)
-3.  [Enable the Google Cloud Translation API][enable_api]
-4.  [Set up authentication with a service account][auth] so you can access the
-    API from your local workstation
-
-[projects]: https://console.cloud.google.com/project
-[billing]: https://support.google.com/cloud/answer/6293499#enable-billing
-[enable_api]:
-  https://console.cloud.google.com/flows/enableapi?apiid=translate.googleapis.com
-[auth]: https://cloud.google.com/docs/authentication/getting-started
-
-You can specify the location of your downloaded JSON key file using the `-c` or
-`--config` option.
-
-### DeepL
-
-To use this tool with DeepL, you need to obtain an API key from their website.
-API-keys are only available to DeepL Pro API users. If you don't have a
-Developer account yet, you can create one
-[here](https://www.deepl.com/en/pro.html#developer).
-
-Afterwards, pass your API-key to `attranslate` via the `--serviceConfig` flag.
-
-### Azure Translator Text
-
-To use `attranslate` with Azure's Translator Text, you need to obtain an API key
-from their website. [Sign Up](https://azure.microsoft.com/en-us/free/) for an
-Azure account if you don't have one already and
-[create a new translator instance](https://portal.azure.com/#create/Microsoft.CognitiveServicesTextTranslation).
-
-Afterwards, pass your API-key to `attranslate` via the `--serviceConfig` flag.
-
-### Manual
-
-This service doesn't require any configuration. You will be prompted to
-translate the source strings manually in the console.
+Once you have an API-key, pass your API-key to `attranslate` via the `--serviceConfig` flag.
 
 ## Interpolations and Matchers
 
 Many websites/apps use _interpolations_  to insert dynamic values into translations.
 For example, an interpolation like `Your name is {{name}}` might be replaced with `Your name is Felix`.
 
-To work with interpolations, `attranslate` provides so-called _matchers_.
+To help with interpolations, `attranslate` provides so-called _matchers_.
 A matcher replaces interpolations with placeholders before they are
 sent to a translation service.
 `attranslate` offers the following matchers for different styles of interpolations:
@@ -152,5 +117,5 @@ The purpose is twofold:
 - The translation-cache enables selective corrections if you are not happy with automatically generated translations.
 - The translation-cache saves time and cost because it prevents redundant re-translations.
 
-The translation-cache consists of `attranslate-cache`-files.
-To make it work, you should put your `attranslate-cache`-files under version control.
+The translation-cache consists of `attranslate-cache-*`-files.
+To make it work, you should put your `attranslate-cache-*`-files under version control.
