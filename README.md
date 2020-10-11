@@ -111,7 +111,7 @@ Alternatively, if you are a JavaScript-developer, then you should install `attra
 `npm install --save-dev attranslate`
 
 Next, you should write a project-specific script that invokes `attranslate` for your specific files.
-See [sample scripts](/sample-scripts) for a guidance on how to translate your project-specific files.
+See [sample scripts](/sample-scripts) for guidance on how to translate your project-specific files.
 
 ## Service Configuration
 
