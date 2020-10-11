@@ -132,10 +132,10 @@ function expectedUpdateOutput(args: {
   bypassEmpty: boolean;
 }): string {
   const lines: string[] = [];
-  const recv = args.bypassEmpty
-    ? "Bypass 1 strings because they are empty..."
-    : "Invoke 'google-translate' with 1 inputs...";
-  args.targetPaths.forEach((targetPath) => {
+  args.targetPaths.forEach((targetPath, index) => {
+    const recv = args.bypassEmpty
+      ? "Bypass 1 strings because they are empty..."
+      : `Invoke 'google-translate' from 'en' to '${targetLngs[index]}' with 1 inputs...`;
     lines.push(
       ...[
         recv,

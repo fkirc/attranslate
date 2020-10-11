@@ -74,7 +74,7 @@ async function runTranslationService(
     interpolationMatcher: getMatcherInstance(args),
   };
   console.info(
-    `Invoke '${args.service}' with ${serviceArgs.strings.length} inputs...`
+    `Invoke '${args.service}' from '${args.srcLng}' to '${args.targetLng}' with ${serviceArgs.strings.length} inputs...`
   );
   const translationService = instantiateTService(args.service);
   const rawResults = await translationService.translateStrings(serviceArgs);
