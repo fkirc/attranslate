@@ -18,9 +18,9 @@ const cacheMissingDir = join("test-assets", "cache-missing");
 
 const testArray: Partial<CliArgs>[] = [
   {
-    srcFile: "test-assets/flat-json/count-en.flat.json",
+    srcFile: "test-assets/flat-json/count-empty-null.flat.json",
     srcFormat: "flat-json",
-    targetFile: "test-assets/flat-json/count-de.flat.json",
+    targetFile: "test-assets/flat-json/count-empty.flat.json",
     targetFormat: "nested-json",
   },
   {
