@@ -1,9 +1,9 @@
-# attranslate - Automated Text Translator for Websites and Apps
+# _attranslate_ - Semi-automated Text Translator for Websites and Apps
 
 Automated translation-services can speedup traditional workflows.
 For example, let's say that a translation-service achieves 90% correct translations on the spot.
-In this case, a quick fix of the remaining 10% is faster than doing everything by hand.
-`attranslate` makes it easy to setup _semi-automated_ translation-workflows.
+With `attranslate`, a quick fix of the remaining 10% is faster than doing everything by hand.
+Therefore, `attranslate` makes it easy to setup _semi-automated_ translation-workflows.
 Other than that, `attranslate` supports manual translations and even file-format-conversions without changing the language.
 
 ## Why attranslate?
