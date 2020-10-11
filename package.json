@@ -43,7 +43,6 @@
     "@google-cloud/translate": "^6.0.3",
     "commander": "^6.1.0",
     "inquirer": "^6.2.2",
-    "lodash": "^4.17.11",
     "messageformat-parser": "^4.1.0"
   },
   "devDependencies": {
