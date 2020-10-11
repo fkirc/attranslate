@@ -52,7 +52,9 @@ This does not only speedup your workflow, but also saves cost for paid translati
 
 Translating to a single target-language is as simple as the following line:
 
-`attranslate --srcFile='en/fruits.json' --srcLng='en' --srcFormat='nested-json' --targetFile='de/fruits.json' --targetLng='de' --targetFormat='nested-json' --service='manual' --serviceConfig='ignored if service=manual'`
+```
+attranslate --srcFile='en/fruits.json' --srcLng='en' --srcFormat='nested-json' --targetFile='de/fruits.json' --targetLng='de' --targetFormat='nested-json' --service='manual' --serviceConfig='ignored if service=manual'
+```
 
 If you have multiple target-languages, then you will need multiple calls to `attranslate`.
 You can write something like the following script to avoid unnecessary duplication:
@@ -109,7 +111,7 @@ Alternatively, if you are a JavaScript-developer, then you should install `attra
 `npm install --save-dev attranslate`
 
 Next, you should write a project-specific script that invokes `attranslate` for your specific files.
-See sample scripts for a guidance on how to translate your project-specific files.
+See [sample scripts](/sample-scripts) for a guidance on how to translate your project-specific files.
 
 ## Service Configuration
 
