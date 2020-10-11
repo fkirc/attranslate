@@ -45,8 +45,8 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
       formatOneOfOptions(Object.keys(serviceMap))
     )
     .requiredOption(
-      "--serviceConfig <pathToKeyFile>",
-      "supply configuration for a translation service (e.g. a path to a key-file)"
+      "--serviceConfig <serviceKey>",
+      "supply configuration for a translation service (either a path to a key-file or an API-key)"
     )
     .option(
       "--cacheDir <cacheDir>",

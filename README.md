@@ -83,8 +83,9 @@ Options:
   --targetFormat <targetFileFormat>  One of "flat-json", "nested-json"
   --service <translationService>     One of "google-translate", "deepl",
                                      "azure", "manual"
-  --serviceConfig <pathToKeyFile>    supply configuration for a translation
-                                     service (e.g. a path to a key-file)
+  --serviceConfig <serviceKey>       supply configuration for a translation
+                                     service (either a path to a key-file or an
+                                     API-key)
   --cacheDir <cacheDir>              The directory where a translation-cache is
                                      expected to be found (default: ".")
   --matcher <matcher>                One of "none", "icu", "i18next", "sprintf"
@@ -93,7 +94,6 @@ Options:
                                      the target file but not in the source file
                                      (default: "true")
   -h, --help                         display help for command
-
 ```
 
 
