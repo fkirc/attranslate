@@ -1,10 +1,5 @@
 import { CoreArgs, TServiceInvocation, TSet } from "./core-definitions";
-import {
-  convertFromServiceResults,
-  convertToTStringList,
-  getMatcherInstance,
-  getServiceInstance,
-} from "./core-util";
+import { getMatcherInstance, getServiceInstance } from "./core-util";
 import {
   reInsertInterpolations,
   replaceInterpolations,
@@ -20,7 +15,39 @@ export async function invokeTranslationService(
   serviceInputs: TSet,
   args: CoreArgs
 ): Promise<TServiceInvocation> {
-  const rawInputs = convertToTStringList(serviceInputs);
+  /**
+   * Some translation services throw errors if they see empty strings.
+   * Therefore, we bypass empty strings without changing them.
+   */
+  const rawInputs: TString[] = [];
+  const results: TSet = new Map();
+  serviceInputs.forEach((value, key) => {
+    if (!value || !value.trim().length) {
+      results.set(key, value);
+    } else {
+      rawInputs.push({
+        key,
+        value,
+      });
+    }
+  });
+  let translateResults: TResult[] = [];
+  if (rawInputs.length) {
+    translateResults = await runTranslationService(rawInputs, args);
+  }
+  translateResults.forEach((tResult) => {
+    results.set(tResult.key, tResult.translated);
+  });
+  return {
+    inputs: serviceInputs,
+    results,
+  };
+}
+
+async function runTranslationService(
+  rawInputs: TString[],
+  args: CoreArgs
+): Promise<TResult[]> {
   const matcher = getMatcherInstance(args);
   const replacers = new Map<string, Replacer>();
   rawInputs.forEach((rawString) => {
@@ -45,7 +72,7 @@ export async function invokeTranslationService(
   const translationService = getServiceInstance(args);
   const rawResults = await translationService.translateStrings(serviceArgs);
 
-  const results: TResult[] = rawResults.map((rawResult) => {
+  return rawResults.map((rawResult) => {
     const cleanResult = reInsertInterpolations(
       rawResult.translated,
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -56,8 +83,4 @@ export async function invokeTranslationService(
       translated: cleanResult,
     };
   });
-  return {
-    inputs: serviceInputs,
-    results: convertFromServiceResults(results),
-  };
 }

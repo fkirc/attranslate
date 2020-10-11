@@ -1,10 +1,5 @@
 import { Matcher, matcherMap } from "../matchers/matcher-definitions";
-import {
-  serviceMap,
-  TResult,
-  TService,
-  TString,
-} from "../services/service-definitions";
+import { serviceMap, TService } from "../services/service-definitions";
 import { CoreArgs, CoreResults, TSet } from "./core-definitions";
 import { logFatal } from "../util/util";
 import {
@@ -105,27 +100,6 @@ export function getServiceInstance(args: CoreArgs): TService {
     throw new Error(`The service ${service} doesn't exist.`);
   }
   return serviceMap[service];
-}
-
-export function convertFromServiceResults(serviceResults: TResult[]): TSet {
-  const tSet = new Map<string, string>();
-  serviceResults.forEach((tResult) => {
-    tSet.set(tResult.key, tResult.translated);
-  });
-  return tSet;
-}
-
-export function convertToTStringList(tSet: TSet): TString[] {
-  const tList: TString[] = [];
-  tSet.forEach((value, key) => {
-    if (value !== null) {
-      tList.push({
-        key,
-        value,
-      });
-    }
-  });
-  return tList;
 }
 
 export function insertAt<T>(array: T[], index: number, ...elementsArray: T[]) {

@@ -15,6 +15,7 @@ import {
 import { logCoreResults } from "./core-util";
 import { logFatal } from "../util/util";
 import { invokeTranslationService } from "./invoke-translation-service";
+
 function extractStringsToTranslate(args: CoreArgs): TSet {
   const src: TSet = args.src;
   if (!src.size) {
