@@ -9,11 +9,6 @@ import {
 } from "../file-formats/file-format-definitions";
 
 export function logCoreResults(args: CoreArgs, results: CoreResults) {
-  if (results.serviceInvocation) {
-    console.info(
-      `Received ${results.serviceInvocation.results.size} results from '${args.service}'...`
-    );
-  }
   if (!args.srcCache) {
     console.info(
       `Cache not found -> Generate a new cache to enable selective translations.\n` +

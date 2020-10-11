@@ -1,5 +1,10 @@
 import { runTranslate } from "../test-util/test-util";
-import { buildE2EArgs, defaultE2EArgs } from "./e2e-common";
+import {
+  buildE2EArgs,
+  defaultE2EArgs,
+  removeTargetFile,
+  switchToRandomTarget,
+} from "./e2e-common";
 import { CliArgs } from "../../src/core/core-definitions";
 
 const testArray: Partial<CliArgs>[] = [
@@ -17,9 +22,10 @@ describe.each(testArray)("empty props %p", (commonArgs) => {
     ...commonArgs,
   };
   test("different empty props", async () => {
+    await switchToRandomTarget(args, true);
     const output = await runTranslate(buildE2EArgs(args));
-    expect(output).toContain(`Warning: Skip 'nullProp' because it is empty.`);
-    expect(output).toContain(`Warning: Skip 'spacesProp' because it is empty.`);
-    expect(output).toContain("Target is up-to-date.");
+    expect(output).toContain(`Bypass 3 strings because they are empty...`);
+    expect(output).toContain("Add 3 new translations");
+    await removeTargetFile(args, true);
   });
 });

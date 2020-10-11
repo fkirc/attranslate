@@ -31,6 +31,9 @@ export async function invokeTranslationService(
       });
     }
   });
+  if (results.size) {
+    console.info(`Bypass ${results.size} strings because they are empty...`);
+  }
   let translateResults: TResult[] = [];
   if (rawInputs.length) {
     translateResults = await runTranslationService(rawInputs, args);
@@ -71,7 +74,9 @@ async function runTranslationService(
   };
   const translationService = getServiceInstance(args);
   const rawResults = await translationService.translateStrings(serviceArgs);
-
+  console.info(
+    `Received ${rawResults.length} results from '${args.service}'...`
+  );
   return rawResults.map((rawResult) => {
     const cleanResult = reInsertInterpolations(
       rawResult.translated,
