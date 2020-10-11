@@ -9,10 +9,29 @@ function buildTranslateCommand(args: string) {
 
 export async function runTranslate(
   args: string,
-  pwd?: string
+  options?: { pwd?: string; maxTime?: number }
 ): Promise<string> {
   const cmd = buildTranslateCommand(args);
-  return await runCommand(cmd, pwd);
+  const maxMillis = options?.maxTime ? options.maxTime : 10 * 1000;
+  return await runMaxTime(maxMillis, cmd, () => {
+    return runCommand(cmd, options?.pwd);
+  });
+}
+
+async function runMaxTime<T>(
+  maxMillis: number,
+  cmd: string,
+  runnable: () => Promise<T>
+): Promise<T> {
+  const before: number = window.performance.now();
+  const res = await runnable();
+  const passed = window.performance.now() - before;
+  if (passed > maxMillis) {
+    logFatal(
+      `Took ${passed} milliseconds - maximum is ${maxMillis} milliseconds: '${cmd}'`
+    );
+  }
+  return res;
 }
 
 export async function runTranslateExpectFailure(

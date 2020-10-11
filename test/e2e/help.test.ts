@@ -20,12 +20,12 @@ test("reGenerateHelp", async () => {
 });
 
 test("--help", async () => {
-  const output = await runTranslate(`--help`, "/");
+  const output = await runTranslate(`--help`, { pwd: "/" });
   expect(output).toBe(getHelpReference());
 });
 
 test("-h", async () => {
-  const output = await runTranslate(`-h`, "/");
+  const output = await runTranslate(`-h`, { pwd: "/" });
   expect(output).toBe(getHelpReference());
 });
 
