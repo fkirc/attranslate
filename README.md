@@ -52,21 +52,33 @@ This does not only speedup your workflow, but also saves cost for paid translati
 
 TODO: Perhaps link to sample-scripts
 
-# Available Options
+# Usage
+
+Run `attranslate --help` to see a list of available options:
 
 ```
+Usage: attranslate [options]
+
 Options:
-  -i, --input <inputDir>               the directory containing language directories (default: ".")
-  -l, --source-language <sourceLang>   specify the source language (default: "en")
-  -t, --type <key-based|natural|auto>  specify the file structure type (default: "auto")
-  -s, --service <service>              selects the service to be used for translation (default: "google-translate")
-  --list-services                      outputs a list of available services
-  -m, --matcher <matcher>              selects the matcher to be used for interpolations (default: "icu")
-  --list-matchers                      outputs a list of available matchers
-  -c, --config <value>                 supply a config parameter (e.g. path to key file) to the translation service
-  -f, --fix-inconsistencies            automatically fixes inconsistent key-value pairs by setting the value to the key
-  -d, --delete-unused-strings          deletes strings in translation files that don't exist in the template
-  -h, --help                           output usage information
+  --srcFile <sourceFile>             The source file to be translated
+  --srcLng <sourceLanguage>          A language code for the source language
+  --srcFormat <sourceFileFormat>     One of "flat-json", "nested-json"
+  --targetFile <targetFile>          The target file for the translations
+  --targetLng <targetLanguage>       A language code for the target language
+  --targetFormat <targetFileFormat>  One of "flat-json", "nested-json"
+  --service <translationService>     One of "google-translate", "deepl",
+                                     "azure", "manual"
+  --serviceConfig <pathToKeyFile>    supply configuration for a translation
+                                     service (e.g. a path to a key-file)
+  --cacheDir <cacheDir>              The directory where a translation-cache is
+                                     expected to be found (default: ".")
+  --matcher <matcher>                One of "none", "icu", "i18next", "sprintf"
+                                     (default: "none")
+  --deleteStale <true | false>       If true, delete translations that exist in
+                                     the target file but not in the source file
+                                     (default: "true")
+  -h, --help                         display help for command
+
 ```
 
 
