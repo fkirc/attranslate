@@ -109,6 +109,9 @@ export async function translateCli(cliArgs: CliArgs) {
   if (flushCache) {
     writeTCache(result, cliArgs);
   }
+  if (!flushTarget && srcCache) {
+    console.info(`Target is up-to-date: '${cliArgs.targetFile}'`);
+  }
 }
 
 function parseBooleanOption(rawOption: string): boolean {

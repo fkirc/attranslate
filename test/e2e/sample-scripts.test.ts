@@ -39,16 +39,16 @@ async function runSampleScript(
 
 test("simple_translate", async () => {
   const output = await runSampleScript(`./simple_translate.sh`);
-  expect(output).toBe("Target is up-to-date.\n");
+  expect(output).toBe("Target is up-to-date: 'de/fruits.json'\n");
 });
 
 test("multi_translate clean", async () => {
   const output = await runSampleScript(`./multi_translate.sh`);
   expect(output).toBe(
     joinLines([
-      "Target is up-to-date.",
-      "Target is up-to-date.",
-      "Target is up-to-date.",
+      "Target is up-to-date: 'es/fruits.json'",
+      "Target is up-to-date: 'zh/fruits.json'",
+      "Target is up-to-date: 'de/fruits.json'",
     ])
   );
 });
@@ -57,7 +57,7 @@ test("multi_translate create new cache", async () => {
   await runCommand(`rm ${cachePath}`);
 
   const targetPaths = getTargetPaths();
-  const expectOutput = getExpectedCreateOutput({
+  const expectOutput = expectedCreateOutput({
     targetPaths,
     cachePath,
   });
@@ -65,28 +65,27 @@ test("multi_translate create new cache", async () => {
   expect(output).toBe(expectOutput);
 });
 
-function getExpectedCreateOutput(args: {
+function expectedCreateOutput(args: {
   targetPaths: string[];
   cachePath: string;
 }): string {
-  const lines: string[] = [];
-  args.targetPaths.forEach((targetPath, index) => {
-    if (index === 0) {
-      lines.push(
-        ...[
-          `Cache not found -> Generate a new cache to enable selective translations.`,
-          `To make selective translations, do one of the following:`,
-          "Option 1: Change your source-file and then re-run this tool.",
-          "Option 2: Delete parts of your target-file and then re-run this tool.",
-          "Skipped translations because we had to generate a new cache.",
-        ]
-      );
-    } else {
-      lines.push(...["Target is up-to-date."]);
-    }
-    lines.push(`Write cache ${getDebugPath(args.cachePath)}`);
-  });
-  return joinLines(lines);
+  const firstPass: string[] = [
+    `Cache not found -> Generate a new cache to enable selective translations.`,
+    `To make selective translations, do one of the following:`,
+    "Option 1: Change your source-file and then re-run this tool.",
+    "Option 2: Delete parts of your target-file and then re-run this tool.",
+    "Skipped translations because we had to generate a new cache.",
+    `Write cache ${getDebugPath(cachePath)}`,
+  ];
+  const secondPass: string[] = [
+    `Write cache ${getDebugPath(cachePath)}`,
+    `Target is up-to-date: 'zh/fruits.json'`,
+  ];
+  const thirdPass: string[] = [
+    `Write cache ${getDebugPath(cachePath)}`,
+    `Target is up-to-date: 'de/fruits.json'`,
+  ];
+  return joinLines(firstPass.concat(secondPass).concat(thirdPass));
 }
 
 test("multi_translate propagate updates to null-targets", async () => {
@@ -99,7 +98,7 @@ test("multi_translate propagate updates to null-targets", async () => {
     });
   });
 
-  const expectOutput = getExpectedUpdateOutput({
+  const expectOutput = expectedUpdateOutput({
     targetPaths,
     cachePath,
     bypassEmpty: false,
@@ -118,7 +117,7 @@ test("multi_translate propagate empty string from source", async () => {
       newValue: "",
     });
   });
-  const expectOutput = getExpectedUpdateOutput({
+  const expectOutput = expectedUpdateOutput({
     targetPaths,
     cachePath,
     bypassEmpty: true,
@@ -127,7 +126,7 @@ test("multi_translate propagate empty string from source", async () => {
   expect(output).toBe(expectOutput);
 });
 
-function getExpectedUpdateOutput(args: {
+function expectedUpdateOutput(args: {
   targetPaths: string[];
   cachePath: string;
   bypassEmpty: boolean;

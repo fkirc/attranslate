@@ -33,14 +33,10 @@ export function logCoreResults(args: CoreArgs, results: CoreResults) {
   if (countSkipped) {
     console.info(`Warning: Skipped ${countSkipped} translations`);
   }
-  if (!results.serviceInvocation) {
-    if (!args.srcCache) {
-      console.info(
-        `Skipped translations because we had to generate a new cache.`
-      );
-    } else if (!countAdded && !countUpdated && !countSkipped && !countDeleted) {
-      console.info(`Target is up-to-date.`);
-    }
+  if (!results.serviceInvocation && !args.srcCache) {
+    console.info(
+      `Skipped translations because we had to generate a new cache.`
+    );
   }
 }
 
