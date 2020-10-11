@@ -35,28 +35,24 @@ export function injectFakeService(serviceName: string, service: TService) {
 
 const fakeServiceMap: Record<string, TService> = {};
 
-export function instantiateTService(
+export async function instantiateTService(
   service: keyof typeof serviceMap
-): TService {
+): Promise<TService> {
   const fakeService = fakeServiceMap[service];
   if (fakeService) {
     return fakeService;
   }
   /**
-   * For performance reasons, we require services dynamically instead of using static imports.
+   * To gain a reasonable launch-performance, we import services dynamically (instead of static imports).
    */
   switch (service) {
     case "azure":
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      return new (require("./azure-translator").AzureTranslator)();
+      return new (await import("./azure-translator")).AzureTranslator();
     case "deepl":
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      return new (require("./deepl").DeepL)();
+      return new (await import("./deepl")).DeepL();
     case "google-translate":
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      return new (require("./google-translate").GoogleTranslate)();
+      return new (await import("./google-translate")).GoogleTranslate();
     case "manual":
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      return new (require("./manual").ManualTranslation)();
+      return new (await import("./manual")).ManualTranslation();
   }
 }
