@@ -1,5 +1,5 @@
 import { buildE2EArgs, defaultE2EArgs } from "./e2e-common";
-import { runTranslateExpectFailure } from "../test-util/test-util";
+import { joinLines, runTranslateExpectFailure } from "../test-util/test-util";
 import { getDebugPath } from "../../src/util/util";
 import { CliArgs } from "../../src/core/core-definitions";
 
@@ -10,7 +10,10 @@ test("non existing gcloud-config", async () => {
   };
   const output = await runTranslateExpectFailure(buildE2EArgs(args));
   expect(output).toBe(
-    `error: ${getDebugPath("not-existing-config")} does not exist.\n`
+    joinLines([
+      `Invoke 'google-translate' with 3 inputs...`,
+      `error: ${getDebugPath("not-existing-config")} does not exist.`,
+    ])
   );
 });
 
@@ -21,6 +24,7 @@ test("invalid azure-config", async () => {
     serviceConfig: "invalid-api-key",
   };
   const output = await runTranslateExpectFailure(buildE2EArgs(args));
+  expect(output).toContain("Invoke 'azure' with 3 inputs...");
   expect(output).toContain("Azure Translation failed");
   expect(output).toContain(
     "The request is not authorized because credentials are missing or invalid"
@@ -34,6 +38,7 @@ test("invalid deepl-config", async () => {
     serviceConfig: "invalid-api-key",
   };
   const output = await runTranslateExpectFailure(buildE2EArgs(args));
+  expect(output).toContain("Invoke 'deepl' with 3 inputs...");
   expect(output).toContain("DeepL.translateString");
   //expect(output).toContain("[403 Forbidden]: Empty body");
 });
@@ -45,8 +50,11 @@ test("invalid gcloud-config", async () => {
   };
   const output = await runTranslateExpectFailure(buildE2EArgs(args));
   expect(output).toBe(
-    `error: ${getDebugPath(
-      "test-assets/invalid/empty.json"
-    )} does not contain a project_id\n`
+    joinLines([
+      `Invoke 'google-translate' with 3 inputs...`,
+      `error: ${getDebugPath(
+        "test-assets/invalid/empty.json"
+      )} does not contain a project_id`,
+    ])
   );
 });

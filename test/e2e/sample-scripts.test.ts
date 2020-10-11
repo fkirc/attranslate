@@ -135,7 +135,7 @@ function getExpectedUpdateOutput(args: {
   const lines: string[] = [];
   const recv = args.bypassEmpty
     ? "Bypass 1 strings because they are empty..."
-    : "Received 1 results from 'google-translate'...";
+    : "Invoke 'google-translate' with 1 inputs...";
   args.targetPaths.forEach((targetPath) => {
     lines.push(
       ...[
