@@ -11,7 +11,7 @@ test("setupGcloudPrivateKey", () => {
   }
 
   const keyTemplate = readJsonFile<GCloudKeyFile>(gcloudTemplatePath);
-  expect(keyTemplate.private_key).toBe("TODO Replace with a real private key");
+  expect(keyTemplate.private_key).toBe("Replace with a real private key");
   keyTemplate.private_key = privateKey.split("\\n").join("\n");
   writeJsonFile(getGCloudKeyPath(), keyTemplate);
 

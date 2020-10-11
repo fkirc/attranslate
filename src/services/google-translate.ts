@@ -42,20 +42,23 @@ export class GoogleTranslate implements TService {
       targetLanguageCode: args.targetLng,
     };
     const [response] = await client.translateText(request);
-
-    // TODO: Error handling
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    return response.translations!.map((value, index) => {
+    if (!response.translations) {
+      logFatal(`Google-translate did not return translations`);
+    }
+    return response.translations.map((value, index) => {
       return this.transformGCloudResult(value, args.strings[index]);
     });
   }
 
   transformGCloudResult(result: ITranslation, input: TString): TResult {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    if (!result.translatedText) {
+      logFatal(
+        `Google-translate did not return a result for input '${input.value}' with key '${input.key}'`
+      );
+    }
     return {
       key: input.key,
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      translated: result!.translatedText!, // TODO: Error handling
+      translated: result.translatedText,
     };
   }
 }
