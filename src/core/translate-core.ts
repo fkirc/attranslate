@@ -12,25 +12,9 @@ import {
   leftMinusRightFillNull,
   selectLeftDistinct,
 } from "./tset-ops";
-import {
-  convertFromServiceResults,
-  convertToTStringList,
-  getMatcherInstance,
-  getServiceInstance,
-  logCoreResults,
-} from "./core-util";
+import { logCoreResults } from "./core-util";
 import { logFatal } from "../util/util";
-import {
-  TResult,
-  TServiceArgs,
-  TString,
-} from "../services/service-definitions";
-import {
-  reInsertInterpolations,
-  replaceInterpolations,
-  Replacer,
-} from "../matchers/matcher-definitions";
-
+import { invokeTranslationService } from "./invoke-translation-service";
 function extractStringsToTranslate(args: CoreArgs): TSet {
   const src: TSet = args.src;
   if (!src.size) {
@@ -56,64 +40,6 @@ function extractStringsToTranslate(args: CoreArgs): TSet {
       return leftJoin(cacheDiffs, targetMisses);
     }
   }
-}
-
-function preprocessServiceInputs(rawInputs: TSet) {
-  const serviceInputs: TSet = new Map();
-  rawInputs.forEach((value, key) => {
-    if (!value || !value.trim().length) {
-      console.info(`Warning: Skip '${key}' because it is empty.`);
-    } else {
-      serviceInputs.set(key, value);
-    }
-  });
-  return serviceInputs;
-}
-
-async function invokeTranslationService(
-  serviceInputs: TSet,
-  args: CoreArgs
-): Promise<TServiceInvocation> {
-  const rawInputs = convertToTStringList(serviceInputs);
-  const matcher = getMatcherInstance(args);
-  const replacers = new Map<string, Replacer>();
-  rawInputs.forEach((rawString) => {
-    const replacer = replaceInterpolations(rawString.value, matcher);
-    replacers.set(rawString.key, replacer);
-  });
-  const replacedInputs: TString[] = rawInputs.map((rawString) => {
-    return {
-      key: rawString.key,
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      value: replacers.get(rawString.key)!.clean,
-    };
-  });
-
-  const serviceArgs: TServiceArgs = {
-    strings: replacedInputs,
-    srcLng: args.srcLng,
-    targetLng: args.targetLng,
-    serviceConfig: args.serviceConfig,
-    interpolationMatcher: getMatcherInstance(args),
-  };
-  const translationService = getServiceInstance(args);
-  const rawResults = await translationService.translateStrings(serviceArgs);
-
-  const results: TResult[] = rawResults.map((rawResult) => {
-    const cleanResult = reInsertInterpolations(
-      rawResult.translated,
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      replacers.get(rawResult.key)!.replacements
-    );
-    return {
-      key: rawResult.key,
-      translated: cleanResult,
-    };
-  });
-  return {
-    inputs: serviceInputs,
-    results: convertFromServiceResults(results),
-  };
 }
 
 function extractStaleTranslations(args: CoreArgs): TSet | null {
@@ -214,8 +140,7 @@ function computeCoreResults(
 }
 
 export async function translateCore(args: CoreArgs): Promise<CoreResults> {
-  const rawInputs = extractStringsToTranslate(args);
-  const serviceInputs = preprocessServiceInputs(rawInputs);
+  const serviceInputs = extractStringsToTranslate(args);
   let serviceInvocation: TServiceInvocation | null = null;
   if (serviceInputs.size >= 1) {
     serviceInvocation = await invokeTranslationService(serviceInputs, args);
