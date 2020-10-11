@@ -37,7 +37,7 @@ Therefore, whenever you are unhappy with the produced results, `attranslate` all
 Depending on your project, some translation-services work better than others.
 `attranslate` supports the following translation-services:
 
-- [Google Cloud Translate](https://translate.google.com)
+- [Google Cloud Translate](https://cloud.google.com/translate)
 - [DeepL](https://deepl.com)
 - [Azure Translator](https://azure.microsoft.com/en-us/services/cognitive-services/translator-text-api/)
 - `manual`: Translate texts manually by entering them into `attranslate`.
