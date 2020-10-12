@@ -1,4 +1,3 @@
-import * as path from "path";
 import { translateCore } from "./translate-core";
 import { existsSync } from "fs";
 import { CliArgs, CoreArgs, TSet } from "./core-definitions";
@@ -9,6 +8,7 @@ import { matcherMap } from "../matchers/matcher-definitions";
 import { fileFormatMap } from "../file-formats/file-format-definitions";
 import { missingTCacheTarget, resolveTCache, writeTCache } from "./cache-layer";
 import { readTFileCore, writeTFileCore } from "./core-util";
+import path from "path";
 
 async function resolveOldTarget(
   args: CliArgs,
