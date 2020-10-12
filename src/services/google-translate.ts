@@ -20,6 +20,11 @@ export interface GCloudKeyFile {
 
 export class GoogleTranslate implements TService {
   async translateStrings(args: TServiceArgs) {
+    if (!args.serviceConfig) {
+      logFatal(
+        "Set '--serviceConfig' to a path that points to a GCloud service account JSON file"
+      );
+    }
     const keyFile = readJsonFile<GCloudKeyFile>(args.serviceConfig);
     if (!keyFile.project_id) {
       logFatal(

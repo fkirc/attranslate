@@ -44,7 +44,7 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
       "--service <translationService>",
       formatOneOfOptions(getTServiceList())
     )
-    .requiredOption(
+    .option(
       "--serviceConfig <serviceKey>",
       "supply configuration for a translation service (either a path to a key-file or an API-key)"
     )

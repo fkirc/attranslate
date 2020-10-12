@@ -7,6 +7,7 @@ import {
   TString,
   TServiceArgs,
 } from "./service-definitions";
+import { logFatal } from "../util/util";
 
 interface TranslationResponse {
   translations: [
@@ -23,7 +24,8 @@ const TRANSLATE_ENDPOINT =
 export class AzureTranslator implements TService {
   async translateBatch(
     batch: TString[],
-    args: TServiceArgs
+    args: TServiceArgs,
+    apiKey: string
   ): Promise<TResult[]> {
     const azureBody: { Text: string }[] = batch.map((tString) => {
       return {
@@ -36,7 +38,7 @@ export class AzureTranslator implements TService {
         method: "POST",
         headers: {
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          "Ocp-Apim-Subscription-Key": args.serviceConfig,
+          "Ocp-Apim-Subscription-Key": apiKey,
           "Content-Type": "application/json; charset=UTF-8",
         },
         body: JSON.stringify(azureBody),
@@ -54,9 +56,13 @@ export class AzureTranslator implements TService {
   }
 
   async translateStrings(args: TServiceArgs): Promise<TResult[]> {
+    const apiKey = args.serviceConfig;
+    if (!apiKey) {
+      logFatal("Set '--serviceConfig' to an Azure API key");
+    }
     const batches = chunk(args.strings, 50);
     const results = await Promise.all(
-      batches.map((batch) => this.translateBatch(batch, args))
+      batches.map((batch) => this.translateBatch(batch, args, apiKey))
     );
     return flatten(results);
   }

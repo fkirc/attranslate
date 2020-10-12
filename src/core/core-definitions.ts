@@ -10,7 +10,7 @@ export interface CoreArgs {
   oldTarget: TSet | null;
   targetLng: string;
   service: TServiceType;
-  serviceConfig: string;
+  serviceConfig: string | null;
   matcher: TMatcherType;
   deleteStale: boolean;
 }
@@ -42,7 +42,7 @@ export interface CliArgs extends Record<string, string | undefined> {
   targetLng: string;
   targetFormat: string;
   service: string;
-  serviceConfig: string;
+  serviceConfig?: string;
   cacheDir: string;
   matcher: string;
   deleteStale: string;

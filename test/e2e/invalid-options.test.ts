@@ -1,5 +1,5 @@
 import { buildE2EArgs, defaultE2EArgs } from "./e2e-common";
-import { runTranslateExpectFailure } from "../test-util/test-util";
+import { joinLines, runTranslateExpectFailure } from "../test-util/test-util";
 import { getDebugPath } from "../../src/util/util";
 import { CliArgs } from "../../src/core/core-definitions";
 
@@ -135,13 +135,23 @@ describe.each(requiredOptions)("Bad options %s", (option) => {
   test(`Missing required option ${option}`, async () => {
     const args: CliArgs = {
       ...defaultE2EArgs,
+      serviceConfig: undefined,
     };
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     args[option] = undefined;
     const output = await runTranslateExpectFailure(buildE2EArgs(args));
-    expect(output).toContain(`error: required option '--${option}`);
-    expect(output).toContain(`not specified`);
+    if (option === "serviceConfig") {
+      expect(output).toBe(
+        joinLines([
+          "Invoke 'google-translate' from 'en' to 'de' with 3 inputs...",
+          "error: Set '--serviceConfig' to a path that points to a GCloud service account JSON file",
+        ])
+      );
+    } else {
+      expect(output).toContain(`error: required option '--${option}`);
+      expect(output).toContain(`not specified`);
+    }
   });
 
   test(`Empty string option ${option}`, async () => {

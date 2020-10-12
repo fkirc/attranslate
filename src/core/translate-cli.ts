@@ -94,7 +94,7 @@ export async function translateCli(cliArgs: CliArgs) {
     oldTarget,
     targetLng: cliArgs.targetLng,
     service: cliArgs.service as TServiceType,
-    serviceConfig: cliArgs.serviceConfig,
+    serviceConfig: cliArgs.serviceConfig ?? null,
     matcher: cliArgs.matcher as TMatcherType,
     deleteStale: parseBooleanOption(cliArgs.deleteStale),
   };
