@@ -19,7 +19,6 @@ export interface GCloudKeyFile {
 }
 
 export class GoogleTranslate implements TService {
-  // eslint-disable-next-line require-await
   async translateStrings(args: TServiceArgs) {
     const keyFile = readJsonFile<GCloudKeyFile>(args.serviceConfig);
     if (!keyFile.project_id) {
