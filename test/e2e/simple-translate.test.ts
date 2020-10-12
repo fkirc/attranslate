@@ -73,7 +73,7 @@ describe.each(testArray)("outdated cache %p", (commonArgs) => {
     await preModifiedTarget(args, commonArgs.modifiedTarget);
     const output = await runWithOutdatedCache(args);
     expect(output).toContain("Update 1 existing translations");
-    await postModifiedTarget(args);
+    await postModifiedTarget(args, true);
   });
 });
 
@@ -98,7 +98,7 @@ describe.each(testArray)("clean cache %p", (commonArgs) => {
       maxTime: offlineMaxTime,
     });
     expect(output).toBe(`Target is up-to-date: '${args.targetFile}'\n`);
-    await postModifiedTarget(args);
+    await postModifiedTarget(args, false);
   });
 });
 
@@ -138,7 +138,7 @@ describe.each(testArray)("missing cache %p", (commonArgs) => {
     expect(output).toContain(
       "Skipped translations because we had to generate a new cache."
     );
-    await postModifiedTarget(args);
+    await postModifiedTarget(args, false);
   });
 });
 
@@ -147,8 +147,8 @@ async function preModifiedTarget(args: CliArgs, modifiedTarget: string) {
   await switchToRandomTarget(args, true);
 }
 
-async function postModifiedTarget(args: CliArgs) {
-  await removeTargetFile(args, true);
+async function postModifiedTarget(args: CliArgs, expectModified: boolean) {
+  await removeTargetFile(args, expectModified);
 }
 
 async function preMissingTarget(args: CliArgs) {
