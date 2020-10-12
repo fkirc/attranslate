@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="one" formatted="format one">Einer</string>
-    <string name="two" formatted="format two">Zwei</string>
+  <string name="one" formatted="format one">Einer</string>
+  <string name="two" formatted="format two">Zwei</string>
 </resources>
