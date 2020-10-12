@@ -24,6 +24,11 @@ interface StringResource {
   $t: string;
 }
 
+/**
+ * Android Studio seems to auto-format XML-files with 4 spaces indentation.
+ */
+const DEFAULT_ANDROID_XML_INDENT = 4;
+
 const ANDROID_KEY_SEPARATOR = "_";
 const JSON_KEY_SEPARATOR = ".";
 
@@ -75,7 +80,7 @@ export class AndroidXml implements TFileFormat {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const prettifyXml = require("prettify-xml");
     const prettyXmlString = prettifyXml(rawXmlString, {
-      indent: 4,
+      indent: DEFAULT_ANDROID_XML_INDENT,
     });
     const xmlString = `<?xml version="1.0" encoding="utf-8"?>\n${prettyXmlString}\n`;
     writeUf8File(args.path, xmlString);

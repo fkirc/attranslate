@@ -28,7 +28,7 @@ const testArgs: {
   nested: boolean;
 }[] = [
   {
-    srcFile: "test-assets/android-xml/count-en.nested.xml",
+    srcFile: "test-assets/android-xml/count-en.indent4.nested.xml",
     fileFormat: "android-xml",
     nested: true,
   },
