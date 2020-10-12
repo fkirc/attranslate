@@ -23,11 +23,12 @@ export const defaultE2EArgs: E2EArgs = {
   deleteStale: "true",
 };
 
+const randomTargetMarker = "random_target";
+
 export async function switchToRandomTarget(args: E2EArgs, copy: boolean) {
-  const randomTargetFile = `${args.targetFile}_${generateId()}`;
-  if (!args.refTargetFile) {
-    args.refTargetFile = args.targetFile;
-  }
+  const randomTargetFile = `${
+    args.targetFile
+  }_${randomTargetMarker}_${generateId()}`;
   const fileToCopy = args.targetFile;
   args.targetFile = randomTargetFile;
   if (copy) {
@@ -42,6 +43,9 @@ export async function removeTargetFile(args: E2EArgs) {
 }
 
 export function buildE2EArgs(args: E2EArgs): string {
+  expect(args.targetFile).toContain(randomTargetMarker); // Guard against race conditions and cascading test failures.
+  expect(args.refTargetFile.includes(randomTargetMarker)).toBe(false); // Guard against bogus passes.
+
   const cmdArgs: string[] = [];
   for (const argKey of Object.keys(args)) {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment

@@ -89,14 +89,14 @@ describe.each(testArray)("outdated cache %p", (commonArgs) => {
 
   test("modified target", async () => {
     const args = { ...argsTemplate };
-    await preModifiedTarget(args);
+    await switchToRandomTarget(args, true);
     const output = await runWithOutdatedCache(args);
     if (!commonArgs.addCount) {
       expect(output).toContain("Update 1 existing translations");
     } else {
       expect(output).toContain(`Add ${commonArgs.addCount} new translations`);
     }
-    await postModifiedTarget(args);
+    await removeTargetFile(args);
   });
 });
 
@@ -116,7 +116,8 @@ describe.each(testArray)("clean cache %p", (commonArgs) => {
 
   test("modified target", async () => {
     const args = { ...argsTemplate };
-    await preModifiedTarget(args);
+    args.refTargetFile = args.targetFile;
+    await switchToRandomTarget(args, true);
     const output = await runTranslate(buildE2EArgs(args), {
       maxTime: commonArgs.addCount ? commonArgs.maxTime : offlineMaxTime,
     });
@@ -124,9 +125,8 @@ describe.each(testArray)("clean cache %p", (commonArgs) => {
       expect(output).toBe(`Target is up-to-date: '${args.targetFile}'\n`);
     } else {
       expect(output).toContain(`Add ${commonArgs.addCount} new translations`);
-      args.refTargetFile = commonArgs.args.targetFile;
     }
-    await postModifiedTarget(args);
+    await removeTargetFile(args);
   });
 });
 
@@ -161,7 +161,8 @@ describe.each(testArray)("missing cache %p", (commonArgs) => {
 
   test("modified target", async () => {
     const args = { ...argsTemplate };
-    await preModifiedTarget(args);
+    args.refTargetFile = args.targetFile;
+    await switchToRandomTarget(args, true);
     const maxTime = commonArgs.addCount ? commonArgs.maxTime : offlineMaxTime;
     const output = await runWithMissingCache(args, maxTime);
     if (!commonArgs.addCount) {
@@ -170,21 +171,12 @@ describe.each(testArray)("missing cache %p", (commonArgs) => {
       );
     } else {
       expect(output).toContain(`Add ${commonArgs.addCount} new translations`);
-      args.refTargetFile = commonArgs.args.targetFile;
     }
-    await postModifiedTarget(args);
+    await removeTargetFile(args);
   });
 });
 
-async function preModifiedTarget(args: E2EArgs) {
-  await switchToRandomTarget(args, true);
-}
-
-async function postModifiedTarget(args: E2EArgs) {
-  await removeTargetFile(args);
-}
-
-async function preMissingTarget(args: E2EArgs & { refTargetFile: string }) {
+async function preMissingTarget(args: E2EArgs) {
   args.targetFile = args.refTargetFile;
   await switchToRandomTarget(args, false);
 }
