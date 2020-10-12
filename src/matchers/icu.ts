@@ -1,13 +1,17 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import { parse } from "messageformat-parser";
 import { TMatcher } from "./matcher-definitions";
+
+let parseModule: null | { parse: (input: string) => string[] } = null;
 
 export const matchIcu: TMatcher = (
   input: string,
   replacer: (i: number) => string
 ) => {
-  const parts = parse(input);
+  // Import parseModule on demand to optimize launch-performance.
+  if (!parseModule) {
+    parseModule = require("messageformat-parser");
+  }
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const parts = parseModule!.parse(input);
 
   const regex = new RegExp(
     parts
