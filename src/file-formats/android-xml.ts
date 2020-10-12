@@ -109,7 +109,7 @@ export class AndroidXml implements TFileFormat {
       },
     };
     const jsonString = JSON.stringify(resourceFile);
-    const rawXmlString = toXml(jsonString, { sanitize: true });
+    const rawXmlString = toXml(jsonString, { sanitize: false });
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const prettifyXml = require("prettify-xml");
     const prettyXmlString = prettifyXml(rawXmlString, {
