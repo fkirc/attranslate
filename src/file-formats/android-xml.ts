@@ -130,7 +130,7 @@ function parseRawXML<T>(xmlString: string, args: ReadTFileArgs): Partial<T> {
   try {
     return (toJson(xmlString, {
       object: true,
-      sanitize: true,
+      sanitize: false,
       trim: false,
       reversible: true,
     }) as unknown) as Partial<T>;
