@@ -15,6 +15,20 @@ test("src not a JSON", async () => {
   );
 });
 
+test("src not an XML", async () => {
+  const args: CliArgs = {
+    ...defaultE2EArgs,
+    srcFormat: "android-xml",
+  };
+  const output = await runTranslateExpectFailure(buildE2EArgs(args));
+  expect(output).toContain(
+    "There are errors in your xml file: not well-formed"
+  );
+  expect(output).toContain(
+    `error: Failed to parse ${getDebugPath(args.srcFile)}: XML parsing error`
+  );
+});
+
 test("src empty JSON", async () => {
   const args: CliArgs = {
     ...defaultE2EArgs,
