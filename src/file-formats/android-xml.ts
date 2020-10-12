@@ -88,6 +88,7 @@ function parseRawXML<T>(args: ReadTFileArgs): Partial<T> {
     return (toJson(xmlString, {
       object: true,
       sanitize: true,
+      trim: false,
     }) as unknown) as Partial<T>;
   } catch (e) {
     console.error(e);
