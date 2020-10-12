@@ -29,17 +29,45 @@ interface XmlCache {
 }
 const globalXmlCaches: Map<string, XmlCache> = new Map();
 
-function resolveXmlCache(args: WriteTFileArgs): XmlCache | null {
+function lookupIndent(args: WriteTFileArgs): number {
   const sameFileCache = globalXmlCaches.get(args.path);
   if (sameFileCache) {
-    return sameFileCache;
+    return sameFileCache.detectedIndent;
   }
   const cacheArray = Array.from(globalXmlCaches);
   if (cacheArray.length) {
-    return cacheArray[cacheArray.length - 1][1];
-  } else {
-    return null;
+    return cacheArray[cacheArray.length - 1][1].detectedIndent;
   }
+  return DEFAULT_ANDROID_XML_INDENT;
+}
+
+function lookupIndividualCache(
+  key: string,
+  cache: XmlCache
+): Partial<StringResource> | null {
+  return cache.resources.get(key) ?? null;
+}
+
+function lookupGlobalCache(
+  key: string,
+  args: WriteTFileArgs
+): Partial<StringResource> | null {
+  const sameFileCache = globalXmlCaches.get(args.path);
+  if (sameFileCache) {
+    const sameFileHit = lookupIndividualCache(key, sameFileCache);
+    if (sameFileHit) {
+      return sameFileHit;
+    }
+  }
+  const cacheArray = Array.from(globalXmlCaches);
+  for (let idx = cacheArray.length - 1; idx >= 0; idx--) {
+    const olderCache = cacheArray[idx][1];
+    const hit = lookupIndividualCache(key, olderCache);
+    if (hit) {
+      return hit;
+    }
+  }
+  return null;
 }
 
 /**
@@ -87,18 +115,14 @@ export class AndroidXml implements TFileFormat {
   }
 
   writeTFile(args: WriteTFileArgs): void {
-    const xmlCache: XmlCache | null = resolveXmlCache(args);
-    const oldResources = xmlCache?.resources;
     const resources: StringResource[] = [];
     args.tSet.forEach((value, jsonKey) => {
-      const oldResource:
-        | Partial<StringResource>
-        | undefined = oldResources?.get(jsonKey);
+      const cachedResource = lookupGlobalCache(jsonKey, args);
       const xmlKey = jsonKey
         .split(JSON_KEY_SEPARATOR)
         .join(ANDROID_KEY_SEPARATOR);
       const newResource: StringResource = {
-        ...oldResource,
+        ...cachedResource,
         name: xmlKey,
         $t: value ?? "",
       };
@@ -109,21 +133,21 @@ export class AndroidXml implements TFileFormat {
         string: resources,
       },
     };
-    const xmlString = serializeResourceFile(resourceFile, xmlCache);
+    const xmlString = serializeResourceFile(resourceFile, args);
     writeUf8File(args.path, xmlString);
   }
 }
 
 function serializeResourceFile(
   resourceFile: AndroidResourceFile,
-  xmlCache: XmlCache | null
+  args: WriteTFileArgs
 ): string {
   const jsonString = JSON.stringify(resourceFile);
   const rawXmlString = toXml(jsonString, { sanitize: false });
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const prettifyXml = require("prettify-xml");
   const prettyXmlString = prettifyXml(rawXmlString, {
-    indent: xmlCache?.detectedIndent ?? DEFAULT_ANDROID_XML_INDENT,
+    indent: lookupIndent(args),
   });
   return `<?xml version="1.0" encoding="utf-8"?>\n${prettyXmlString}\n`;
 }
