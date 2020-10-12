@@ -108,16 +108,23 @@ export class AndroidXml implements TFileFormat {
         string: resources,
       },
     };
-    const jsonString = JSON.stringify(resourceFile);
-    const rawXmlString = toXml(jsonString, { sanitize: false });
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const prettifyXml = require("prettify-xml");
-    const prettyXmlString = prettifyXml(rawXmlString, {
-      indent: xmlCache?.detectedIndent ?? DEFAULT_ANDROID_XML_INDENT,
-    });
-    const xmlString = `<?xml version="1.0" encoding="utf-8"?>\n${prettyXmlString}\n`;
+    const xmlString = serializeResourceFile(resourceFile, xmlCache);
     writeUf8File(args.path, xmlString);
   }
+}
+
+function serializeResourceFile(
+  resourceFile: AndroidResourceFile,
+  xmlCache: XmlCache | null
+): string {
+  const jsonString = JSON.stringify(resourceFile);
+  const rawXmlString = toXml(jsonString, { sanitize: false });
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const prettifyXml = require("prettify-xml");
+  const prettyXmlString = prettifyXml(rawXmlString, {
+    indent: xmlCache?.detectedIndent ?? DEFAULT_ANDROID_XML_INDENT,
+  });
+  return `<?xml version="1.0" encoding="utf-8"?>\n${prettyXmlString}\n`;
 }
 
 function detectIndent(xmlString: string): number {
