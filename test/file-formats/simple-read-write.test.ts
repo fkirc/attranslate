@@ -6,51 +6,60 @@ import {
 } from "../../src/file-formats/file-format-definitions";
 import { toStrictEqualMapOrder } from "../test-util/to-strict-equal-map-order";
 
-function expectedTSet(nested: boolean): TSet {
-  if (nested) {
-    return new Map([
-      ["inner.innerInner.one", "One"],
-      ["inner.two", "Two"],
-      ["three", "Three"],
-    ]);
-  } else {
-    return new Map([
-      ["one", "One"],
-      ["two", "Two"],
-      ["three", "Three"],
-    ]);
-  }
+function nestedCount(): TSet {
+  return new Map([
+    ["inner.innerInner.one", "One"],
+    ["inner.two", "Two"],
+    ["three", "Three"],
+  ]);
+}
+
+function flatCount(): TSet {
+  return new Map([
+    ["one", "One"],
+    ["two", "Two"],
+    ["three", "Three"],
+  ]);
 }
 
 const testArgs: {
   srcFile: string;
   fileFormat: TFileType;
-  nested: boolean;
+  expectTSet: TSet;
 }[] = [
+  {
+    srcFile: "test-assets/android-xml/sanitize.xml",
+    fileFormat: "android-xml",
+    expectTSet: new Map([
+      ["rounded brackets", "()("],
+      ["angle brackets ", " "],
+      ["other stuff", "> ## [] {}"],
+    ]),
+  },
   {
     srcFile: "test-assets/android-xml/count-en.indent4.nested.xml",
     fileFormat: "android-xml",
-    nested: true,
+    expectTSet: nestedCount(),
   },
   {
     srcFile: "test-assets/android-xml/count-en.indent2.flat.xml",
     fileFormat: "android-xml",
-    nested: false,
+    expectTSet: flatCount(),
   },
   {
     srcFile: "test-assets/nested-json/count-en.nested.json",
     fileFormat: "nested-json",
-    nested: true,
+    expectTSet: nestedCount(),
   },
   {
     srcFile: "test-assets/flat-json/count-en.flat.json",
     fileFormat: "nested-json",
-    nested: false,
+    expectTSet: flatCount(),
   },
   {
     srcFile: "test-assets/flat-json/count-en.flat.json",
     fileFormat: "flat-json",
-    nested: false,
+    expectTSet: flatCount(),
   },
 ];
 
@@ -62,7 +71,7 @@ describe.each(testArgs)("Read/write %p", (args) => {
       lng: "en",
     });
 
-    toStrictEqualMapOrder(tSet, expectedTSet(args.nested));
+    toStrictEqualMapOrder(tSet, args.expectTSet);
 
     const targetFile = `${args.srcFile}_${generateId()}`;
     fileFormat.writeTFile({

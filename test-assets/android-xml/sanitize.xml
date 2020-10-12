@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="rounded brackets" formatted="false">()(</string>
+  <string name="angle brackets " others="prop"> </string>
+  <string name="other stuff" formatted="false">> ## [] {}</string>
+</resources>
