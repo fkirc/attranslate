@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="one" formatted="false">One</string>
-  <string name="two">Two</string>
-  <string name="three">Three</string>
+  <string name="one" formatted="format one">One</string>
+  <string name="two" formatted="format two">Two</string>
+  <string name="three" formatted="format three">Three</string>
 </resources>

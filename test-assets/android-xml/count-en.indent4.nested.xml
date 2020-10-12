@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="inner_innerInner_one" formatted="format one">One</string>
-    <string name="inner_two" formatted="format two">Two</string>
-    <string name="three" formatted="format three">Three</string>
+    <string name="inner_innerInner_one" formatted="false" another="some metadata">One</string>
+    <string name="inner_two">Two</string>
+    <string name="three">Three</string>
 </resources>
