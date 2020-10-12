@@ -3,10 +3,9 @@ import {
   runTranslateExpectFailure,
 } from "../test-util/test-util";
 import { readUtf8File } from "../../src/util/util";
-import { buildE2EArgs, defaultE2EArgs } from "./e2e-common";
+import { buildE2EArgs, defaultE2EArgs, offlineMaxTime } from "./e2e-common";
 
 const helpRef = "test-assets/help_reference.txt";
-const maxTime = 200;
 
 function getHelpReference(): string {
   return readUtf8File(helpRef);
@@ -23,13 +22,16 @@ test("reGenerateHelp", async () => {
 test("--help", async () => {
   const output = await runTranslate(`--help`, {
     pwd: "/",
-    maxTime,
+    maxTime: offlineMaxTime,
   });
   expect(output).toBe(getHelpReference());
 });
 
 test("-h", async () => {
-  const output = await runTranslate(`-h`, { pwd: "/", maxTime });
+  const output = await runTranslate(`-h`, {
+    pwd: "/",
+    maxTime: offlineMaxTime,
+  });
   expect(output).toBe(getHelpReference());
 });
 

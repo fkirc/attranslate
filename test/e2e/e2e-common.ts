@@ -8,6 +8,9 @@ import {
   runCommandExpectFailure,
 } from "../test-util/test-util";
 
+export const offlineMaxTime = 250;
+export const onlineMaxTime = 2000;
+
 export const defaultE2EArgs: CliArgs = {
   srcFile: "test-assets/flat-json/count-en.flat.json",
   srcLng: "en",

@@ -6,6 +6,8 @@ import {
 import {
   buildE2EArgs,
   defaultE2EArgs,
+  offlineMaxTime,
+  onlineMaxTime,
   removeTargetFile,
   switchToRandomTarget,
 } from "./e2e-common";
@@ -15,9 +17,6 @@ import { CliArgs } from "../../src/core/core-definitions";
 
 const cacheDirOutdated = join("test-assets", "cache-outdated");
 const cacheMissingDir = join("test-assets", "cache-missing");
-
-const offlineMaxTime = 200;
-const onlineMaxTime = 2000;
 
 const testArray: { cliArgs: Partial<CliArgs>; maxTime: number }[] = [
   {

@@ -2,12 +2,11 @@ import { runTranslate } from "../test-util/test-util";
 import {
   buildE2EArgs,
   defaultE2EArgs,
+  offlineMaxTime,
   removeTargetFile,
   switchToRandomTarget,
 } from "./e2e-common";
 import { CliArgs } from "../../src/core/core-definitions";
-
-const maxTime = 200;
 
 const testArray: Partial<CliArgs>[] = [
   {
@@ -25,7 +24,9 @@ describe.each(testArray)("empty props %p", (commonArgs) => {
   };
   test("different empty props", async () => {
     await switchToRandomTarget(args, true);
-    const output = await runTranslate(buildE2EArgs(args), { maxTime });
+    const output = await runTranslate(buildE2EArgs(args), {
+      maxTime: offlineMaxTime,
+    });
     expect(output).toContain(`Bypass 3 strings because they are empty...`);
     expect(output).toContain("Add 3 new translations");
     await removeTargetFile(args, true);
