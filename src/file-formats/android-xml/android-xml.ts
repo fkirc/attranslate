@@ -2,14 +2,14 @@ import {
   ReadTFileArgs,
   TFileFormat,
   WriteTFileArgs,
-} from "./file-format-definitions";
-import { TSet } from "../core/core-definitions";
+} from "../file-format-definitions";
+import { TSet } from "../../core/core-definitions";
 import {
   getDebugPath,
   logFatal,
   readUtf8File,
   writeUf8File,
-} from "../util/util";
+} from "../../util/util";
 import { toJson, toXml } from "xml2json";
 
 interface AndroidResourceFile {

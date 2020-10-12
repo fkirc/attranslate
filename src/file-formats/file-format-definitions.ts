@@ -42,6 +42,6 @@ export async function instantiateTFileFormat(
     case "nested-json":
       return new NestedJson();
     case "android-xml":
-      return new (await import("./android-xml")).AndroidXml();
+      return new (await import("./android-xml/android-xml")).AndroidXml();
   }
 }
