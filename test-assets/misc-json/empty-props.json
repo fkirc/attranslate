@@ -1,4 +1,7 @@
 {
+  "one": "One",
+  "two": "Two",
+  "three": "Three",
   "nullProp": null,
   "emptyProp": "",
   "spacesProp": "   "
