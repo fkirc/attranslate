@@ -29,6 +29,20 @@ test("src not an XML", async () => {
   );
 });
 
+test("duplicate keys XML", async () => {
+  const args: CliArgs = {
+    ...defaultE2EArgs,
+    srcFile: "test-assets/invalid/duplicate-keys.xml",
+    srcFormat: "android-xml",
+  };
+  const output = await runTranslateExpectFailure(buildE2EArgs(args));
+  expect(output).toBe(
+    `error: Failed to parse ${getDebugPath(
+      args.srcFile
+    )}: duplicate key 'dup' -> Do you really meant to use duplicate translation-keys?\n`
+  );
+});
+
 test("src empty JSON", async () => {
   const args: CliArgs = {
     ...defaultE2EArgs,

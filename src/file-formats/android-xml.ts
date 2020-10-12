@@ -107,6 +107,12 @@ export class AndroidXml implements TFileFormat {
       const jsonKey = xmlKey
         .split(ANDROID_KEY_SEPARATOR)
         .join(JSON_KEY_SEPARATOR);
+      if (tSet.get(jsonKey)) {
+        logXmlError(
+          `duplicate key '${jsonKey}' -> Do you really meant to use duplicate translation-keys?`,
+          args
+        );
+      }
       tSet.set(jsonKey, value);
       xmlCache.resources.set(jsonKey, stringResource);
     });
