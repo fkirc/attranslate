@@ -3,4 +3,6 @@
   <string name="rounded brackets" formatted="false">()(</string>
   <string name="angle brackets " others="prop"> </string>
   <string name="other stuff" formatted="false">> ## [] {}</string>
+  <string name="amp" formatted="false">amp is problematic: \n&amp;</string>
+  <string name="double quotes" formatted="false">"Double quotes" are problematic</string>
 </resources>

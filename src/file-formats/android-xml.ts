@@ -71,14 +71,15 @@ export class AndroidXml implements TFileFormat {
     };
     strings.forEach((stringResource: Partial<StringResource>) => {
       const xmlKey = stringResource.name;
-      const value = stringResource.$t;
+      const rawValue = stringResource.$t;
+      const value = rawValue ? attemptToFixBrokenSanitation(rawValue) : null;
       if (!xmlKey) {
         logXmlError(`undefined key: '${stringResource}'`, args);
       }
       const jsonKey = xmlKey
         .split(ANDROID_KEY_SEPARATOR)
         .join(JSON_KEY_SEPARATOR);
-      tSet.set(jsonKey, value ?? null);
+      tSet.set(jsonKey, value);
       xmlCache.resources.set(jsonKey, stringResource);
     });
     globalXmlCaches.set(args.path, xmlCache);
@@ -150,4 +151,16 @@ function parseRawXML<T>(xmlString: string, args: ReadTFileArgs): Partial<T> {
 function logXmlError(rawMsg: string, args: ReadTFileArgs): never {
   const msg = `Failed to parse ${getDebugPath(args.path)}: ${rawMsg}`;
   logFatal(msg);
+}
+
+function attemptToFixBrokenSanitation(fromXml: string) {
+  /**
+   * Perhaps we should use a saner XML-library which does not change any character at all.
+   */
+  return (
+    fromXml
+      //  .replace(/&quot;/g, '"')
+      .replace(/&/g, "&amp;")
+  );
+  //.replace(/"/g, "&quot;");
 }

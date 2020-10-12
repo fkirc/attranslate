@@ -34,6 +34,8 @@ const testArgs: {
       ["rounded brackets", "()("],
       ["angle brackets ", " "],
       ["other stuff", "> ## [] {}"],
+      ["amp", "amp is problematic: \\n&amp;"],
+      ["double quotes", '"Double quotes" are problematic'],
     ]),
   },
   {
