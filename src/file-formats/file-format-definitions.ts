@@ -1,6 +1,4 @@
 import { TSet } from "../core/core-definitions";
-import { NestedJson } from "./nested-json";
-import { FlatJson } from "./flat-json";
 
 export interface WriteTFileArgs {
   path: string;
@@ -19,6 +17,23 @@ export interface TFileFormat {
 }
 
 export const fileFormatMap = {
-  "flat-json": new FlatJson(),
-  "nested-json": new NestedJson(),
+  "flat-json": null,
+  "nested-json": null,
+  "android-xml": null,
 };
+
+export async function instantiateFileFormat(
+  fileFormat: keyof typeof fileFormatMap
+): Promise<TFileFormat> {
+  /**
+   * To improve the launch-performance, we import file-formats dynamically.
+   */
+  switch (fileFormat) {
+    case "flat-json":
+      return new (await import("./flat-json")).FlatJson();
+    case "nested-json":
+      return new (await import("./nested-json")).NestedJson();
+    case "android-xml":
+      return new (await import("./android-xml")).AndroidXml();
+  }
+}

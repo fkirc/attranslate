@@ -3,6 +3,7 @@ import { CoreArgs, CoreResults, TSet } from "./core-definitions";
 import { logFatal } from "../util/util";
 import {
   fileFormatMap,
+  instantiateFileFormat,
   ReadTFileArgs,
   WriteTFileArgs,
 } from "../file-formats/file-format-definitions";
@@ -40,7 +41,7 @@ export function logCoreResults(args: CoreArgs, results: CoreResults) {
   }
 }
 
-export function writeTFileCore(
+export async function writeTFileCore(
   fileFormat: keyof typeof fileFormatMap,
   args: WriteTFileArgs
 ) {
@@ -49,14 +50,16 @@ export function writeTFileCore(
       args.tSet.set(key, "");
     }
   });
-  fileFormatMap[fileFormat].writeTFile(args);
+  const module = await instantiateFileFormat(fileFormat);
+  module.writeTFile(args);
 }
 
-export function readTFileCore(
+export async function readTFileCore(
   fileFormat: keyof typeof fileFormatMap,
   args: ReadTFileArgs
-): TSet {
-  const rawTSet = fileFormatMap[fileFormat].readTFile(args);
+): Promise<TSet> {
+  const module = await instantiateFileFormat(fileFormat);
+  const rawTSet = module.readTFile(args);
   rawTSet.forEach((value, key) => {
     if (value === "") {
       /**

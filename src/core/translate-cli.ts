@@ -10,15 +10,15 @@ import { fileFormatMap } from "../file-formats/file-format-definitions";
 import { missingTCacheTarget, resolveTCache, writeTCache } from "./cache-layer";
 import { readTFileCore, writeTFileCore } from "./core-util";
 
-function resolveOldTarget(
+async function resolveOldTarget(
   args: CliArgs,
   targetFileFormat: keyof typeof fileFormatMap
-): TSet | null {
+): Promise<TSet | null> {
   const targetPath = path.resolve(args.targetFile);
   const targetDir = path.dirname(targetPath);
   checkDir(targetDir);
   if (existsSync(targetPath)) {
-    return readTFileCore(targetFileFormat, {
+    return await readTFileCore(targetFileFormat, {
       path: targetPath,
       lng: args.targetLng,
     });
@@ -63,7 +63,7 @@ export async function translateCli(cliArgs: CliArgs) {
     );
   }
   const targetFileFormat = cliArgs.targetFormat as keyof typeof fileFormatMap;
-  const src = readTFileCore(srcFileFormat, {
+  const src = await readTFileCore(srcFileFormat, {
     path: cliArgs.srcFile,
     lng: cliArgs.srcLng,
   });
@@ -76,7 +76,10 @@ export async function translateCli(cliArgs: CliArgs) {
   }
 
   const srcCache: TSet | null = resolveTCache(src, cliArgs);
-  const oldTarget: TSet | null = resolveOldTarget(cliArgs, targetFileFormat);
+  const oldTarget: TSet | null = await resolveOldTarget(
+    cliArgs,
+    targetFileFormat
+  );
 
   const coreArgs: CoreArgs = {
     src,
@@ -95,7 +98,7 @@ export async function translateCli(cliArgs: CliArgs) {
     !oldTarget || !areEqual(oldTarget, result.newTarget);
   if (flushTarget) {
     console.info(`Write target ${getDebugPath(cliArgs.targetFile)}`);
-    writeTFileCore(targetFileFormat, {
+    await writeTFileCore(targetFileFormat, {
       path: cliArgs.targetFile,
       tSet: result.newTarget,
       lng: cliArgs.targetLng,
