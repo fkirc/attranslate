@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="inner_innerInner_one" formatted="false">One</string>
+    <string name="inner_two" formatted="false">Two</string>
+    <string name="three" formatted="false">Three</string>
+</resources>
