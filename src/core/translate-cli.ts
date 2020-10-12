@@ -5,14 +5,17 @@ import { areEqual } from "./tset-ops";
 import { checkDir, getDebugPath, logFatal } from "../util/util";
 import { serviceMap } from "../services/service-definitions";
 import { matcherMap } from "../matchers/matcher-definitions";
-import { fileFormatMap } from "../file-formats/file-format-definitions";
 import { missingTCacheTarget, resolveTCache, writeTCache } from "./cache-layer";
 import { readTFileCore, writeTFileCore } from "./core-util";
 import path from "path";
+import {
+  getTFileFormatList,
+  TFileType,
+} from "../file-formats/file-format-definitions";
 
 async function resolveOldTarget(
   args: CliArgs,
-  targetFileFormat: keyof typeof fileFormatMap
+  targetFileFormat: TFileType
 ): Promise<TSet | null> {
   const targetPath = path.resolve(args.targetFile);
   const targetDir = path.dirname(targetPath);
@@ -33,6 +36,7 @@ export function formatCliOptions(options: string[]): string {
 
 export async function translateCli(cliArgs: CliArgs) {
   checkForEmptyStringOptions(cliArgs);
+  const fileFormats = getTFileFormatList();
   if (!(cliArgs.service in serviceMap)) {
     logFatal(
       `Unknown service "${
@@ -47,22 +51,22 @@ export async function translateCli(cliArgs: CliArgs) {
       }". Available matchers: ${formatCliOptions(Object.keys(matcherMap))}`
     );
   }
-  if (!(cliArgs.srcFormat in fileFormatMap)) {
+  if (!fileFormats.includes(cliArgs.srcFormat as TFileType)) {
     logFatal(
       `Unknown source format "${
         cliArgs.srcFormat
-      }". Available formats: ${formatCliOptions(Object.keys(fileFormatMap))}`
+      }". Available formats: ${formatCliOptions(fileFormats)}`
     );
   }
-  const srcFileFormat: keyof typeof fileFormatMap = cliArgs.srcFormat as keyof typeof fileFormatMap;
-  if (!(cliArgs.targetFormat in fileFormatMap)) {
+  const srcFileFormat: TFileType = cliArgs.srcFormat as TFileType;
+  if (!fileFormats.includes(cliArgs.targetFormat as TFileType)) {
     logFatal(
       `Unknown target format "${
         cliArgs.targetFormat
-      }". Available formats: ${formatCliOptions(Object.keys(fileFormatMap))}`
+      }". Available formats: ${formatCliOptions(fileFormats)}`
     );
   }
-  const targetFileFormat = cliArgs.targetFormat as keyof typeof fileFormatMap;
+  const targetFileFormat = cliArgs.targetFormat as TFileType;
   const src = await readTFileCore(srcFileFormat, {
     path: cliArgs.srcFile,
     lng: cliArgs.srcLng,

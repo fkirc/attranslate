@@ -18,14 +18,20 @@ export interface TFileFormat {
   readTFile: (args: ReadTFileArgs) => TSet;
 }
 
-export const fileFormatMap = {
+export type TFileType = keyof typeof fileFormatMap;
+
+export function getTFileFormatList(): TFileType[] {
+  return Object.keys(fileFormatMap) as TFileType[];
+}
+
+const fileFormatMap = {
   "flat-json": null,
   "nested-json": null,
   "android-xml": null,
 };
 
 export async function instantiateFileFormat(
-  fileFormat: keyof typeof fileFormatMap
+  fileFormat: TFileType
 ): Promise<TFileFormat> {
   /**
    * To improve launch-performance, we import file-formats dynamically.

@@ -2,7 +2,7 @@ import commander from "commander";
 import { serviceMap } from "./services/service-definitions";
 import { matcherMap } from "./matchers/matcher-definitions";
 import { translateCli, formatCliOptions } from "./core/translate-cli";
-import { fileFormatMap } from "./file-formats/file-format-definitions";
+import { getTFileFormatList } from "./file-formats/file-format-definitions";
 import { CliArgs } from "./core/core-definitions";
 
 process.on("unhandledRejection", (error) => {
@@ -26,7 +26,7 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
     )
     .requiredOption(
       "--srcFormat <sourceFileFormat>",
-      formatOneOfOptions(Object.keys(fileFormatMap))
+      formatOneOfOptions(getTFileFormatList())
     )
     .requiredOption(
       "--targetFile <targetFile>",
@@ -38,7 +38,7 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
     )
     .requiredOption(
       "--targetFormat <targetFileFormat>",
-      formatOneOfOptions(Object.keys(fileFormatMap))
+      formatOneOfOptions(getTFileFormatList())
     )
     .requiredOption(
       "--service <translationService>",

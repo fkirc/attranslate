@@ -1,8 +1,8 @@
 import { TSet } from "../../src/core/core-definitions";
 import { assertPathNotChanged, runCommand } from "../test-util/test-util";
 import {
-  fileFormatMap,
   instantiateFileFormat,
+  TFileType,
 } from "../../src/file-formats/file-format-definitions";
 import { toStrictEqualMapOrder } from "../test-util/to-strict-equal-map-order";
 
@@ -24,7 +24,7 @@ function expectedTSet(nested: boolean): TSet {
 
 const testArgs: {
   srcFile: string;
-  fileFormat: keyof typeof fileFormatMap;
+  fileFormat: TFileType;
   nested: boolean;
 }[] = [
   {

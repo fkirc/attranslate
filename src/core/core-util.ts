@@ -2,9 +2,9 @@ import { Matcher, matcherMap } from "../matchers/matcher-definitions";
 import { CoreArgs, CoreResults, TSet } from "./core-definitions";
 import { logFatal } from "../util/util";
 import {
-  fileFormatMap,
   instantiateFileFormat,
   ReadTFileArgs,
+  TFileType,
   WriteTFileArgs,
 } from "../file-formats/file-format-definitions";
 
@@ -42,7 +42,7 @@ export function logCoreResults(args: CoreArgs, results: CoreResults) {
 }
 
 export async function writeTFileCore(
-  fileFormat: keyof typeof fileFormatMap,
+  fileFormat: TFileType,
   args: WriteTFileArgs
 ) {
   args.tSet.forEach((value, key) => {
@@ -55,7 +55,7 @@ export async function writeTFileCore(
 }
 
 export async function readTFileCore(
-  fileFormat: keyof typeof fileFormatMap,
+  fileFormat: TFileType,
   args: ReadTFileArgs
 ): Promise<TSet> {
   const module = await instantiateFileFormat(fileFormat);
