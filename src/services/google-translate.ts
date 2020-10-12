@@ -32,9 +32,9 @@ export class GoogleTranslate implements TService {
       keyFile: args.serviceConfig,
     };
     const client = new TranslationServiceClient(clientOptions);
-    const batches = chunk(args.strings, 10);
+    const batches: TString[][] = chunk(args.strings, 10);
     const results = await Promise.all(
-      batches.map((batch) =>
+      batches.map((batch: TString[]) =>
         this.translateBatch(batch, client, args, projectId)
       )
     );
