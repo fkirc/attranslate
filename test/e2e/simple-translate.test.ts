@@ -25,6 +25,16 @@ const testArray: {
 }[] = [
   {
     cliArgs: {
+      srcFile: "test-assets/android-xml/count-en.indent2.flat.xml",
+      srcFormat: "android-xml",
+      targetFile: "test-assets/android-xml/count-de.xml",
+      targetFormat: "android-xml",
+    },
+    maxTime: onlineMaxTime,
+    modifiedTarget: "test-assets/android-xml/count-de.missing-entry.xml",
+  },
+  {
+    cliArgs: {
       srcFile: "test-assets/flat-json/count-empty-null.flat.json",
       srcFormat: "flat-json",
       targetFile: "test-assets/flat-json/count-empty.flat.json",
