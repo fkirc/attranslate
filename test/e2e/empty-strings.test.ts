@@ -10,10 +10,11 @@ import { CliArgs } from "../../src/core/core-definitions";
 
 const testArray: Partial<CliArgs>[] = [
   {
-    srcFile: "test-assets/invalid/empty-props.json",
+    srcFile: "test-assets/misc-json/empty-props.json",
     srcFormat: "flat-json",
     targetFile: "test-assets/flat-json/count-de.flat.json",
     targetFormat: "flat-json",
+    refTargetFile: "test-assets/misc-json/empty-props+count-de.json",
   },
 ];
 
@@ -29,6 +30,6 @@ describe.each(testArray)("empty props %p", (commonArgs) => {
     });
     expect(output).toContain(`Bypass 3 strings because they are empty...`);
     expect(output).toContain("Add 3 new translations");
-    await removeTargetFile(args, true);
+    await removeTargetFile(args);
   });
 });
