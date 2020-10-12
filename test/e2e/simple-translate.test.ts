@@ -22,6 +22,7 @@ const testArray: {
   cliArgs: Partial<CliArgs>;
   maxTime: number;
   modifiedTarget: string;
+  addCount: number;
 }[] = [
   {
     cliArgs: {
@@ -32,6 +33,7 @@ const testArray: {
     },
     maxTime: onlineMaxTime,
     modifiedTarget: "test-assets/android-xml/count-de.missing-entry.xml",
+    addCount: 1,
   },
   {
     cliArgs: {
@@ -42,6 +44,7 @@ const testArray: {
     },
     maxTime: offlineMaxTime,
     modifiedTarget: "test-assets/flat-json/count-empty.flat.modified.json",
+    addCount: 0,
   },
   {
     cliArgs: {
@@ -52,6 +55,7 @@ const testArray: {
     },
     maxTime: onlineMaxTime,
     modifiedTarget: "test-assets/nested-json/count-de.flattened.modified.json",
+    addCount: 0,
   },
 ];
 
@@ -82,7 +86,11 @@ describe.each(testArray)("outdated cache %p", (commonArgs) => {
     const args = { ...argsTemplate };
     await preModifiedTarget(args, commonArgs.modifiedTarget);
     const output = await runWithOutdatedCache(args);
-    expect(output).toContain("Update 1 existing translations");
+    if (!commonArgs.addCount) {
+      expect(output).toContain("Update 1 existing translations");
+    } else {
+      expect(output).toContain(`Add ${commonArgs.addCount} new translations`);
+    }
     await postModifiedTarget(args, true);
   });
 });
@@ -105,9 +113,14 @@ describe.each(testArray)("clean cache %p", (commonArgs) => {
     const args = { ...argsTemplate };
     await preModifiedTarget(args, commonArgs.modifiedTarget);
     const output = await runTranslate(buildE2EArgs(args), {
-      maxTime: offlineMaxTime,
+      maxTime: commonArgs.addCount ? commonArgs.maxTime : offlineMaxTime,
     });
-    expect(output).toBe(`Target is up-to-date: '${args.targetFile}'\n`);
+    if (!commonArgs.addCount) {
+      expect(output).toBe(`Target is up-to-date: '${args.targetFile}'\n`);
+    } else {
+      expect(output).toContain(`Add ${commonArgs.addCount} new translations`);
+      args.refTargetFile = commonArgs.cliArgs.targetFile;
+    }
     await postModifiedTarget(args, false);
   });
 });
@@ -144,10 +157,16 @@ describe.each(testArray)("missing cache %p", (commonArgs) => {
   test("modified target", async () => {
     const args = { ...argsTemplate };
     await preModifiedTarget(args, commonArgs.modifiedTarget);
-    const output = await runWithMissingCache(args, offlineMaxTime);
-    expect(output).toContain(
-      "Skipped translations because we had to generate a new cache."
-    );
+    const maxTime = commonArgs.addCount ? commonArgs.maxTime : offlineMaxTime;
+    const output = await runWithMissingCache(args, maxTime);
+    if (!commonArgs.addCount) {
+      expect(output).toContain(
+        "Skipped translations because we had to generate a new cache."
+      );
+    } else {
+      expect(output).toContain(`Add ${commonArgs.addCount} new translations`);
+      args.refTargetFile = commonArgs.cliArgs.targetFile;
+    }
     await postModifiedTarget(args, false);
   });
 });
