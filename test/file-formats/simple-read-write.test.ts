@@ -1,6 +1,9 @@
 import { TSet } from "../../src/core/core-definitions";
 import { assertPathNotChanged, runCommand } from "../test-util/test-util";
-import { fileFormatMap } from "../../src/file-formats/file-format-definitions";
+import {
+  fileFormatMap,
+  instantiateFileFormat,
+} from "../../src/file-formats/file-format-definitions";
 import { toStrictEqualMapOrder } from "../test-util/to-strict-equal-map-order";
 
 function expectedTSet(nested: boolean): TSet {
@@ -25,6 +28,11 @@ const testArgs: {
   nested: boolean;
 }[] = [
   {
+    srcFile: "test-assets/android-xml/count-en.nested.xml",
+    fileFormat: "android-xml",
+    nested: true,
+  },
+  {
     srcFile: "test-assets/nested-json/count-en.nested.json",
     fileFormat: "nested-json",
     nested: true,
@@ -43,7 +51,7 @@ const testArgs: {
 
 describe.each(testArgs)("Read/write %p", (args) => {
   test("Read - delete - write - git-diff", async () => {
-    const fileFormat = fileFormatMap[args.fileFormat];
+    const fileFormat = await instantiateFileFormat(args.fileFormat);
     const tSet = fileFormat.readTFile({
       path: args.srcFile,
       lng: "en",
