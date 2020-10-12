@@ -30,7 +30,7 @@ const fileFormatMap = {
   "android-xml": null,
 };
 
-export async function instantiateFileFormat(
+export async function instantiateTFileFormat(
   fileFormat: TFileType
 ): Promise<TFileFormat> {
   /**

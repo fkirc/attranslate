@@ -2,7 +2,7 @@ import { Matcher, matcherMap } from "../matchers/matcher-definitions";
 import { CoreArgs, CoreResults, TSet } from "./core-definitions";
 import { logFatal } from "../util/util";
 import {
-  instantiateFileFormat,
+  instantiateTFileFormat,
   ReadTFileArgs,
   TFileType,
   WriteTFileArgs,
@@ -50,7 +50,7 @@ export async function writeTFileCore(
       args.tSet.set(key, "");
     }
   });
-  const module = await instantiateFileFormat(fileFormat);
+  const module = await instantiateTFileFormat(fileFormat);
   module.writeTFile(args);
 }
 
@@ -58,7 +58,7 @@ export async function readTFileCore(
   fileFormat: TFileType,
   args: ReadTFileArgs
 ): Promise<TSet> {
-  const module = await instantiateFileFormat(fileFormat);
+  const module = await instantiateTFileFormat(fileFormat);
   const rawTSet = module.readTFile(args);
   rawTSet.forEach((value, key) => {
     if (value === "") {

@@ -1,7 +1,7 @@
 import { TSet } from "../../src/core/core-definitions";
 import { assertPathNotChanged, runCommand } from "../test-util/test-util";
 import {
-  instantiateFileFormat,
+  instantiateTFileFormat,
   TFileType,
 } from "../../src/file-formats/file-format-definitions";
 import { toStrictEqualMapOrder } from "../test-util/to-strict-equal-map-order";
@@ -51,7 +51,7 @@ const testArgs: {
 
 describe.each(testArgs)("Read/write %p", (args) => {
   test("Read - delete - write - git-diff", async () => {
-    const fileFormat = await instantiateFileFormat(args.fileFormat);
+    const fileFormat = await instantiateTFileFormat(args.fileFormat);
     const tSet = fileFormat.readTFile({
       path: args.srcFile,
       lng: "en",
