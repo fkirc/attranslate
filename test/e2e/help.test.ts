@@ -19,6 +19,12 @@ test("reGenerateHelp", async () => {
   }
 });
 
+test("ensure that README is up-to-date", () => {
+  const readme = readUtf8File("README.md");
+  const helpOutput = readUtf8File(helpRef);
+  expect(readme).toContain(helpOutput);
+});
+
 test("--help", async () => {
   const output = await runTranslate(`--help`, {
     pwd: "/",
