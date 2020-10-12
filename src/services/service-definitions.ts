@@ -30,6 +30,7 @@ const serviceMap = {
   deepl: null,
   azure: null,
   manual: null,
+  "sync-without-translate": null,
 };
 
 export function injectFakeService(serviceName: string, service: TService) {
@@ -46,7 +47,8 @@ export async function instantiateTService(
     return fakeService;
   }
   /**
-   * To gain a reasonable launch-performance, we import services dynamically (instead of static imports).
+   * To gain a reasonable launch-performance, we import services dynamically.
+   * This is especially important for google-translate, which uses a huge bunch of packages.
    */
   switch (service) {
     case "azure":
@@ -57,5 +59,9 @@ export async function instantiateTService(
       return new (await import("./google-translate")).GoogleTranslate();
     case "manual":
       return new (await import("./manual")).ManualTranslation();
+    case "sync-without-translate":
+      return new (
+        await import("./sync-without-translate")
+      ).SyncWithoutTranslate();
   }
 }
