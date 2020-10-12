@@ -20,7 +20,6 @@ interface AndroidResourceFile {
 
 interface StringResource {
   name: string;
-  formatted?: string;
   $t: string;
 }
 
@@ -75,14 +74,18 @@ export class AndroidXml implements TFileFormat {
     const xmlCache: XmlCache | undefined = globalXmlCaches.get(args.path);
     const resources: StringResource[] = [];
     args.tSet.forEach((value, jsonKey) => {
+      const oldStringResource:
+        | Partial<StringResource>
+        | undefined = xmlCache?.resources.get(jsonKey);
       const androidKey = jsonKey
         .split(JSON_KEY_SEPARATOR)
         .join(ANDROID_KEY_SEPARATOR);
-      resources.push({
+      const newStringResource: StringResource = {
+        ...oldStringResource,
         name: androidKey,
-        formatted: "false",
         $t: value ?? "",
-      });
+      };
+      resources.push(newStringResource);
     });
     const resourceFile: AndroidResourceFile = {
       resources: {
@@ -113,6 +116,7 @@ function parseRawXML<T>(xmlString: string, args: ReadTFileArgs): Partial<T> {
       object: true,
       sanitize: true,
       trim: false,
+      reversible: true,
     }) as unknown) as Partial<T>;
   } catch (e) {
     console.error(e);
