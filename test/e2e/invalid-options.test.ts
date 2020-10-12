@@ -1,10 +1,9 @@
-import { buildE2EArgs, defaultE2EArgs } from "./e2e-common";
+import { buildE2EArgs, defaultE2EArgs, E2EArgs } from "./e2e-common";
 import { joinLines, runTranslateExpectFailure } from "../test-util/test-util";
 import { getDebugPath } from "../../src/util/util";
-import { CliArgs } from "../../src/core/core-definitions";
 
 test("srcFile not existing", async () => {
-  const args: CliArgs = {
+  const args: E2EArgs = {
     ...defaultE2EArgs,
     srcFile: "not-existing-source",
   };
@@ -15,7 +14,7 @@ test("srcFile not existing", async () => {
 });
 
 test("srcFile not a file", async () => {
-  const args: CliArgs = {
+  const args: E2EArgs = {
     ...defaultE2EArgs,
     srcFile: ".",
   };
@@ -24,7 +23,7 @@ test("srcFile not a file", async () => {
 });
 
 test("targetFile in dir not existing", async () => {
-  const args: CliArgs = {
+  const args: E2EArgs = {
     ...defaultE2EArgs,
     targetFile: "not-existing-dir/target",
   };
@@ -35,7 +34,7 @@ test("targetFile in dir not existing", async () => {
 });
 
 test("targetFile not a file", async () => {
-  const args: CliArgs = {
+  const args: E2EArgs = {
     ...defaultE2EArgs,
     targetFile: "src",
   };
@@ -44,7 +43,7 @@ test("targetFile not a file", async () => {
 });
 
 test("cacheDir not existing", async () => {
-  const args: CliArgs = {
+  const args: E2EArgs = {
     ...defaultE2EArgs,
     cacheDir: "not-existing-cache",
   };
@@ -55,7 +54,7 @@ test("cacheDir not existing", async () => {
 });
 
 test("cacheDir not a dir", async () => {
-  const args: CliArgs = {
+  const args: E2EArgs = {
     ...defaultE2EArgs,
     cacheDir: "README.md",
   };
@@ -66,7 +65,7 @@ test("cacheDir not a dir", async () => {
 });
 
 test("unknown service", async () => {
-  const args: CliArgs = {
+  const args: E2EArgs = {
     ...defaultE2EArgs,
     service: ("some-invalid-service" as unknown) as never,
   };
@@ -77,7 +76,7 @@ test("unknown service", async () => {
 });
 
 test("unknown matcher", async () => {
-  const args: CliArgs = {
+  const args: E2EArgs = {
     ...defaultE2EArgs,
     matcher: ("some-invalid-matcher" as unknown) as never,
   };
@@ -88,7 +87,7 @@ test("unknown matcher", async () => {
 });
 
 test("unknown source file format", async () => {
-  const args: CliArgs = {
+  const args: E2EArgs = {
     ...defaultE2EArgs,
     srcFormat: ("some-invalid-source" as unknown) as never,
   };
@@ -99,7 +98,7 @@ test("unknown source file format", async () => {
 });
 
 test("unknown target file format", async () => {
-  const args: CliArgs = {
+  const args: E2EArgs = {
     ...defaultE2EArgs,
     targetFormat: ("some-invalid-target" as unknown) as never,
   };
@@ -110,7 +109,7 @@ test("unknown target file format", async () => {
 });
 
 test("bad delete stale", async () => {
-  const args: CliArgs = {
+  const args: E2EArgs = {
     ...defaultE2EArgs,
     deleteStale: "not-true-false",
   };
@@ -133,7 +132,7 @@ const requiredOptions: (keyof typeof defaultE2EArgs)[] = [
 
 describe.each(requiredOptions)("Bad options %s", (option) => {
   test(`Missing required option ${option}`, async () => {
-    const args: CliArgs = {
+    const args: E2EArgs = {
       ...defaultE2EArgs,
       serviceConfig: undefined,
     };
@@ -155,7 +154,7 @@ describe.each(requiredOptions)("Bad options %s", (option) => {
   });
 
   test(`Empty string option ${option}`, async () => {
-    const args: CliArgs = {
+    const args: E2EArgs = {
       ...defaultE2EArgs,
     };
     args[option] = "";
@@ -166,7 +165,7 @@ describe.each(requiredOptions)("Bad options %s", (option) => {
   });
 
   test(`Empty trim option ${option}`, async () => {
-    const args: CliArgs = {
+    const args: E2EArgs = {
       ...defaultE2EArgs,
     };
     args[option] = "    ";

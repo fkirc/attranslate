@@ -2,14 +2,15 @@ import { runTranslate } from "../test-util/test-util";
 import {
   buildE2EArgs,
   defaultE2EArgs,
+  E2EArgs,
   offlineMaxTime,
   removeTargetFile,
   switchToRandomTarget,
 } from "./e2e-common";
-import { CliArgs } from "../../src/core/core-definitions";
 
-const testArray: Partial<CliArgs>[] = [
+const testArray: E2EArgs[] = [
   {
+    ...defaultE2EArgs,
     srcFile: "test-assets/misc-json/empty-props.json",
     srcFormat: "flat-json",
     targetFile: "test-assets/flat-json/count-de.flat.json",
@@ -19,7 +20,7 @@ const testArray: Partial<CliArgs>[] = [
 ];
 
 describe.each(testArray)("empty props %p", (commonArgs) => {
-  const args: CliArgs = {
+  const args: E2EArgs = {
     ...defaultE2EArgs,
     ...commonArgs,
   };

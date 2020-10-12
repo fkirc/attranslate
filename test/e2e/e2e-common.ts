@@ -6,11 +6,14 @@ import { generateId, runCommand } from "../test-util/test-util";
 export const offlineMaxTime = 250;
 export const onlineMaxTime = 2500;
 
-export const defaultE2EArgs: CliArgs = {
+export type E2EArgs = CliArgs & { refTargetFile: string };
+
+export const defaultE2EArgs: E2EArgs = {
   srcFile: "test-assets/flat-json/count-en.flat.json",
   srcLng: "en",
   srcFormat: "flat-json",
   targetFile: "default-target.json",
+  refTargetFile: "ref-default-target.json",
   targetLng: "de",
   targetFormat: "nested-json",
   service: "google-translate",
@@ -20,7 +23,7 @@ export const defaultE2EArgs: CliArgs = {
   deleteStale: "true",
 };
 
-export async function switchToRandomTarget(args: CliArgs, copy: boolean) {
+export async function switchToRandomTarget(args: E2EArgs, copy: boolean) {
   const randomTargetFile = `${args.targetFile}_${generateId()}`;
   if (!args.refTargetFile) {
     args.refTargetFile = args.targetFile;
@@ -32,13 +35,13 @@ export async function switchToRandomTarget(args: CliArgs, copy: boolean) {
   }
 }
 
-export async function removeTargetFile(args: CliArgs) {
+export async function removeTargetFile(args: E2EArgs) {
   const diffCmd = `diff ${args.targetFile} ${args.refTargetFile}`;
   await runCommand(diffCmd);
   await runCommand(`rm ${args.targetFile}`);
 }
 
-export function buildE2EArgs(args: CliArgs): string {
+export function buildE2EArgs(args: E2EArgs): string {
   const cmdArgs: string[] = [];
   for (const argKey of Object.keys(args)) {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment

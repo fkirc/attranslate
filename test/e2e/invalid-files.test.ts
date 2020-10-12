@@ -1,10 +1,9 @@
-import { CliArgs } from "../../src/core/core-definitions";
-import { buildE2EArgs, defaultE2EArgs } from "./e2e-common";
+import { buildE2EArgs, defaultE2EArgs, E2EArgs } from "./e2e-common";
 import { runTranslateExpectFailure } from "../test-util/test-util";
 import { getDebugPath } from "../../src/util/util";
 
 test("src not a JSON", async () => {
-  const args: CliArgs = {
+  const args: E2EArgs = {
     ...defaultE2EArgs,
     srcFile: "test-assets/invalid/not-a-json",
   };
@@ -16,7 +15,7 @@ test("src not a JSON", async () => {
 });
 
 test("src not an XML", async () => {
-  const args: CliArgs = {
+  const args: E2EArgs = {
     ...defaultE2EArgs,
     srcFormat: "android-xml",
   };
@@ -30,7 +29,7 @@ test("src not an XML", async () => {
 });
 
 test("duplicate keys XML", async () => {
-  const args: CliArgs = {
+  const args: E2EArgs = {
     ...defaultE2EArgs,
     srcFile: "test-assets/invalid/duplicate-keys.xml",
     srcFormat: "android-xml",
@@ -44,7 +43,7 @@ test("duplicate keys XML", async () => {
 });
 
 test("src empty JSON", async () => {
-  const args: CliArgs = {
+  const args: E2EArgs = {
     ...defaultE2EArgs,
     srcFile: "test-assets/invalid/empty.json",
   };
@@ -57,7 +56,7 @@ test("src empty JSON", async () => {
 });
 
 test("target non-flat JSON", async () => {
-  const args: CliArgs = {
+  const args: E2EArgs = {
     ...defaultE2EArgs,
     targetFile: "test-assets/nested-json/count-en.nested.json",
     targetFormat: "flat-json",
@@ -71,7 +70,7 @@ test("target non-flat JSON", async () => {
 });
 
 test("unsupported cache version", async () => {
-  const args: CliArgs = {
+  const args: E2EArgs = {
     ...defaultE2EArgs,
     cacheDir: "test-assets/invalid",
   };
@@ -82,7 +81,7 @@ test("unsupported cache version", async () => {
 });
 
 /*test("src duplicate JSON", async () => {
-  const args: CliArgs = {
+  const args: E2EArgs = {
     ...defaultE2EArgs,
     srcFile: "test-assets/invalid/duplicate-property.json",
   };
@@ -90,7 +89,7 @@ test("unsupported cache version", async () => {
   expect(output).toBe(`error: ${getDebugPath(args.srcFile)} -dup--\n`);
 });
 test("src duplicate nested JSON", async () => {
-  const args: CliArgs = {
+  const args: E2EArgs = {
     ...defaultE2EArgs,
     srcFile: "test-assets/invalid/duplicate-nested-property.json",
   };
