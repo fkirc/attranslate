@@ -1,5 +1,5 @@
-import { serviceMap } from "../services/service-definitions";
 import { matcherMap } from "../matchers/matcher-definitions";
+import { TServiceType } from "../services/service-definitions";
 
 export type TSet = Map<string, string | null>;
 
@@ -9,7 +9,7 @@ export interface CoreArgs {
   srcLng: string;
   oldTarget: TSet | null;
   targetLng: string;
-  service: keyof typeof serviceMap;
+  service: TServiceType;
   serviceConfig: string;
   matcher: keyof typeof matcherMap;
   deleteStale: boolean;

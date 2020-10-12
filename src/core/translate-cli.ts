@@ -3,7 +3,6 @@ import { existsSync } from "fs";
 import { CliArgs, CoreArgs, TSet } from "./core-definitions";
 import { areEqual } from "./tset-ops";
 import { checkDir, getDebugPath, logFatal } from "../util/util";
-import { serviceMap } from "../services/service-definitions";
 import { matcherMap } from "../matchers/matcher-definitions";
 import { missingTCacheTarget, resolveTCache, writeTCache } from "./cache-layer";
 import { readTFileCore, writeTFileCore } from "./core-util";
@@ -12,6 +11,7 @@ import {
   getTFileFormatList,
   TFileType,
 } from "../file-formats/file-format-definitions";
+import { getTServiceList, TServiceType } from "../services/service-definitions";
 
 async function resolveOldTarget(
   args: CliArgs,
@@ -37,11 +37,12 @@ export function formatCliOptions(options: string[]): string {
 export async function translateCli(cliArgs: CliArgs) {
   checkForEmptyStringOptions(cliArgs);
   const fileFormats = getTFileFormatList();
-  if (!(cliArgs.service in serviceMap)) {
+  const services = getTServiceList();
+  if (!services.includes(cliArgs.service as TServiceType)) {
     logFatal(
       `Unknown service "${
         cliArgs.service
-      }". Available services: ${formatCliOptions(Object.keys(serviceMap))}`
+      }". Available services: ${formatCliOptions(services)}`
     );
   }
   if (!(cliArgs.matcher in matcherMap)) {
@@ -91,7 +92,7 @@ export async function translateCli(cliArgs: CliArgs) {
     srcLng: cliArgs.srcLng,
     oldTarget,
     targetLng: cliArgs.targetLng,
-    service: cliArgs.service as keyof typeof serviceMap,
+    service: cliArgs.service as TServiceType,
     serviceConfig: cliArgs.serviceConfig,
     matcher: cliArgs.matcher as keyof typeof matcherMap,
     deleteStale: parseBooleanOption(cliArgs.deleteStale),

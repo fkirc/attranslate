@@ -1,9 +1,9 @@
 import commander from "commander";
-import { serviceMap } from "./services/service-definitions";
 import { matcherMap } from "./matchers/matcher-definitions";
 import { translateCli, formatCliOptions } from "./core/translate-cli";
 import { getTFileFormatList } from "./file-formats/file-format-definitions";
 import { CliArgs } from "./core/core-definitions";
+import { getTServiceList } from "./services/service-definitions";
 
 process.on("unhandledRejection", (error) => {
   console.error("[fatal]", error);
@@ -42,7 +42,7 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
     )
     .requiredOption(
       "--service <translationService>",
-      formatOneOfOptions(Object.keys(serviceMap))
+      formatOneOfOptions(getTServiceList())
     )
     .requiredOption(
       "--serviceConfig <serviceKey>",

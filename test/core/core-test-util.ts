@@ -2,10 +2,10 @@ import { CoreArgs, CoreResults, TSet } from "../../src/core/core-definitions";
 import { translateCore } from "../../src/core/translate-core";
 import {
   injectFakeService,
-  serviceMap,
   TResult,
   TService,
   TServiceArgs,
+  TServiceType,
 } from "../../src/services/service-definitions";
 import { logFatal } from "../../src/util/util";
 import { enumerateSubsets } from "../test-util/test-util";
@@ -84,7 +84,7 @@ class BogusService implements TService {
 }
 
 export const commonArgs: Omit<CoreArgs, "oldTarget" | "src" | "srcCache"> = {
-  service: bogusTranslateName as keyof typeof serviceMap,
+  service: bogusTranslateName as TServiceType,
   serviceConfig: getGCloudKeyPath(),
   matcher: "icu",
   srcLng: "en",

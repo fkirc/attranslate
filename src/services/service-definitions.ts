@@ -22,7 +22,13 @@ export interface TService {
   translateStrings: (args: TServiceArgs) => Promise<TResult[]>;
 }
 
-export const serviceMap = {
+export type TServiceType = keyof typeof serviceMap;
+
+export function getTServiceList(): TServiceType[] {
+  return Object.keys(serviceMap) as TServiceType[];
+}
+
+const serviceMap = {
   "google-translate": null,
   deepl: null,
   azure: null,
@@ -36,7 +42,7 @@ export function injectFakeService(serviceName: string, service: TService) {
 const fakeServiceMap: Record<string, TService> = {};
 
 export async function instantiateTService(
-  service: keyof typeof serviceMap
+  service: TServiceType
 ): Promise<TService> {
   const fakeService = fakeServiceMap[service];
   if (fakeService) {

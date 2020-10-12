@@ -2,10 +2,10 @@ import { commonArgs, enSrc, translateCoreAssert } from "./core-test-util";
 import { CoreArgs, CoreResults, TSet } from "../../src/core/core-definitions";
 import {
   injectFakeService,
-  serviceMap,
   TResult,
   TService,
   TServiceArgs,
+  TServiceType,
 } from "../../src/services/service-definitions";
 import { toStrictEqualMapOrder } from "../test-util/to-strict-equal-map-order";
 
@@ -21,7 +21,7 @@ test("up-to-date cache, no target, empty service", async () => {
   injectFakeService(service, new EmptyResultsService());
   const args: CoreArgs = {
     ...commonArgs,
-    service: service as keyof typeof serviceMap,
+    service: service as TServiceType,
     src: enSrc,
     srcCache: enSrc,
     oldTarget: null,
@@ -79,7 +79,7 @@ test("bogus cache, modified target, partial service", async () => {
   injectFakeService(service, new PartialResultsService());
   const args: CoreArgs = {
     ...commonArgs,
-    service: service as keyof typeof serviceMap,
+    service: service as TServiceType,
     src: enSrc,
     srcCache: modifiedTarget,
     oldTarget: modifiedTarget,
