@@ -1,6 +1,6 @@
-import { Matcher } from "./matcher-definitions";
+import { TMatcher } from "./matcher-definitions";
 
-export const matchSprintf: Matcher = (
+export const matchSprintf: TMatcher = (
   input: string,
   replacer: (i: number) => string
 ) => {

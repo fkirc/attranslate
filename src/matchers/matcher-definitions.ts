@@ -7,9 +7,9 @@ const xmlLeftTag = "<span>";
 const xmlRightTag = "</span>";
 const spaceXmlRightTag = "</ span>";
 
-export const matchNothing: Matcher = () => [];
+export const matchNothing: TMatcher = () => [];
 
-export type Matcher = (
+export type TMatcher = (
   input: string,
   replacer: (index: number) => string
 ) => { from: string; to: string }[];
@@ -28,7 +28,7 @@ export type Replacer = {
 
 export const replaceInterpolations = (
   input: string,
-  matcher: Matcher = matchNothing,
+  matcher: TMatcher = matchNothing,
   replacer: (index: number) => string = xmlStyleReplacer
 ): Replacer => {
   const replacements = matcher(input, replacer);

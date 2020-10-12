@@ -1,6 +1,6 @@
-import { Matcher } from "./matcher-definitions";
+import { TMatcher } from "./matcher-definitions";
 
-export const matchI18Next: Matcher = (
+export const matchI18Next: TMatcher = (
   input: string,
   replacer: (i: number) => string
 ) => {

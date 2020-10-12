@@ -68,11 +68,11 @@ test("cacheDir not a dir", async () => {
 test("unknown service", async () => {
   const args: CliArgs = {
     ...defaultE2EArgs,
-    service: ("some-invalid-matcher" as unknown) as never,
+    service: ("some-invalid-service" as unknown) as never,
   };
   const output = await runTranslateExpectFailure(buildE2EArgs(args));
   expect(output).toContain(
-    `error: Unknown service "some-invalid-matcher". Available services: "`
+    `error: Unknown service "some-invalid-service". Available services: "`
   );
 });
 

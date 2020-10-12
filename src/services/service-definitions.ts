@@ -1,4 +1,4 @@
-import { Matcher } from "../matchers/matcher-definitions";
+import { TMatcher } from "../matchers/matcher-definitions";
 
 export interface TResult {
   key: string;
@@ -15,7 +15,7 @@ export interface TServiceArgs {
   srcLng: string;
   targetLng: string;
   serviceConfig: string;
-  interpolationMatcher?: Matcher;
+  interpolationMatcher?: TMatcher;
 }
 
 export interface TService {

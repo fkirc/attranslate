@@ -1,4 +1,4 @@
-import { Matcher, matcherMap } from "../matchers/matcher-definitions";
+import { TMatcher, matcherMap } from "../matchers/matcher-definitions";
 import { CoreArgs, CoreResults, TSet } from "./core-definitions";
 import { logFatal } from "../util/util";
 import {
@@ -72,7 +72,7 @@ export async function readTFileCore(
   return rawTSet;
 }
 
-export function getMatcherInstance(args: CoreArgs): Matcher {
+export function getMatcherInstance(args: CoreArgs): TMatcher {
   const matcher: keyof typeof matcherMap = args.matcher;
   if (typeof matcherMap[matcher] === "undefined") {
     throw new Error(`The matcher ${matcher} doesn't exist.`);
