@@ -33,6 +33,11 @@ const testArgs: {
     nested: true,
   },
   {
+    srcFile: "test-assets/android-xml/count-en.indent2.flat.xml",
+    fileFormat: "android-xml",
+    nested: false,
+  },
+  {
     srcFile: "test-assets/nested-json/count-en.nested.json",
     fileFormat: "nested-json",
     nested: true,
