@@ -12,13 +12,17 @@ import {
   switchToRandomTarget,
 } from "./e2e-common";
 import { join } from "path";
-import { getDebugPath, readJsonFile, writeJsonFile } from "../../src/util/util";
+import { getDebugPath } from "../../src/util/util";
 import { CliArgs } from "../../src/core/core-definitions";
 
 const cacheDirOutdated = join("test-assets", "cache-outdated");
 const cacheMissingDir = join("test-assets", "cache-missing");
 
-const testArray: { cliArgs: Partial<CliArgs>; maxTime: number }[] = [
+const testArray: {
+  cliArgs: Partial<CliArgs>;
+  maxTime: number;
+  modifiedTarget: string;
+}[] = [
   {
     cliArgs: {
       srcFile: "test-assets/flat-json/count-empty-null.flat.json",
@@ -27,6 +31,7 @@ const testArray: { cliArgs: Partial<CliArgs>; maxTime: number }[] = [
       targetFormat: "nested-json",
     },
     maxTime: offlineMaxTime,
+    modifiedTarget: "test-assets/flat-json/count-empty.flat.modified.json",
   },
   {
     cliArgs: {
@@ -36,6 +41,7 @@ const testArray: { cliArgs: Partial<CliArgs>; maxTime: number }[] = [
       targetFormat: "flat-json",
     },
     maxTime: onlineMaxTime,
+    modifiedTarget: "test-assets/nested-json/count-de.flattened.modified.json",
   },
 ];
 
@@ -64,7 +70,7 @@ describe.each(testArray)("outdated cache %p", (commonArgs) => {
 
   test("modified target", async () => {
     const args = { ...argsTemplate };
-    await preModifiedTarget(args);
+    await preModifiedTarget(args, commonArgs.modifiedTarget);
     const output = await runWithOutdatedCache(args);
     expect(output).toContain("Update 1 existing translations");
     await postModifiedTarget(args);
@@ -87,7 +93,7 @@ describe.each(testArray)("clean cache %p", (commonArgs) => {
 
   test("modified target", async () => {
     const args = { ...argsTemplate };
-    await preModifiedTarget(args);
+    await preModifiedTarget(args, commonArgs.modifiedTarget);
     const output = await runTranslate(buildE2EArgs(args), {
       maxTime: offlineMaxTime,
     });
@@ -127,7 +133,7 @@ describe.each(testArray)("missing cache %p", (commonArgs) => {
 
   test("modified target", async () => {
     const args = { ...argsTemplate };
-    await preModifiedTarget(args);
+    await preModifiedTarget(args, commonArgs.modifiedTarget);
     const output = await runWithMissingCache(args, offlineMaxTime);
     expect(output).toContain(
       "Skipped translations because we had to generate a new cache."
@@ -136,9 +142,9 @@ describe.each(testArray)("missing cache %p", (commonArgs) => {
   });
 });
 
-async function preModifiedTarget(args: CliArgs) {
+async function preModifiedTarget(args: CliArgs, modifiedTarget: string) {
+  args.targetFile = modifiedTarget;
   await switchToRandomTarget(args, true);
-  modifyFirstTwoProperties(args.targetFile);
 }
 
 async function postModifiedTarget(args: CliArgs) {
@@ -153,12 +159,4 @@ async function postMissingTarget(args: CliArgs, output: string) {
   expect(output).toContain(`Add 3 new translations`);
   expect(output).toContain(`Write target ${getDebugPath(args.targetFile)}`);
   await removeTargetFile(args, false);
-}
-
-function modifyFirstTwoProperties(jsonPath: string) {
-  const json: Record<string, unknown> = readJsonFile(jsonPath);
-  const keys = Object.keys(json);
-  json[keys[0]] += " modified 1";
-  json[keys[1]] += " modified 2";
-  writeJsonFile(jsonPath, json);
 }
