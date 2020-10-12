@@ -1,9 +1,9 @@
 import commander from "commander";
-import { matcherMap } from "./matchers/matcher-definitions";
 import { translateCli, formatCliOptions } from "./core/translate-cli";
 import { getTFileFormatList } from "./file-formats/file-format-definitions";
 import { CliArgs } from "./core/core-definitions";
 import { getTServiceList } from "./services/service-definitions";
+import { getTMatcherList } from "./matchers/matcher-definitions";
 
 process.on("unhandledRejection", (error) => {
   console.error("[fatal]", error);
@@ -55,7 +55,7 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
     )
     .option(
       "--matcher <matcher>",
-      formatOneOfOptions(Object.keys(matcherMap)),
+      formatOneOfOptions(getTMatcherList()),
       "none"
     )
     .option(

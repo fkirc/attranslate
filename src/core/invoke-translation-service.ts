@@ -1,6 +1,6 @@
 import { CoreArgs, TServiceInvocation, TSet } from "./core-definitions";
-import { getMatcherInstance } from "./core-util";
 import {
+  instantiateTMatcher,
   reInsertInterpolations,
   replaceInterpolations,
   Replacer,
@@ -52,7 +52,7 @@ async function runTranslationService(
   rawInputs: TString[],
   args: CoreArgs
 ): Promise<TResult[]> {
-  const matcher = getMatcherInstance(args);
+  const matcher = instantiateTMatcher(args.matcher);
   const replacers = new Map<string, Replacer>();
   rawInputs.forEach((rawString) => {
     const replacer = replaceInterpolations(rawString.value, matcher);
@@ -71,7 +71,6 @@ async function runTranslationService(
     srcLng: args.srcLng,
     targetLng: args.targetLng,
     serviceConfig: args.serviceConfig,
-    interpolationMatcher: getMatcherInstance(args),
   };
   console.info(
     `Invoke '${args.service}' from '${args.srcLng}' to '${args.targetLng}' with ${serviceArgs.strings.length} inputs...`

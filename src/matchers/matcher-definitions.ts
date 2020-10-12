@@ -14,7 +14,13 @@ export type TMatcher = (
   replacer: (index: number) => string
 ) => { from: string; to: string }[];
 
-export const matcherMap = {
+export type TMatcherType = keyof typeof matcherMap;
+
+export function getTMatcherList(): TMatcherType[] {
+  return Object.keys(matcherMap) as TMatcherType[];
+}
+
+const matcherMap = {
   none: matchNothing,
   icu: matchIcu,
   i18next: matchI18Next,
@@ -49,3 +55,10 @@ export const reInsertInterpolations = (
   const c3 = c2.replace(` ${xmlRightTag}`, xmlRightTag);
   return replacements.reduce((acc, cur) => acc.replace(cur.to, cur.from), c3);
 };
+
+export function instantiateTMatcher(matcher: TMatcherType): TMatcher {
+  if (typeof matcherMap[matcher] === "undefined") {
+    throw new Error(`matcher ${matcher} doesn't exist.`);
+  }
+  return matcherMap[matcher];
+}

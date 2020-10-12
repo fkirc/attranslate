@@ -1,5 +1,3 @@
-import { TMatcher } from "../matchers/matcher-definitions";
-
 export interface TResult {
   key: string;
   translated: string;
@@ -15,7 +13,6 @@ export interface TServiceArgs {
   srcLng: string;
   targetLng: string;
   serviceConfig: string;
-  interpolationMatcher?: TMatcher;
 }
 
 export interface TService {

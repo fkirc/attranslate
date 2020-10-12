@@ -3,7 +3,6 @@ import { existsSync } from "fs";
 import { CliArgs, CoreArgs, TSet } from "./core-definitions";
 import { areEqual } from "./tset-ops";
 import { checkDir, getDebugPath, logFatal } from "../util/util";
-import { matcherMap } from "../matchers/matcher-definitions";
 import { missingTCacheTarget, resolveTCache, writeTCache } from "./cache-layer";
 import { readTFileCore, writeTFileCore } from "./core-util";
 import path from "path";
@@ -12,6 +11,7 @@ import {
   TFileType,
 } from "../file-formats/file-format-definitions";
 import { getTServiceList, TServiceType } from "../services/service-definitions";
+import { getTMatcherList, TMatcherType } from "../matchers/matcher-definitions";
 
 async function resolveOldTarget(
   args: CliArgs,
@@ -38,6 +38,7 @@ export async function translateCli(cliArgs: CliArgs) {
   checkForEmptyStringOptions(cliArgs);
   const fileFormats = getTFileFormatList();
   const services = getTServiceList();
+  const matchers = getTMatcherList();
   if (!services.includes(cliArgs.service as TServiceType)) {
     logFatal(
       `Unknown service "${
@@ -45,11 +46,11 @@ export async function translateCli(cliArgs: CliArgs) {
       }". Available services: ${formatCliOptions(services)}`
     );
   }
-  if (!(cliArgs.matcher in matcherMap)) {
+  if (!matchers.includes(cliArgs.matcher as TMatcherType)) {
     logFatal(
       `Unknown matcher "${
         cliArgs.matcher
-      }". Available matchers: ${formatCliOptions(Object.keys(matcherMap))}`
+      }". Available matchers: ${formatCliOptions(matchers)}`
     );
   }
   if (!fileFormats.includes(cliArgs.srcFormat as TFileType)) {
@@ -94,7 +95,7 @@ export async function translateCli(cliArgs: CliArgs) {
     targetLng: cliArgs.targetLng,
     service: cliArgs.service as TServiceType,
     serviceConfig: cliArgs.serviceConfig,
-    matcher: cliArgs.matcher as keyof typeof matcherMap,
+    matcher: cliArgs.matcher as TMatcherType,
     deleteStale: parseBooleanOption(cliArgs.deleteStale),
   };
   const result = await translateCore(coreArgs);
