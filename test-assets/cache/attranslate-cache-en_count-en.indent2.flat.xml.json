@@ -12,6 +12,10 @@
         {
           "id": "de",
           "state": "frozen"
+        },
+        {
+          "id": "en",
+          "state": "frozen"
         }
       ]
     },
@@ -21,6 +25,10 @@
         {
           "id": "de",
           "state": "frozen"
+        },
+        {
+          "id": "en",
+          "state": "frozen"
         }
       ]
     },
@@ -29,6 +37,10 @@
       "targets": [
         {
           "id": "de",
+          "state": "frozen"
+        },
+        {
+          "id": "en",
           "state": "frozen"
         }
       ]
