@@ -39,7 +39,7 @@ test("duplicate keys XML", async () => {
   expect(output).toBe(
     `error: Failed to parse ${getDebugPath(
       args.srcFile
-    )}: duplicate key 'dup' -> Do you really meant to use duplicate translation-keys?\n`
+    )}: duplicate key 'dup' -> Currently, the usage of duplicate translation-keys is discouraged.\n`
   );
 });
 
