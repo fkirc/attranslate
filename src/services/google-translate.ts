@@ -10,6 +10,8 @@ import ITranslateTextRequest = google.cloud.translation.v3.ITranslateTextRequest
 import { ClientOptions } from "google-gax";
 import ITranslation = google.cloud.translation.v3.ITranslation;
 import { getDebugPath, logFatal, readJsonFile } from "../util/util";
+import { chunk, flatten } from "lodash";
+import * as v3 from "@google-cloud/translate/build/src/v3";
 
 export interface GCloudKeyFile {
   project_id: string;
@@ -26,14 +28,28 @@ export class GoogleTranslate implements TService {
       );
     }
     const projectId: string = keyFile.project_id;
-    const location = "global";
 
     const clientOptions: ClientOptions = {
       keyFile: args.serviceConfig,
     };
     const client = new TranslationServiceClient(clientOptions);
+    const batches = chunk(args.strings, 10);
+    const results = await Promise.all(
+      batches.map((batch) =>
+        this.translateBatch(batch, client, args, projectId)
+      )
+    );
+    return flatten(results);
+  }
 
-    const stringsToTranslate = args.strings.map((tString) => tString.value);
+  async translateBatch(
+    batch: TString[],
+    client: v3.TranslationServiceClient,
+    args: TServiceArgs,
+    projectId: string
+  ): Promise<TResult[]> {
+    const location = "global";
+    const stringsToTranslate = batch.map((tString) => tString.value);
     const request: ITranslateTextRequest = {
       parent: `projects/${projectId}/locations/${location}`,
       contents: stringsToTranslate,
@@ -46,7 +62,7 @@ export class GoogleTranslate implements TService {
       logFatal(`Google-translate did not return translations`);
     }
     return response.translations.map((value, index) => {
-      return this.transformGCloudResult(value, args.strings[index]);
+      return this.transformGCloudResult(value, batch[index]);
     });
   }
 
