@@ -1,5 +1,5 @@
 import { TSet } from "../../src/core/core-definitions";
-import { assertPathNotChanged, runCommand } from "../test-util/test-util";
+import { generateId, runCommand } from "../test-util/test-util";
 import {
   instantiateTFileFormat,
   TFileType,
@@ -55,19 +55,24 @@ const testArgs: {
 ];
 
 describe.each(testArgs)("Read/write %p", (args) => {
-  test("Read - delete - write - git-diff", async () => {
+  test("Read - write - diff", async () => {
     const fileFormat = await instantiateTFileFormat(args.fileFormat);
     const tSet = fileFormat.readTFile({
       path: args.srcFile,
       lng: "en",
     });
+
     toStrictEqualMapOrder(tSet, expectedTSet(args.nested));
-    await runCommand(`rm ${args.srcFile}`);
+
+    const targetFile = `${args.srcFile}_${generateId()}`;
     fileFormat.writeTFile({
-      path: args.srcFile,
+      path: targetFile,
       tSet,
       lng: "en",
     });
-    await assertPathNotChanged(args.srcFile);
+
+    const diffCmd = `diff ${args.srcFile} ${targetFile}`;
+    await runCommand(diffCmd);
+    await runCommand(`rm ${targetFile}`);
   });
 });

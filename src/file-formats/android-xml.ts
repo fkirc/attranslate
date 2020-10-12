@@ -27,7 +27,20 @@ interface XmlCache {
   detectedIndent: number;
   resources: Map<string, Partial<StringResource>>;
 }
-const globalXmlCaches = new Map<string, XmlCache>();
+const globalXmlCaches: Map<string, XmlCache> = new Map();
+
+function resolveXmlCache(args: WriteTFileArgs): XmlCache | null {
+  const sameFileCache = globalXmlCaches.get(args.path);
+  if (sameFileCache) {
+    return sameFileCache;
+  }
+  const cacheArray = Array.from(globalXmlCaches);
+  if (cacheArray.length) {
+    return cacheArray[cacheArray.length - 1][1];
+  } else {
+    return null;
+  }
+}
 
 /**
  * Android Studio seems to auto-format XML-files with 4 spaces indentation.
@@ -57,35 +70,38 @@ export class AndroidXml implements TFileFormat {
       resources: new Map(),
     };
     strings.forEach((stringResource: Partial<StringResource>) => {
-      const rawKey = stringResource.name;
+      const xmlKey = stringResource.name;
       const value = stringResource.$t;
-      if (!rawKey) {
+      if (!xmlKey) {
         logXmlError(`undefined key: '${stringResource}'`, args);
       }
-      const key = rawKey.split(ANDROID_KEY_SEPARATOR).join(JSON_KEY_SEPARATOR);
-      tSet.set(key, value ?? null);
-      xmlCache.resources.set(key, stringResource);
+      const jsonKey = xmlKey
+        .split(ANDROID_KEY_SEPARATOR)
+        .join(JSON_KEY_SEPARATOR);
+      tSet.set(jsonKey, value ?? null);
+      xmlCache.resources.set(jsonKey, stringResource);
     });
     globalXmlCaches.set(args.path, xmlCache);
     return tSet;
   }
 
   writeTFile(args: WriteTFileArgs): void {
-    const xmlCache: XmlCache | undefined = globalXmlCaches.get(args.path);
+    const xmlCache: XmlCache | null = resolveXmlCache(args);
+    const oldResources = xmlCache?.resources;
     const resources: StringResource[] = [];
     args.tSet.forEach((value, jsonKey) => {
-      const oldStringResource:
+      const oldResource:
         | Partial<StringResource>
-        | undefined = xmlCache?.resources.get(jsonKey);
-      const androidKey = jsonKey
+        | undefined = oldResources?.get(jsonKey);
+      const xmlKey = jsonKey
         .split(JSON_KEY_SEPARATOR)
         .join(ANDROID_KEY_SEPARATOR);
-      const newStringResource: StringResource = {
-        ...oldStringResource,
-        name: androidKey,
+      const newResource: StringResource = {
+        ...oldResource,
+        name: xmlKey,
         $t: value ?? "",
       };
-      resources.push(newStringResource);
+      resources.push(newResource);
     });
     const resourceFile: AndroidResourceFile = {
       resources: {
