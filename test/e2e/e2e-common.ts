@@ -1,12 +1,7 @@
 import { CliArgs } from "../../src/core/core-definitions";
 import { getGCloudKeyPath } from "../setup/key-exports";
 import { readJsonFile, writeJsonFile } from "../../src/util/util";
-import {
-  assertExists,
-  generateId,
-  runCommand,
-  runCommandExpectFailure,
-} from "../test-util/test-util";
+import { generateId, runCommand } from "../test-util/test-util";
 
 export const offlineMaxTime = 250;
 export const onlineMaxTime = 2500;
@@ -27,21 +22,19 @@ export const defaultE2EArgs: CliArgs = {
 
 export async function switchToRandomTarget(args: CliArgs, copy: boolean) {
   const randomTargetFile = `${args.targetFile}_${generateId()}`;
-  args.refTargetFile = args.targetFile;
+  if (!args.refTargetFile) {
+    args.refTargetFile = args.targetFile;
+  }
+  const fileToCopy = args.targetFile;
   args.targetFile = randomTargetFile;
   if (copy) {
-    await runCommand(`cp ${args.refTargetFile} ${args.targetFile}`);
+    await runCommand(`cp ${fileToCopy} ${args.targetFile}`);
   }
 }
 
-export async function removeTargetFile(args: CliArgs, expectModified: boolean) {
+export async function removeTargetFile(args: CliArgs) {
   const diffCmd = `diff ${args.targetFile} ${args.refTargetFile}`;
-  assertExists(args.targetFile);
-  if (expectModified) {
-    await runCommandExpectFailure(diffCmd);
-  } else {
-    await runCommand(diffCmd);
-  }
+  await runCommand(diffCmd);
   await runCommand(`rm ${args.targetFile}`);
 }
 
