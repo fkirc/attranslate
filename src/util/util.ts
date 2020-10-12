@@ -59,7 +59,7 @@ export function deleteFile(path: string): void {
 
 export function writeJsonFile(path: string, object: unknown): string {
   const jsonString = JSON.stringify(object, null, 2);
-  writeFileSync(path, jsonString, { encoding: "utf8" });
+  writeUf8File(path, jsonString);
   return jsonString;
 }
 
@@ -76,6 +76,10 @@ export function readJsonFile<T>(path: string): Partial<T> {
 export function readUtf8File(path: string): string {
   checkNotDir(path);
   return readFileSync(path, { encoding: "utf8", flag: "r" });
+}
+
+export function writeUf8File(path: string, content: string) {
+  writeFileSync(path, content, { encoding: "utf8" });
 }
 
 export function runCommandOrDie(command: string): string {
