@@ -24,6 +24,12 @@ interface StringResource {
   $t: string;
 }
 
+interface XmlCache {
+  detectedIndent: number;
+  resources: Map<string, Partial<StringResource>>;
+}
+const globalXmlCaches = new Map<string, XmlCache>();
+
 /**
  * Android Studio seems to auto-format XML-files with 4 spaces indentation.
  */
@@ -34,9 +40,10 @@ const JSON_KEY_SEPARATOR = ".";
 
 export class AndroidXml implements TFileFormat {
   readTFile(args: ReadTFileArgs): TSet {
+    const xmlString = readUtf8File(args.path);
     const resourceFile: Partial<AndroidResourceFile> = parseRawXML<
       AndroidResourceFile
-    >(args);
+    >(xmlString, args);
     const strings = resourceFile.resources?.string;
     if (!strings || !Array.isArray(strings)) {
       logXmlError("string resources not found", args);
@@ -46,6 +53,10 @@ export class AndroidXml implements TFileFormat {
     }
 
     const tSet: TSet = new Map();
+    const xmlCache: XmlCache = {
+      detectedIndent: detectIndent(xmlString),
+      resources: new Map(),
+    };
     strings.forEach((stringResource: Partial<StringResource>) => {
       const rawKey = stringResource.name;
       const value = stringResource.$t;
@@ -54,11 +65,14 @@ export class AndroidXml implements TFileFormat {
       }
       const key = rawKey.split(ANDROID_KEY_SEPARATOR).join(JSON_KEY_SEPARATOR);
       tSet.set(key, value ?? null);
+      xmlCache.resources.set(key, stringResource);
     });
+    globalXmlCaches.set(args.path, xmlCache);
     return tSet;
   }
 
   writeTFile(args: WriteTFileArgs): void {
+    const xmlCache: XmlCache | undefined = globalXmlCaches.get(args.path);
     const resources: StringResource[] = [];
     args.tSet.forEach((value, jsonKey) => {
       const androidKey = jsonKey
@@ -80,15 +94,20 @@ export class AndroidXml implements TFileFormat {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const prettifyXml = require("prettify-xml");
     const prettyXmlString = prettifyXml(rawXmlString, {
-      indent: DEFAULT_ANDROID_XML_INDENT,
+      indent: xmlCache?.detectedIndent ?? DEFAULT_ANDROID_XML_INDENT,
     });
     const xmlString = `<?xml version="1.0" encoding="utf-8"?>\n${prettyXmlString}\n`;
     writeUf8File(args.path, xmlString);
   }
 }
 
-function parseRawXML<T>(args: ReadTFileArgs): Partial<T> {
-  const xmlString = readUtf8File(args.path);
+function detectIndent(xmlString: string): number {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const detectModule = require("detect-indent");
+  return detectModule(xmlString).amount ?? DEFAULT_ANDROID_XML_INDENT;
+}
+
+function parseRawXML<T>(xmlString: string, args: ReadTFileArgs): Partial<T> {
   try {
     return (toJson(xmlString, {
       object: true,
