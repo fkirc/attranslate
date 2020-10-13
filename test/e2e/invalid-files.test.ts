@@ -1,5 +1,5 @@
 import { buildE2EArgs, defaultE2EArgs, E2EArgs } from "./e2e-common";
-import { runTranslateExpectFailure } from "../test-util/test-util";
+import { joinLines, runTranslateExpectFailure } from "../test-util/test-util";
 import { getDebugPath } from "../../src/util/util";
 
 test("src not a JSON", async () => {
@@ -39,6 +39,23 @@ test("duplicate keys XML", async () => {
     `error: Failed to parse ${getDebugPath(
       args.srcFile
     )}: duplicate key 'dup' -> Currently, the usage of duplicate translation-keys is discouraged.\n`
+  );
+});
+
+test("invalid iOS strings", async () => {
+  const args: E2EArgs = {
+    ...defaultE2EArgs,
+    srcFile: "test-assets/invalid/empty.json",
+    srcFormat: "ios-strings",
+  };
+  const output = await runTranslateExpectFailure(buildE2EArgs(args));
+  expect(output).toBe(
+    joinLines([
+      `Warning: Line '{}' seems to be unexpected`,
+      `error: Failed to iOS-parse ${getDebugPath(
+        "test-assets/invalid/empty.json"
+      )}: Did not find any Strings in the expected format`,
+    ])
   );
 });
 

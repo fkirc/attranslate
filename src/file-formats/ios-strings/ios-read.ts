@@ -42,7 +42,7 @@ export function parseiOSFile(args: ReadTFileArgs): iOSFile {
     iosFile.appendix = currentChunk;
   }
   if (!iosFile.chunks.size) {
-    logiOSError("Did not find Strings in the expected format", args);
+    logiOSError("Did not find any Strings in the expected format", args);
   }
   return iosFile;
 }
