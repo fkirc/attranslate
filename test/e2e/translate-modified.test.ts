@@ -61,6 +61,11 @@ describe.each(testArray)("translate modified %p", (commonArgs) => {
     await removeTargetFile(args);
   }
 
+  test("missing target - clean cache", async () => {
+    const args: E2EArgs = { ...commonArgs.args };
+    await runMissingTarget(args);
+  });
+
   async function runModifiedTarget(
     args: E2EArgs,
     cleanCache: boolean
@@ -75,11 +80,6 @@ describe.each(testArray)("translate modified %p", (commonArgs) => {
     await removeTargetFile(args);
     return output;
   }
-
-  test("missing target - clean cache", async () => {
-    const args: E2EArgs = { ...commonArgs.args };
-    await runMissingTarget(args);
-  });
 
   test("modified target - clean cache", async () => {
     const args: E2EArgs = { ...commonArgs.args };
