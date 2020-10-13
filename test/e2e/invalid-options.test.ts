@@ -1,4 +1,9 @@
-import { buildE2EArgs, defaultE2EArgs, E2EArgs } from "./e2e-common";
+import {
+  buildE2EArgs,
+  defaultE2EArgs,
+  E2EArgs,
+  switchToRandomTarget,
+} from "./e2e-common";
 import { joinLines, runTranslateExpectFailure } from "../test-util/test-util";
 import { getDebugPath } from "../../src/util/util";
 
@@ -25,8 +30,9 @@ test("srcFile not a file", async () => {
 test("targetFile in dir not existing", async () => {
   const args: E2EArgs = {
     ...defaultE2EArgs,
-    targetFile: "not-existing-dir/target",
+    targetFile: "not-existing-dir/some_file",
   };
+  await switchToRandomTarget(args, false);
   const output = await runTranslateExpectFailure(buildE2EArgs(args));
   expect(output).toBe(
     `error: ${getDebugPath("not-existing-dir")} does not exist.\n`
@@ -38,7 +44,7 @@ test("targetFile not a file", async () => {
     ...defaultE2EArgs,
     targetFile: "src",
   };
-  const output = await runTranslateExpectFailure(buildE2EArgs(args));
+  const output = await runTranslateExpectFailure(buildE2EArgs(args, true));
   expect(output).toBe(`error: ${getDebugPath("src")} is a directory.\n`);
 });
 

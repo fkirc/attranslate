@@ -58,10 +58,10 @@ test("src empty JSON", async () => {
 test("target non-flat JSON", async () => {
   const args: E2EArgs = {
     ...defaultE2EArgs,
-    targetFile: "test-assets/nested-json/count-en.nested.json",
+    targetFile: "test-assets/nested-json/count-en.json",
     targetFormat: "flat-json",
   };
-  const output = await runTranslateExpectFailure(buildE2EArgs(args));
+  const output = await runTranslateExpectFailure(buildE2EArgs(args, true));
   expect(output).toBe(
     `error: ${getDebugPath(
       args.targetFile

@@ -11,13 +11,13 @@ export type E2EArgs = CliArgs & { refTargetFile: string };
 const randomTargetMarker = "random_target";
 
 export const defaultE2EArgs: E2EArgs = {
-  srcFile: "test-assets/flat-json/count-en.flat.json",
+  srcFile: "test-assets/nested-json/count-en.json",
   srcLng: "en",
-  srcFormat: "flat-json",
-  targetFile: randomTargetMarker,
+  srcFormat: "nested-json",
+  targetFile: getRandomTargetName("default_target"),
   refTargetFile: "default-ref-target",
   targetLng: "de",
-  targetFormat: "nested-json",
+  targetFormat: "flat-json",
   service: "google-translate",
   serviceConfig: getGCloudKeyPath(),
   cacheDir: "test-assets/cache",
@@ -25,12 +25,13 @@ export const defaultE2EArgs: E2EArgs = {
   deleteStale: "true",
 };
 
+function getRandomTargetName(path: string) {
+  return `${path}_${randomTargetMarker}_${generateId()}`;
+}
+
 export async function switchToRandomTarget(args: E2EArgs, copy: boolean) {
-  const randomTargetFile = `${
-    args.targetFile
-  }_${randomTargetMarker}_${generateId()}`;
   const fileToCopy = args.targetFile;
-  args.targetFile = randomTargetFile;
+  args.targetFile = getRandomTargetName(args.targetFile);
   if (copy) {
     await runCommand(`cp ${fileToCopy} ${args.targetFile}`);
   }
@@ -45,8 +46,10 @@ export async function removeTargetFile(args: E2EArgs) {
   await runCommand(`rm ${args.targetFile}`);
 }
 
-export function buildE2EArgs(args: E2EArgs): string {
-  expect(args.targetFile).toContain(randomTargetMarker); // Guard against race conditions and cascading test failures.
+export function buildE2EArgs(args: E2EArgs, unsafe?: boolean): string {
+  if (args.targetFile?.trim()?.length && !unsafe) {
+    expect(args.targetFile).toContain(randomTargetMarker); // Guard against race conditions and cascading test failures.
+  }
   expect(args.refTargetFile.includes(randomTargetMarker)).toBe(false); // Guard against bogus passes.
 
   const cmdArgs: string[] = [];
@@ -59,15 +62,6 @@ export function buildE2EArgs(args: E2EArgs): string {
     }
   }
   return cmdArgs.join(" ");
-}
-
-export function injectJsonProperties(
-  jsonPath: string,
-  inject: Record<string, unknown>
-) {
-  const json = readJsonFile(jsonPath);
-  const injectJson = { ...json, ...inject };
-  writeJsonFile(jsonPath, injectJson);
 }
 
 export function modifyJsonProperty(args: {
