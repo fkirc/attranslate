@@ -8,12 +8,14 @@ export const onlineMaxTime = 2500;
 
 export type E2EArgs = CliArgs & { refTargetFile: string };
 
+const randomTargetMarker = "random_target";
+
 export const defaultE2EArgs: E2EArgs = {
   srcFile: "test-assets/flat-json/count-en.flat.json",
   srcLng: "en",
   srcFormat: "flat-json",
-  targetFile: "default-target.json",
-  refTargetFile: "ref-default-target.json",
+  targetFile: randomTargetMarker,
+  refTargetFile: "default-ref-target",
   targetLng: "de",
   targetFormat: "nested-json",
   service: "google-translate",
@@ -22,8 +24,6 @@ export const defaultE2EArgs: E2EArgs = {
   matcher: "none",
   deleteStale: "true",
 };
-
-const randomTargetMarker = "random_target";
 
 export async function switchToRandomTarget(args: E2EArgs, copy: boolean) {
   const randomTargetFile = `${
