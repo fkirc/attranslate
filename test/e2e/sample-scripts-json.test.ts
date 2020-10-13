@@ -1,21 +1,10 @@
-import {
-  assertPathChanged,
-  assertPathNotChanged,
-  joinLines,
-  runCommand,
-} from "../test-util/test-util";
-import { join } from "path";
+import { joinLines, runCommand } from "../test-util/test-util";
 import { modifyJsonProperty } from "./e2e-common";
 import { getDebugPath } from "../../src/util/util";
+import { runSampleScript, sampleDir } from "./sample-scripts-util";
+import { join } from "path";
 
-const sampleDir = "sample-scripts";
 const targetLngs = ["es", "zh", "de"];
-const sourcePath = join(sampleDir, "en", "fruits.json");
-const cachePath = join(
-  sampleDir,
-  "translate-cache",
-  "attranslate-cache-en_fruits.json.json"
-);
 
 function getTargetPaths(): string[] {
   return targetLngs.map((targetLng) => {
@@ -23,19 +12,12 @@ function getTargetPaths(): string[] {
   });
 }
 
-async function runSampleScript(
-  command: string,
-  expectModified?: boolean
-): Promise<string> {
-  const output = await runCommand(command, sampleDir);
-  if (expectModified) {
-    await assertPathChanged(sampleDir);
-    await runCommand(`git checkout ${sampleDir}`);
-  } else {
-    await assertPathNotChanged(sampleDir);
-  }
-  return output;
-}
+const sourcePath = join(sampleDir, "en", "fruits.json");
+const cachePath = join(
+  sampleDir,
+  "translate-cache",
+  "attranslate-cache-en_fruits.json.json"
+);
 
 test("simple_translate", async () => {
   const output = await runSampleScript(`./simple_translate.sh`);
