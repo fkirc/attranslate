@@ -49,19 +49,18 @@ const testArgs: {
     expectTSet: flatCount(),
   },
   {
-    srcFile: "test-assets/nested-json/count-en.nested.json",
+    srcFile: "test-assets/nested-json/count-en.json",
     fileFormat: "nested-json",
     expectTSet: nestedCount(),
   },
   {
-    srcFile: "test-assets/flat-json/count-en.flat.json",
-    fileFormat: "nested-json",
-    expectTSet: flatCount(),
-  },
-  {
-    srcFile: "test-assets/flat-json/count-en.flat.json",
+    srcFile: "test-assets/flat-json/count-empty-null.json",
     fileFormat: "flat-json",
-    expectTSet: flatCount(),
+    expectTSet: new Map([
+      ["one", ""],
+      ["two", " "],
+      ["three", null],
+    ]),
   },
 ];
 
