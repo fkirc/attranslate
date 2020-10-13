@@ -28,6 +28,16 @@ const testArgs: {
   expectTSet: TSet;
 }[] = [
   {
+    srcFile: "test-assets/ios-strings/count-en-appendix.strings",
+    fileFormat: "ios-strings",
+    expectTSet: flatCount(),
+  },
+  {
+    srcFile: "test-assets/ios-strings/count-en-slim.strings",
+    fileFormat: "ios-strings",
+    expectTSet: nestedCount(),
+  },
+  {
     srcFile: "test-assets/android-xml/sanitize.xml",
     fileFormat: "android-xml",
     expectTSet: new Map([

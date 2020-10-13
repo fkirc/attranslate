@@ -28,6 +28,7 @@ const fileFormatMap = {
   "flat-json": null,
   "nested-json": null,
   "android-xml": null,
+  "ios-strings": null,
 };
 
 export async function instantiateTFileFormat(
@@ -43,5 +44,7 @@ export async function instantiateTFileFormat(
       return new NestedJson();
     case "android-xml":
       return new (await import("./android-xml/android-xml")).AndroidXml();
+    case "ios-strings":
+      return new (await import("./ios-strings/ios-strings")).IosStrings();
   }
 }
