@@ -27,7 +27,8 @@ const outdatedCacheTests: {
       srcFile: "test-assets/flat-json/count-empty-null.flat.json",
       srcFormat: "flat-json",
       targetFile: "test-assets/flat-json/count-empty.flat.modified.json",
-      refTargetFile: "test-assets/flat-json/count-empty.flat.json",
+      refTargetFile:
+        "test-assets/flat-json/count-empty.flat.less-modified.json",
       targetFormat: "nested-json",
     },
     maxTime: offlineMaxTime,
