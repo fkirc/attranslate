@@ -17,7 +17,7 @@ import { join } from "path";
 
 const cacheDirOutdated = join("test-assets", "cache-outdated");
 
-const outdatedCacheTests: {
+const testArray: {
   args: E2EArgs;
   cleanTargetFile: string;
   maxTime: number;
@@ -48,38 +48,50 @@ const outdatedCacheTests: {
   },
 ];
 
-describe.each(outdatedCacheTests)("outdated cache %p", (commonArgs) => {
-  const argsTemplate: E2EArgs = {
-    ...defaultE2EArgs,
-    ...commonArgs.args,
-    cacheDir: cacheDirOutdated,
-  };
-  async function runWithOutdatedCache(args: E2EArgs): Promise<string> {
-    const output = await runTranslate(buildE2EArgs(args), {
-      maxTime: commonArgs.maxTime,
-    });
-    expect(output).toContain(`Write cache`);
-    await assertPathChanged(args.cacheDir);
-    await runCommand(`git checkout ${args.cacheDir}`);
-    return output;
-  }
-
-  test("missing target", async () => {
-    const args = { ...argsTemplate };
+describe.each(testArray)("translate modified %p", (commonArgs) => {
+  async function runMissingTarget(args: E2EArgs) {
     args.targetFile = commonArgs.cleanTargetFile;
     args.refTargetFile = commonArgs.cleanTargetFile;
     await switchToRandomTarget(args, false);
-    const output = await runWithOutdatedCache(args);
+    const output = await runTranslate(buildE2EArgs(args), {
+      maxTime: commonArgs.maxTime,
+    });
     expect(output).toContain(`Add 3 new translations`);
     expect(output).toContain(`Write target ${getDebugPath(args.targetFile)}`);
     await removeTargetFile(args);
+  }
+
+  async function runModifiedTarget(
+    args: E2EArgs,
+    cleanCache: boolean
+  ): Promise<string> {
+    if (cleanCache) {
+      args.refTargetFile = args.targetFile;
+    }
+    await switchToRandomTarget(args, true);
+    const output = await runTranslate(buildE2EArgs(args), {
+      maxTime: commonArgs.maxTime,
+    });
+    await removeTargetFile(args);
+    return output;
+  }
+
+  test("missing target - clean cache", async () => {
+    const args: E2EArgs = { ...commonArgs.args };
+    await runMissingTarget(args);
   });
 
-  test("modified target", async () => {
-    const args = { ...argsTemplate };
-    await switchToRandomTarget(args, true);
-    const output = await runWithOutdatedCache(args);
+  test("modified target - clean cache", async () => {
+    const args: E2EArgs = { ...commonArgs.args };
+    const output = await runModifiedTarget(args, true);
+    expect(output).toBe(`Target is up-to-date: '${args.targetFile}'\n`);
+  });
+
+  test("modified target - outdated cache", async () => {
+    const args: E2EArgs = { ...commonArgs.args, cacheDir: cacheDirOutdated };
+    const output = await runModifiedTarget(args, false);
     expect(output).toContain("Update 1 existing translations");
-    await removeTargetFile(args);
+    await assertPathChanged(args.cacheDir);
+    await runCommand(`git checkout ${args.cacheDir}`);
   });
 });
