@@ -107,4 +107,14 @@ describe.each(testArray)("translate modified %p", (commonArgs) => {
     await assertPathChanged(args.cacheDir);
     await runCommand(`git checkout ${args.cacheDir}`);
   });
+
+  test("modified target - missing cache", async () => {
+    await runCommand(`rm -f ${cacheMissingFile}`);
+    const args: E2EArgs = { ...commonArgs.args, cacheDir: cacheMissingDir };
+    const output = await runModifiedTarget(args, true);
+    expect(output).toContain(
+      `Skipped translations because we had to generate a new cache.`
+    );
+    await runCommand(`rm ${cacheMissingFile}`);
+  });
 });
