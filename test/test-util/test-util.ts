@@ -3,7 +3,7 @@ import { join } from "path";
 import { logFatal } from "../../src/util/util";
 import { existsSync } from "fs";
 
-function buildTranslateCommand(args: string) {
+export function buildTranslateCommand(args: string) {
   return `${join(process.cwd(), "bin", "attranslate")} ${args}`;
 }
 
@@ -12,6 +12,13 @@ export async function runTranslate(
   options?: { pwd?: string; maxTime?: number }
 ): Promise<string> {
   const cmd = buildTranslateCommand(args);
+  return await runCommandTimeout(cmd, options);
+}
+
+export async function runCommandTimeout(
+  cmd: string,
+  options?: { pwd?: string; maxTime?: number }
+): Promise<string> {
   const maxMillis = options?.maxTime ? options.maxTime : 10 * 1000;
   return await runMaxTime(maxMillis, cmd, () => {
     return runCommand(cmd, options?.pwd);
