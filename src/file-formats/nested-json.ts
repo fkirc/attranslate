@@ -12,7 +12,7 @@ export class NestedJson implements TFileFormat {
     const nestedJson = readJsonFile(args.path);
     const flatJson: Record<string, string> = flatten(nestedJson);
     const tMap = new Map<string, string>();
-    Object.keys(flatJson).forEach((key, index) => {
+    Object.keys(flatJson).forEach((key) => {
       tMap.set(key, flatJson[key]);
     });
     return tMap;

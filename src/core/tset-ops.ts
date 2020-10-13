@@ -84,7 +84,7 @@ export function joinResultsPreserveOrder(args: {
   });
   // Add any remaining newly added translations whose target order was not determined.
   args.changeSet.added.forEach((value, key) => {
-    if (joinResult.get(key) === undefined) {
+    if (!joinResult.has(key)) {
       joinResult.set(key, value);
     }
   });
@@ -117,7 +117,7 @@ function injectNewKeysIntoTargetOrder(args: {
 export function leftMinusRightFillNull(left: TSet, right: TSet): TSet {
   const leftRemaining = new Map<string, string | null>();
   left.forEach((value, key) => {
-    if (right.get(key) === undefined) {
+    if (!right.has(key)) {
       leftRemaining.set(key, value);
     } else {
       leftRemaining.set(key, null);
@@ -129,7 +129,7 @@ export function leftMinusRightFillNull(left: TSet, right: TSet): TSet {
 export function leftMinusRight(left: TSet, right: TSet): TSet {
   const leftRemaining = new Map<string, string | null>();
   left.forEach((value, key) => {
-    if (right.get(key) === undefined) {
+    if (!right.has(key)) {
       leftRemaining.set(key, value);
     }
   });
