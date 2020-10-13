@@ -9,6 +9,7 @@ import {
 } from "./e2e-common";
 import {
   assertPathChanged,
+  assertPathNotChanged,
   runCommand,
   runTranslate,
 } from "../test-util/test-util";
@@ -67,6 +68,7 @@ describe.each(testArray)("translate modified %p", (commonArgs) => {
   test("missing target - clean cache", async () => {
     const args: E2EArgs = { ...commonArgs.args };
     await runMissingTarget(args);
+    await assertPathNotChanged(args.cacheDir);
   });
 
   test("missing target - missing cache", async () => {
