@@ -37,6 +37,9 @@ export async function switchToRandomTarget(args: E2EArgs, copy: boolean) {
 }
 
 export async function removeTargetFile(args: E2EArgs) {
+  if (process.env.GENERATE_REFS) {
+    await runCommand(`cp ${args.targetFile} ${args.refTargetFile}`);
+  }
   const diffCmd = `diff ${args.targetFile} ${args.refTargetFile}`;
   await runCommand(diffCmd);
   await runCommand(`rm ${args.targetFile}`);
