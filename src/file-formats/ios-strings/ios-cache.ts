@@ -17,7 +17,7 @@ function findChunkInFile(key: string, file: iOSFile): LineChunk | null {
 
 const DEFAULT_APPENDIX: string[] = ["\n"];
 
-export function lookupAppendix(arg: WriteTFileArgs): string[] {
+export function lookupAppendix(): string[] {
   if (cacheArray.length) {
     return cacheArray[cacheArray.length - 1].appendix;
   } else {

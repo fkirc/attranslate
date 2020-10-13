@@ -42,6 +42,20 @@ test("duplicate keys XML", async () => {
   );
 });
 
+test("duplicate keys iOS", async () => {
+  const args: E2EArgs = {
+    ...defaultE2EArgs,
+    srcFile: "test-assets/invalid/duplicate-keys.strings",
+    srcFormat: "ios-strings",
+  };
+  const output = await runTranslateExpectFailure(buildE2EArgs(args));
+  expect(output).toBe(
+    `Warning: Line 'other content' seems to be unexpected\nerror: Failed to iOS-parse ${getDebugPath(
+      args.srcFile
+    )}: duplicate key 'dup_ios' -> Currently, the usage of duplicate translation-keys is discouraged.\n`
+  );
+});
+
 test("invalid iOS strings", async () => {
   const args: E2EArgs = {
     ...defaultE2EArgs,

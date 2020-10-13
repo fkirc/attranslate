@@ -20,7 +20,7 @@ export function writeiOSFile(args: WriteTFileArgs) {
     }
     outLines.push(...newChunk.lines);
   });
-  outLines.push(...lookupAppendix(args));
+  outLines.push(...lookupAppendix());
   const output = outLines.join("\n");
   writeUf8File(args.path, output);
 }

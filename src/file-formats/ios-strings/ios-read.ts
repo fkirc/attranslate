@@ -18,7 +18,7 @@ export function parseiOSFile(args: ReadTFileArgs): iOSFile {
   };
   let currentChunk: string[] = [];
   lines.forEach((line) => {
-    const keyValue = parseSingleiOSLine(line);
+    const keyValue = parseiOSLine(line);
     currentChunk.push(line);
     if (keyValue) {
       const key = keyValue.key;
@@ -28,7 +28,6 @@ export function parseiOSFile(args: ReadTFileArgs): iOSFile {
         lines: currentChunk,
       };
       if (iosFile.chunks.has(key)) {
-        // TODO: Test
         logiOSError(
           `duplicate key '${key}' -> Currently, the usage of duplicate translation-keys is discouraged.`,
           args
@@ -47,7 +46,7 @@ export function parseiOSFile(args: ReadTFileArgs): iOSFile {
   return iosFile;
 }
 
-function parseSingleiOSLine(
+function parseiOSLine(
   line: string
 ): { key: string; value: string | null } | null {
   if (!line.trim().length) {
