@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="apple">Apfel</string>
+    <string name="pear" formatted="false">Birne</string>
+    <string name="banana" formatted="true">Banane</string>
+</resources>
