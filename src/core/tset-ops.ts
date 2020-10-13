@@ -142,6 +142,9 @@ export function leftMinusRight(left: TSet, right: TSet): TSet {
 }
 
 export function areEqual(set1: TSet, set2: TSet): boolean {
+  if (set1.size !== set2.size) {
+    return false;
+  }
   for (const key1 of set1.keys()) {
     const value1 = set1.get(key1);
     const value2 = set2.get(key1);
