@@ -14,7 +14,7 @@ A single developer can integrate `attranslate` in a matter of minutes.
 In contrast to many other tools, `attranslate` can operate on the very same translations-files that you are already using.
 This is possible because `attranslate` does not apply unnecessary changes to already existing translation-files.
 `attranslate` has you covered, regardless of whether you use i18n, JavaScript-frameworks, Android-XML, iOS-Strings or other systems.
-See [tools comparison](/TOOL_COMPARISON.md) for an overview about translation-tools.
+See [tools comparison](/docs/TOOL_COMPARISON.md) for an overview about translation-tools.
 
 # Features
 
@@ -127,7 +127,7 @@ See [sample scripts](/sample-scripts) for guidance on how to translate your proj
 
 If you use `attranslate` with an automated translation-service, then you need to configure an API-key.
 API-keys can be obtained for free, but you might need to register an account.
-See [service config](/SERVICE_CONFIG.md) for guidance on how to obtain API-keys for specific services.
+See [service config](docs/SERVICE_CONFIG.md) for guidance on how to obtain API-keys for specific services.
 
 Once you have an API-key, pass your API-key to `attranslate` via the `--serviceConfig` flag.
 
