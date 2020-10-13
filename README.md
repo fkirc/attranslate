@@ -27,6 +27,7 @@ To make this possible, `attranslate` supports the following file formats:
 - Nested JSON
 - Flat JSON
 - Android-XML
+- iOS-Strings
 
 ## Allow Manual Overwrites
 
@@ -81,11 +82,11 @@ Options:
   --srcFile <sourceFile>             The source file to be translated
   --srcLng <sourceLanguage>          A language code for the source language
   --srcFormat <sourceFileFormat>     One of "flat-json", "nested-json",
-                                     "android-xml"
+                                     "android-xml", "ios-strings"
   --targetFile <targetFile>          The target file for the translations
   --targetLng <targetLanguage>       A language code for the target language
   --targetFormat <targetFileFormat>  One of "flat-json", "nested-json",
-                                     "android-xml"
+                                     "android-xml", "ios-strings"
   --service <translationService>     One of "google-translate", "deepl",
                                      "azure", "manual",
                                      "sync-without-translate"
