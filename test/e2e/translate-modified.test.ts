@@ -16,6 +16,8 @@ import { getDebugPath } from "../../src/util/util";
 import { join } from "path";
 
 const cacheDirOutdated = join("test-assets", "cache-outdated");
+const cacheMissingDir = join("test-assets", "cache-missing");
+const cacheMissingFile = `${join(cacheMissingDir, "attranslate-cache-*")}`;
 
 const testArray: {
   args: E2EArgs;
@@ -49,7 +51,7 @@ const testArray: {
 ];
 
 describe.each(testArray)("translate modified %p", (commonArgs) => {
-  async function runMissingTarget(args: E2EArgs) {
+  async function runMissingTarget(args: E2EArgs): Promise<string> {
     args.targetFile = commonArgs.cleanTargetFile;
     args.refTargetFile = commonArgs.cleanTargetFile;
     await switchToRandomTarget(args, false);
@@ -59,11 +61,22 @@ describe.each(testArray)("translate modified %p", (commonArgs) => {
     expect(output).toContain(`Add 3 new translations`);
     expect(output).toContain(`Write target ${getDebugPath(args.targetFile)}`);
     await removeTargetFile(args);
+    return output;
   }
 
   test("missing target - clean cache", async () => {
     const args: E2EArgs = { ...commonArgs.args };
     await runMissingTarget(args);
+  });
+
+  test("missing target - missing cache", async () => {
+    await runCommand(`rm -f ${cacheMissingFile}`);
+    const args: E2EArgs = { ...commonArgs.args, cacheDir: cacheMissingDir };
+    const output = await runMissingTarget(args);
+    expect(output).toContain(
+      `Cache not found -> Generate a new cache to enable selective translations.`
+    );
+    await runCommand(`rm ${cacheMissingFile}`);
   });
 
   async function runModifiedTarget(
