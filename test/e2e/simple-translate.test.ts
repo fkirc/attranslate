@@ -15,7 +15,6 @@ import {
 import { join } from "path";
 import { getDebugPath } from "../../src/util/util";
 
-const cacheDirOutdated = join("test-assets", "cache-outdated");
 const cacheMissingDir = join("test-assets", "cache-missing");
 
 const testArray: {
@@ -62,43 +61,6 @@ const testArray: {
     addCount: 0,
   },
 ];
-
-describe.each(testArray)("outdated cache %p", (commonArgs) => {
-  const argsTemplate: E2EArgs = {
-    ...defaultE2EArgs,
-    ...commonArgs.args,
-    cacheDir: cacheDirOutdated,
-  };
-  async function runWithOutdatedCache(args: E2EArgs): Promise<string> {
-    const output = await runTranslate(buildE2EArgs(args), {
-      maxTime: commonArgs.maxTime,
-    });
-    expect(output).toContain(`Write cache`);
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    await assertPathChanged(args.cacheDir!);
-    await runCommand(`git checkout ${args.cacheDir}`);
-    return output;
-  }
-
-  test("missing target", async () => {
-    const args = { ...argsTemplate };
-    await preMissingTarget(args);
-    const output = await runWithOutdatedCache(args);
-    await postMissingTarget(args, output);
-  });
-
-  test("modified target", async () => {
-    const args = { ...argsTemplate };
-    await switchToRandomTarget(args, true);
-    const output = await runWithOutdatedCache(args);
-    if (!commonArgs.addCount) {
-      expect(output).toContain("Update 1 existing translations");
-    } else {
-      expect(output).toContain(`Add ${commonArgs.addCount} new translations`);
-    }
-    await removeTargetFile(args);
-  });
-});
 
 describe.each(testArray)("clean cache %p", (commonArgs) => {
   const argsTemplate: E2EArgs = {
@@ -176,10 +138,7 @@ describe.each(testArray)("missing cache %p", (commonArgs) => {
   });
 });
 
-async function preMissingTarget(args: E2EArgs) {
-  args.targetFile = args.refTargetFile;
-  await switchToRandomTarget(args, false);
-}
+async function preMissingTarget(args: E2EArgs) {}
 
 async function postMissingTarget(args: E2EArgs, output: string) {
   expect(output).toContain(`Add 3 new translations`);
