@@ -87,7 +87,8 @@ Options:
   --targetFormat <targetFileFormat>  One of "flat-json", "nested-json",
                                      "android-xml"
   --service <translationService>     One of "google-translate", "deepl",
-                                     "azure", "manual"
+                                     "azure", "manual",
+                                     "sync-without-translate"
   --serviceConfig <serviceKey>       supply configuration for a translation
                                      service (either a path to a key-file or an
                                      API-key)
