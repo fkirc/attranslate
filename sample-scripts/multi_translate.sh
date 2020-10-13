@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-# This example translates a JSON-file into spanish, chinese and german, using Google Cloud Translate.
+# This example translates an english JSON-file into spanish, chinese and german. It uses Google Cloud Translate.
 CACHE_DIR="translate-cache"
 SERVICE_ACCOUNT_KEY="../gcloud/gcloud_service_account.json"
 COMMON_ARGS=( "--srcFile=en/fruits.json" "--srcLng=en" "--srcFormat=nested-json" "--targetFormat=nested-json" "--service=google-translate" "--serviceConfig=$SERVICE_ACCOUNT_KEY" "--cacheDir=$CACHE_DIR" "--matcher=i18next" )

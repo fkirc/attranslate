@@ -52,7 +52,7 @@ This does not only speedup your workflow, but also saves cost for paid translati
 
 # Usage Examples
 
-Translating to a single target-language is as simple as the following line:
+Translating a single file is as simple as the following line:
 
 ```
 attranslate --srcFile='en/fruits.json' --srcLng='en' --srcFormat='nested-json' --targetFile='de/fruits.json' --targetLng='de' --targetFormat='nested-json' --service='manual'
@@ -62,14 +62,19 @@ If you have multiple target-languages, then you will need multiple calls to `att
 You can write something like the following script to avoid unnecessary duplication:
 
 ```bash
+# This example translates an english JSON-file into spanish, chinese and german. It uses Google Cloud Translate.
 CACHE_DIR="translate-cache"
 SERVICE_ACCOUNT_KEY="../gcloud/gcloud_service_account.json"
 COMMON_ARGS=( "--srcFile=en/fruits.json" "--srcLng=en" "--srcFormat=nested-json" "--targetFormat=nested-json" "--service=google-translate" "--serviceConfig=$SERVICE_ACCOUNT_KEY" "--cacheDir=$CACHE_DIR" "--matcher=i18next" )
 
+# Run "npm install --global attranslate" before you try this example.
 attranslate "${COMMON_ARGS[@]}" --targetFile='es/fruits.json' --targetLng='es'
 attranslate "${COMMON_ARGS[@]}" --targetFile='zh/fruits.json' --targetLng='zh'
 attranslate "${COMMON_ARGS[@]}" --targetFile='de/fruits.json' --targetLng='de'
 ```
+
+Similarly, you can use `attranslate` to convert between file-formats.
+See [`Android to iOS`](/sample-scripts/android_to_ios.sh) as a more advanced example.
 
 # Usage Options
 
