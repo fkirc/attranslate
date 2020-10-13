@@ -1,17 +1,16 @@
 import {
-  buildE2EArgs,
   defaultE2EArgs,
   E2EArgs,
   offlineMaxTime,
   onlineMaxTime,
   removeTargetFile,
+  runE2E,
   switchToRandomTarget,
 } from "./e2e-common";
 import {
   assertPathChanged,
   assertPathNotChanged,
   runCommand,
-  runTranslate,
 } from "../test-util/test-util";
 import { getDebugPath } from "../../src/util/util";
 import { join } from "path";
@@ -56,7 +55,7 @@ describe.each(testArray)("translate modified %p", (commonArgs) => {
     args.targetFile = commonArgs.cleanTargetFile;
     args.refTargetFile = commonArgs.cleanTargetFile;
     await switchToRandomTarget(args, false);
-    const output = await runTranslate(buildE2EArgs(args), {
+    const output = await runE2E(args, {
       maxTime: commonArgs.maxTime,
     });
     expect(output).toContain(`Add 3 new translations`);
@@ -89,7 +88,7 @@ describe.each(testArray)("translate modified %p", (commonArgs) => {
       args.refTargetFile = args.targetFile;
     }
     await switchToRandomTarget(args, true);
-    const output = await runTranslate(buildE2EArgs(args), {
+    const output = await runE2E(args, {
       maxTime: commonArgs.maxTime,
     });
     await removeTargetFile(args);

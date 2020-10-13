@@ -1,10 +1,9 @@
-import { runTranslate } from "../test-util/test-util";
 import {
-  buildE2EArgs,
   defaultE2EArgs,
   E2EArgs,
   offlineMaxTime,
   removeTargetFile,
+  runE2E,
   switchToRandomTarget,
 } from "./e2e-common";
 
@@ -48,7 +47,7 @@ describe.each(testArray)("translate add %p", (commonArgs) => {
   test("add new translations", async () => {
     const args: E2EArgs = { ...commonArgs.args };
     await switchToRandomTarget(args, true);
-    const output = await runTranslate(buildE2EArgs(args), {
+    const output = await runE2E(args, {
       maxTime: offlineMaxTime,
     });
     expect(output).toContain(commonArgs.toContain);

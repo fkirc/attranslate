@@ -1,7 +1,7 @@
 import { CliArgs } from "../../src/core/core-definitions";
 import { getGCloudKeyPath } from "../setup/key-exports";
 import { readJsonFile, writeJsonFile } from "../../src/util/util";
-import { generateId, runCommand } from "../test-util/test-util";
+import { generateId, runCommand, runTranslate } from "../test-util/test-util";
 
 export const offlineMaxTime = 250;
 export const onlineMaxTime = 2500;
@@ -44,6 +44,10 @@ export async function removeTargetFile(args: E2EArgs) {
   const diffCmd = `diff ${args.targetFile} ${args.refTargetFile}`;
   await runCommand(diffCmd);
   await runCommand(`rm ${args.targetFile}`);
+}
+
+export async function runE2E(args: E2EArgs, options?: { maxTime: number }) {
+  return await runTranslate(buildE2EArgs(args), options);
 }
 
 export function buildE2EArgs(args: E2EArgs, unsafe?: boolean): string {
