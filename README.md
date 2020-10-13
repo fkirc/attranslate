@@ -1,5 +1,7 @@
 # _attranslate_ - Semi-automated Text Translator for Websites and Apps
 
+<a href="https://github.com/fkirc/attranslate/actions?query=branch%3Amaster"><img alt="CI status" src="https://github.com/fkirc/attranslate/workflows/CI/badge.svg/?branch=master"></a>
+
 Automated translation-services can speedup traditional workflows.
 For example, let's say that a translation-service achieves 90% correct translations on the spot.
 With `attranslate`, a quick fix of the remaining 10% is faster than doing everything by hand.
