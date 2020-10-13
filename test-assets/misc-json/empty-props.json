@@ -1,6 +1,6 @@
 {
-  "one.innerInner.one": "One",
-  "two.two": "Two",
+  "inner.innerInner.one": "One",
+  "inner.two": "Two",
   "three": "Three",
   "nullProp": null,
   "emptyProp": "",
