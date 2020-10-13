@@ -6,7 +6,7 @@ import {
   TSet,
 } from "./core-definitions";
 import {
-  leftJoin,
+  leftMerge,
   joinResultsPreserveOrder,
   leftMinusRight,
   leftMinusRightFillNull,
@@ -38,7 +38,8 @@ function extractStringsToTranslate(args: CoreArgs): TSet {
         oldTarget,
         "COMPARE_KEYS_AND_NULL_VALUES"
       );
-      return leftJoin(cacheDiffs, targetMisses);
+      leftMerge(cacheDiffs, targetMisses);
+      return cacheDiffs;
     }
   }
 }

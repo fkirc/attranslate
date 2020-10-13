@@ -42,17 +42,12 @@ function compareLeftRight(args: {
   }
 }
 
-export function leftJoin(left: TSet, right: TSet): TSet {
-  const join = new Map<string, string | null>();
-  left.forEach((value, key) => {
-    join.set(key, value);
-  });
+export function leftMerge(left: TSet, right: TSet) {
   right.forEach((value, key) => {
-    if (join.get(key) === undefined) {
-      join.set(key, value);
+    if (!left.has(key)) {
+      left.set(key, value);
     }
   });
-  return join;
 }
 
 export function joinResultsPreserveOrder(args: {

@@ -3,8 +3,8 @@ import { getGCloudKeyPath } from "../setup/key-exports";
 import { readJsonFile, writeJsonFile } from "../../src/util/util";
 import { generateId, runCommand, runTranslate } from "../test-util/test-util";
 
-export const offlineMaxTime = 250;
-export const onlineMaxTime = 2500;
+export const offlineMaxTime = 300;
+export const onlineMaxTime = 3000;
 
 export type E2EArgs = CliArgs & { refTargetFile: string };
 
