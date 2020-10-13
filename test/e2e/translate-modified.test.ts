@@ -39,8 +39,8 @@ const testArray: {
   {
     args: {
       ...defaultE2EArgs,
-      srcFile: "test-assets/nested-json/count-en.json",
-      srcFormat: "nested-json",
+      srcFile: "test-assets/ios-strings/count-en-slim.strings",
+      srcFormat: "ios-strings",
       targetFile: "test-assets/nested-json/count-de.modified.json",
       refTargetFile: "test-assets/nested-json/count-de.less-modified.json",
       targetFormat: "flat-json",
