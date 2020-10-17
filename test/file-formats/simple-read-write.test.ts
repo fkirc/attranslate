@@ -28,6 +28,11 @@ const testArgs: {
   expectTSet: TSet;
 }[] = [
   {
+    srcFile: "test-assets/flutter/intl_en.arb",
+    fileFormat: "nested-json",
+    expectTSet: new Map([["title", "Hello world from intl_en.arb"]]),
+  },
+  {
     srcFile: "test-assets/ios-strings/count-en-appendix.strings",
     fileFormat: "ios-strings",
     expectTSet: flatCount(),
