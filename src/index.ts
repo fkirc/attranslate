@@ -63,6 +63,11 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
       "If true, delete translations that exist in the target file but not in the source file",
       "true"
     )
+    .option(
+      "--manualReview <true | false>",
+      "If true, mark newly generated texts with a review-notice",
+      "false"
+    )
     .parse(process.argv);
 
   if (commander.args?.length) {
@@ -82,6 +87,7 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
     cacheDir: commander.cacheDir,
     matcher: commander.matcher,
     deleteStale: commander.deleteStale,
+    manualReview: commander.manualReview,
   };
   translateCli(args)
     .then(() => {

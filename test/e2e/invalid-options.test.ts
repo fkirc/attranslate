@@ -114,15 +114,23 @@ test("unknown target file format", async () => {
   );
 });
 
-test("bad delete stale", async () => {
-  const args: E2EArgs = {
-    ...defaultE2EArgs,
-    deleteStale: "not-true-false",
-  };
-  const output = await runTranslateExpectFailure(buildE2EArgs(args));
-  expect(output).toBe(
-    `error: Invalid option 'not-true-false'. Must be either true or false.\n`
-  );
+const booleanOptions: (keyof typeof defaultE2EArgs)[] = [
+  "deleteStale",
+  "manualReview",
+];
+describe.each(booleanOptions)("Bad boolean options %s", (option) => {
+  test(`Bad option ${option}`, async () => {
+    const args: E2EArgs = {
+      ...defaultE2EArgs,
+    };
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    args[option] = "not-true-false";
+    const output = await runTranslateExpectFailure(buildE2EArgs(args));
+    expect(output).toBe(
+      `error: Invalid option '--${option}=not-true-false'. Should be either true or false.\n`
+    );
+  });
 });
 
 const requiredOptions: (keyof typeof defaultE2EArgs)[] = [

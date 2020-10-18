@@ -46,4 +46,5 @@ export interface CliArgs extends Record<string, string | undefined> {
   cacheDir: string;
   matcher: string;
   deleteStale: string;
+  manualReview: string;
 }

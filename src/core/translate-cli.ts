@@ -89,6 +89,7 @@ export async function translateCli(cliArgs: CliArgs) {
     targetFileFormat
   );
 
+  const manualReview = parseBooleanOption(cliArgs.manualReview, "manualReview");
   const coreArgs: CoreArgs = {
     src,
     srcCache,
@@ -98,7 +99,7 @@ export async function translateCli(cliArgs: CliArgs) {
     service: cliArgs.service as TServiceType,
     serviceConfig: cliArgs.serviceConfig ?? null,
     matcher: cliArgs.matcher as TMatcherType,
-    deleteStale: parseBooleanOption(cliArgs.deleteStale),
+    deleteStale: parseBooleanOption(cliArgs.deleteStale, "deleteStale"),
   };
   const result = await translateCore(coreArgs);
 
@@ -111,7 +112,7 @@ export async function translateCli(cliArgs: CliArgs) {
       tSet: result.newTarget,
       lng: cliArgs.targetLng,
       changeSet: result.changeSet,
-      manualReview: true, // TODO: Pass externally
+      manualReview,
     });
   }
   const flushCache =
@@ -127,14 +128,16 @@ export async function translateCli(cliArgs: CliArgs) {
   }
 }
 
-function parseBooleanOption(rawOption: string): boolean {
+function parseBooleanOption(rawOption: string, optionKey: string): boolean {
   const option = rawOption.trim().toLowerCase();
   if (option === "true") {
     return true;
   } else if (option === "false") {
     return false;
   } else {
-    logFatal(`Invalid option '${rawOption}'. Must be either true or false.`);
+    logFatal(
+      `Invalid option '--${optionKey}=${rawOption}'. Should be either true or false.`
+    );
   }
 }
 
