@@ -1,20 +1,25 @@
-Although there exist many similar tools, `attranslate` aims to prevent unnecessary duplication.
+Although there exist many translation-tools, `attranslate` aims to prevent unnecessary duplication.
 Therefore, we compare `attranslate` against the following tools:
 
-## i18next
+## Commercial translation-platforms
 
-`attranslate` is not a competitor against [i18next](https://www.i18next.com/), but a complement.
-Whereas `i18next` provides runtime-support for different target-frameworks, `attranslate` acts as a "file-transformation-engine" for different source-files.
+`attranslate` is not a direct competitor against commercial platforms, but a complementary tool.
+Typically, platforms like https://lingohub.com/ provide a web-interface to manage translations with multiple contributors.
+In contrast, `attranslate` is a command-line-tool that is designed to modify your existing files as fast as possible.
 
-## Commercial tools
+In fact, it is possible to combine `attranslate` with commercial platforms.
+In this scenario, your developers would use `attranslate` to get their work done as fast as possible, and then a platform like https://lingohub.com/ would be used to review automatically generated translations later on.
+Although `attranslate` does provide support for manual reviews, platforms like https://lingohub.com/ have a much more sophisticated user-management, and a more convenient interface for non-technical users.
 
-In contrast to commercial tools, `attranslate` works with any service and does not require any account-registration.
-Although commercial tools might be better, `attranslate` is very easy to integrate and extend.
+## Runtime-libraries: i18next, Flutter-intl, Android-resources,...
+
+`attranslate` is not a competitor against runtime-libraries, but a complementary tool.
+Whereas runtime-libraries provide technical support for different frameworks, `attranslate` acts as a "file-transformation-engine" for different source-files.
 
 ## Low-level libraries
 
-[google-cloud translate](https://github.com/googleapis/nodejs-translate), [translate](https://github.com/franciscop/translate) and similar libraries translate `a` to `b`, but they are not complete workflows on its own.
-To use those low-level libraries effectively, additional infrastructure like `attranslate` is necessary.
+[google-cloud translate](https://github.com/googleapis/nodejs-translate), [DeepL](https://github.com/vsetka/deepl-translator) and similar libraries translate `a` to `b`, but they do not provide a usable workflow on its own.
+Hence, to use those low-level libraries effectively, additional infrastructure like `attranslate` is necessary.
 
 ## json-autotranslate
 
