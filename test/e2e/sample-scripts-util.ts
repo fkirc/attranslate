@@ -1,23 +1,15 @@
-import {
-  assertPathChanged,
-  assertPathNotChanged,
-  runCommand,
-} from "../test-util/test-util";
+import { assertPathNotChanged, runCommand } from "../test-util/test-util";
 import { join } from "path";
 
 export const sampleDir = "sample-scripts";
 
 export async function runSampleScript(
   command: string,
-  assetDir: string,
-  expectModified?: boolean
+  assetDirs: string[]
 ): Promise<string> {
-  const fullAssetDir = join(sampleDir, assetDir);
   const output = await runCommand(command, sampleDir);
-  if (expectModified) {
-    await assertPathChanged(fullAssetDir);
-    await runCommand(`git checkout ${fullAssetDir}`);
-  } else {
+  for (const assetDir of assetDirs) {
+    const fullAssetDir = join(sampleDir, assetDir);
     await assertPathNotChanged(fullAssetDir);
   }
   return output;

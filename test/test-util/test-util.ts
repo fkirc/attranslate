@@ -115,6 +115,7 @@ export function assertExists(path: string) {
 }
 
 export async function assertPathChanged(path: string) {
+  // TODO: Remove this function because it degenerates tests
   assertExists(path);
   await runCommandExpectFailure(`git diff --exit-code ${path}`);
 }
