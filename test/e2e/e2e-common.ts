@@ -23,6 +23,7 @@ export const defaultE2EArgs: E2EArgs = {
   cacheDir: "test-assets/cache",
   matcher: "none",
   deleteStale: "true",
+  manualReview: "false",
 };
 
 function getRandomTargetName(path: string) {

@@ -11,7 +11,7 @@ test("performance of --help", async () => {
     batchCmds.push(helpCmd);
   }
   const cmdChain = batchCmds.join(" && ");
-  const output = await runCommandTimeout(cmdChain, { maxTime: 1500 });
+  const output = await runCommandTimeout(cmdChain, { maxTime: 2500 });
   expect(countOccurrences(output, "Usage: attranslate [options]")).toBe(runs);
 });
 
