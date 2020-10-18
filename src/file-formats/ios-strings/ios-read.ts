@@ -1,6 +1,7 @@
-import { iOSFile, LineChunk, logiOSError } from "./ios-strings";
+import { iOSFile, LineChunk } from "./ios-strings";
 import { ReadTFileArgs } from "../file-format-definitions";
 import { readUtf8File } from "../../util/util";
+import { logParseError } from "../common/parse-utils";
 
 const KEY_INDEX = 1;
 export const VALUE_INDEX = 3;
@@ -9,7 +10,7 @@ export function parseiOSFile(args: ReadTFileArgs): iOSFile {
   const rawString = readUtf8File(args.path);
   const lines = rawString.split("\n");
   if (!lines.length) {
-    logiOSError("Empty file", args);
+    logParseError("Empty file", args);
   }
   const iosFile: iOSFile = {
     path: args.path,
@@ -28,7 +29,7 @@ export function parseiOSFile(args: ReadTFileArgs): iOSFile {
         lines: currentChunk,
       };
       if (iosFile.entries.has(key)) {
-        logiOSError(
+        logParseError(
           `duplicate key '${key}' -> Currently, the usage of duplicate translation-keys is discouraged.`,
           args
         );
@@ -41,7 +42,7 @@ export function parseiOSFile(args: ReadTFileArgs): iOSFile {
     iosFile.auxData = currentChunk;
   }
   if (!iosFile.entries.size) {
-    logiOSError("Did not find any Strings in the expected format", args);
+    logParseError("Did not find any Strings in the expected format", args);
   }
   return iosFile;
 }

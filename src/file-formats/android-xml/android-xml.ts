@@ -4,7 +4,7 @@ import {
   WriteTFileArgs,
 } from "../file-format-definitions";
 import { TSet } from "../../core/core-definitions";
-import { getDebugPath, logFatal, readUtf8File } from "../../util/util";
+import { readUtf8File } from "../../util/util";
 import { writeXmlResourceFile } from "./xml-write";
 import {
   detectSpaceIndent,
@@ -12,6 +12,7 @@ import {
   parseStringResources,
 } from "./xml-read";
 import { FileCache, FormatCache } from "../common/format-cache";
+import { logParseError } from "../common/parse-utils";
 
 const globalCache = new FormatCache<
   Partial<StringResource>,
@@ -62,10 +63,10 @@ export class AndroidXml implements TFileFormat {
     };
     const strings = resourceFile.resources?.string;
     if (!strings || !Array.isArray(strings)) {
-      logXmlError("string resources not found", args);
+      logParseError("string resources not found", args);
     }
     if (!strings.length) {
-      logXmlError("string resources are empty", args);
+      logParseError("string resources are empty", args);
     }
     const tSet = parseStringResources(strings, args, xmlCache);
     globalCache.insertFileCache(xmlCache);
@@ -97,9 +98,4 @@ export class AndroidXml implements TFileFormat {
       DEFAULT_ANDROID_XML_INDENT;
     writeXmlResourceFile(resourceFile, args, intent);
   }
-}
-
-export function logXmlError(rawMsg: string, args: ReadTFileArgs): never {
-  const msg = `Failed to parse ${getDebugPath(args.path)}: ${rawMsg}`;
-  logFatal(msg);
 }

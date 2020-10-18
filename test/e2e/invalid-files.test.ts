@@ -50,7 +50,7 @@ test("duplicate keys iOS", async () => {
   };
   const output = await runTranslateExpectFailure(buildE2EArgs(args));
   expect(output).toBe(
-    `Warning: Line 'other content' seems to be unexpected\nerror: Failed to iOS-parse ${getDebugPath(
+    `Warning: Line 'other content' seems to be unexpected\nerror: Failed to parse ${getDebugPath(
       args.srcFile
     )}: duplicate key 'dup_ios' -> Currently, the usage of duplicate translation-keys is discouraged.\n`
   );
@@ -66,7 +66,7 @@ test("invalid iOS strings", async () => {
   expect(output).toBe(
     joinLines([
       `Warning: Line '{}' seems to be unexpected`,
-      `error: Failed to iOS-parse ${getDebugPath(
+      `error: Failed to parse ${getDebugPath(
         "test-assets/invalid/empty.json"
       )}: Did not find any Strings in the expected format`,
     ])
@@ -94,9 +94,9 @@ test("target non-flat JSON", async () => {
   };
   const output = await runTranslateExpectFailure(buildE2EArgs(args, true));
   expect(output).toBe(
-    `error: ${getDebugPath(
+    `error: Failed to parse ${getDebugPath(
       args.targetFile
-    )} is not a flat JSON-file - Property 'inner' is not a string or null\n`
+    )}: Property 'inner' is not a string or null\n`
   );
 });
 

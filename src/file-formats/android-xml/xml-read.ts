@@ -1,6 +1,5 @@
 import {
   DEFAULT_ANDROID_XML_INDENT,
-  logXmlError,
   StringResource,
   XmlCache,
   xmlKeyToJsonKey,
@@ -8,6 +7,7 @@ import {
 import { ReadTFileArgs } from "../file-format-definitions";
 import { toJson } from "xml2json";
 import { TSet } from "../../core/core-definitions";
+import { logParseError } from "../common/parse-utils";
 
 export function parseRawXML<T>(
   xmlString: string,
@@ -22,7 +22,7 @@ export function parseRawXML<T>(
     }) as unknown) as Partial<T>;
   } catch (e) {
     console.error(e);
-    logXmlError("XML parsing error", args);
+    logParseError("XML parsing error", args);
   }
 }
 
@@ -37,11 +37,11 @@ export function parseStringResources(
     const rawValue = stringResource.$t;
     const value = rawValue ? attemptToFixBrokenSanitation(rawValue) : null;
     if (!xmlKey) {
-      logXmlError(`undefined key: '${stringResource}'`, args);
+      logParseError(`undefined key: '${stringResource}'`, args);
     }
     const jsonKey = xmlKeyToJsonKey(xmlKey);
     if (tSet.has(jsonKey)) {
-      logXmlError(
+      logParseError(
         `duplicate key '${jsonKey}' -> Currently, the usage of duplicate translation-keys is discouraged.`,
         args
       );

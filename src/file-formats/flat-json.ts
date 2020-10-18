@@ -4,12 +4,8 @@ import {
   WriteTFileArgs,
 } from "./file-format-definitions";
 import { TSet } from "../core/core-definitions";
-import {
-  getDebugPath,
-  logFatal,
-  readJsonFile,
-  writeJsonFile,
-} from "../util/util";
+import { readJsonFile, writeJsonFile } from "../util/util";
+import { logParseError } from "./common/parse-utils";
 
 export class FlatJson implements TFileFormat {
   readTFile(args: ReadTFileArgs): TSet {
@@ -20,11 +16,7 @@ export class FlatJson implements TFileFormat {
       // @ts-ignore
       const value = json[key];
       if (typeof value !== "string" && value !== null) {
-        logFatal(
-          `${getDebugPath(
-            args.path
-          )} is not a flat JSON-file - Property '${key}' is not a string or null`
-        );
+        logParseError(`Property '${key}' is not a string or null`, args);
       }
       tMap.set(key, value);
     }

@@ -4,7 +4,6 @@ import {
   WriteTFileArgs,
 } from "../file-format-definitions";
 import { TSet } from "../../core/core-definitions";
-import { getDebugPath, logFatal } from "../../util/util";
 import { parseiOSFile } from "./ios-read";
 import { writeiOSFile } from "./ios-write";
 import { FileCache, FormatCache } from "../common/format-cache";
@@ -32,9 +31,4 @@ export class IosStrings implements TFileFormat {
   writeTFile(args: WriteTFileArgs): void {
     writeiOSFile(args, iOSCache);
   }
-}
-
-export function logiOSError(rawMsg: string, args: ReadTFileArgs): never {
-  const msg = `Failed to iOS-parse ${getDebugPath(args.path)}: ${rawMsg}`;
-  logFatal(msg);
 }
