@@ -110,6 +110,8 @@ export async function translateCli(cliArgs: CliArgs) {
       path: cliArgs.targetFile,
       tSet: result.newTarget,
       lng: cliArgs.targetLng,
+      changeSet: result.changeSet,
+      manualReview: true, // TODO: Pass externally
     });
   }
   const flushCache =

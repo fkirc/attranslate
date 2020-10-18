@@ -1,10 +1,12 @@
-import { TSet } from "../core/core-definitions";
+import { TChangeSet, TSet } from "../core/core-definitions";
 import { FlatJson } from "./flat-json/flat-json";
 import { NestedJson } from "./nested-json/nested-json";
 
 export interface WriteTFileArgs {
   path: string;
   tSet: TSet;
+  changeSet: TChangeSet;
+  manualReview: boolean;
   lng: string;
 }
 

@@ -6,6 +6,10 @@ import {
 import { TSet } from "../../core/core-definitions";
 import { readJsonFile, writeJsonFile } from "../../util/util";
 import { logParseError } from "../common/parse-utils";
+import {
+  addManualReviewToJSON,
+  isJsonKeyTranslatable,
+} from "../common/manual-review";
 
 export class FlatJson implements TFileFormat {
   readTFile(args: ReadTFileArgs): TSet {
@@ -18,7 +22,9 @@ export class FlatJson implements TFileFormat {
       if (typeof value !== "string" && value !== null) {
         logParseError(`Property '${key}' is not a string or null`, args);
       }
-      tMap.set(key, value);
+      if (isJsonKeyTranslatable(key)) {
+        tMap.set(key, value);
+      }
     }
     return tMap;
   }
@@ -27,6 +33,7 @@ export class FlatJson implements TFileFormat {
     const flatJson: Record<string, string | null> = {};
     args.tSet.forEach((value, key) => {
       flatJson[key] = value;
+      addManualReviewToJSON(flatJson, key, value, args);
     });
     writeJsonFile(args.path, flatJson);
   }

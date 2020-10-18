@@ -1,5 +1,8 @@
 {
   "apple": "Apfel",
+  "apple__reviewed": "false",
   "pear": "Birne",
-  "banana": "Banane"
+  "pear__reviewed": "false",
+  "banana": "Banane",
+  "banana__reviewed": "false"
 }

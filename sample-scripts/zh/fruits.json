@@ -1,5 +1,8 @@
 {
   "apple": "苹果",
+  "apple__reviewed": "false",
   "pear": "梨",
-  "banana": "香蕉"
+  "pear__reviewed": "false",
+  "banana": "香蕉",
+  "banana__reviewed": "false"
 }
