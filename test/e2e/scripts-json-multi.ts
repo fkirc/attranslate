@@ -1,7 +1,7 @@
 import { joinLines, runCommand } from "../test-util/test-util";
 import { modifyJsonProperty } from "./e2e-common";
 import { getDebugPath } from "../../src/util/util";
-import { runSampleScript, sampleDir } from "./sample-scripts-util";
+import { runSampleScript, sampleDir } from "./scripts-e2e-util";
 import { join } from "path";
 
 test("simple_translate", async () => {

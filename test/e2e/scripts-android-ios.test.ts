@@ -1,4 +1,4 @@
-import { runSampleScript, sampleDir } from "./sample-scripts-util";
+import { runSampleScript, sampleDir } from "./scripts-e2e-util";
 import { joinLines } from "../test-util/test-util";
 import { unlinkSync } from "fs";
 import { join } from "path";
