@@ -1,0 +1,8 @@
+{
+  "apple": "Apfel",
+  "pear": "Birne",
+  "banana": "Banane",
+  "@banana": {
+    "type": "text"
+  }
+}
