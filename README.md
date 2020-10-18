@@ -10,12 +10,9 @@ Other than that, `attranslate` supports manual translations and even file-format
 
 ## Why attranslate?
 
-In contrast to paid services, `attranslate` does not need any account-registration.
-A single developer can integrate `attranslate` in a matter of minutes.
-
+In contrast to paid services, a single developer can integrate `attranslate` in a matter of minutes.
 In contrast to many other tools, `attranslate` can operate on the very same translations-files that you are already using.
-This is possible because `attranslate` does not apply unnecessary changes to already existing translation-files.
-`attranslate` has you covered, regardless of whether you use i18n, JavaScript-frameworks, Android, iOS, Flutter or other systems.
+This is possible because `attranslate` operates on your file in a surgical way, with as little changes as possible.
 See [tools comparison](/docs/TOOL_COMPARISON.md) for an overview about translation-tools.
 
 # Features
@@ -23,7 +20,7 @@ See [tools comparison](/docs/TOOL_COMPARISON.md) for an overview about translati
 ## Cross-platform Support
 
 `attranslate` is designed to translate any website or app with any toolchain.
-`attranslate` works for Web/Android/iOS/Flutter or any combination of platforms.
+`attranslate` works for i18n, JavaScript-frameworks/Android/iOS/Flutter or any combination of platforms.
 To make this possible, `attranslate` supports the following file formats:
 
 - Nested JSON
@@ -36,6 +33,11 @@ To make this possible, `attranslate` supports the following file formats:
 
 `attranslate` recognizes that automated translations are not perfect.
 Therefore, whenever you are unhappy with the produced results, `attranslate` allows you to simply overwrite texts in your target-files.
+
+## Optional Manual Reviews
+
+Optionally, `attranslate` marks newly generated texts with a user-defined hint.
+This helps to keep track of which texts have been already reviewed by a human.
 
 ## Available Services
 
