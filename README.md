@@ -34,9 +34,9 @@ To make this possible, `attranslate` supports the following file formats:
 `attranslate` recognizes that automated translations are not perfect.
 Therefore, whenever you are unhappy with the produced results, `attranslate` allows you to simply overwrite texts in your target-files.
 
-## Optional Manual Reviews
+## Support For Manual Reviews
 
-Optionally, `attranslate` marks newly generated texts with a user-defined hint.
+Optionally, `attranslate` marks newly generated texts with a "review-notice".
 This helps to keep track of which texts have been already reviewed by a human.
 
 ## Available Services
