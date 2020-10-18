@@ -7,13 +7,15 @@ import { unlinkSync } from "fs";
 
 const targetLngs = ["es", "zh", "de"];
 
+const assetDir = "json-manual-review";
+
 function jsonTargetPaths(): string[] {
   return targetLngs.map((targetLng) => {
-    return join(targetLng, "fruits.json");
+    return join(assetDir, targetLng, "fruits.json");
   });
 }
 
-const sourcePath = join(sampleDir, "en", "fruits.json");
+const sourcePath = join(sampleDir, assetDir, "en", "fruits.json");
 const cachePath = join(
   sampleDir,
   "translate-cache",
@@ -21,12 +23,12 @@ const cachePath = join(
 );
 
 test("simple_translate", async () => {
-  const output = await runSampleScript(`./simple_translate.sh`);
+  const output = await runSampleScript(`./simple_translate.sh`, assetDir);
   expect(output).toBe("Target is up-to-date: 'de/fruits.json'\n");
 });
 
 test("multi_translate clean", async () => {
-  const output = await runSampleScript(`./multi_translate.sh`);
+  const output = await runSampleScript(`./multi_translate.sh`, assetDir);
   expect(output).toBe(
     joinLines(
       jsonTargetPaths().map((path) => {
@@ -38,20 +40,14 @@ test("multi_translate clean", async () => {
 
 test("multi_translate create new cache", async () => {
   await runCommand(`rm ${cachePath}`);
-
-  const targetPaths = jsonTargetPaths();
   const expectOutput = expectedCreateOutput({
-    targetPaths,
     cachePath,
   });
-  const output = await runSampleScript(`./multi_translate.sh`);
+  const output = await runSampleScript(`./multi_translate.sh`, assetDir);
   expect(output).toBe(expectOutput);
 });
 
-function expectedCreateOutput(args: {
-  targetPaths: string[];
-  cachePath: string;
-}): string {
+function expectedCreateOutput(args: { cachePath: string }): string {
   const firstPass: string[] = [
     `Cache not found -> Generate a new cache to enable selective translations.`,
     `To make selective translations, do one of the following:`,
@@ -62,11 +58,11 @@ function expectedCreateOutput(args: {
   ];
   const secondPass: string[] = [
     `Write cache ${getDebugPath(cachePath)}`,
-    `Target is up-to-date: 'zh/fruits.json'`,
+    `Target is up-to-date: '${assetDir}/zh/fruits.json'`,
   ];
   const thirdPass: string[] = [
     `Write cache ${getDebugPath(cachePath)}`,
-    `Target is up-to-date: 'de/fruits.json'`,
+    `Target is up-to-date: '${assetDir}/de/fruits.json'`,
   ];
   return joinLines(firstPass.concat(secondPass).concat(thirdPass));
 }
@@ -86,7 +82,7 @@ test("multi_translate propagate updates to null-targets", async () => {
     cachePath,
     bypassEmpty: false,
   });
-  const output = await runSampleScript(`./multi_translate.sh`);
+  const output = await runSampleScript(`./multi_translate.sh`, assetDir);
   expect(output).toBe(expectOutput);
 });
 
@@ -105,7 +101,7 @@ test("multi_translate propagate empty string from source", async () => {
     cachePath,
     bypassEmpty: true,
   });
-  const output = await runSampleScript(`./multi_translate.sh`, true);
+  const output = await runSampleScript(`./multi_translate.sh`, assetDir, true);
   expect(output).toBe(expectOutput);
 });
 
@@ -140,7 +136,7 @@ const targetPaths: string[] = [
 ];
 
 test("Android to iOS clean", async () => {
-  const output = await runSampleScript(`./android_to_ios.sh`);
+  const output = await runSampleScript(`./android_to_ios.sh`, ".");
   expect(output).toBe(
     joinLines(
       targetPaths.map((path) => {
@@ -154,7 +150,7 @@ test("Android to iOS re-create targets", async () => {
   targetPaths.forEach((path) => {
     unlinkSync(join(sampleDir, path));
   });
-  const output = await runSampleScript(`./android_to_ios.sh`);
+  const output = await runSampleScript(`./android_to_ios.sh`, ".");
   targetPaths.forEach((path) => {
     expect(output).toContain(
       `Write target ${getDebugPath(join(sampleDir, path))}`
@@ -162,13 +158,15 @@ test("Android to iOS re-create targets", async () => {
   });
 });
 
+const flutterAssetDir = "flutter";
+
 const flutterTargetPaths: string[] = [
   "flutter/lib/l10n/intl_es.arb",
   "flutter/lib/l10n/intl_de.arb",
 ];
 
 test("Flutter clean", async () => {
-  const output = await runSampleScript(`./flutter.sh`);
+  const output = await runSampleScript(`./flutter.sh`, flutterAssetDir);
   expect(output).toBe(
     joinLines(
       flutterTargetPaths.map((path) => {
@@ -182,7 +180,7 @@ test("Flutter re-create targets", async () => {
   flutterTargetPaths.forEach((path) => {
     unlinkSync(join(sampleDir, path));
   });
-  const output = await runSampleScript(`./flutter.sh`);
+  const output = await runSampleScript(`./flutter.sh`, flutterAssetDir);
   flutterTargetPaths.forEach((path) => {
     expect(output).toContain(
       `Write target ${getDebugPath(join(sampleDir, path))}`
