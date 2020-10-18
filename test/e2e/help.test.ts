@@ -4,11 +4,15 @@ import {
 } from "../test-util/test-util";
 import { readUtf8File } from "../../src/util/util";
 import { buildE2EArgs, defaultE2EArgs, offlineMaxTime } from "./e2e-common";
-import { readHelpReference } from "../setup/doc-utils";
+import { readHelpReference, readmeSnippets } from "../setup/doc-utils";
 
 test("ensure that README is up-to-date", () => {
   const readme = readUtf8File("README.md");
   expect(readme).toContain(readHelpReference());
+  readmeSnippets.forEach((snippet) => {
+    const refSnippet = readUtf8File(snippet.refPath);
+    expect(readme).toContain(refSnippet);
+  });
 });
 
 test("--help", async () => {
