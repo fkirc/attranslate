@@ -1,7 +1,7 @@
 export interface FileCache<T, A> {
   path: string;
   entries: Map<string, T>;
-  auxData: A;
+  auxData: A | null;
 }
 
 /**
@@ -20,6 +20,14 @@ export class FormatCache<E, A> {
   }
   insertFileCache(fileCache: FileCache<E, A>) {
     this.fileCaches.push(fileCache);
+  }
+  insert(args: { path: string; key: string; entry: E }) {
+    let fileCache = this.findFileCache(args.path);
+    if (!fileCache) {
+      fileCache = { path: args.path, entries: new Map(), auxData: null };
+      this.insertFileCache(fileCache);
+    }
+    fileCache.entries.set(args.key, args.entry);
   }
   lookup(args: { path: string; key: string }): E | null {
     const sameFileCache = this.findFileCache(args.path);

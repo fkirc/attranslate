@@ -28,6 +28,7 @@ export function getTFileFormatList(): TFileType[] {
 const fileFormatMap = {
   "flat-json": null,
   "nested-json": null,
+  "flutter-arb": null,
   "android-xml": null,
   "ios-strings": null,
 };
@@ -43,6 +44,8 @@ export async function instantiateTFileFormat(
       return new FlatJson();
     case "nested-json":
       return new NestedJson();
+    case "flutter-arb":
+      return new (await import("./flutter-arb/flutter-arb")).FlutterArb();
     case "android-xml":
       return new (await import("./android-xml/android-xml")).AndroidXml();
     case "ios-strings":
