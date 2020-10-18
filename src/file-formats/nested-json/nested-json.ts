@@ -6,10 +6,7 @@ import {
   TFileFormat,
   WriteTFileArgs,
 } from "../file-format-definitions";
-import {
-  addManualReviewToJSON,
-  isJsonKeyTranslatable,
-} from "../common/json-common";
+import { writeJsonProp, readJsonProp } from "../common/json-common";
 
 export class NestedJson implements TFileFormat {
   readTFile(args: ReadTFileArgs): TSet {
@@ -17,9 +14,7 @@ export class NestedJson implements TFileFormat {
     const flatJson: Record<string, string> = flatten(nestedJson);
     const tMap = new Map<string, string>();
     Object.keys(flatJson).forEach((key) => {
-      if (isJsonKeyTranslatable(key)) {
-        tMap.set(key, flatJson[key]);
-      }
+      readJsonProp(key, flatJson[key], tMap, args);
     });
     return tMap;
   }
@@ -27,8 +22,7 @@ export class NestedJson implements TFileFormat {
   writeTFile(args: WriteTFileArgs): void {
     const flatJson: Record<string, string | null> = {};
     args.tSet.forEach((value, key) => {
-      flatJson[key] = value;
-      addManualReviewToJSON(flatJson, key, value, args);
+      writeJsonProp(flatJson, key, value, args);
     });
     const nestedJson = unflatten(flatJson);
     writeJsonFile(args.path, nestedJson);
