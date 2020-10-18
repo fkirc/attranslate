@@ -77,7 +77,7 @@ attranslate "${COMMON_ARGS[@]}" --targetFile='de/fruits.json' --targetLng='de'
 ```
 
 Similarly, you can use `attranslate` to convert between file-formats.
-See [`Android to iOS`](/sample-scripts/android_to_ios.sh) as a more advanced example.
+See [sample scripts](/sample-scripts) for more examples.
 
 # Usage Options
 
