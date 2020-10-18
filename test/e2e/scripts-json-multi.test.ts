@@ -27,10 +27,10 @@ const cachePath = join(
 );
 
 async function runMultiJSON(): Promise<string> {
-  return await runSampleScript(`./multi_translate.sh`, [assetDir]);
+  return await runSampleScript(`./json_manual_review.sh`, [assetDir]);
 }
 
-test("multi_translate clean", async () => {
+test("multi_json clean", async () => {
   const output = await runMultiJSON();
   expect(output).toBe(
     joinLines(
@@ -41,7 +41,7 @@ test("multi_translate clean", async () => {
   );
 });
 
-test("multi_translate create new cache", async () => {
+test("multi_json create new cache", async () => {
   await runCommand(`rm ${cachePath}`);
   const expectOutput = expectedCreateOutput({
     cachePath,
@@ -70,7 +70,7 @@ function expectedCreateOutput(args: { cachePath: string }): string {
   return joinLines(firstPass.concat(secondPass).concat(thirdPass));
 }
 
-test("multi_translate propagate updates to null-targets", async () => {
+test("multi_json propagate updates to null-targets", async () => {
   const targetPaths = jsonTargetPaths();
   targetPaths.forEach((targetPath) => {
     modifyJsonProperty({
@@ -89,7 +89,7 @@ test("multi_translate propagate updates to null-targets", async () => {
   expect(output).toBe(expectOutput);
 });
 
-test("multi_translate propagate empty string from source", async () => {
+test("multi_json propagate empty string from source", async () => {
   const targetPaths = jsonTargetPaths();
   modifyJsonProperty({
     jsonPath: sourcePath,
@@ -101,7 +101,7 @@ test("multi_translate propagate empty string from source", async () => {
     cachePath,
     bypassEmpty: true,
   });
-  const output = await runSampleScript(`./multi_translate.sh`, ["json-raw"]); // Circumvent diff-check
+  const output = await runSampleScript(`./json_manual_review.sh`, ["json-raw"]); // Circumvent diff-check
   expect(output).toBe(expectOutput);
   await runCommand(
     `diff -r ${join(sampleDir, assetDir)} ${join(
