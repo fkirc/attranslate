@@ -163,8 +163,8 @@ test("Android to iOS re-create targets", async () => {
 });
 
 const flutterTargetPaths: string[] = [
-  "flutter/lib/l10n/intl_de.arb",
   "flutter/lib/l10n/intl_es.arb",
+  "flutter/lib/l10n/intl_de.arb",
 ];
 
 test("Flutter clean", async () => {
