@@ -9,7 +9,7 @@ In contrast, `attranslate` is a command-line-tool that is designed to modify you
 
 In fact, it is possible to combine `attranslate` with commercial platforms.
 In this scenario, your developers would use `attranslate` to get their work done as fast as possible, and then a platform like https://lingohub.com/ would be used to review automatically generated translations later on.
-Although `attranslate` does provide support for manual reviews, platforms like https://lingohub.com/ have a much more sophisticated user-management, and a more convenient interface for non-technical users.
+Although `attranslate` does provide support for manual reviews, platforms like https://lingohub.com/ provide a much more sophisticated user-management, as well as a more convenient interface for non-technical users.
 
 ## Runtime-libraries: i18next, Flutter-intl, Android-resources,...
 
