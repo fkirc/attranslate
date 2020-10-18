@@ -7,27 +7,34 @@ import { TSet } from "../../core/core-definitions";
 import { getDebugPath, readJsonFile, writeJsonFile } from "../../util/util";
 import { FormatCache } from "../common/format-cache";
 
-const attributeCache = new FormatCache<unknown, never>();
+const attributeCache = new FormatCache<unknown, Record<string, unknown>>();
 
 export class FlutterArb implements TFileFormat {
   readTFile(args: ReadTFileArgs): TSet {
     const json = readJsonFile(args.path);
     const tMap = new Map<string, string>();
+    const globalAttributes: Record<string, unknown> = {};
     for (const key of Object.keys(json)) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       const value = json[key];
-      if (key.startsWith("@")) {
+      if (key.startsWith("@@")) {
+        globalAttributes[key] = value;
+      } else if (key.startsWith("@")) {
         attributeCache.insert({ path: args.path, key, entry: value });
       } else if (typeof value === "string") {
         tMap.set(key, value);
       } else {
         console.info(
-          `'${key}-${value}' in ${getDebugPath(
+          `Warning: '${key}-${value}' in ${getDebugPath(
             args.path
-          )} is neither a string nor does it start with "@"`
+          )} is unexpected`
         );
       }
+    }
+    const fileCache = attributeCache.findFileCache(args.path);
+    if (fileCache) {
+      fileCache.auxData = globalAttributes;
     }
     return tMap;
   }
@@ -45,6 +52,11 @@ export class FlutterArb implements TFileFormat {
         json[attributeKey] = attribute;
       }
     });
-    writeJsonFile(args.path, json);
+    const globalAttributes = attributeCache.lookupAuxdata({ path: args.path });
+    const mergedJson = {
+      ...globalAttributes,
+      ...json,
+    };
+    writeJsonFile(args.path, mergedJson);
   }
 }

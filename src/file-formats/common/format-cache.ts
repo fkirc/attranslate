@@ -15,7 +15,7 @@ export class FormatCache<E, A> {
     this.fileCaches = [];
   }
   private readonly fileCaches: FileCache<E, A>[];
-  private findFileCache(path: string): FileCache<E, A> | null {
+  findFileCache(path: string): FileCache<E, A> | null {
     return this.fileCaches.find((fileCache) => fileCache.path === path) ?? null;
   }
   insertFileCache(fileCache: FileCache<E, A>) {
