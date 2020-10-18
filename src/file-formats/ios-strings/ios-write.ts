@@ -2,7 +2,7 @@ import { WriteTFileArgs } from "../file-format-definitions";
 import { LineChunk } from "./ios-strings";
 import { VALUE_INDEX } from "./ios-read";
 import { writeUf8File } from "../../util/util";
-import { FormatCache } from "../format-cache";
+import { FormatCache } from "../common/format-cache";
 
 const DEFAULT_APPENDIX: string[] = ["\n"];
 

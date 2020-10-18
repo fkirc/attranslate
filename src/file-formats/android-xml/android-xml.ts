@@ -11,7 +11,7 @@ import {
   parseRawXML,
   parseStringResources,
 } from "./xml-read";
-import { FileCache, FormatCache } from "../format-cache";
+import { FileCache, FormatCache } from "../common/format-cache";
 
 const globalCache = new FormatCache<
   Partial<StringResource>,

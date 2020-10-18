@@ -7,7 +7,7 @@ import { TSet } from "../../core/core-definitions";
 import { getDebugPath, logFatal } from "../../util/util";
 import { parseiOSFile } from "./ios-read";
 import { writeiOSFile } from "./ios-write";
-import { FileCache, FormatCache } from "../format-cache";
+import { FileCache, FormatCache } from "../common/format-cache";
 
 export type iOSFile = FileCache<LineChunk, string[]>;
 
