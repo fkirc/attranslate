@@ -2,7 +2,6 @@
   "apple": "Apfel",
   "apple__reviewed": "false",
   "pear": "Birne",
-  "pear__reviewed": "false",
-  "banana": "Banane",
-  "banana__reviewed": "false"
+  "pear__reviewed": "true",
+  "banana": "Banane"
 }

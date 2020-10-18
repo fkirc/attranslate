@@ -2,7 +2,7 @@
   "apple": "manzana",
   "apple__reviewed": "false",
   "pear": "Pera",
-  "pear__reviewed": "false",
+  "pear__reviewed": "true",
   "banana": "Plátano",
-  "banana__reviewed": "false"
+  "banana__reviewed": "You may delete this line once a review is finished"
 }
