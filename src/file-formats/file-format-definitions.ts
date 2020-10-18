@@ -1,6 +1,6 @@
 import { TSet } from "../core/core-definitions";
-import { FlatJson } from "./flat-json";
-import { NestedJson } from "./nested-json";
+import { FlatJson } from "./flat-json/flat-json";
+import { NestedJson } from "./nested-json/nested-json";
 
 export interface WriteTFileArgs {
   path: string;

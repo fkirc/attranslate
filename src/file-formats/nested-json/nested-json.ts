@@ -1,11 +1,11 @@
-import { TSet } from "../core/core-definitions";
-import { readJsonFile, writeJsonFile } from "../util/util";
-import { flatten, unflatten } from "../util/flatten";
+import { TSet } from "../../core/core-definitions";
+import { readJsonFile, writeJsonFile } from "../../util/util";
+import { flatten, unflatten } from "../../util/flatten";
 import {
   ReadTFileArgs,
   TFileFormat,
   WriteTFileArgs,
-} from "./file-format-definitions";
+} from "../file-format-definitions";
 
 export class NestedJson implements TFileFormat {
   readTFile(args: ReadTFileArgs): TSet {

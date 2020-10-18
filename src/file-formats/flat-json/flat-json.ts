@@ -2,10 +2,10 @@ import {
   ReadTFileArgs,
   TFileFormat,
   WriteTFileArgs,
-} from "./file-format-definitions";
-import { TSet } from "../core/core-definitions";
-import { readJsonFile, writeJsonFile } from "../util/util";
-import { logParseError } from "./common/parse-utils";
+} from "../file-format-definitions";
+import { TSet } from "../../core/core-definitions";
+import { readJsonFile, writeJsonFile } from "../../util/util";
+import { logParseError } from "../common/parse-utils";
 
 export class FlatJson implements TFileFormat {
   readTFile(args: ReadTFileArgs): TSet {
