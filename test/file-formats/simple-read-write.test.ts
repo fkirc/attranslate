@@ -89,6 +89,7 @@ describe.each(testArgs)("Read/write %p", (args) => {
     const tSet = fileFormat.readTFile({
       path: args.srcFile,
       lng: "en",
+      format: args.fileFormat,
     });
 
     toStrictEqualMapOrder(tSet, args.expectTSet);

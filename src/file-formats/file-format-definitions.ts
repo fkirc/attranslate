@@ -11,6 +11,7 @@ export interface WriteTFileArgs {
 export interface ReadTFileArgs {
   path: string;
   lng: string;
+  format: TFileType;
 }
 
 export interface TFileFormat {

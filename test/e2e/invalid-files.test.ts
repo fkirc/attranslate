@@ -24,7 +24,9 @@ test("src not an XML", async () => {
     "There are errors in your xml file: not well-formed"
   );
   expect(output).toContain(
-    `error: Failed to parse ${getDebugPath(args.srcFile)}: XML parsing error`
+    `error: Failed to parse ${getDebugPath(
+      args.srcFile
+    )} with expected format '${args.srcFormat}': XML parsing error`
   );
 });
 
@@ -38,7 +40,9 @@ test("duplicate keys XML", async () => {
   expect(output).toBe(
     `error: Failed to parse ${getDebugPath(
       args.srcFile
-    )}: duplicate key 'dup' -> Currently, the usage of duplicate translation-keys is discouraged.\n`
+    )} with expected format '${
+      args.srcFormat
+    }': duplicate key 'dup' -> Currently, the usage of duplicate translation-keys is discouraged.\n`
   );
 });
 
@@ -52,7 +56,9 @@ test("duplicate keys iOS", async () => {
   expect(output).toBe(
     `Warning: Line 'other content' seems to be unexpected\nerror: Failed to parse ${getDebugPath(
       args.srcFile
-    )}: duplicate key 'dup_ios' -> Currently, the usage of duplicate translation-keys is discouraged.\n`
+    )} with expected format '${
+      args.srcFormat
+    }': duplicate key 'dup_ios' -> Currently, the usage of duplicate translation-keys is discouraged.\n`
   );
 });
 
@@ -68,7 +74,9 @@ test("invalid iOS strings", async () => {
       `Warning: Line '{}' seems to be unexpected`,
       `error: Failed to parse ${getDebugPath(
         "test-assets/invalid/empty.json"
-      )}: Did not find any Strings in the expected format`,
+      )} with expected format '${
+        args.srcFormat
+      }': Did not find any Strings in the expected format`,
     ])
   );
 });
@@ -96,7 +104,9 @@ test("target non-flat JSON", async () => {
   expect(output).toBe(
     `error: Failed to parse ${getDebugPath(
       args.targetFile
-    )}: Property 'inner' is not a string or null\n`
+    )} with expected format '${
+      args.targetFormat
+    }': Property 'inner' is not a string or null\n`
   );
 });
 

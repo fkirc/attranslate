@@ -24,6 +24,7 @@ async function resolveOldTarget(
     return await readTFileCore(targetFileFormat, {
       path: targetPath,
       lng: args.targetLng,
+      format: targetFileFormat,
     });
   } else {
     return null;
@@ -72,6 +73,7 @@ export async function translateCli(cliArgs: CliArgs) {
   const src = await readTFileCore(srcFileFormat, {
     path: cliArgs.srcFile,
     lng: cliArgs.srcLng,
+    format: srcFileFormat,
   });
   if (!src.size) {
     logFatal(
