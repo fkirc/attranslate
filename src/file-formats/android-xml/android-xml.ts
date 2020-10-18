@@ -5,13 +5,21 @@ import {
 } from "../file-format-definitions";
 import { TSet } from "../../core/core-definitions";
 import { getDebugPath, logFatal, readUtf8File } from "../../util/util";
-import { insertNewXmlCache, lookupStringResource, XmlCache } from "./xml-cache";
 import { writeXmlResourceFile } from "./xml-write";
 import {
   detectSpaceIndent,
   parseRawXML,
   parseStringResources,
 } from "./xml-read";
+import { FileCache, FormatCache } from "../format-cache";
+
+const globalCache = new FormatCache<
+  Partial<StringResource>,
+  { detectedIntent: number }
+>();
+
+export interface XmlCache
+  extends FileCache<Partial<StringResource>, { detectedIntent: number }> {}
 
 export interface XmlResourceFile {
   resources: {
@@ -49,8 +57,8 @@ export class AndroidXml implements TFileFormat {
     );
     const xmlCache: XmlCache = {
       path: args.path,
-      detectedIndent: detectSpaceIndent(xmlString),
-      resources: new Map(),
+      auxData: { detectedIntent: detectSpaceIndent(xmlString) },
+      entries: new Map(),
     };
     const strings = resourceFile.resources?.string;
     if (!strings || !Array.isArray(strings)) {
@@ -59,16 +67,18 @@ export class AndroidXml implements TFileFormat {
     if (!strings.length) {
       logXmlError("string resources are empty", args);
     }
-
     const tSet = parseStringResources(strings, args, xmlCache);
-    insertNewXmlCache(xmlCache);
+    globalCache.insertFileCache(xmlCache);
     return tSet;
   }
 
   writeTFile(args: WriteTFileArgs): void {
     const resources: StringResource[] = [];
     args.tSet.forEach((value, jsonKey) => {
-      const cachedResource = lookupStringResource(jsonKey, args);
+      const cachedResource = globalCache.lookup({
+        path: args.path,
+        key: jsonKey,
+      });
       const xmlKey = jsonKeyToXmlKey(jsonKey);
       const newResource: StringResource = {
         ...cachedResource,
@@ -82,7 +92,10 @@ export class AndroidXml implements TFileFormat {
         string: resources,
       },
     };
-    writeXmlResourceFile(resourceFile, args);
+    const intent =
+      globalCache.lookupAuxdata({ path: args.path })?.detectedIntent ??
+      DEFAULT_ANDROID_XML_INDENT;
+    writeXmlResourceFile(resourceFile, args, intent);
   }
 }
 

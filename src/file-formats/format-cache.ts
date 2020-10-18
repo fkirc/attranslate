@@ -21,14 +21,6 @@ export class FormatCache<E, A> {
   insertFileCache(fileCache: FileCache<E, A>) {
     this.fileCaches.push(fileCache);
   }
-  // insert(args: { path: string; key: string; value: T }) {
-  //   let fileCache = this.findFileCache(args.path);
-  //   if (!fileCache) {
-  //     fileCache = {};
-  //     this.fileCaches.push({ path: args.path, entries: fileCache });
-  //   }
-  //   fileCache[args.key] = args.value;
-  // }
   lookup(args: { path: string; key: string }): E | null {
     const sameFileCache = this.findFileCache(args.path);
     if (sameFileCache) {

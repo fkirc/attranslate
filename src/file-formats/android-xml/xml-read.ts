@@ -2,11 +2,11 @@ import {
   DEFAULT_ANDROID_XML_INDENT,
   logXmlError,
   StringResource,
+  XmlCache,
   xmlKeyToJsonKey,
 } from "./android-xml";
 import { ReadTFileArgs } from "../file-format-definitions";
 import { toJson } from "xml2json";
-import { XmlCache } from "./xml-cache";
 import { TSet } from "../../core/core-definitions";
 
 export function parseRawXML<T>(
@@ -47,7 +47,7 @@ export function parseStringResources(
       );
     }
     tSet.set(jsonKey, value);
-    xmlCache.resources.set(jsonKey, stringResource);
+    xmlCache.entries.set(jsonKey, stringResource);
   });
   return tSet;
 }
