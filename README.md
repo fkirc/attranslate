@@ -60,7 +60,7 @@ This does not only speedup your workflow, but also saves cost for paid translati
 Translating a single file is as simple as the following line:
 
 ```
-attranslate --srcFile='en/fruits.json' --srcLng='en' --srcFormat='nested-json' --targetFile='de/fruits.json' --targetLng='de' --targetFormat='nested-json' --service='manual'
+attranslate --srcFile='json-raw/fruits-en.json' --srcLng='en' --srcFormat='nested-json' --targetFile='json-raw/fruits-de.json' --targetLng='de' --targetFormat='nested-json' --service='manual'
 ```
 
 If you have multiple target-languages, then you will need multiple calls to `attranslate`.
@@ -68,14 +68,14 @@ You can write something like the following script to avoid unnecessary duplicati
 
 ```bash
 # This example translates an english JSON-file into spanish, chinese and german. It uses Google Cloud Translate.
-CACHE_DIR="translate-cache"
+BASE_DIR="json-manual-review"
 SERVICE_ACCOUNT_KEY="../gcloud/gcloud_service_account.json"
-COMMON_ARGS=( "--srcFile=en/fruits.json" "--srcLng=en" "--srcFormat=nested-json" "--targetFormat=nested-json" "--service=google-translate" "--serviceConfig=$SERVICE_ACCOUNT_KEY" "--cacheDir=$CACHE_DIR" "--matcher=i18next" )
+COMMON_ARGS=( "--srcFile=$BASE_DIR/en/fruits.json" "--srcLng=en" "--srcFormat=nested-json" "--targetFormat=nested-json" "--service=google-translate" "--serviceConfig=$SERVICE_ACCOUNT_KEY" "--manualReview=true" "--cacheDir=$BASE_DIR" "--matcher=i18next" )
 
 # Run "npm install --global attranslate" before you try this example.
-attranslate "${COMMON_ARGS[@]}" --targetFile='es/fruits.json' --targetLng='es'
-attranslate "${COMMON_ARGS[@]}" --targetFile='zh/fruits.json' --targetLng='zh'
-attranslate "${COMMON_ARGS[@]}" --targetFile='de/fruits.json' --targetLng='de'
+attranslate "${COMMON_ARGS[@]}" --targetFile=$BASE_DIR/es/fruits.json --targetLng=es
+attranslate "${COMMON_ARGS[@]}" --targetFile=$BASE_DIR/zh/fruits.json --targetLng=zh
+attranslate "${COMMON_ARGS[@]}" --targetFile=$BASE_DIR/de/fruits.json --targetLng=de
 ```
 
 Similarly, you can use `attranslate` to convert between file-formats.

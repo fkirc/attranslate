@@ -7,7 +7,7 @@ import {
 } from "./doc-utils";
 import { join } from "path";
 import { sampleDir } from "../e2e/scripts-e2e-util";
-import { readUtf8File } from "../../src/util/util";
+import { readUtf8File, writeUf8File } from "../../src/util/util";
 
 interface ReadmeSnippet {
   refPath: string;
@@ -49,6 +49,7 @@ function generateReadmeSnippet(snippet: ReadmeSnippet) {
   const oldSnippet = readUtf8File(snippet.refPath);
   const newSnippet = extractNewReadmeSnippet(snippet);
   replaceReadme(oldSnippet, newSnippet);
+  writeUf8File(snippet.refPath, newSnippet);
 }
 
 test("generate README snippets", () => {
