@@ -9,7 +9,7 @@ import {
 import {
   addManualReviewToJSON,
   isJsonKeyTranslatable,
-} from "../common/manual-review";
+} from "../common/json-common";
 
 export class NestedJson implements TFileFormat {
   readTFile(args: ReadTFileArgs): TSet {

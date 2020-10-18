@@ -9,7 +9,7 @@ import { logParseError } from "../common/parse-utils";
 import {
   addManualReviewToJSON,
   isJsonKeyTranslatable,
-} from "../common/manual-review";
+} from "../common/json-common";
 
 export class FlatJson implements TFileFormat {
   readTFile(args: ReadTFileArgs): TSet {
