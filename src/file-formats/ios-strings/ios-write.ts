@@ -1,17 +1,18 @@
 import { WriteTFileArgs } from "../file-format-definitions";
 import { LineChunk } from "./ios-strings";
-import { lookupAppendix, lookupLineChunk } from "./ios-cache";
 import { VALUE_INDEX } from "./ios-read";
 import { writeUf8File } from "../../util/util";
+import { FormatCache } from "../format-cache";
 
-export function writeiOSFile(args: WriteTFileArgs) {
-  // const outFile: iOSFile = {
-  //   path: args.path,
-  //   chunks: new Map(),
-  // };
+const DEFAULT_APPENDIX: string[] = ["\n"];
+
+export function writeiOSFile(
+  args: WriteTFileArgs,
+  cache: FormatCache<LineChunk, string[]>
+) {
   const outLines: string[] = [];
   args.tSet.forEach((value, key) => {
-    const oldChunk = lookupLineChunk(key, args);
+    const oldChunk = cache.lookup({ path: args.path, key });
     let newChunk: LineChunk;
     if (oldChunk) {
       newChunk = convertOldChunkIntoNewChunk(oldChunk, value);
@@ -20,7 +21,8 @@ export function writeiOSFile(args: WriteTFileArgs) {
     }
     outLines.push(...newChunk.lines);
   });
-  outLines.push(...lookupAppendix());
+  const appendix = cache.lookupAuxdata({ path: args.path }) ?? DEFAULT_APPENDIX;
+  outLines.push(...appendix);
   const output = outLines.join("\n");
   writeUf8File(args.path, output);
 }

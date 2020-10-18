@@ -6,33 +6,31 @@ import {
 import { TSet } from "../../core/core-definitions";
 import { getDebugPath, logFatal } from "../../util/util";
 import { parseiOSFile } from "./ios-read";
-import { insertIntoiOSCache } from "./ios-cache";
 import { writeiOSFile } from "./ios-write";
+import { FileCache, FormatCache } from "../format-cache";
 
-export interface iOSFile {
-  path: string;
-  chunks: Map<string, LineChunk>;
-  appendix: string[];
-}
+export type iOSFile = FileCache<LineChunk, string[]>;
 
 export interface LineChunk {
   value: string | null;
   lines: string[];
 }
 
+const iOSCache = new FormatCache<LineChunk, string[]>();
+
 export class IosStrings implements TFileFormat {
   readTFile(args: ReadTFileArgs): TSet {
     const iosFile = parseiOSFile(args);
-    insertIntoiOSCache(iosFile);
+    iOSCache.insertFileCache(iosFile);
     const result: TSet = new Map();
-    iosFile.chunks.forEach((value, key) => {
+    iosFile.entries.forEach((value, key) => {
       result.set(key, value.value);
     });
     return result;
   }
 
   writeTFile(args: WriteTFileArgs): void {
-    writeiOSFile(args);
+    writeiOSFile(args, iOSCache);
   }
 }
 

@@ -13,8 +13,8 @@ export function parseiOSFile(args: ReadTFileArgs): iOSFile {
   }
   const iosFile: iOSFile = {
     path: args.path,
-    chunks: new Map(),
-    appendix: [],
+    entries: new Map(),
+    auxData: [],
   };
   let currentChunk: string[] = [];
   lines.forEach((line) => {
@@ -27,20 +27,20 @@ export function parseiOSFile(args: ReadTFileArgs): iOSFile {
         value,
         lines: currentChunk,
       };
-      if (iosFile.chunks.has(key)) {
+      if (iosFile.entries.has(key)) {
         logiOSError(
           `duplicate key '${key}' -> Currently, the usage of duplicate translation-keys is discouraged.`,
           args
         );
       }
-      iosFile.chunks.set(key, lineChunk);
+      iosFile.entries.set(key, lineChunk);
       currentChunk = [];
     }
   });
   if (currentChunk.length) {
-    iosFile.appendix = currentChunk;
+    iosFile.auxData = currentChunk;
   }
-  if (!iosFile.chunks.size) {
+  if (!iosFile.entries.size) {
     logiOSError("Did not find any Strings in the expected format", args);
   }
   return iosFile;
