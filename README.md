@@ -43,7 +43,6 @@ This helps to keep track of which texts have been already reviewed by a human.
 
 ## Available Services
 
-Depending on your project, some translation-services work better than others.
 `attranslate` supports the following translation-services:
 
 - [Google Cloud Translate](https://cloud.google.com/translate)
