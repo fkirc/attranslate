@@ -7,11 +7,7 @@ import {
   runE2E,
   switchToRandomTarget,
 } from "./e2e-common";
-import {
-  assertPathChanged,
-  assertPathNotChanged,
-  runCommand,
-} from "../test-util/test-util";
+import { assertPathNotChanged, runCommand } from "../test-util/test-util";
 import { getDebugPath } from "../../src/util/util";
 import { join } from "path";
 
@@ -105,7 +101,6 @@ describe.each(testArray)("translate modified %p", (commonArgs) => {
     const args: E2EArgs = { ...commonArgs.args, cacheDir: cacheDirOutdated };
     const output = await runModifiedTarget(args, false);
     expect(output).toContain("Update 1 existing translations");
-    await assertPathChanged(args.cacheDir);
     await runCommand(`git checkout ${args.cacheDir}`);
   });
 

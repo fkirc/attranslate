@@ -110,16 +110,6 @@ export function* enumerateSubsets<T>(set: T[], offset = 0): Generator<T[]> {
   yield [];
 }
 
-export function assertExists(path: string) {
-  expect(existsSync(path)).toBe(true);
-}
-
-export async function assertPathChanged(path: string) {
-  // TODO: Remove this function because it degenerates tests
-  assertExists(path);
-  await runCommandExpectFailure(`git diff --exit-code ${path}`);
-}
-
 export async function assertPathNotChanged(path: string) {
   await runCommand(`git diff --exit-code ${path}`);
 }
