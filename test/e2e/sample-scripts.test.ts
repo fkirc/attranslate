@@ -7,9 +7,9 @@ import { unlinkSync } from "fs";
 
 const targetLngs = ["es", "zh", "de"];
 
-function getTargetPaths(): string[] {
+function jsonTargetPaths(): string[] {
   return targetLngs.map((targetLng) => {
-    return join(sampleDir, targetLng, "fruits.json");
+    return join(targetLng, "fruits.json");
   });
 }
 
@@ -28,18 +28,18 @@ test("simple_translate", async () => {
 test("multi_translate clean", async () => {
   const output = await runSampleScript(`./multi_translate.sh`);
   expect(output).toBe(
-    joinLines([
-      "Target is up-to-date: 'es/fruits.json'",
-      "Target is up-to-date: 'zh/fruits.json'",
-      "Target is up-to-date: 'de/fruits.json'",
-    ])
+    joinLines(
+      jsonTargetPaths().map((path) => {
+        return `Target is up-to-date: '${path}'`;
+      })
+    )
   );
 });
 
 test("multi_translate create new cache", async () => {
   await runCommand(`rm ${cachePath}`);
 
-  const targetPaths = getTargetPaths();
+  const targetPaths = jsonTargetPaths();
   const expectOutput = expectedCreateOutput({
     targetPaths,
     cachePath,
@@ -72,10 +72,10 @@ function expectedCreateOutput(args: {
 }
 
 test("multi_translate propagate updates to null-targets", async () => {
-  const targetPaths = getTargetPaths();
+  const targetPaths = jsonTargetPaths();
   targetPaths.forEach((targetPath) => {
     modifyJsonProperty({
-      jsonPath: targetPath,
+      jsonPath: join(sampleDir, targetPath),
       index: 0,
       newValue: null,
     });
@@ -91,7 +91,7 @@ test("multi_translate propagate updates to null-targets", async () => {
 });
 
 test("multi_translate propagate empty string from source", async () => {
-  const targetPaths = getTargetPaths();
+  const targetPaths = jsonTargetPaths();
 
   targetPaths.forEach((targetPath) => {
     modifyJsonProperty({
@@ -123,7 +123,7 @@ function expectedUpdateOutput(args: {
       ...[
         recv,
         "Update 1 existing translations",
-        `Write target ${getDebugPath(targetPath)}`,
+        `Write target ${getDebugPath(join(sampleDir, targetPath))}`,
         `Write cache ${getDebugPath(args.cachePath)}`,
       ]
     );
