@@ -29,8 +29,12 @@ const testArgs: {
 }[] = [
   {
     srcFile: "test-assets/flutter-arb/intl_en.arb",
-    fileFormat: "nested-json",
-    expectTSet: new Map([["title", "Hello world from intl_en.arb"]]),
+    fileFormat: "nested-json", // TODO: Implement "flutter-arb" according to https://github.com/google/app-resource-bundle/wiki/ApplicationResourceBundleSpecification
+    expectTSet: new Map([
+      ["title", "Hello World from intl_en.arb"],
+      ["@title.description", "Title for the Demo application"],
+      ["@title.type", "text"],
+    ]),
   },
   {
     srcFile: "test-assets/ios-strings/count-en-appendix.strings",
