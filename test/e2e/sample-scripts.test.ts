@@ -3,7 +3,6 @@ import { modifyJsonProperty } from "./e2e-common";
 import { getDebugPath } from "../../src/util/util";
 import { runSampleScript, sampleDir } from "./sample-scripts-util";
 import { join } from "path";
-import { unlinkSync } from "fs";
 
 test("simple_translate", async () => {
   const output = await runSampleScript(`./simple_translate.sh`, ["json-raw"]);
@@ -127,33 +126,3 @@ function expectedUpdateOutput(args: {
   });
   return joinLines(lines);
 }
-
-const flutterAssetDir = "flutter";
-
-const flutterTargetPaths: string[] = [
-  "flutter/lib/l10n/intl_es.arb",
-  "flutter/lib/l10n/intl_de.arb",
-];
-
-test("Flutter clean", async () => {
-  const output = await runSampleScript(`./flutter.sh`, [flutterAssetDir]);
-  expect(output).toBe(
-    joinLines(
-      flutterTargetPaths.map((path) => {
-        return `Target is up-to-date: '${path}'`;
-      })
-    )
-  );
-});
-
-test("Flutter re-create targets", async () => {
-  flutterTargetPaths.forEach((path) => {
-    unlinkSync(join(sampleDir, path));
-  });
-  const output = await runSampleScript(`./flutter.sh`, [flutterAssetDir]);
-  flutterTargetPaths.forEach((path) => {
-    expect(output).toContain(
-      `Write target ${getDebugPath(join(sampleDir, path))}`
-    );
-  });
-});
