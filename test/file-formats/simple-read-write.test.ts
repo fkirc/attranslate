@@ -95,6 +95,13 @@ describe.each(testArgs)("Read/write %p", (args) => {
       path: targetFile,
       tSet,
       lng: "en",
+      manualReview: false,
+      changeSet: {
+        added: new Map(),
+        updated: new Map(),
+        deleted: new Map(),
+        skipped: new Map(),
+      },
     });
 
     const diffCmd = `diff ${args.srcFile} ${targetFile}`;
