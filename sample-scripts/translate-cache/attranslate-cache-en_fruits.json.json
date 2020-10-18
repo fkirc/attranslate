@@ -7,7 +7,7 @@
   },
   "entries": {
     "apple": {
-      "value": null,
+      "value": "Apple",
       "targets": [
         {
           "id": "es",
