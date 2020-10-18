@@ -1,6 +1,6 @@
 import { readUtf8File, writeUf8File } from "../../src/util/util";
 import { join } from "path";
-const docAssets = join("test-assets", "doc-assets");
+export const docAssets = join("test-assets", "doc-assets");
 
 export const helpRef = join(docAssets, "help_reference.txt");
 
