@@ -1,0 +1,22 @@
+{
+  "generated-by-attranslate": "",
+  "source": "",
+  "version": {
+    "major": "",
+    "minor": ""
+  },
+  "entries": {
+    "apple": {
+      "value": "",
+      "targets": ["", "", ""]
+    },
+    "pear": {
+      "value": "",
+      "targets": ["", "", ""]
+    },
+    "banana": {
+      "value": "",
+      "targets": ["", "", ""]
+    }
+  }
+}

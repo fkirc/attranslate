@@ -1,8 +1,3 @@
 {
-  "apple": "苹果",
-  "apple__reviewed": "false",
-  "pear": "梨",
-  "pear__reviewed": "you may delete this line once a review is finished",
-  "banana": "香蕉",
-  "banana__reviewed": "false - ask somebody else?"
+  "apple__reviewed": "false"
 }
