@@ -22,7 +22,7 @@ function jsonTargetPaths(): string[] {
 const sourcePath = join(sampleDir, assetDir, "en", "fruits.json");
 const cachePath = join(
   sampleDir,
-  "translate-cache",
+  assetDir,
   "attranslate-cache-en_fruits.json.json"
 );
 
@@ -101,8 +101,15 @@ test("multi_translate propagate empty string from source", async () => {
     cachePath,
     bypassEmpty: true,
   });
-  const output = await runMultiJSON();
+  const output = await runSampleScript(`./multi_translate.sh`, ["json-raw"]); // Circumvent diff-check
   expect(output).toBe(expectOutput);
+  await runCommand(
+    `diff -r ${join(sampleDir, assetDir)} ${join(
+      "test-assets",
+      "json-manual-review-with-nulls"
+    )}`
+  );
+  await runCommand(`git checkout ${join(sampleDir, assetDir)}`);
 });
 
 function expectedUpdateOutput(args: {
