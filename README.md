@@ -3,9 +3,9 @@
 <a href="https://github.com/fkirc/attranslate/actions?query=branch%3Amaster"><img alt="CI status" src="https://github.com/fkirc/attranslate/workflows/CI/badge.svg/?branch=master"></a>
 
 Automated translation-services can speedup traditional workflows.
+`attranslate` makes it easy to setup _semi-automated_ translation-workflows.
 For example, let's say that a translation-service achieves 90% correct translations on the spot.
-With `attranslate`, a quick fix of the remaining 10% is faster than doing everything by hand.
-Therefore, `attranslate` makes it easy to setup _semi-automated_ translation-workflows.
+Thanks to `attranslate`, a quick fix of the remaining 10% is faster than doing everything by hand.
 Other than that, `attranslate` supports manual translations and even file-format-conversions without changing the language.
 
 ## Why attranslate?
