@@ -89,11 +89,13 @@ Options:
   --srcFile <sourceFile>             The source file to be translated
   --srcLng <sourceLanguage>          A language code for the source language
   --srcFormat <sourceFileFormat>     One of "flat-json", "nested-json",
-                                     "android-xml", "ios-strings"
+                                     "flutter-arb", "android-xml",
+                                     "ios-strings"
   --targetFile <targetFile>          The target file for the translations
   --targetLng <targetLanguage>       A language code for the target language
   --targetFormat <targetFileFormat>  One of "flat-json", "nested-json",
-                                     "android-xml", "ios-strings"
+                                     "flutter-arb", "android-xml",
+                                     "ios-strings"
   --service <translationService>     One of "google-translate", "deepl",
                                      "azure", "manual",
                                      "sync-without-translate"
