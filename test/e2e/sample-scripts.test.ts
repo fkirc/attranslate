@@ -5,6 +5,11 @@ import { runSampleScript, sampleDir } from "./sample-scripts-util";
 import { join } from "path";
 import { unlinkSync } from "fs";
 
+test("simple_translate", async () => {
+  const output = await runSampleScript(`./simple_translate.sh`, "json-raw");
+  expect(output).toBe("Target is up-to-date: 'json-raw/fruits-de.json'\n");
+});
+
 const targetLngs = ["es", "zh", "de"];
 
 const assetDir = "json-manual-review";
@@ -21,11 +26,6 @@ const cachePath = join(
   "translate-cache",
   "attranslate-cache-en_fruits.json.json"
 );
-
-test("simple_translate", async () => {
-  const output = await runSampleScript(`./simple_translate.sh`, assetDir);
-  expect(output).toBe("Target is up-to-date: 'de/fruits.json'\n");
-});
 
 test("multi_translate clean", async () => {
   const output = await runSampleScript(`./multi_translate.sh`, assetDir);
