@@ -1,4 +1,6 @@
-# _attranslate_ - Semi-automated Text Translator for Websites and Apps
+<p align="center">
+  <img alt="attranslate - Semi-automated Text Translator for Websites and Apps" src="docs/logo/attranslate_v1.png">
+</p>
 
 <a href="https://github.com/fkirc/attranslate/actions?query=branch%3Amaster"><img alt="CI status" src="https://github.com/fkirc/attranslate/workflows/CI/badge.svg/?branch=master"></a>
 
