@@ -1,5 +1,8 @@
 import { readUtf8File, writeUf8File } from "../../src/util/util";
-export const helpRef = "test-assets/help_reference.txt";
+import { join } from "path";
+const docAssets = join("test-assets", "doc-assets");
+
+export const helpRef = join(docAssets, "help_reference.txt");
 
 export function readHelpReference(): string {
   return readUtf8File(helpRef);
