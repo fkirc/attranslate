@@ -3,6 +3,7 @@ import { modifyJsonProperty } from "./e2e-common";
 import { getDebugPath } from "../../src/util/util";
 import { runSampleScript, sampleDir } from "./sample-scripts-util";
 import { join } from "path";
+import { unlinkSync } from "fs";
 
 const targetLngs = ["es", "zh", "de"];
 
@@ -129,3 +130,34 @@ function expectedUpdateOutput(args: {
   });
   return joinLines(lines);
 }
+
+const targetPaths: string[] = [
+  "android/app/src/main/res/values-de/strings.xml",
+  "android/app/src/main/res/values-es/strings.xml",
+  "ios/Localizable/Base.lproj/Localizable.strings",
+  "ios/Localizable/de.lproj/Localizable.strings",
+  "ios/Localizable/es.lproj/Localizable.strings",
+];
+
+test("Android to iOS clean", async () => {
+  const output = await runSampleScript(`./android_to_ios.sh`);
+  expect(output).toBe(
+    joinLines(
+      targetPaths.map((path) => {
+        return `Target is up-to-date: '${path}'`;
+      })
+    )
+  );
+});
+
+test("Android to iOS re-create targets", async () => {
+  targetPaths.forEach((path) => {
+    unlinkSync(join(sampleDir, path));
+  });
+  const output = await runSampleScript(`./android_to_ios.sh`);
+  targetPaths.forEach((path) => {
+    expect(output).toContain(
+      `Write target ${getDebugPath(join(sampleDir, path))}`
+    );
+  });
+});
