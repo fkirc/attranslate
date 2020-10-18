@@ -12,8 +12,7 @@
     "website translation",
     "mobile app translation",
     "cross-platform translation",
-    "i18n",
-    "react-i18next"
+    "i18n"
   ],
   "license": "MIT",
   "author": "Felix Kirchengast",
@@ -30,14 +29,15 @@
     "dist/"
   ],
   "scripts": {
-    "build": "yarn run clean && tsc",
+    "build": "yarn clean && tsc",
     "clean": "rimraf ./dist",
-    "lint": "yarn run eslint",
-    "reformat": "yarn run eslint -- --fix",
+    "lint": "yarn eslint",
+    "reformat": "yarn eslint -- --fix",
     "eslint": "./node_modules/.bin/eslint '**/*.{js,ts,tsx}' --ignore-path=.gitignore",
     "preTest": "jest --runTestsByPath test/setup/prepare-gcloud-keys.test.ts",
     "test": "jest",
-    "test:generate_refs": "GENERATE_REFS=True yarn run test",
+    "test:generate_refs": "GENERATE_REFS=True yarn test",
+    "generate_docs": "GENERATE_REFS=True jest --runTestsByPath test/setup/generate-docs.test.ts",
     "prepublishOnly": "git diff --exit-code"
   },
   "dependencies": {

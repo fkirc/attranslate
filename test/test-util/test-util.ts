@@ -1,7 +1,6 @@
 import { exec } from "child_process";
 import { join } from "path";
 import { logFatal } from "../../src/util/util";
-import { existsSync } from "fs";
 
 export function buildTranslateCommand(args: string) {
   return `${join(process.cwd(), "bin", "attranslate")} ${args}`;

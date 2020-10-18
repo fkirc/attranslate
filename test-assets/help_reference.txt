@@ -24,4 +24,6 @@ Options:
   --deleteStale <true | false>       If true, delete translations that exist in
                                      the target file but not in the source file
                                      (default: "true")
+  --manualReview <true | false>      If true, mark newly generated texts with a
+                                     review-notice (default: "false")
   -h, --help                         display help for command
