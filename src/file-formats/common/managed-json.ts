@@ -34,7 +34,7 @@ export function writeManagedJson(args: {
 }
 
 export function readManagedJson<T>(path: string): Partial<T> {
-  const { object, jsonString } = readRawJsonFile<T>(path);
+  const { object, jsonString } = readRawJson<T>(path);
   let jsonSuffix: string | null = null;
   for (const ending of checkedEndings) {
     if (jsonString.endsWith(ending)) {
@@ -49,7 +49,7 @@ export function readManagedJson<T>(path: string): Partial<T> {
   return object;
 }
 
-function readRawJsonFile<T>(
+export function readRawJson<T>(
   path: string
 ): { object: Partial<T>; jsonString: string } {
   try {
