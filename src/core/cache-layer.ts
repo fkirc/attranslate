@@ -1,8 +1,9 @@
 import { CliArgs, CoreResults, TSet } from "./core-definitions";
 import { existsSync } from "fs";
-import { checkDir, getDebugPath, writeJsonFile } from "../util/util";
+import { checkDir, getDebugPath } from "../util/util";
 import path from "path";
 import { parseTCache } from "./cache-parsing";
+import { writeManagedJson } from "../file-formats/common/managed-json";
 
 export interface TCache {
   "generated-by-attranslate"?: string;
@@ -72,7 +73,7 @@ export function writeTCache(results: CoreResults, args: CliArgs) {
     cache.entries[key] = internalEntryToCacheEntry(key, value, args);
   });
 
-  writeJsonFile(cachePath, cache);
+  writeManagedJson({ path: cachePath, object: cache });
 }
 
 function getTargetId(args: CliArgs) {

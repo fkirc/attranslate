@@ -1,5 +1,4 @@
 import { TSet } from "../../core/core-definitions";
-import { readJsonFile, writeJsonFile } from "../../util/util";
 import { flatten, unflatten } from "../../util/flatten";
 import {
   ReadTFileArgs,
@@ -7,10 +6,11 @@ import {
   WriteTFileArgs,
 } from "../file-format-definitions";
 import { writeJsonProp, readJsonProp } from "../common/json-common";
+import { readManagedJson, writeManagedJson } from "../common/managed-json";
 
 export class NestedJson implements TFileFormat {
   readTFile(args: ReadTFileArgs): TSet {
-    const nestedJson = readJsonFile(args.path);
+    const nestedJson = readManagedJson(args.path);
     const flatJson: Record<string, string> = flatten(nestedJson);
     const tMap = new Map<string, string>();
     Object.keys(flatJson).forEach((key) => {
@@ -25,6 +25,6 @@ export class NestedJson implements TFileFormat {
       writeJsonProp(flatJson, key, value, args);
     });
     const nestedJson = unflatten(flatJson);
-    writeJsonFile(args.path, nestedJson);
+    writeManagedJson({ path: args.path, object: nestedJson });
   }
 }

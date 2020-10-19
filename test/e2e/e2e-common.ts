@@ -1,7 +1,10 @@
 import { CliArgs } from "../../src/core/core-definitions";
 import { getGCloudKeyPath } from "../setup/key-exports";
-import { readJsonFile, writeJsonFile } from "../../src/util/util";
 import { generateId, runCommand, runTranslate } from "../test-util/test-util";
+import {
+  readManagedJson,
+  writeManagedJson,
+} from "../../src/file-formats/common/managed-json";
 
 export const offlineMaxTime = 300;
 export const onlineMaxTime = 3000;
@@ -75,8 +78,8 @@ export function modifyJsonProperty(args: {
   newValue: unknown;
 }) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const json: any = readJsonFile(args.jsonPath);
+  const json: any = readManagedJson(args.jsonPath);
   const keys = Object.keys(json);
   json[keys[args.index]] = args.newValue;
-  writeJsonFile(args.jsonPath, json);
+  writeManagedJson({ path: args.jsonPath, object: json });
 }

@@ -4,14 +4,15 @@ import {
   WriteTFileArgs,
 } from "../file-format-definitions";
 import { TSet } from "../../core/core-definitions";
-import { getDebugPath, readJsonFile, writeJsonFile } from "../../util/util";
+import { getDebugPath } from "../../util/util";
 import { FormatCache } from "../common/format-cache";
+import { readManagedJson, writeManagedJson } from "../common/managed-json";
 
 const attributeCache = new FormatCache<unknown, Record<string, unknown>>();
 
 export class FlutterArb implements TFileFormat {
   readTFile(args: ReadTFileArgs): TSet {
-    const json = readJsonFile(args.path);
+    const json = readManagedJson(args.path);
     const tMap = new Map<string, string>();
     const globalAttributes: Record<string, unknown> = {};
     for (const key of Object.keys(json)) {
@@ -57,6 +58,6 @@ export class FlutterArb implements TFileFormat {
       ...globalAttributes,
       ...json,
     };
-    writeJsonFile(args.path, mergedJson);
+    writeManagedJson({ path: args.path, object: mergedJson });
   }
 }

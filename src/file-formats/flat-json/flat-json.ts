@@ -4,13 +4,13 @@ import {
   WriteTFileArgs,
 } from "../file-format-definitions";
 import { TSet } from "../../core/core-definitions";
-import { readJsonFile, writeJsonFile } from "../../util/util";
 import { logParseError } from "../common/parse-utils";
 import { writeJsonProp, readJsonProp } from "../common/json-common";
+import { readManagedJson, writeManagedJson } from "../common/managed-json";
 
 export class FlatJson implements TFileFormat {
   readTFile(args: ReadTFileArgs): TSet {
-    const json = readJsonFile(args.path);
+    const json = readManagedJson(args.path);
     const tMap = new Map<string, string>();
     for (const key of Object.keys(json)) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -29,6 +29,6 @@ export class FlatJson implements TFileFormat {
     args.tSet.forEach((value, key) => {
       writeJsonProp(flatJson, key, value, args);
     });
-    writeJsonFile(args.path, flatJson);
+    writeManagedJson({ path: args.path, object: flatJson });
   }
 }

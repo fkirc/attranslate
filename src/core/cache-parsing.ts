@@ -1,5 +1,6 @@
-import { getDebugPath, logFatal, readJsonFile } from "../util/util";
+import { getDebugPath, logFatal } from "../util/util";
 import { TCache, TCacheEntry, TCacheTarget } from "./cache-layer";
+import { readManagedJson } from "../file-formats/common/managed-json";
 
 interface CParseContext {
   key?: string;
@@ -7,7 +8,7 @@ interface CParseContext {
 }
 
 export function parseTCache(context: CParseContext): TCache {
-  const rawCache: Partial<TCache> = readJsonFile<TCache>(context.cachePath);
+  const rawCache: Partial<TCache> = readManagedJson<TCache>(context.cachePath);
   const { version, entries } = rawCache;
   if (!version) {
     logCacheError(`version is falsy`, context);

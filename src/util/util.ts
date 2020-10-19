@@ -57,22 +57,6 @@ export function deleteFile(path: string): void {
   console.info(`Deleted ${getDebugPath(path)}`);
 }
 
-export function writeJsonFile(path: string, object: unknown): string {
-  const jsonString = JSON.stringify(object, null, 2);
-  writeUf8File(path, jsonString);
-  return jsonString;
-}
-
-export function readJsonFile<T>(path: string): Partial<T> {
-  try {
-    const jsonString = readUtf8File(path);
-    return JSON.parse(jsonString) as Partial<T>;
-  } catch (e) {
-    console.error(e);
-    logFatal(`Failed to parse ${getDebugPath(path)}.`);
-  }
-}
-
 export function readUtf8File(path: string): string {
   checkNotDir(path);
   return readFileSync(path, { encoding: "utf8", flag: "r" });
