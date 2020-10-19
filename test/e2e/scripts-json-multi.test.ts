@@ -1,4 +1,4 @@
-import { joinLines, runCommand } from "../test-util/test-util";
+import { joinLines, recursiveDiff, runCommand } from "../test-util/test-util";
 import { modifyJsonProperty } from "./e2e-common";
 import { getDebugPath } from "../../src/util/util";
 import { runSampleScript, sampleDir } from "./scripts-e2e-util";
@@ -103,12 +103,10 @@ test("multi_json propagate empty string from source", async () => {
   });
   const output = await runSampleScript(`./json_manual_review.sh`, ["json-raw"]); // Circumvent diff-check
   expect(output).toBe(expectOutput);
-  await runCommand(
-    `diff -r ${join(sampleDir, assetDir)} ${join(
-      "test-assets",
-      "json-manual-review-with-nulls"
-    )}`
-  );
+  await recursiveDiff({
+    pathActual: join(sampleDir, assetDir),
+    pathExpected: join("test-assets", "json-manual-review-with-nulls"),
+  });
   await runCommand(`git checkout ${join(sampleDir, assetDir)}`);
 });
 
