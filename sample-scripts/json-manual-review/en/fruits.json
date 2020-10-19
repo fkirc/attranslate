@@ -1,6 +1,6 @@
 {
   "apple": "Apple",
-  "apple__reviewed": "you can change or delete any review-lines; attranslate won't modify it",
+  "apple__reviewed": "you may change or delete any review-lines; attranslate won't modify it",
   "pear": "Pear",
   "banana": "Banana"
 }

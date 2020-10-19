@@ -2,7 +2,7 @@
   "apple": "苹果",
   "apple__reviewed": "false",
   "pear": "梨",
-  "pear__reviewed": "you may delete this line once a review is finished",
+  "pear__reviewed": "you may change or delete any review-lines; attranslate won't modify it",
   "banana": "香蕉",
-  "banana__reviewed": "false - ask somebody else?"
+  "banana__reviewed": "false"
 }
