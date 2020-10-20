@@ -5,21 +5,25 @@ import {
   xmlKeyToJsonKey,
 } from "./android-xml";
 import { ReadTFileArgs } from "../file-format-definitions";
-import { toJson } from "xml2json";
 import { TSet } from "../../core/core-definitions";
 import { logParseError } from "../common/parse-utils";
+import { OptionsV2 } from "xml2js";
 
 export function parseRawXML<T>(
   xmlString: string,
   args: ReadTFileArgs
 ): Partial<T> {
   try {
-    return (toJson(xmlString, {
-      object: true,
-      sanitize: false,
-      trim: false,
-      reversible: true,
-    }) as unknown) as Partial<T>;
+    const options: OptionsV2 = {
+      preserveChildrenOrder: true,
+      headless: true,
+    };
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const result = await require("xml2js").parseStringPromise(
+      xmlString,
+      options
+    );
+    return result as Partial<T>;
   } catch (e) {
     console.error(e);
     logParseError("XML parsing error", args);
