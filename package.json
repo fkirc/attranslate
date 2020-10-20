@@ -46,7 +46,8 @@
     "detect-indent": "^6.0.0",
     "inquirer": "^7.3.3",
     "messageformat-parser": "^4.1.0",
-    "prettify-xml": "^1.2.0"
+    "prettify-xml": "^1.2.0",
+    "xml2js": "^0.4.23"
   },
   "devDependencies": {
     "@types/inquirer": "^7.3.1",
