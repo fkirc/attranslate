@@ -803,13 +803,6 @@
   dependencies:
     "@types/node" "*"
 
-"@types/xml2json@^0.11.3":
-  version "0.11.3"
-  resolved "https://registry.yarnpkg.com/@types/xml2json/-/xml2json-0.11.3.tgz#c0fb144d61753c1e0f54aee750608b00184d3241"
-  integrity sha512-iuN41kDZvCGfr43ra1WizAZl2y+0v1z9UPf93B9g4629F9jaA6CZywx80GZwqosS2e7aGZEGIaU1DeU0sKFEZw==
-  dependencies:
-    "@types/node" "*"
-
 "@types/yargs-parser@*":
   version "15.0.0"
   resolved "https://registry.yarnpkg.com/@types/yargs-parser/-/yargs-parser-15.0.0.tgz#cb3f9f741869e20cce330ffbeb9271590483882d"
