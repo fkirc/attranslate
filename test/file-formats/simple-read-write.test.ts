@@ -28,6 +28,11 @@ const testArgs: {
   expectTSet: TSet;
 }[] = [
   {
+    srcFile: "test-assets/android-xml/plurals.xml",
+    fileFormat: "android-xml",
+    expectTSet: nestedCount(),
+  },
+  {
     srcFile: "test-assets/flutter-arb/intl_en.arb",
     fileFormat: "flutter-arb", // According to https://github.com/google/app-resource-bundle/wiki/ApplicationResourceBundleSpecification
     expectTSet: new Map([["title", "Hello World from intl_en.arb"]]),
