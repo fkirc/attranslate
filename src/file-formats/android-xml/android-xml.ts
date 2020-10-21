@@ -29,8 +29,8 @@ export interface XmlResourceFile {
 }
 
 export interface NamedXmlTag {
-  _: string;
-  $: { name: string };
+  characterContent: string;
+  attributes: { name: string };
 }
 
 /**
@@ -81,8 +81,8 @@ export class AndroidXml implements TFileFormat {
       });
       const xmlKey = jsonKeyToXmlKey(jsonKey);
       const newResource: NamedXmlTag = {
-        $: { ...cachedResource?.$, name: xmlKey },
-        _: value ?? "",
+        attributes: { ...cachedResource?.attributes, name: xmlKey },
+        characterContent: value ?? "",
       };
       resources.push(newResource);
     });

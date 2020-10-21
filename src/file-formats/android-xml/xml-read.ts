@@ -25,6 +25,8 @@ export async function parseRawXML<T>(
       trim: false,
       normalize: false,
       normalizeTags: false,
+      attrkey: "attributes",
+      charkey: "characterContent",
     };
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const xml2js = require("xml2js");
@@ -43,8 +45,8 @@ export function parseStringResources(
 ): TSet {
   const tSet: TSet = new Map();
   strings.forEach((stringResource: Partial<NamedXmlTag>) => {
-    const xmlKey = stringResource?.$?.name;
-    const rawValue = stringResource._;
+    const xmlKey = stringResource?.attributes?.name;
+    const rawValue = stringResource.characterContent;
     const value = rawValue ?? null;
     if (!xmlKey) {
       logParseError(`undefined key: '${stringResource}'`, args);

@@ -12,6 +12,8 @@ export function writeXmlResourceFile(
   const xml2js = require("xml2js");
   const stringIndent = " ".repeat(indent);
   const options: OptionsV2 = {
+    attrkey: "attributes", // TODO: Introduce shared options with spread operator?
+    charkey: "characterContent",
     xmldec: {
       version: "1.0",
       encoding: "utf-8",
