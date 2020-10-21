@@ -5051,6 +5051,13 @@ xml2js@^0.4.23:
     sax ">=0.6.0"
     xmlbuilder "~11.0.0"
 
+"xml2js@https://github.com/fkirc/node-xml2js/tarball/attranslate":
+  version "0.4.23"
+  resolved "https://github.com/fkirc/node-xml2js/tarball/attranslate#92d35fe662118560a26cf9bb90802f1cfecdf385"
+  dependencies:
+    sax ">=0.6.0"
+    xmlbuilder "~11.0.0"
+
 xmlbuilder@~11.0.0:
   version "11.0.1"
   resolved "https://registry.yarnpkg.com/xmlbuilder/-/xmlbuilder-11.0.1.tgz#be9bae1c8a046e76b31127726347d0ad7002beb3"
