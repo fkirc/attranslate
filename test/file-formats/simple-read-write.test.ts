@@ -46,8 +46,9 @@ const testArgs: {
     srcFile: "test-assets/android-xml/sanitize.xml",
     fileFormat: "android-xml",
     expectTSet: new Map([
+      ["empty string", null],
+      ["whitespace", "    "],
       ["rounded brackets", "()("],
-      ["angle brackets ", " "],
       ["other stuff", "> ## [] {}"],
       ["amp", "amp is problematic: \\n&amp;"],
       ["double quotes", '"Double quotes" are problematic'],
