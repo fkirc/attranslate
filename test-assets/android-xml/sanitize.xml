@@ -3,7 +3,7 @@
   <string name="empty string" others="prop"/>
   <string name="whitespace" others="prop">    </string>
   <string name="rounded brackets" formatted="false">()(</string>
-  <string name="other stuff" formatted="false">> ## [] {}</string>
+  <string name="greater than character is problematic" formatted="false">> ## [] {}</string>
   <string name="amp" formatted="false">amp is problematic: \n&amp;</string>
   <string name="double quotes" formatted="false">"Double quotes" are problematic</string>
 </resources>
