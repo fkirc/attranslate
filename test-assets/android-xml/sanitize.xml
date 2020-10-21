@@ -4,6 +4,7 @@
   <string name="whitespace" others="prop">    </string>
   <string name="rounded brackets" formatted="false">()(</string>
   <string name="greater than character is problematic" formatted="false">> ## [] {}</string>
-  <string name="amp" formatted="false">amp is problematic: \n&amp;</string>
+  <string name="amp 1" formatted="false">amp is problematic: \n&amp;</string>
+  <string name="amp 2" formatted="false">Before &amp; after</string>
   <string name="double quotes" formatted="false">"Double quotes" are problematic</string>
 </resources>
