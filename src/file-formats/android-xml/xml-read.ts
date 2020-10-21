@@ -15,10 +15,16 @@ export async function parseRawXML<T>(
 ): Promise<Partial<T>> {
   try {
     const options: OptionsV2 = {
-      emptyTag: true,
-      includeWhiteChars: true,
+      strict: true,
+      async: false,
+      //explicitChildren: true, // if true, then the resulting object will be entirely different
       preserveChildrenOrder: true,
       headless: true,
+      //emptyTag: " ",
+      includeWhiteChars: true,
+      trim: false,
+      normalize: false,
+      normalizeTags: false,
     };
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const xml2js = require("xml2js");
