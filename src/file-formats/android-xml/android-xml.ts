@@ -29,8 +29,8 @@ export interface XmlResourceFile {
 }
 
 export interface StringResource {
-  name: string;
-  $t: string;
+  _: string;
+  $: { name: string };
 }
 
 /**
@@ -50,12 +50,11 @@ export function xmlKeyToJsonKey(xmlKey: string): string {
 }
 
 export class AndroidXml implements TFileFormat {
-  readTFile(args: ReadTFileArgs): TSet {
+  async readTFile(args: ReadTFileArgs): Promise<TSet> {
     const xmlString = readUtf8File(args.path);
-    const resourceFile: Partial<XmlResourceFile> = parseRawXML<XmlResourceFile>(
-      xmlString,
-      args
-    );
+    const resourceFile: Partial<XmlResourceFile> = await parseRawXML<
+      XmlResourceFile
+    >(xmlString, args);
     const xmlCache: XmlCache = {
       path: args.path,
       auxData: { detectedIntent: detectSpaceIndent(xmlString) },
@@ -82,9 +81,8 @@ export class AndroidXml implements TFileFormat {
       });
       const xmlKey = jsonKeyToXmlKey(jsonKey);
       const newResource: StringResource = {
-        ...cachedResource,
-        name: xmlKey,
-        $t: value ?? "",
+        $: { ...cachedResource?.$, name: xmlKey },
+        _: value ?? "",
       };
       resources.push(newResource);
     });

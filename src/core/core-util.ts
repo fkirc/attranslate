@@ -58,7 +58,7 @@ export async function readTFileCore(
   args: ReadTFileArgs
 ): Promise<TSet> {
   const module = await instantiateTFileFormat(fileFormat);
-  const rawTSet = module.readTFile(args);
+  const rawTSet = await module.readTFile(args);
   rawTSet.forEach((value, key) => {
     if (value === "") {
       /**

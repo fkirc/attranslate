@@ -46,10 +46,12 @@ const testArgs: {
     srcFile: "test-assets/android-xml/sanitize.xml",
     fileFormat: "android-xml",
     expectTSet: new Map([
+      ["empty string", ""],
+      ["whitespace", "    "],
       ["rounded brackets", "()("],
-      ["angle brackets ", " "],
-      ["other stuff", "> ## [] {}"],
-      ["amp", "amp is problematic: \\n&amp;"],
+      ["greater than character is problematic", "> ## [] {}"],
+      ["amp 1", "amp is problematic: \\n&"],
+      ["amp 2", "Before & after"],
       ["double quotes", '"Double quotes" are problematic'],
     ]),
   },
@@ -82,7 +84,7 @@ const testArgs: {
 describe.each(testArgs)("Read/write %p", (args) => {
   test("Read - write - diff", async () => {
     const fileFormat = await instantiateTFileFormat(args.fileFormat);
-    const tSet = fileFormat.readTFile({
+    const tSet: TSet = await fileFormat.readTFile({
       path: args.srcFile,
       lng: "en",
       format: args.fileFormat,

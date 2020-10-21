@@ -9,14 +9,14 @@ import { writeJsonProp, readJsonProp } from "../common/json-common";
 import { readManagedJson, writeManagedJson } from "../common/managed-json";
 
 export class NestedJson implements TFileFormat {
-  readTFile(args: ReadTFileArgs): TSet {
+  readTFile(args: ReadTFileArgs): Promise<TSet> {
     const nestedJson = readManagedJson(args.path);
     const flatJson: Record<string, string> = flatten(nestedJson);
     const tMap = new Map<string, string>();
     Object.keys(flatJson).forEach((key) => {
       readJsonProp(key, flatJson[key], tMap, args);
     });
-    return tMap;
+    return Promise.resolve(tMap);
   }
 
   writeTFile(args: WriteTFileArgs): void {
