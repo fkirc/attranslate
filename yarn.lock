@@ -3882,11 +3882,6 @@ prettier@^2.1.2:
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.1.2.tgz#3050700dae2e4c8b67c4c3f666cdb8af405e1ce5"
   integrity sha512-16c7K+x4qVlJg9rEbXl7HEGmQyZlG4R9AgP+oHKRMsMsuk8s+ATStlf1NpDqyBI1HpVyfjLOeMhH2LvuNvV5Vg==
 
-prettify-xml@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/prettify-xml/-/prettify-xml-1.2.0.tgz#46dcf1ee8a8d8b73db30b7e06ef26dc9cf3f6f18"
-  integrity sha1-Rtzx7oqNi3PbMLfgbvJtyc8/bxg=
-
 pretty-format@^25.2.1, pretty-format@^25.5.0:
   version "25.5.0"
   resolved "https://registry.yarnpkg.com/pretty-format/-/pretty-format-25.5.0.tgz#7873c1d774f682c34b8d48b6743a2bf2ac55791a"
