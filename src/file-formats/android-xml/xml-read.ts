@@ -9,20 +9,20 @@ import { TSet } from "../../core/core-definitions";
 import { logParseError } from "../common/parse-utils";
 import { OptionsV2 } from "xml2js";
 
-export function parseRawXML<T>(
+export async function parseRawXML<T>(
   xmlString: string,
   args: ReadTFileArgs
-): Partial<T> {
+): Promise<Partial<T>> {
   try {
     const options: OptionsV2 = {
+      emptyTag: true,
+      includeWhiteChars: true,
       preserveChildrenOrder: true,
       headless: true,
     };
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const result = await require("xml2js").parseStringPromise(
-      xmlString,
-      options
-    );
+    const xml2js = require("xml2js");
+    const result = await xml2js.parseStringPromise(xmlString, options);
     return result as Partial<T>;
   } catch (e) {
     console.error(e);
@@ -37,8 +37,8 @@ export function parseStringResources(
 ): TSet {
   const tSet: TSet = new Map();
   strings.forEach((stringResource: Partial<StringResource>) => {
-    const xmlKey = stringResource.name;
-    const rawValue = stringResource.$t;
+    const xmlKey = stringResource?.$?.name;
+    const rawValue = stringResource._;
     const value = rawValue ? attemptToFixBrokenSanitation(rawValue) : null;
     if (!xmlKey) {
       logParseError(`undefined key: '${stringResource}'`, args);

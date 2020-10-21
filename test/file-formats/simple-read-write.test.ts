@@ -82,7 +82,7 @@ const testArgs: {
 describe.each(testArgs)("Read/write %p", (args) => {
   test("Read - write - diff", async () => {
     const fileFormat = await instantiateTFileFormat(args.fileFormat);
-    const tSet = fileFormat.readTFile({
+    const tSet: TSet = await fileFormat.readTFile({
       path: args.srcFile,
       lng: "en",
       format: args.fileFormat,

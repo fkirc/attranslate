@@ -11,7 +11,7 @@ import { readManagedJson, writeManagedJson } from "../common/managed-json";
 const attributeCache = new FormatCache<unknown, Record<string, unknown>>();
 
 export class FlutterArb implements TFileFormat {
-  readTFile(args: ReadTFileArgs): TSet {
+  readTFile(args: ReadTFileArgs): Promise<TSet> {
     const json = readManagedJson(args.path);
     const tMap = new Map<string, string>();
     const globalAttributes: Record<string, unknown> = {};
@@ -37,7 +37,7 @@ export class FlutterArb implements TFileFormat {
     if (fileCache) {
       fileCache.auxData = globalAttributes;
     }
-    return tMap;
+    return Promise.resolve(tMap);
   }
 
   writeTFile(args: WriteTFileArgs): void {

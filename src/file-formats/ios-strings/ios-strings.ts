@@ -18,14 +18,14 @@ export interface LineChunk {
 const iOSCache = new FormatCache<LineChunk, string[]>();
 
 export class IosStrings implements TFileFormat {
-  readTFile(args: ReadTFileArgs): TSet {
+  readTFile(args: ReadTFileArgs): Promise<TSet> {
     const iosFile = parseiOSFile(args);
     iOSCache.insertFileCache(iosFile);
     const result: TSet = new Map();
     iosFile.entries.forEach((value, key) => {
       result.set(key, value.value);
     });
-    return result;
+    return Promise.resolve(result);
   }
 
   writeTFile(args: WriteTFileArgs): void {

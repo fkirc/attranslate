@@ -9,7 +9,7 @@ import { writeJsonProp, readJsonProp } from "../common/json-common";
 import { readManagedJson, writeManagedJson } from "../common/managed-json";
 
 export class FlatJson implements TFileFormat {
-  readTFile(args: ReadTFileArgs): TSet {
+  readTFile(args: ReadTFileArgs): Promise<TSet> {
     const json = readManagedJson(args.path);
     const tMap = new Map<string, string>();
     for (const key of Object.keys(json)) {
@@ -21,7 +21,7 @@ export class FlatJson implements TFileFormat {
       }
       readJsonProp(key, value, tMap, args);
     }
-    return tMap;
+    return Promise.resolve(tMap);
   }
 
   writeTFile(args: WriteTFileArgs): void {

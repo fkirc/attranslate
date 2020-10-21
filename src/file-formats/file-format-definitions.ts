@@ -18,7 +18,7 @@ export interface ReadTFileArgs {
 
 export interface TFileFormat {
   writeTFile: (args: WriteTFileArgs) => void;
-  readTFile: (args: ReadTFileArgs) => TSet;
+  readTFile: (args: ReadTFileArgs) => Promise<TSet>;
 }
 
 export type TFileType = keyof typeof fileFormatMap;
