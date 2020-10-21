@@ -28,6 +28,11 @@ const testArgs: {
   expectTSet: TSet;
 }[] = [
   {
+    srcFile: "test-assets/android-xml/advanced.xml",
+    fileFormat: "android-xml",
+    expectTSet: advancedXml(),
+  },
+  {
     srcFile: "test-assets/android-xml/plurals.xml",
     fileFormat: "android-xml",
     expectTSet: nestedCount(),
@@ -116,3 +121,16 @@ describe.each(testArgs)("Read/write %p", (args) => {
     await runCommand(`rm ${targetFile}`);
   });
 });
+
+function advancedXml(): TSet {
+  return new Map([
+    // TODO: Expand this reference with remaining stuff
+    ["deutscher string", "actually german: muss grösser gleich %d sein"],
+    ["escaped quotes", 'Logged in as \\"%s\\"'],
+    ["escaped single quotes", "Logged in as \\'%s\\'"],
+    ["surrounded quotes", "\"Logged in as '%s'\""],
+    ["surrounded quotes escaped", "\"Logged in as \\'%s\\'\""],
+    ["two placeholder newline", "Hello %s!\\nYou have got %s unread messages."],
+    ["with html content", ""], // TODO: Fix html content
+  ]);
+}
