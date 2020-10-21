@@ -20,9 +20,7 @@ test("src not an XML", async () => {
     srcFormat: "android-xml",
   };
   const output = await runTranslateExpectFailure(buildE2EArgs(args));
-  expect(output).toContain(
-    "There are errors in your xml file: not well-formed"
-  );
+  expect(output).toContain("Error: Non-whitespace before first tag");
   expect(output).toContain(
     `error: Failed to parse ${getDebugPath(
       args.srcFile
