@@ -10,11 +10,16 @@ export function writeXmlResourceFile(
 ) {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const xml2js = require("xml2js");
+  const stringIndent = " ".repeat(indent);
   const options: OptionsV2 = {
     xmldec: {
       version: "1.0",
       encoding: "utf-8",
       standalone: undefined,
+    },
+    renderOpts: {
+      pretty: true,
+      indent: stringIndent,
     },
   };
   // See https://github.com/oozcitak/xmlbuilder-js/wiki/Builder-Options for available xmlBuilderOptions
@@ -25,11 +30,6 @@ export function writeXmlResourceFile(
   const mergedOptions = { ...options, xmlBuilderOptions };
   const builder: Builder = new xml2js.Builder(mergedOptions);
   const rawXmlString: string = builder.buildObject(resourceFile);
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const prettifyXml = require("prettify-xml");
-  const prettyXmlString = prettifyXml(rawXmlString, {
-    indent,
-  });
-  const xmlString = `${prettyXmlString}\n`;
+  const xmlString = `${rawXmlString}\n`;
   writeUf8File(args.path, xmlString);
 }
