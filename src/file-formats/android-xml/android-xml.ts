@@ -15,20 +15,20 @@ import { FileCache, FormatCache } from "../common/format-cache";
 import { logParseError } from "../common/parse-utils";
 
 const globalCache = new FormatCache<
-  Partial<StringResource>,
+  Partial<NamedXmlTag>,
   { detectedIntent: number }
 >();
 
 export interface XmlCache
-  extends FileCache<Partial<StringResource>, { detectedIntent: number }> {}
+  extends FileCache<Partial<NamedXmlTag>, { detectedIntent: number }> {}
 
 export interface XmlResourceFile {
   resources: {
-    string: StringResource[];
+    string: NamedXmlTag[];
   };
 }
 
-export interface StringResource {
+export interface NamedXmlTag {
   _: string;
   $: { name: string };
 }
@@ -73,14 +73,14 @@ export class AndroidXml implements TFileFormat {
   }
 
   writeTFile(args: WriteTFileArgs): void {
-    const resources: StringResource[] = [];
+    const resources: NamedXmlTag[] = [];
     args.tSet.forEach((value, jsonKey) => {
       const cachedResource = globalCache.lookup({
         path: args.path,
         key: jsonKey,
       });
       const xmlKey = jsonKeyToXmlKey(jsonKey);
-      const newResource: StringResource = {
+      const newResource: NamedXmlTag = {
         $: { ...cachedResource?.$, name: xmlKey },
         _: value ?? "",
       };

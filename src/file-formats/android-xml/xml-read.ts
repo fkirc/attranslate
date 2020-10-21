@@ -1,6 +1,6 @@
 import {
   DEFAULT_ANDROID_XML_INDENT,
-  StringResource,
+  NamedXmlTag,
   XmlCache,
   xmlKeyToJsonKey,
 } from "./android-xml";
@@ -37,12 +37,12 @@ export async function parseRawXML<T>(
 }
 
 export function parseStringResources(
-  strings: Partial<StringResource>[],
+  strings: Partial<NamedXmlTag>[],
   args: ReadTFileArgs,
   xmlCache: XmlCache
 ): TSet {
   const tSet: TSet = new Map();
-  strings.forEach((stringResource: Partial<StringResource>) => {
+  strings.forEach((stringResource: Partial<NamedXmlTag>) => {
     const xmlKey = stringResource?.$?.name;
     const rawValue = stringResource._;
     const value = rawValue ?? null;
