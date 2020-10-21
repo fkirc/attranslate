@@ -5043,17 +5043,16 @@ xml-name-validator@^3.0.0:
   resolved "https://registry.yarnpkg.com/xml-name-validator/-/xml-name-validator-3.0.0.tgz#6ae73e06de4d8c6e47f9fb181f78d648ad457c6a"
   integrity sha512-A5CUptxDsvxKJEU3yO6DuWBSJz/qizqzJKOMIfUJHETbBw/sFaDxgd6fxm1ewUaM0jZ444Fc5vC5ROYurg/4Pw==
 
-"xml2js@https://github.com/fkirc/node-xml2js/tarball/attranslate":
+"xml2js@https://github.com/fkirc/node-xml2js/tarball/21de47581c46ce5b5659448ab198501786d2117d":
   version "0.4.23"
-  resolved "https://github.com/fkirc/node-xml2js/tarball/attranslate#92d35fe662118560a26cf9bb90802f1cfecdf385"
+  resolved "https://github.com/fkirc/node-xml2js/tarball/21de47581c46ce5b5659448ab198501786d2117d#a11dc50a8887979cdbeeb612a9dfaaf1281edd37"
   dependencies:
     sax ">=0.6.0"
-    xmlbuilder "~11.0.0"
+    xmlbuilder "https://github.com/fkirc/xmlbuilder-js/tarball/e287de6254b719c1565ab47745d2140b137d9021"
 
-xmlbuilder@~11.0.0:
-  version "11.0.1"
-  resolved "https://registry.yarnpkg.com/xmlbuilder/-/xmlbuilder-11.0.1.tgz#be9bae1c8a046e76b31127726347d0ad7002beb3"
-  integrity sha512-fDlsI/kFEx7gLvbecc0/ohLG50fugQp8ryHzMTuW9vSa1GJ0XYWKnhsUx7oie3G98+r56aTQIUB4kht42R3JvA==
+"xmlbuilder@https://github.com/fkirc/xmlbuilder-js/tarball/e287de6254b719c1565ab47745d2140b137d9021":
+  version "15.1.1"
+  resolved "https://github.com/fkirc/xmlbuilder-js/tarball/e287de6254b719c1565ab47745d2140b137d9021#90432bd5f2a16676afdf0d1ee609d511e7298e21"
 
 xmlchars@^2.2.0:
   version "2.2.0"
