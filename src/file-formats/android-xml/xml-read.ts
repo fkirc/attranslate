@@ -45,7 +45,7 @@ export function parseStringResources(
   strings.forEach((stringResource: Partial<StringResource>) => {
     const xmlKey = stringResource?.$?.name;
     const rawValue = stringResource._;
-    const value = rawValue ? attemptToFixBrokenSanitation(rawValue) : null;
+    const value = rawValue ?? null;
     if (!xmlKey) {
       logParseError(`undefined key: '${stringResource}'`, args);
     }
@@ -66,16 +66,4 @@ export function detectSpaceIndent(xmlString: string): number {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const detectModule = require("detect-indent");
   return detectModule(xmlString).amount ?? DEFAULT_ANDROID_XML_INDENT;
-}
-
-function attemptToFixBrokenSanitation(fromXml: string) {
-  /**
-   * Perhaps we should use a saner XML-library which does not change any character at all.
-   */
-  return (
-    fromXml
-      //  .replace(/&quot;/g, '"')
-      .replace(/&/g, "&amp;")
-  );
-  //.replace(/"/g, "&quot;");
 }
