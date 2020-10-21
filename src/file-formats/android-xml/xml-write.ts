@@ -17,7 +17,13 @@ export function writeXmlResourceFile(
       standalone: undefined,
     },
   };
-  const builder: Builder = new xml2js.Builder(options);
+  // See https://github.com/oozcitak/xmlbuilder-js/wiki/Builder-Options for available xmlBuilderOptions
+  const xmlBuilderOptions = {
+    noValidation: false,
+    noDoubleEncoding: true,
+  };
+  const mergedOptions = { ...options, xmlBuilderOptions };
+  const builder: Builder = new xml2js.Builder(mergedOptions);
   const rawXmlString: string = builder.buildObject(resourceFile);
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const prettifyXml = require("prettify-xml");
