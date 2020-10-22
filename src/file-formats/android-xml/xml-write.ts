@@ -1,5 +1,5 @@
 import { WriteTFileArgs } from "../file-format-definitions";
-import { XmlResourceFile } from "./android-xml";
+import { sharedXmlOptions, XmlResourceFile } from "./android-xml";
 import { writeUf8File } from "../../util/util";
 import { Builder, OptionsV2 } from "xml2js";
 
@@ -12,8 +12,7 @@ export function writeXmlResourceFile(
   const xml2js = require("xml2js");
   const stringIndent = " ".repeat(indent);
   const options: OptionsV2 = {
-    attrkey: "attributes", // TODO: Introduce shared options with spread operator?
-    charkey: "characterContent",
+    ...sharedXmlOptions,
     xmldec: {
       version: "1.0",
       encoding: "utf-8",

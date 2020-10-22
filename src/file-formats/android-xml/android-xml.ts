@@ -5,32 +5,27 @@ import {
 } from "../file-format-definitions";
 import { TSet } from "../../core/core-definitions";
 import { readUtf8File } from "../../util/util";
-import { writeXmlResourceFile } from "./xml-write";
-import {
-  detectSpaceIndent,
-  parseRawXML,
-  parseStringResources,
-} from "./xml-read";
+import { detectSpaceIndent, parseRawXML, readNamedXmlTag } from "./xml-read";
 import { FileCache, FormatCache } from "../common/format-cache";
 import { logParseError } from "../common/parse-utils";
+import { OptionsV2 } from "xml2js";
 
-const globalCache = new FormatCache<
-  Partial<NamedXmlTag>,
-  { detectedIntent: number }
->();
-
-export interface XmlCache
-  extends FileCache<Partial<NamedXmlTag>, { detectedIntent: number }> {}
-
-export interface XmlResourceFile {
-  resources: {
-    string: NamedXmlTag[];
-  };
-}
+export type XmlFileCache = FileCache<NamedXmlTag, { detectedIntent: number }>;
+const globalCache = new FormatCache<NamedXmlTag, { detectedIntent: number }>();
 
 export interface NamedXmlTag {
   characterContent: string;
   attributes: { name: string };
+}
+export const sharedXmlOptions: OptionsV2 = {
+  attrkey: "attributes",
+  charkey: "characterContent",
+};
+
+export interface XmlResourceFile {
+  resources: {
+    [prop: string]: Partial<NamedXmlTag>[];
+  };
 }
 
 /**
@@ -55,20 +50,35 @@ export class AndroidXml implements TFileFormat {
     const resourceFile: Partial<XmlResourceFile> = await parseRawXML<
       XmlResourceFile
     >(xmlString, args);
-    const xmlCache: XmlCache = {
+    const fileCache: XmlFileCache = {
       path: args.path,
       auxData: { detectedIntent: detectSpaceIndent(xmlString) },
       entries: new Map(),
     };
-    const strings = resourceFile.resources?.string;
-    if (!strings || !Array.isArray(strings)) {
-      logParseError("string resources not found", args);
+    const resources = resourceFile.resources;
+    if (!resources) {
+      logParseError("resources-tag not found", args);
     }
-    if (!strings.length) {
-      logParseError("string resources are empty", args);
+    if (typeof resources !== "object") {
+      logParseError("resources-tag is not an object", args);
     }
-    const tSet = parseStringResources(strings, args, xmlCache);
-    globalCache.insertFileCache(xmlCache);
+    const tSet: TSet = new Map<string, string | null>();
+    for (const key of Object.keys(resources)) {
+      const tagArray: Partial<NamedXmlTag>[] = resources[key];
+      if (Array.isArray(tagArray)) {
+        for (const xmlTag of tagArray) {
+          if (
+            typeof xmlTag === "object" &&
+            xmlTag.attributes?.name &&
+            xmlTag.characterContent !== undefined &&
+            typeof xmlTag.characterContent === "string"
+          ) {
+            readNamedXmlTag(<NamedXmlTag>xmlTag, args, fileCache, tSet);
+          }
+        }
+      }
+    }
+    globalCache.insertFileCache(fileCache);
     return tSet;
   }
 
@@ -86,7 +96,8 @@ export class AndroidXml implements TFileFormat {
       };
       resources.push(newResource);
     });
-    const resourceFile: XmlResourceFile = {
+    // TODO: Re-implement
+    /*const resourceFile: XmlResourceFile = {
       resources: {
         string: resources,
       },
@@ -94,6 +105,6 @@ export class AndroidXml implements TFileFormat {
     const intent =
       globalCache.lookupAuxdata({ path: args.path })?.detectedIntent ??
       DEFAULT_ANDROID_XML_INDENT;
-    writeXmlResourceFile(resourceFile, args, intent);
+    writeXmlResourceFile(resourceFile, args, intent);*/
   }
 }

@@ -1,7 +1,8 @@
 import {
   DEFAULT_ANDROID_XML_INDENT,
   NamedXmlTag,
-  XmlCache,
+  sharedXmlOptions,
+  XmlFileCache,
   xmlKeyToJsonKey,
 } from "./android-xml";
 import { ReadTFileArgs } from "../file-format-definitions";
@@ -15,6 +16,7 @@ export async function parseRawXML<T>(
 ): Promise<Partial<T>> {
   try {
     const options: OptionsV2 = {
+      ...sharedXmlOptions,
       strict: true,
       async: false,
       //explicitChildren: true, // if true, then the resulting object will be entirely different
@@ -25,8 +27,6 @@ export async function parseRawXML<T>(
       trim: false,
       normalize: false,
       normalizeTags: false,
-      attrkey: "attributes",
-      charkey: "characterContent",
     };
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const xml2js = require("xml2js");
@@ -38,30 +38,22 @@ export async function parseRawXML<T>(
   }
 }
 
-export function parseStringResources(
-  strings: Partial<NamedXmlTag>[],
+export function readNamedXmlTag(
+  tag: NamedXmlTag,
   args: ReadTFileArgs,
-  xmlCache: XmlCache
-): TSet {
-  const tSet: TSet = new Map();
-  strings.forEach((stringResource: Partial<NamedXmlTag>) => {
-    const xmlKey = stringResource?.attributes?.name;
-    const rawValue = stringResource.characterContent;
-    const value = rawValue ?? null;
-    if (!xmlKey) {
-      logParseError(`undefined key: '${stringResource}'`, args);
-    }
-    const jsonKey = xmlKeyToJsonKey(xmlKey);
-    if (tSet.has(jsonKey)) {
-      logParseError(
-        `duplicate key '${jsonKey}' -> Currently, the usage of duplicate translation-keys is discouraged.`,
-        args
-      );
-    }
-    tSet.set(jsonKey, value);
-    xmlCache.entries.set(jsonKey, stringResource);
-  });
-  return tSet;
+  fileCache: XmlFileCache,
+  tSet: TSet
+) {
+  const xmlKey = tag.attributes.name;
+  const jsonKey = xmlKeyToJsonKey(xmlKey);
+  if (tSet.has(jsonKey)) {
+    logParseError(
+      `duplicate key '${jsonKey}' -> Currently, the usage of duplicate translation-keys is discouraged.`,
+      args
+    );
+  }
+  tSet.set(xmlKey, tag.characterContent);
+  fileCache.entries.set(jsonKey, tag);
 }
 
 export function detectSpaceIndent(xmlString: string): number {
