@@ -15,7 +15,7 @@
         }
       ]
     },
-    "category_pear": {
+    "category_sub_pear": {
       "value": "Pera",
       "targets": [
         {
@@ -24,7 +24,7 @@
         }
       ]
     },
-    "category_banana": {
+    "category_sub_sub_banana": {
       "value": "Plátano",
       "targets": [
         {

@@ -3,10 +3,10 @@
 "category_apple" = "Apple";
 
 
-"category_pear" = "Pear";
+"category_sub_pear" = "Pear";
 
 
-"category_banana" = "Banana";
+"category_sub_sub_banana" = "Banana";
 
 
 "plurals.some plurals.item_0" = "Only one";
