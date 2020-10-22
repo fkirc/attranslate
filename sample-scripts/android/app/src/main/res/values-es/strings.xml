@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="apple">manzana</string>
-    <string name="pear" formatted="false">Pera</string>
-    <string name="banana" formatted="true">Plátano</string>
+    <string name="category_apple">manzana</string>
+    <string name="category_pear" formatted="false">Pera</string>
+    <string name="category_banana" formatted="true">Plátano</string>
     <plurals name="some plurals">
         <item quantity="one">Solo uno</item>
         <item quantity="few">Unos pocos</item>

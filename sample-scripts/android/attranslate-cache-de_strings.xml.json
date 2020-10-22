@@ -6,7 +6,7 @@
     "minor": 0
   },
   "entries": {
-    "apple": {
+    "category_apple": {
       "value": "Apfel",
       "targets": [
         {
@@ -15,7 +15,7 @@
         }
       ]
     },
-    "pear": {
+    "category_pear": {
       "value": "Birne",
       "targets": [
         {
@@ -24,7 +24,7 @@
         }
       ]
     },
-    "banana": {
+    "category_banana": {
       "value": "Banane",
       "targets": [
         {

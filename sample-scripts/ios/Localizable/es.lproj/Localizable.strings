@@ -1,12 +1,12 @@
 
 
-"apple" = "manzana";
+"category_apple" = "manzana";
 
 
-"pear" = "Pera";
+"category_pear" = "Pera";
 
 
-"banana" = "Plátano";
+"category_banana" = "Plátano";
 
 
 "plurals.some plurals.item_0" = "Solo uno";
