@@ -115,6 +115,11 @@ Options:
                                      (default: "true")
   --manualReview <true | false>      If true, mark newly generated texts with a
                                      review-notice (default: "false")
+  --keySearch <regExp>               A regular expression to replace
+                                     translation-keys (can be used for
+                                     file-format conversions) (default: "x")
+  --keyReplace <string>              The replacement for occurrences of
+                                     keySearch (default: "x")
   -h, --help                         display help for command
 ```
 
