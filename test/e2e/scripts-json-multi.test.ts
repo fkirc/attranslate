@@ -23,7 +23,7 @@ const sourcePath = join(sampleDir, assetDir, "en", "fruits.json");
 const cachePath = join(
   sampleDir,
   assetDir,
-  "attranslate-cache-en_fruits.json.json"
+  "attranslate-cache_from-en_to-nested-json_src-fruits.json.json"
 );
 
 async function runMultiJSON(): Promise<string> {
