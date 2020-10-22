@@ -1,5 +1,5 @@
 import {
-  DEFAULT_ANDROID_XML_INDENT,
+  DEFAULT_XML_INDENT,
   NamedXmlTag,
   sharedXmlOptions,
   XmlFileCache,
@@ -164,5 +164,9 @@ function insertXmlContent(
 export function detectSpaceIndent(xmlString: string): number {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const detectModule = require("detect-indent");
-  return detectModule(xmlString).amount ?? DEFAULT_ANDROID_XML_INDENT;
+  return detectModule(xmlString).amount ?? DEFAULT_XML_INDENT;
+}
+
+export function extractFirstLine(str: string) {
+  return str.split("\n", 1)[0];
 }

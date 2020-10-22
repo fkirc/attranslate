@@ -7,6 +7,7 @@ import { TSet } from "../../core/core-definitions";
 import { readUtf8File } from "../../util/util";
 import {
   detectSpaceIndent,
+  extractFirstLine,
   parseRawXML,
   readResourceTag,
   XmlReadContext,
@@ -30,6 +31,7 @@ export interface XmlCacheEntry extends PartialCacheEntry {
 }
 
 export interface XmlAuxData {
+  xmlHeader: string;
   detectedIntent: number;
   resourceFile: XmlResourceFile;
 }
@@ -61,7 +63,8 @@ export interface XmlResourceFile {
 /**
  * Android Studio seems to auto-format XML-files with 4 spaces indentation.
  */
-export const DEFAULT_ANDROID_XML_INDENT = 4;
+export const DEFAULT_XML_INDENT = 4;
+export const DEFAULT_XML_HEADER = '<?xml version="1.0" encoding="utf-8"?>';
 
 const XML_KEY_SEPARATOR = "_";
 export const JSON_KEY_SEPARATOR = ".";
@@ -81,6 +84,7 @@ export class AndroidXml implements TFileFormat {
     const fileCache: XmlFileCache = {
       path: args.path,
       auxData: {
+        xmlHeader: extractFirstLine(xmlString),
         resourceFile: resourceFile as XmlResourceFile,
         detectedIntent: detectSpaceIndent(xmlString),
       },

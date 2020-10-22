@@ -1,9 +1,11 @@
 import { WriteTFileArgs } from "../file-format-definitions";
 import {
-  DEFAULT_ANDROID_XML_INDENT,
+  DEFAULT_XML_HEADER,
+  DEFAULT_XML_INDENT,
   jsonToXmlKey,
   NamedXmlTag,
   sharedXmlOptions,
+  XmlAuxData,
   XmlCacheEntry,
   XmlResourceFile,
   XmlTag,
@@ -122,20 +124,16 @@ function insertRawResourceTag(
 export function writeXmlResourceFile(
   resourceFile: XmlResourceFile,
   args: WriteTFileArgs,
-  auxData: { detectedIntent: number } | null
+  auxData: XmlAuxData | null
 ) {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const xml2js = require("xml2js");
   const stringIndent = " ".repeat(
-    auxData?.detectedIntent ?? DEFAULT_ANDROID_XML_INDENT
+    auxData?.detectedIntent ?? DEFAULT_XML_INDENT
   );
   const options: OptionsV2 = {
     ...sharedXmlOptions,
-    xmldec: {
-      version: "1.0",
-      encoding: "utf-8",
-      standalone: undefined,
-    },
+    headless: true,
     renderOpts: {
       pretty: true,
       indent: stringIndent,
@@ -149,7 +147,8 @@ export function writeXmlResourceFile(
   const mergedOptions = { ...options, xmlBuilderOptions };
   const builder: Builder = new xml2js.Builder(mergedOptions);
   const rawXmlString: string = builder.buildObject(resourceFile);
-  const xmlString = `${removeBlankLines(rawXmlString)}\n`;
+  const xmlHeader: string = auxData?.xmlHeader ?? DEFAULT_XML_HEADER;
+  const xmlString = `${xmlHeader}\n${removeBlankLines(rawXmlString)}\n`;
   writeUf8File(args.path, xmlString);
 }
 
