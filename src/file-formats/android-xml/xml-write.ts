@@ -2,7 +2,6 @@ import { WriteTFileArgs } from "../file-format-definitions";
 import {
   DEFAULT_XML_HEADER,
   DEFAULT_XML_INDENT,
-  jsonToXmlKey,
   NamedXmlTag,
   sharedXmlOptions,
   XmlAuxData,
@@ -80,11 +79,10 @@ function writeUncachedTag(
   jsonKey: string,
   value: string | null
 ) {
-  const xmlKey = jsonToXmlKey(jsonKey);
   const newTag: NamedXmlTag = {
     characterContent: value ?? "",
     attributes: {
-      name: xmlKey,
+      name: jsonKey,
     },
   };
   insertRawResourceTag(resourceFile, "string", newTag);

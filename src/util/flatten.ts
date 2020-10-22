@@ -1,5 +1,7 @@
 import _ from "lodash";
 
+export const NESTED_JSON_SEPARATOR = ".";
+
 export function unflatten(params: Record<string, unknown>) {
   return _.reduce(
     params,
@@ -20,7 +22,7 @@ export function flatten(obj: unknown): Record<string, string> {
           mkey: string
         ) {
           if (_.isArray(value)) {
-            const index = mkey.indexOf(".");
+            const index = mkey.indexOf(NESTED_JSON_SEPARATOR);
             if (-1 !== index) {
               return `${key}[${mkey.slice(0, index)}]${mkey.slice(index)}`;
             }
