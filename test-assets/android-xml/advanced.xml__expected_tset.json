@@ -1,0 +1,106 @@
+[
+  [
+    "deutscher string",
+    "actually german: muss grösser gleich %d sein"
+  ],
+  [
+    "escaped quotes",
+    "Logged in as \\\"%s\\\""
+  ],
+  [
+    "escaped single quotes",
+    "Logged in as \\'%s\\'"
+  ],
+  [
+    "surrounded quotes",
+    "\"Logged in as '%s'\""
+  ],
+  [
+    "surrounded quotes escaped",
+    "\"Logged in as \\'%s\\'\""
+  ],
+  [
+    "two placeholder newline",
+    "Hello %s!\\nYou have got %s unread messages."
+  ],
+  [
+    "with html content",
+    ""
+  ],
+  [
+    "string-array.planets.array.item_0",
+    "Mercury"
+  ],
+  [
+    "string-array.planets.array.item_1",
+    "Venus"
+  ],
+  [
+    "string-array.planets.array.item_2",
+    "Earth"
+  ],
+  [
+    "string-array.planets.array.item_3",
+    "Mars"
+  ],
+  [
+    "string-array.months.item_0",
+    "January"
+  ],
+  [
+    "string-array.months.item_1",
+    "February"
+  ],
+  [
+    "string-array.months.item_2",
+    "March"
+  ],
+  [
+    "string-array.months.item_3",
+    "April"
+  ],
+  [
+    "string-array.months.item_4",
+    "May"
+  ],
+  [
+    "string-array.months.item_5",
+    "Jun"
+  ],
+  [
+    "string-array.months.item_6",
+    "July"
+  ],
+  [
+    "string-array.months.item_7",
+    "August"
+  ],
+  [
+    "string-array.months.item_8",
+    "September"
+  ],
+  [
+    "string-array.months.item_9",
+    "October"
+  ],
+  [
+    "string-array.months.item_10",
+    "November"
+  ],
+  [
+    "string-array.months.item_11",
+    "December"
+  ],
+  [
+    "plurals.numberOfSongsAvailable.item_0",
+    "Znaleziono jedną piosenkę."
+  ],
+  [
+    "plurals.numberOfSongsAvailable.item_1",
+    "Znaleziono %d piosenki."
+  ],
+  [
+    "plurals.numberOfSongsAvailable.item_2",
+    "Znaleziono %d piosenek."
+  ]
+]

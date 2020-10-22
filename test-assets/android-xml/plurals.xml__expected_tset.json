@@ -1,0 +1,22 @@
+[
+  [
+    "plurals.some.plural.headLine.item_0",
+    "%d till today"
+  ],
+  [
+    "plurals.some.plural.headLine.item_1",
+    "Another %d days till today"
+  ],
+  [
+    "plurals.numberOfSongsAvailable.item_0",
+    "Znaleziono \\njedną piosenkę."
+  ],
+  [
+    "plurals.numberOfSongsAvailable.item_1",
+    "Znaleziono %d piosenki."
+  ],
+  [
+    "plurals.numberOfSongsAvailable.item_2",
+    "Znaleziono %d piosenek."
+  ]
+]
