@@ -37,3 +37,6 @@ However, TPDD has additional requirements on how tests should be done:
 - Prefer reference-files over testing-code.
 - Prefer stability and robustness over an excessive number of tests.
 - Test high-level logic instead of implementation details.
+
+Don't be scared of this long list of requirements.
+In many cases, testing a new feature is as simple as adding a new input-file and then generating a reference-file.
