@@ -29,11 +29,13 @@ export interface XmlCacheEntry extends PartialCacheEntry {
   childOffset: number;
 }
 
-export type XmlFileCache = FileCache<XmlCacheEntry, { detectedIntent: number }>;
-const globalCache = new FormatCache<
-  XmlCacheEntry,
-  { detectedIntent: number }
->();
+export interface XmlAuxData {
+  detectedIntent: number;
+  resourceFile: XmlResourceFile;
+}
+
+export type XmlFileCache = FileCache<XmlCacheEntry, XmlAuxData>;
+const globalCache = new FormatCache<XmlCacheEntry, XmlAuxData>();
 
 export interface XmlTag {
   characterContent: string;
@@ -75,12 +77,13 @@ export function xmlToJsonKey(xmlKey: string): string {
 export class AndroidXml implements TFileFormat {
   async readTFile(args: ReadTFileArgs): Promise<TSet> {
     const xmlString = readUtf8File(args.path);
-    const resourceFile: Partial<XmlResourceFile> = await parseRawXML<
-      XmlResourceFile
-    >(xmlString, args);
+    const resourceFile = await parseRawXML<XmlResourceFile>(xmlString, args);
     const fileCache: XmlFileCache = {
       path: args.path,
-      auxData: { detectedIntent: detectSpaceIndent(xmlString) },
+      auxData: {
+        resourceFile: resourceFile as XmlResourceFile,
+        detectedIntent: detectSpaceIndent(xmlString),
+      },
       entries: new Map(),
     };
     const resources = resourceFile.resources;
@@ -118,6 +121,7 @@ export class AndroidXml implements TFileFormat {
   }
 
   writeTFile(args: WriteTFileArgs): void {
+    const auxData = globalCache.lookupAuxdata({ path: args.path });
     const resourceFile: XmlResourceFile = {
       resources: {},
     };
@@ -128,7 +132,6 @@ export class AndroidXml implements TFileFormat {
       });
       writeResourceTag(resourceFile, cacheEntry, jsonKey, value);
     });
-    const auxData = globalCache.lookupAuxdata({ path: args.path });
     writeXmlResourceFile(resourceFile, args, auxData);
   }
 }

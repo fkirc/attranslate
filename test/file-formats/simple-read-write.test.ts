@@ -15,11 +15,11 @@ const testArgs: {
   fileFormat: TFileType;
 }[] = [
   {
-    srcFile: "test-assets/android-xml/advanced.xml",
+    srcFile: "test-assets/android-xml/plurals.xml",
     fileFormat: "android-xml",
   },
   {
-    srcFile: "test-assets/android-xml/plurals.xml",
+    srcFile: "test-assets/android-xml/advanced.xml",
     fileFormat: "android-xml",
   },
   {
