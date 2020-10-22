@@ -1,5 +1,10 @@
 import { TSet } from "../../src/core/core-definitions";
-import { generateId, runCommand } from "../test-util/test-util";
+import {
+  generateId,
+  mapToObject,
+  objectToMap,
+  runCommand,
+} from "../test-util/test-util";
 import {
   instantiateTFileFormat,
   TFileType,
@@ -69,12 +74,10 @@ describe.each(testArgs)("Read/write %p", (args) => {
     if (process.env.GENERATE_REFS) {
       writeManagedJson({
         path: expectTSetPath,
-        object: [...tSet],
+        object: mapToObject(tSet),
       });
     }
-    const expectTSet: TSet = new Map(
-      (readRawJson(expectTSetPath).object as unknown) as never
-    );
+    const expectTSet: TSet = objectToMap(readRawJson(expectTSetPath).object);
     toStrictEqualMapOrder(tSet, expectTSet);
 
     const targetFile = `${args.srcFile}_${generateId()}`;
