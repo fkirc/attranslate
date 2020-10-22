@@ -25,6 +25,8 @@ async function resolveOldTarget(
       path: targetPath,
       lng: args.targetLng,
       format: targetFileFormat,
+      keySearch: "x",
+      keyReplace: "x", // Key-replacement is only done after reading a source-file
     });
   } else {
     return null;
@@ -74,6 +76,8 @@ export async function translateCli(cliArgs: CliArgs) {
     path: cliArgs.srcFile,
     lng: cliArgs.srcLng,
     format: srcFileFormat,
+    keySearch: cliArgs.keySearch,
+    keyReplace: cliArgs.keyReplace,
   });
   if (!src.size) {
     logFatal(

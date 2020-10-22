@@ -6,6 +6,14 @@ export function buildTranslateCommand(args: string) {
   return `${join(process.cwd(), "bin", "attranslate")} ${args}`;
 }
 
+export function mapToObject(map: Map<string, unknown>): unknown {
+  return [...map];
+}
+
+export function objectToMap<K, V>(obj: Record<string, unknown>): Map<K, V> {
+  return new Map((obj as unknown) as never);
+}
+
 export async function runTranslate(
   args: string,
   options?: { pwd?: string; maxTime?: number }

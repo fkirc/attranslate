@@ -3,9 +3,7 @@ import {
   NamedXmlTag,
   sharedXmlOptions,
   XmlFileCache,
-  xmlToJsonKey,
   XmlTag,
-  JSON_KEY_SEPARATOR,
   XmlCacheEntry,
   PartialCacheEntry,
 } from "./android-xml";
@@ -13,6 +11,7 @@ import { ReadTFileArgs } from "../file-format-definitions";
 import { TSet } from "../../core/core-definitions";
 import { logParseError } from "../common/parse-utils";
 import { OptionsV2 } from "xml2js";
+import { NESTED_JSON_SEPARATOR } from "../../util/flatten";
 
 export async function parseRawXML<T>(
   xmlString: string,
@@ -121,12 +120,16 @@ function readNestedTag(
   });
 }
 
+function xmlToFlatJsonKey(cacheEntry: XmlCacheEntry): string {
+  return cacheEntry.parentTag?.attributes.name ?? "_";
+}
+
 function xmlToNestedJsonKey(cacheEntry: XmlCacheEntry): string {
   return [
     cacheEntry.arrayName,
-    xmlToJsonKey(cacheEntry.parentTag?.attributes.name ?? "_"),
+    xmlToFlatJsonKey(cacheEntry),
     `item_${cacheEntry.childOffset}`,
-  ].join(JSON_KEY_SEPARATOR);
+  ].join(NESTED_JSON_SEPARATOR);
 }
 
 function cacheEntryToJsonKey(cacheEntry: XmlCacheEntry): string {
@@ -137,7 +140,7 @@ function cacheEntryToJsonKey(cacheEntry: XmlCacheEntry): string {
    */
   switch (cacheEntry.type) {
     case "FLAT":
-      return xmlToJsonKey(cacheEntry.parentTag?.attributes.name ?? "_");
+      return xmlToFlatJsonKey(cacheEntry);
     case "NESTED":
       return xmlToNestedJsonKey(cacheEntry);
     case "STRING_ARRAY":

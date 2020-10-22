@@ -6,7 +6,7 @@ import {
   writeManagedJson,
 } from "../../src/file-formats/common/managed-json";
 
-export const offlineMaxTime = 300;
+export const offlineMaxTime = 400;
 export const onlineMaxTime = 3000;
 
 export type E2EArgs = CliArgs & { refTargetFile: string };
@@ -27,6 +27,8 @@ export const defaultE2EArgs: E2EArgs = {
   matcher: "none",
   deleteStale: "true",
   manualReview: "false",
+  keySearch: "x",
+  keyReplace: "x",
 };
 
 function getRandomTargetName(path: string) {

@@ -59,16 +59,19 @@ export async function readTFileCore(
 ): Promise<TSet> {
   const module = await instantiateTFileFormat(fileFormat);
   const rawTSet = await module.readTFile(args);
+
+  const tSet: TSet = new Map();
+  const keyRegExp = new RegExp(args.keySearch, "g");
   rawTSet.forEach((value, key) => {
-    if (value === "") {
-      /**
-       * Empty JavaScript-strings evaluate to false, which is a serious source of bugs throughout this codebase.
-       * To mitigate such bugs, we eliminate empty strings as early as possible.
-       */
-      rawTSet.set(key, null);
-    }
+    const replacedKey = key.replace(keyRegExp, args.keyReplace);
+    /**
+     * Empty JavaScript-strings evaluate to false, which is a source of bugs throughout this codebase.
+     * To mitigate such bugs, we eliminate empty strings as early as possible.
+     */
+    const replacedValue: string | null = value === "" ? null : value;
+    tSet.set(replacedKey, replacedValue);
   });
-  return rawTSet;
+  return tSet;
 }
 
 export function insertAt<T>(array: T[], index: number, ...elementsArray: T[]) {

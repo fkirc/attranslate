@@ -6,7 +6,7 @@
     "minor": 0
   },
   "entries": {
-    "apple": {
+    "category.apple": {
       "value": "Apfel",
       "targets": [
         {
@@ -15,7 +15,7 @@
         }
       ]
     },
-    "pear": {
+    "category.sub.pear": {
       "value": "Birne",
       "targets": [
         {
@@ -24,7 +24,7 @@
         }
       ]
     },
-    "banana": {
+    "category.sub.sub.banana": {
       "value": "Banane",
       "targets": [
         {
@@ -33,7 +33,7 @@
         }
       ]
     },
-    "plurals.some plurals.item_0": {
+    "plurals.some plurals.item.0": {
       "value": "Nur einer",
       "targets": [
         {
@@ -42,7 +42,7 @@
         }
       ]
     },
-    "plurals.some plurals.item_1": {
+    "plurals.some plurals.item.1": {
       "value": "Ein paar",
       "targets": [
         {
@@ -51,7 +51,7 @@
         }
       ]
     },
-    "plurals.some plurals.item_2": {
+    "plurals.some plurals.item.2": {
       "value": "Einige andere",
       "targets": [
         {
@@ -60,7 +60,7 @@
         }
       ]
     },
-    "string-array.planets.item_0": {
+    "string-array.planets.item.0": {
       "value": "Venus",
       "targets": [
         {
@@ -69,7 +69,7 @@
         }
       ]
     },
-    "string-array.planets.item_1": {
+    "string-array.planets.item.1": {
       "value": "Erde",
       "targets": [
         {
@@ -78,7 +78,7 @@
         }
       ]
     },
-    "string-array.planets.item_2": {
+    "string-array.planets.item.2": {
       "value": "Mars",
       "targets": [
         {

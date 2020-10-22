@@ -23,13 +23,11 @@ export interface PartialCacheEntry {
   arrayName: string;
   parentTag: NamedXmlTag;
 }
-
 export interface XmlCacheEntry extends PartialCacheEntry {
   type: XmlTagType;
   childTag: XmlTag | null;
   childOffset: number;
 }
-
 export interface XmlAuxData {
   xmlHeader: string;
   detectedIntent: number;
@@ -43,7 +41,6 @@ export interface XmlTag {
   characterContent: string;
   attributes: Record<string, string>;
 }
-
 export interface NamedXmlTag {
   characterContent: string;
   attributes: { name: string };
@@ -65,17 +62,6 @@ export interface XmlResourceFile {
  */
 export const DEFAULT_XML_INDENT = 4;
 export const DEFAULT_XML_HEADER = '<?xml version="1.0" encoding="utf-8"?>';
-
-const XML_KEY_SEPARATOR = "_";
-export const JSON_KEY_SEPARATOR = ".";
-
-export function jsonToXmlKey(jsonKey: string): string {
-  return jsonKey.split(JSON_KEY_SEPARATOR).join(XML_KEY_SEPARATOR);
-}
-
-export function xmlToJsonKey(xmlKey: string): string {
-  return xmlKey.split(XML_KEY_SEPARATOR).join(JSON_KEY_SEPARATOR);
-}
 
 export class AndroidXml implements TFileFormat {
   async readTFile(args: ReadTFileArgs): Promise<TSet> {

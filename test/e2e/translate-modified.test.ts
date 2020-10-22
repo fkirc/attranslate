@@ -13,7 +13,7 @@ import { join } from "path";
 
 const cacheDirOutdated = join("test-assets", "cache-outdated");
 const cacheMissingDir = join("test-assets", "cache-missing");
-const cacheMissingFile = `${join(cacheMissingDir, "attranslate-cache-*")}`;
+const cacheMissingFile = `${join(cacheMissingDir, "attranslate-cache*")}`;
 
 const testArray: {
   args: E2EArgs;
