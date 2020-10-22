@@ -52,7 +52,6 @@ export interface XmlReadContext {
 
 export function readResourceTag(xmlContext: XmlReadContext, tag: NamedXmlTag) {
   const cacheEntry: PartialCacheEntry = {
-    startedToWrite: false,
     arrayName: xmlContext.arrayName,
     parentTag: tag,
   };

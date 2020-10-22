@@ -19,7 +19,6 @@ import { writeResourceTag, writeXmlResourceFile } from "./xml-write";
 export type XmlTagType = "FLAT" | "STRING_ARRAY" | "NESTED";
 
 export interface PartialCacheEntry {
-  startedToWrite: boolean;
   arrayName: string;
   parentTag: NamedXmlTag;
 }
@@ -37,7 +36,6 @@ const globalCache = new FormatCache<
 >();
 
 export interface XmlTag {
-  shouldSurvive?: boolean;
   characterContent: string;
   attributes: Record<string, string>;
 }

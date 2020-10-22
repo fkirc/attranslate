@@ -49,13 +49,15 @@ function writeFlatTag(writeContext: XmlWriteContext) {
   insertCachedResourceTag(writeContext);
 }
 
+const survivingTags: Set<NamedXmlTag> = new Set();
+
 function writeStringArrayTag(writeContext: XmlWriteContext) {
   const cacheEntry = writeContext.cacheEntry;
   const parentTag = cacheEntry.parentTag;
   parentTag.characterContent = "";
-  if (!cacheEntry.startedToWrite || !parentTag.item) {
-    cacheEntry.startedToWrite = true;
+  if (!parentTag.item || !survivingTags.has(parentTag)) {
     parentTag.item = [];
+    survivingTags.add(parentTag);
   }
   parentTag.item.push((writeContext.value ?? "") as string & XmlTag);
   insertCachedResourceTag(writeContext);
