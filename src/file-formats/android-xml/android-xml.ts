@@ -5,7 +5,12 @@ import {
 } from "../file-format-definitions";
 import { TSet } from "../../core/core-definitions";
 import { readUtf8File } from "../../util/util";
-import { detectSpaceIndent, parseRawXML, readNamedXmlTag } from "./xml-read";
+import {
+  detectSpaceIndent,
+  parseRawXML,
+  readNamedXmlTag,
+  XmlContext,
+} from "./xml-read";
 import { FileCache, FormatCache } from "../common/format-cache";
 import { logParseError } from "../common/parse-utils";
 import { OptionsV2 } from "xml2js";
@@ -13,9 +18,15 @@ import { OptionsV2 } from "xml2js";
 export type XmlFileCache = FileCache<NamedXmlTag, { detectedIntent: number }>;
 const globalCache = new FormatCache<NamedXmlTag, { detectedIntent: number }>();
 
+export interface XmlTag {
+  characterContent: string;
+  attributes: Record<string, string>;
+}
+
 export interface NamedXmlTag {
   characterContent: string;
   attributes: { name: string };
+  item?: string[] | XmlTag[];
 }
 export const sharedXmlOptions: OptionsV2 = {
   attrkey: "attributes",
@@ -62,7 +73,11 @@ export class AndroidXml implements TFileFormat {
     if (typeof resources !== "object") {
       logParseError("resources-tag is not an object", args);
     }
-    const tSet: TSet = new Map<string, string | null>();
+    const xmlContext: XmlContext = {
+      tSet: new Map(),
+      fileCache,
+      args,
+    };
     for (const key of Object.keys(resources)) {
       const tagArray: Partial<NamedXmlTag>[] = resources[key];
       if (Array.isArray(tagArray)) {
@@ -73,13 +88,13 @@ export class AndroidXml implements TFileFormat {
             xmlTag.characterContent !== undefined &&
             typeof xmlTag.characterContent === "string"
           ) {
-            readNamedXmlTag(<NamedXmlTag>xmlTag, args, fileCache, tSet);
+            readNamedXmlTag(xmlContext, <NamedXmlTag>xmlTag);
           }
         }
       }
     }
-    globalCache.insertFileCache(fileCache);
-    return tSet;
+    globalCache.insertFileCache(xmlContext.fileCache);
+    return xmlContext.tSet;
   }
 
   writeTFile(args: WriteTFileArgs): void {

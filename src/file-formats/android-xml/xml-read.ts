@@ -38,22 +38,50 @@ export async function parseRawXML<T>(
   }
 }
 
-export function readNamedXmlTag(
-  tag: NamedXmlTag,
-  args: ReadTFileArgs,
-  fileCache: XmlFileCache,
-  tSet: TSet
-) {
+export interface XmlContext {
+  tSet: TSet;
+  fileCache: XmlFileCache;
+  args: ReadTFileArgs;
+}
+
+export function readNamedXmlTag(xmlContext: XmlContext, tag: NamedXmlTag) {
+  if (Array.isArray(tag.item) && tag.item.length) {
+    if (typeof tag.item[0] === "string") {
+      return readStringArrayTag(xmlContext, tag, tag.item as string[]);
+    }
+  }
   const xmlKey = tag.attributes.name;
   const jsonKey = xmlKeyToJsonKey(xmlKey);
-  if (tSet.has(jsonKey)) {
+  insertCheckDuplicate(xmlContext, jsonKey, tag.characterContent);
+  xmlContext.fileCache.entries.set(jsonKey, tag);
+}
+
+function readStringArrayTag(
+  xmlContext: XmlContext,
+  parentTag: NamedXmlTag,
+  items: string[]
+) {
+  items.forEach((item, index) => {
+    const stringItemKey: string = [
+      parentTag.attributes.name,
+      `string_item_${index}`,
+    ].join("####");
+    insertCheckDuplicate(xmlContext, stringItemKey, item);
+  });
+}
+
+function insertCheckDuplicate(
+  xmlContext: XmlContext,
+  jsonKey: string,
+  value: string | null
+) {
+  if (xmlContext.tSet.has(jsonKey)) {
     logParseError(
       `duplicate key '${jsonKey}' -> Currently, the usage of duplicate translation-keys is discouraged.`,
-      args
+      xmlContext.args
     );
   }
-  tSet.set(xmlKey, tag.characterContent);
-  fileCache.entries.set(jsonKey, tag);
+  xmlContext.tSet.set(jsonKey, value);
 }
 
 export function detectSpaceIndent(xmlString: string): number {
