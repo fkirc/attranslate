@@ -5,6 +5,7 @@ import {
   XmlFileCache,
   xmlKeyToJsonKey,
   XmlTag,
+  XmlTagType,
 } from "./android-xml";
 import { ReadTFileArgs } from "../file-format-definitions";
 import { TSet } from "../../core/core-definitions";
@@ -64,8 +65,12 @@ export function readNamedXmlTag(xmlContext: XmlContext, tag: NamedXmlTag) {
 
 function readFlatTag(xmlContext: XmlContext, tag: NamedXmlTag) {
   const xmlKey = tag.attributes.name;
-  const jsonKey = xmlKeyToJsonKey(xmlKey);
-  insertCheckDuplicate(xmlContext, jsonKey, tag.characterContent);
+  const { jsonKey } = insertTSet(
+    xmlContext,
+    "FLAT",
+    xmlKey,
+    tag.characterContent
+  );
   xmlContext.fileCache.entries.set(jsonKey, tag);
 }
 
@@ -81,7 +86,7 @@ function readStringArrayTag(
       parentTag.attributes.name,
       `string_item_${index}`,
     ].join("####");
-    insertCheckDuplicate(xmlContext, stringItemKey, item);
+    insertTSet(xmlContext, "STRING_ARRAY", stringItemKey, item);
   });
 }
 
@@ -93,15 +98,17 @@ function readNestedTag(
   childs.forEach((child, index) => {
     const childKey =
       `XML_CHILD_` + parentTag.attributes.name + "_string_item_" + index; // TODO
-    xmlContext.tSet.set(childKey, child.characterContent);
+    insertTSet(xmlContext, "NESTED", childKey, child.characterContent);
   });
 }
 
-function insertCheckDuplicate(
+function insertTSet(
   xmlContext: XmlContext,
-  jsonKey: string,
+  type: XmlTagType,
+  xmlKey: string,
   value: string | null
-) {
+): { jsonKey: string } {
+  const jsonKey = xmlKeyToJsonKey(type, xmlKey);
   if (xmlContext.tSet.has(jsonKey)) {
     logParseError(
       `duplicate key '${jsonKey}' -> Currently, the usage of duplicate translation-keys is discouraged.`,
@@ -109,6 +116,7 @@ function insertCheckDuplicate(
     );
   }
   xmlContext.tSet.set(jsonKey, value);
+  return { jsonKey };
 }
 
 export function detectSpaceIndent(xmlString: string): number {

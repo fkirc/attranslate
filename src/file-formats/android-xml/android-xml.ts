@@ -18,6 +18,8 @@ import { OptionsV2 } from "xml2js";
 export type XmlFileCache = FileCache<NamedXmlTag, { detectedIntent: number }>;
 const globalCache = new FormatCache<NamedXmlTag, { detectedIntent: number }>();
 
+export type XmlTagType = "FLAT" | "STRING_ARRAY" | "NESTED";
+
 export interface XmlTag {
   characterContent: string;
   attributes: Record<string, string>;
@@ -51,8 +53,8 @@ function jsonKeyToXmlKey(jsonKey: string): string {
   return jsonKey.split(JSON_KEY_SEPARATOR).join(XML_KEY_SEPARATOR);
 }
 
-export function xmlKeyToJsonKey(xmlKey: string): string {
-  return xmlKey.split(XML_KEY_SEPARATOR).join(JSON_KEY_SEPARATOR);
+export function xmlKeyToJsonKey(type: XmlTagType, xmlKey: string): string {
+  return type + "_" + xmlKey.split(XML_KEY_SEPARATOR).join(JSON_KEY_SEPARATOR);
 }
 
 export class AndroidXml implements TFileFormat {
