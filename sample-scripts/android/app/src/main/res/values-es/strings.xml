@@ -8,4 +8,9 @@
         <item quantity="few">Unos pocos</item>
         <item quantity="other">Algunos otros</item>
     </plurals>
+    <string-array name="planets">
+        <item>Venus</item>
+        <item>Tierra</item>
+        <item>Marte</item>
+    </string-array>
 </resources>

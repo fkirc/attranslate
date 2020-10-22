@@ -8,4 +8,9 @@
         <item quantity="few">A few</item>
         <item quantity="other">Some others</item>
     </plurals>
+    <string-array name="planets">
+        <item>Venus</item>
+        <item>Earth</item>
+        <item>Mars</item>
+    </string-array>
 </resources>

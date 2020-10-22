@@ -17,3 +17,12 @@
 
 "plurals.some plurals.item_2" = "Algunos otros";
 
+
+"string-array.planets.item_0" = "Venus";
+
+
+"string-array.planets.item_1" = "Tierra";
+
+
+"string-array.planets.item_2" = "Marte";
+

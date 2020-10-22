@@ -59,6 +59,33 @@
           "state": "frozen"
         }
       ]
+    },
+    "string-array.planets.item_0": {
+      "value": "Venus",
+      "targets": [
+        {
+          "id": "de",
+          "state": "frozen"
+        }
+      ]
+    },
+    "string-array.planets.item_1": {
+      "value": "Erde",
+      "targets": [
+        {
+          "id": "de",
+          "state": "frozen"
+        }
+      ]
+    },
+    "string-array.planets.item_2": {
+      "value": "Mars",
+      "targets": [
+        {
+          "id": "de",
+          "state": "frozen"
+        }
+      ]
     }
   }
 }
