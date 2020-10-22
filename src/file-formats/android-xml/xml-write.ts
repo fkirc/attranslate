@@ -52,6 +52,7 @@ function writeFlatTag(writeContext: XmlWriteContext) {
 function writeStringArrayTag(writeContext: XmlWriteContext) {
   const cacheEntry = writeContext.cacheEntry;
   const parentTag = cacheEntry.parentTag;
+  parentTag.characterContent = "";
   if (!cacheEntry.startedToWrite || !parentTag.item) {
     cacheEntry.startedToWrite = true;
     parentTag.item = [];
@@ -62,6 +63,7 @@ function writeStringArrayTag(writeContext: XmlWriteContext) {
 
 function writeNestedTag(writeContext: XmlWriteContext) {
   const cacheEntry = writeContext.cacheEntry;
+  cacheEntry.parentTag.characterContent = "";
   const childTag = cacheEntry.childTag;
   if (childTag) {
     //childTag.shouldSurvive = true; // TODO: Implement a mark-and-sweep approach?
@@ -104,7 +106,16 @@ function insertRawResourceTag(
     xmlArray = [];
     resourceFile.resources[arrayName] = xmlArray;
   }
-  xmlArray.push(tag);
+  let tagFound = false;
+  for (const existingTag of xmlArray) {
+    if (existingTag === tag) {
+      tagFound = true;
+      break;
+    }
+  }
+  if (!tagFound) {
+    xmlArray.push(tag);
+  }
 }
 
 export function writeXmlResourceFile(
