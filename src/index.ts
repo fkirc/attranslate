@@ -14,6 +14,7 @@ function formatOneOfOptions(options: string[]): string {
 }
 
 export function run(process: NodeJS.Process, cliBinDir: string): void {
+  commander.storeOptionsAsProperties(false);
   commander.addHelpCommand(false);
   commander
     .requiredOption(
@@ -68,6 +69,16 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
       "If true, mark newly generated texts with a review-notice",
       "false"
     )
+    .option(
+      "--keySearch <regExp>",
+      "A regular expression to replace translation-keys (can be used for file-format conversions)",
+      "x"
+    )
+    .option(
+      "--keyReplace <string>",
+      "The replacement for occurrences of keySearch",
+      "x"
+    )
     .parse(process.argv);
 
   if (commander.args?.length) {
@@ -76,18 +87,20 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
   }
 
   const args: CliArgs = {
-    srcFile: commander.srcFile,
-    srcLng: commander.srcLng,
-    srcFormat: commander.srcFormat,
-    targetFile: commander.targetFile,
-    targetLng: commander.targetLng,
-    targetFormat: commander.targetFormat,
-    service: commander.service,
-    serviceConfig: commander.serviceConfig,
-    cacheDir: commander.cacheDir,
-    matcher: commander.matcher,
-    deleteStale: commander.deleteStale,
-    manualReview: commander.manualReview,
+    srcFile: commander.opts().srcFile,
+    srcLng: commander.opts().srcLng,
+    srcFormat: commander.opts().srcFormat,
+    targetFile: commander.opts().targetFile,
+    targetLng: commander.opts().targetLng,
+    targetFormat: commander.opts().targetFormat,
+    service: commander.opts().service,
+    serviceConfig: commander.opts().serviceConfig,
+    cacheDir: commander.opts().cacheDir,
+    matcher: commander.opts().matcher,
+    deleteStale: commander.opts().deleteStale,
+    manualReview: commander.opts().manualReview,
+    keySearch: commander.opts().keySearch,
+    keyReplace: commander.opts().keyReplace,
   };
   translateCli(args)
     .then(() => {

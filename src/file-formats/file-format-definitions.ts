@@ -14,6 +14,8 @@ export interface ReadTFileArgs {
   path: string;
   lng: string;
   format: TFileType;
+  keySearch: string;
+  keyReplace: string;
 }
 
 export interface TFileFormat {

@@ -68,6 +68,8 @@ describe.each(testArgs)("Read/write %p", (args) => {
       path: args.srcFile,
       lng: "en",
       format: args.fileFormat,
+      keySearch: "x",
+      keyReplace: "x",
     });
 
     const expectTSetPath = `${args.srcFile}__expected_tset.json`;

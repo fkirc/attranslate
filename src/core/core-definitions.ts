@@ -47,4 +47,6 @@ export interface CliArgs extends Record<string, string | undefined> {
   matcher: string;
   deleteStale: string;
   manualReview: string;
+  keySearch: string;
+  keyReplace: string;
 }
