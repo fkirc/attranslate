@@ -129,25 +129,28 @@ function xmlToNestedJsonKey(cacheEntry: XmlCacheEntry): string {
   ].join(JSON_KEY_SEPARATOR);
 }
 
-function insertXmlContent(
-  xmlContext: XmlContext,
-  cacheEntry: XmlCacheEntry,
-  value: string | null
-) {
+function cacheEntryToJsonKey(cacheEntry: XmlCacheEntry): string {
   /**
    * The JSON-key is only relevant if we convert from XML into other file-formats,
    * and then it might be subject to personal taste.
    * If we stay within XML, then the JSON-key does not matter as long as it remains unique.
    */
-  let jsonKey: string;
   switch (cacheEntry.type) {
     case "FLAT":
-      jsonKey = xmlToJsonKey(cacheEntry.parentTag?.attributes.name ?? "_");
+      return xmlToJsonKey(cacheEntry.parentTag?.attributes.name ?? "_");
     case "NESTED":
-      jsonKey = xmlToNestedJsonKey(cacheEntry);
+      return xmlToNestedJsonKey(cacheEntry);
     case "STRING_ARRAY":
-      jsonKey = xmlToNestedJsonKey(cacheEntry);
+      return xmlToNestedJsonKey(cacheEntry);
   }
+}
+
+function insertXmlContent(
+  xmlContext: XmlContext,
+  cacheEntry: XmlCacheEntry,
+  value: string | null
+) {
+  const jsonKey: string = cacheEntryToJsonKey(cacheEntry);
   if (xmlContext.tSet.has(jsonKey)) {
     logParseError(
       `duplicate key '${jsonKey}' -> Currently, the usage of duplicate translation-keys is discouraged.`,
