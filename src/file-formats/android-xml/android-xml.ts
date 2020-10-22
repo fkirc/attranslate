@@ -8,17 +8,31 @@ import { readUtf8File } from "../../util/util";
 import {
   detectSpaceIndent,
   parseRawXML,
-  readNamedXmlTag,
+  readResourceTag,
   XmlContext,
 } from "./xml-read";
 import { FileCache, FormatCache } from "../common/format-cache";
 import { logParseError } from "../common/parse-utils";
 import { OptionsV2 } from "xml2js";
 
-export type XmlFileCache = FileCache<NamedXmlTag, { detectedIntent: number }>;
-const globalCache = new FormatCache<NamedXmlTag, { detectedIntent: number }>();
-
 export type XmlTagType = "FLAT" | "STRING_ARRAY" | "NESTED";
+
+export interface PartialCacheEntry {
+  arrayName: string;
+  parentTag: NamedXmlTag;
+}
+
+export interface XmlCacheEntry extends PartialCacheEntry {
+  type: XmlTagType;
+  childTag: XmlTag | null;
+  childOffset: number;
+}
+
+export type XmlFileCache = FileCache<XmlCacheEntry, { detectedIntent: number }>;
+const globalCache = new FormatCache<
+  XmlCacheEntry,
+  { detectedIntent: number }
+>();
 
 export interface XmlTag {
   characterContent: string;
@@ -47,14 +61,16 @@ export interface XmlResourceFile {
 export const DEFAULT_ANDROID_XML_INDENT = 4;
 
 const XML_KEY_SEPARATOR = "_";
-const JSON_KEY_SEPARATOR = ".";
+export const JSON_KEY_SEPARATOR = ".";
 
-function jsonKeyToXmlKey(jsonKey: string): string {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function jsonToXmlKey(jsonKey: string): string {
+  // TODO: Use
   return jsonKey.split(JSON_KEY_SEPARATOR).join(XML_KEY_SEPARATOR);
 }
 
-export function xmlKeyToJsonKey(type: XmlTagType, xmlKey: string): string {
-  return type + "_" + xmlKey.split(XML_KEY_SEPARATOR).join(JSON_KEY_SEPARATOR);
+export function xmlToJsonKey(xmlKey: string): string {
+  return xmlKey.split(XML_KEY_SEPARATOR).join(JSON_KEY_SEPARATOR);
 }
 
 export class AndroidXml implements TFileFormat {
@@ -79,9 +95,11 @@ export class AndroidXml implements TFileFormat {
       tSet: new Map(),
       fileCache,
       args,
+      arrayName: "",
+      parentTag: null,
     };
-    for (const key of Object.keys(resources)) {
-      const tagArray: Partial<NamedXmlTag>[] = resources[key];
+    for (const arrayName of Object.keys(resources)) {
+      const tagArray: Partial<NamedXmlTag>[] = resources[arrayName];
       if (Array.isArray(tagArray)) {
         for (const xmlTag of tagArray) {
           if (
@@ -90,7 +108,8 @@ export class AndroidXml implements TFileFormat {
             xmlTag.characterContent !== undefined &&
             typeof xmlTag.characterContent === "string"
           ) {
-            readNamedXmlTag(xmlContext, <NamedXmlTag>xmlTag);
+            xmlContext.arrayName = arrayName;
+            readResourceTag(xmlContext, <NamedXmlTag>xmlTag);
           }
         }
       }
@@ -100,13 +119,13 @@ export class AndroidXml implements TFileFormat {
   }
 
   writeTFile(args: WriteTFileArgs): void {
-    const resources: NamedXmlTag[] = [];
-    args.tSet.forEach((value, jsonKey) => {
+    //const resources: NamedXmlTag[] = [];
+    /*args.tSet.forEach((value, jsonKey) => {
       const cachedResource = globalCache.lookup({
         path: args.path,
         key: jsonKey,
       });
-      const xmlKey = jsonKeyToXmlKey(jsonKey);
+      const xmlKey = jsonToXmlSeparators(jsonKey);
       const newResource: NamedXmlTag = {
         attributes: { ...cachedResource?.attributes, name: xmlKey },
         characterContent: value ?? "",
@@ -114,7 +133,7 @@ export class AndroidXml implements TFileFormat {
       resources.push(newResource);
     });
     // TODO: Re-implement
-    /*const resourceFile: XmlResourceFile = {
+    const resourceFile: XmlResourceFile = {
       resources: {
         string: resources,
       },
