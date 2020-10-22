@@ -32,6 +32,60 @@
           "state": "frozen"
         }
       ]
+    },
+    "plurals.some plurals.item_0": {
+      "value": "Nur einer",
+      "targets": [
+        {
+          "id": "de",
+          "state": "frozen"
+        }
+      ]
+    },
+    "plurals.some plurals.item_1": {
+      "value": "Ein paar",
+      "targets": [
+        {
+          "id": "de",
+          "state": "frozen"
+        }
+      ]
+    },
+    "plurals.some plurals.item_2": {
+      "value": "Einige andere",
+      "targets": [
+        {
+          "id": "de",
+          "state": "frozen"
+        }
+      ]
+    },
+    "string-array.planets.item_0": {
+      "value": "Venus",
+      "targets": [
+        {
+          "id": "de",
+          "state": "frozen"
+        }
+      ]
+    },
+    "string-array.planets.item_1": {
+      "value": "Erde",
+      "targets": [
+        {
+          "id": "de",
+          "state": "frozen"
+        }
+      ]
+    },
+    "string-array.planets.item_2": {
+      "value": "Mars",
+      "targets": [
+        {
+          "id": "de",
+          "state": "frozen"
+        }
+      ]
     }
   }
 }

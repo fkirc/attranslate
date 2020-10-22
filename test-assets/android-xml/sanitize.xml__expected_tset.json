@@ -1,0 +1,30 @@
+[
+  [
+    "empty string",
+    ""
+  ],
+  [
+    "whitespace",
+    "    "
+  ],
+  [
+    "rounded brackets",
+    "()("
+  ],
+  [
+    "greater than character is problematic",
+    "> ## [] {}"
+  ],
+  [
+    "amp 1",
+    "amp is problematic: \\n&"
+  ],
+  [
+    "amp 2",
+    "Before & after"
+  ],
+  [
+    "double quotes",
+    "\"Double quotes\" are problematic"
+  ]
+]

@@ -8,3 +8,21 @@
 
 "banana" = "Banana";
 
+
+"plurals.some plurals.item_0" = "Only one";
+
+
+"plurals.some plurals.item_1" = "A few";
+
+
+"plurals.some plurals.item_2" = "Some others";
+
+
+"string-array.planets.item_0" = "Venus";
+
+
+"string-array.planets.item_1" = "Earth";
+
+
+"string-array.planets.item_2" = "Mars";
+

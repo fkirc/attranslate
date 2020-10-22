@@ -3,4 +3,14 @@
     <string name="apple">manzana</string>
     <string name="pear" formatted="false">Pera</string>
     <string name="banana" formatted="true">Plátano</string>
+    <plurals name="some plurals">
+        <item quantity="one">Solo uno</item>
+        <item quantity="few">Unos pocos</item>
+        <item quantity="other">Algunos otros</item>
+    </plurals>
+    <string-array name="planets">
+        <item>Venus</item>
+        <item>Tierra</item>
+        <item>Marte</item>
+    </string-array>
 </resources>

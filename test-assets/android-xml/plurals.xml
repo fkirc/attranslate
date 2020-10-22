@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="some_plural_headLine">
+        <item quantity="one">%d till today</item>
+        <item quantity="other">Another %d days till today</item>
+    </plurals>
+    <plurals name="numberOfSongsAvailable">
+        <item quantity="one">Znaleziono \njedną piosenkę.</item>
+        <item quantity="few">Znaleziono %d piosenki.</item>
+        <item quantity="other">Znaleziono %d piosenek.</item>
+    </plurals>
+</resources>

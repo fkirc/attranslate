@@ -1,8 +1,13 @@
 import {
-  DEFAULT_ANDROID_XML_INDENT,
-  StringResource,
-  XmlCache,
-  xmlKeyToJsonKey,
+  DEFAULT_XML_INDENT,
+  NamedXmlTag,
+  sharedXmlOptions,
+  XmlFileCache,
+  xmlToJsonKey,
+  XmlTag,
+  JSON_KEY_SEPARATOR,
+  XmlCacheEntry,
+  PartialCacheEntry,
 } from "./android-xml";
 import { ReadTFileArgs } from "../file-format-definitions";
 import { TSet } from "../../core/core-definitions";
@@ -15,6 +20,7 @@ export async function parseRawXML<T>(
 ): Promise<Partial<T>> {
   try {
     const options: OptionsV2 = {
+      ...sharedXmlOptions,
       strict: true,
       async: false,
       //explicitChildren: true, // if true, then the resulting object will be entirely different
@@ -36,34 +42,131 @@ export async function parseRawXML<T>(
   }
 }
 
-export function parseStringResources(
-  strings: Partial<StringResource>[],
-  args: ReadTFileArgs,
-  xmlCache: XmlCache
-): TSet {
-  const tSet: TSet = new Map();
-  strings.forEach((stringResource: Partial<StringResource>) => {
-    const xmlKey = stringResource?.$?.name;
-    const rawValue = stringResource._;
-    const value = rawValue ?? null;
-    if (!xmlKey) {
-      logParseError(`undefined key: '${stringResource}'`, args);
+export interface XmlReadContext {
+  tSet: TSet;
+  fileCache: XmlFileCache;
+  args: ReadTFileArgs;
+  arrayName: string;
+  parentTag: NamedXmlTag | null;
+}
+
+export function readResourceTag(xmlContext: XmlReadContext, tag: NamedXmlTag) {
+  const cacheEntry: PartialCacheEntry = {
+    arrayName: xmlContext.arrayName,
+    parentTag: tag,
+  };
+  if (Array.isArray(tag.item) && tag.item.length) {
+    const firstChild = tag.item[0];
+    if (typeof firstChild === "string") {
+      return readStringArrayTag(xmlContext, cacheEntry, tag.item as string[]);
     }
-    const jsonKey = xmlKeyToJsonKey(xmlKey);
-    if (tSet.has(jsonKey)) {
-      logParseError(
-        `duplicate key '${jsonKey}' -> Currently, the usage of duplicate translation-keys is discouraged.`,
-        args
-      );
+    if (
+      typeof firstChild === "object" &&
+      typeof firstChild.attributes === "object" &&
+      typeof firstChild.characterContent === "string"
+    ) {
+      return readNestedTag(xmlContext, cacheEntry, tag.item as XmlTag[]);
     }
-    tSet.set(jsonKey, value);
-    xmlCache.entries.set(jsonKey, stringResource);
+  }
+  return readFlatTag(xmlContext, cacheEntry, tag);
+}
+
+function readFlatTag(
+  xmlContext: XmlReadContext,
+  cacheEntry: PartialCacheEntry,
+  tag: NamedXmlTag
+) {
+  insertXmlContent(
+    xmlContext,
+    { ...cacheEntry, type: "FLAT", childTag: null, childOffset: 0 },
+    tag.characterContent
+  );
+}
+
+function readStringArrayTag(
+  xmlContext: XmlReadContext,
+  cacheEntry: PartialCacheEntry,
+  items: string[]
+) {
+  items.forEach((item, index) => {
+    insertXmlContent(
+      xmlContext,
+      {
+        ...cacheEntry,
+        type: "STRING_ARRAY",
+        childTag: null,
+        childOffset: index,
+      },
+      item
+    );
   });
-  return tSet;
+}
+
+function readNestedTag(
+  xmlContext: XmlReadContext,
+  cacheEntry: PartialCacheEntry,
+  childs: XmlTag[]
+) {
+  childs.forEach((child, index) => {
+    insertXmlContent(
+      xmlContext,
+      {
+        ...cacheEntry,
+        type: "NESTED",
+        childTag: child,
+        childOffset: index,
+      },
+      child.characterContent
+    );
+  });
+}
+
+function xmlToNestedJsonKey(cacheEntry: XmlCacheEntry): string {
+  return [
+    cacheEntry.arrayName,
+    xmlToJsonKey(cacheEntry.parentTag?.attributes.name ?? "_"),
+    `item_${cacheEntry.childOffset}`,
+  ].join(JSON_KEY_SEPARATOR);
+}
+
+function cacheEntryToJsonKey(cacheEntry: XmlCacheEntry): string {
+  /**
+   * The JSON-key is only relevant if we convert from XML into other file-formats,
+   * and then it might be subject to personal taste.
+   * If we stay within XML, then the JSON-key does not matter as long as it remains unique.
+   */
+  switch (cacheEntry.type) {
+    case "FLAT":
+      return xmlToJsonKey(cacheEntry.parentTag?.attributes.name ?? "_");
+    case "NESTED":
+      return xmlToNestedJsonKey(cacheEntry);
+    case "STRING_ARRAY":
+      return xmlToNestedJsonKey(cacheEntry);
+  }
+}
+
+function insertXmlContent(
+  xmlContext: XmlReadContext,
+  cacheEntry: XmlCacheEntry,
+  value: string | null
+) {
+  const jsonKey: string = cacheEntryToJsonKey(cacheEntry);
+  if (xmlContext.tSet.has(jsonKey)) {
+    logParseError(
+      `duplicate key '${jsonKey}' -> Currently, the usage of duplicate translation-keys is discouraged.`,
+      xmlContext.args
+    );
+  }
+  xmlContext.tSet.set(jsonKey, value);
+  xmlContext.fileCache.entries.set(jsonKey, cacheEntry);
 }
 
 export function detectSpaceIndent(xmlString: string): number {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const detectModule = require("detect-indent");
-  return detectModule(xmlString).amount ?? DEFAULT_ANDROID_XML_INDENT;
+  return detectModule(xmlString).amount ?? DEFAULT_XML_INDENT;
+}
+
+export function extractFirstLine(str: string) {
+  return str.split("\n", 1)[0];
 }

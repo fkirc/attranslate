@@ -5,79 +5,54 @@ import {
   TFileType,
 } from "../../src/file-formats/file-format-definitions";
 import { toStrictEqualMapOrder } from "../test-util/to-strict-equal-map-order";
-
-function nestedCount(): TSet {
-  return new Map([
-    ["inner.innerInner.one", "One"],
-    ["inner.two", "Two"],
-    ["three", "Three"],
-  ]);
-}
-
-function flatCount(): TSet {
-  return new Map([
-    ["one", "One"],
-    ["two", "Two"],
-    ["three", "Three"],
-  ]);
-}
+import {
+  readRawJson,
+  writeManagedJson,
+} from "../../src/file-formats/common/managed-json";
 
 const testArgs: {
   srcFile: string;
   fileFormat: TFileType;
-  expectTSet: TSet;
 }[] = [
+  {
+    srcFile: "test-assets/android-xml/plurals.xml",
+    fileFormat: "android-xml",
+  },
+  {
+    srcFile: "test-assets/android-xml/advanced.xml",
+    fileFormat: "android-xml",
+  },
   {
     srcFile: "test-assets/flutter-arb/intl_en.arb",
     fileFormat: "flutter-arb", // According to https://github.com/google/app-resource-bundle/wiki/ApplicationResourceBundleSpecification
-    expectTSet: new Map([["title", "Hello World from intl_en.arb"]]),
   },
   {
     srcFile: "test-assets/ios-strings/count-en-appendix.strings",
     fileFormat: "ios-strings",
-    expectTSet: flatCount(),
   },
   {
     srcFile: "test-assets/ios-strings/count-en-slim.strings",
     fileFormat: "ios-strings",
-    expectTSet: nestedCount(),
   },
   {
     srcFile: "test-assets/android-xml/sanitize.xml",
     fileFormat: "android-xml",
-    expectTSet: new Map([
-      ["empty string", ""],
-      ["whitespace", "    "],
-      ["rounded brackets", "()("],
-      ["greater than character is problematic", "> ## [] {}"],
-      ["amp 1", "amp is problematic: \\n&"],
-      ["amp 2", "Before & after"],
-      ["double quotes", '"Double quotes" are problematic'],
-    ]),
   },
   {
     srcFile: "test-assets/android-xml/count-en.indent4.nested.xml",
     fileFormat: "android-xml",
-    expectTSet: nestedCount(),
   },
   {
     srcFile: "test-assets/android-xml/count-en.indent2.flat.xml",
     fileFormat: "android-xml",
-    expectTSet: flatCount(),
   },
   {
     srcFile: "test-assets/nested-json/count-en.json",
     fileFormat: "nested-json",
-    expectTSet: nestedCount(),
   },
   {
     srcFile: "test-assets/flat-json/count-empty-null.json",
     fileFormat: "flat-json",
-    expectTSet: new Map([
-      ["one", ""],
-      ["two", " "],
-      ["three", null],
-    ]),
   },
 ];
 
@@ -90,7 +65,17 @@ describe.each(testArgs)("Read/write %p", (args) => {
       format: args.fileFormat,
     });
 
-    toStrictEqualMapOrder(tSet, args.expectTSet);
+    const expectTSetPath = `${args.srcFile}__expected_tset.json`;
+    if (process.env.GENERATE_REFS) {
+      writeManagedJson({
+        path: expectTSetPath,
+        object: [...tSet],
+      });
+    }
+    const expectTSet: TSet = new Map(
+      (readRawJson(expectTSetPath).object as unknown) as never
+    );
+    toStrictEqualMapOrder(tSet, expectTSet);
 
     const targetFile = `${args.srcFile}_${generateId()}`;
     fileFormat.writeTFile({
