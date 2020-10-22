@@ -7,20 +7,13 @@
     <string name="surrounded quotes">"Logged in as '%s'"</string>
     <string name="surrounded quotes escaped">"Logged in as \'%s\'"</string>
 
-    <!-- single line comment -->
     <string name="two placeholder newline">Hello %s!\nYou have got %s unread messages.</string>
-    <!-- multi
-    line -->
-    <!-- comment -->
     <string name="with html content"><i>left</i></string>
 
-    <!-- string-array comment -->
     <string-array name="planets_array">
         <item>Mercury</item>
-        <!-- Venus comment -->
         <item>Venus</item>
         <item>Earth</item>
-        <!-- Mars comment -->
         <item>Mars</item>
     </string-array>
 
@@ -39,12 +32,9 @@
         <item>December</item>
     </string-array>
 
-    <!-- strings quantity comment -->
     <plurals name="numberOfSongsAvailable">
-        <!-- one comment -->
         <item quantity="one">Znaleziono jedną piosenkę.</item>
         <item quantity="few">Znaleziono %d piosenki.</item>
-        <!-- other comment -->
         <item quantity="other">Znaleziono %d piosenek.</item>
     </plurals>
 

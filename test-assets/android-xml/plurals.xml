@@ -4,12 +4,9 @@
         <item quantity="one">%d till today</item>
         <item quantity="other">Another %d days till today</item>
     </plurals>
-    <!-- strings quantity comment -->
     <plurals name="numberOfSongsAvailable">
-        <!-- one comment -->
         <item quantity="one">Znaleziono \njedną piosenkę.</item>
         <item quantity="few">Znaleziono %d piosenki.</item>
-        <!-- other comment -->
         <item quantity="other">Znaleziono %d piosenek.</item>
     </plurals>
 </resources>
