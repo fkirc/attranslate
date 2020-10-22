@@ -1,12 +1,12 @@
 
 
-"category_apple" = "Apfel";
+"category.apple" = "Apfel";
 
 
-"category_sub_pear" = "Birne";
+"category.sub.pear" = "Birne";
 
 
-"category_sub_sub_banana" = "Banane";
+"category.sub.sub.banana" = "Banane";
 
 
 "plurals.some plurals.item_0" = "Nur einer";
