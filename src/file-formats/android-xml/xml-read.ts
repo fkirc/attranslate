@@ -4,6 +4,7 @@ import {
   sharedXmlOptions,
   XmlFileCache,
   xmlKeyToJsonKey,
+  XmlTag,
 } from "./android-xml";
 import { ReadTFileArgs } from "../file-format-definitions";
 import { TSet } from "../../core/core-definitions";
@@ -46,10 +47,22 @@ export interface XmlContext {
 
 export function readNamedXmlTag(xmlContext: XmlContext, tag: NamedXmlTag) {
   if (Array.isArray(tag.item) && tag.item.length) {
-    if (typeof tag.item[0] === "string") {
+    const firstChild = tag.item[0];
+    if (typeof firstChild === "string") {
       return readStringArrayTag(xmlContext, tag, tag.item as string[]);
     }
+    if (
+      typeof firstChild === "object" &&
+      typeof firstChild.attributes === "object" &&
+      typeof firstChild.characterContent === "string"
+    ) {
+      return readNestedTag(xmlContext, tag, tag.item as XmlTag[]);
+    }
   }
+  return readFlatTag(xmlContext, tag);
+}
+
+function readFlatTag(xmlContext: XmlContext, tag: NamedXmlTag) {
   const xmlKey = tag.attributes.name;
   const jsonKey = xmlKeyToJsonKey(xmlKey);
   insertCheckDuplicate(xmlContext, jsonKey, tag.characterContent);
@@ -61,12 +74,26 @@ function readStringArrayTag(
   parentTag: NamedXmlTag,
   items: string[]
 ) {
+  const cacheKey = parentTag.attributes.name + "___string-array-cache"; // TODO
+  xmlContext.fileCache.entries.set(cacheKey, parentTag);
   items.forEach((item, index) => {
     const stringItemKey: string = [
       parentTag.attributes.name,
       `string_item_${index}`,
     ].join("####");
     insertCheckDuplicate(xmlContext, stringItemKey, item);
+  });
+}
+
+function readNestedTag(
+  xmlContext: XmlContext,
+  parentTag: NamedXmlTag,
+  childs: XmlTag[]
+) {
+  childs.forEach((child, index) => {
+    const childKey =
+      `XML_CHILD_` + parentTag.attributes.name + "_string_item_" + index; // TODO
+    xmlContext.tSet.set(childKey, child.characterContent);
   });
 }
 
