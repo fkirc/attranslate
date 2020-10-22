@@ -6,153 +6,81 @@
     "minor": 0
   },
   "entries": {
-    "category_apple": {
+    "category.apple": {
       "value": "Apple",
       "targets": [
         {
-          "id": "de",
-          "state": "frozen"
-        },
-        {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "en",
           "state": "frozen"
         }
       ]
     },
-    "category_sub_pear": {
+    "category.sub.pear": {
       "value": "Pear",
       "targets": [
         {
-          "id": "de",
-          "state": "frozen"
-        },
-        {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "en",
           "state": "frozen"
         }
       ]
     },
-    "category_sub_sub_banana": {
+    "category.sub.sub.banana": {
       "value": "Banana",
       "targets": [
         {
-          "id": "de",
-          "state": "frozen"
-        },
-        {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "en",
           "state": "frozen"
         }
       ]
     },
-    "plurals.some plurals.item_0": {
+    "plurals.some plurals.item.0": {
       "value": "Only one",
       "targets": [
         {
-          "id": "de",
-          "state": "frozen"
-        },
-        {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "en",
           "state": "frozen"
         }
       ]
     },
-    "plurals.some plurals.item_1": {
+    "plurals.some plurals.item.1": {
       "value": "A few",
       "targets": [
         {
-          "id": "de",
-          "state": "frozen"
-        },
-        {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "en",
           "state": "frozen"
         }
       ]
     },
-    "plurals.some plurals.item_2": {
+    "plurals.some plurals.item.2": {
       "value": "Some others",
       "targets": [
         {
-          "id": "de",
-          "state": "frozen"
-        },
-        {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "en",
           "state": "frozen"
         }
       ]
     },
-    "string-array.planets.item_0": {
+    "string-array.planets.item.0": {
       "value": "Venus",
       "targets": [
         {
-          "id": "de",
-          "state": "frozen"
-        },
-        {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "en",
           "state": "frozen"
         }
       ]
     },
-    "string-array.planets.item_1": {
+    "string-array.planets.item.1": {
       "value": "Earth",
       "targets": [
         {
-          "id": "de",
-          "state": "frozen"
-        },
-        {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "en",
           "state": "frozen"
         }
       ]
     },
-    "string-array.planets.item_2": {
+    "string-array.planets.item.2": {
       "value": "Mars",
       "targets": [
-        {
-          "id": "de",
-          "state": "frozen"
-        },
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "en",
           "state": "frozen"

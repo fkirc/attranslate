@@ -9,20 +9,20 @@
 "category.sub.sub.banana" = "Banane";
 
 
-"plurals.some plurals.item_0" = "Nur einer";
+"plurals.some plurals.item.0" = "Nur einer";
 
 
-"plurals.some plurals.item_1" = "Ein paar";
+"plurals.some plurals.item.1" = "Ein paar";
 
 
-"plurals.some plurals.item_2" = "Einige andere";
+"plurals.some plurals.item.2" = "Einige andere";
 
 
-"string-array.planets.item_0" = "Venus";
+"string-array.planets.item.0" = "Venus";
 
 
-"string-array.planets.item_1" = "Erde";
+"string-array.planets.item.1" = "Erde";
 
 
-"string-array.planets.item_2" = "Mars";
+"string-array.planets.item.2" = "Mars";
 
