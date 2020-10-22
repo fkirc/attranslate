@@ -56,6 +56,57 @@
           "state": "frozen"
         }
       ]
+    },
+    "plurals.some plurals.item_0": {
+      "value": "Only one",
+      "targets": [
+        {
+          "id": "de",
+          "state": "frozen"
+        },
+        {
+          "id": "es",
+          "state": "frozen"
+        },
+        {
+          "id": "en",
+          "state": "frozen"
+        }
+      ]
+    },
+    "plurals.some plurals.item_1": {
+      "value": "A few",
+      "targets": [
+        {
+          "id": "de",
+          "state": "frozen"
+        },
+        {
+          "id": "es",
+          "state": "frozen"
+        },
+        {
+          "id": "en",
+          "state": "frozen"
+        }
+      ]
+    },
+    "plurals.some plurals.item_2": {
+      "value": "Some others",
+      "targets": [
+        {
+          "id": "de",
+          "state": "frozen"
+        },
+        {
+          "id": "es",
+          "state": "frozen"
+        },
+        {
+          "id": "en",
+          "state": "frozen"
+        }
+      ]
     }
   }
 }

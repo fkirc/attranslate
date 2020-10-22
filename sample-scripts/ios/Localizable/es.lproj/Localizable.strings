@@ -8,3 +8,12 @@
 
 "banana" = "Plátano";
 
+
+"plurals.some plurals.item_0" = "Solo uno";
+
+
+"plurals.some plurals.item_1" = "Unos pocos";
+
+
+"plurals.some plurals.item_2" = "Algunos otros";
+

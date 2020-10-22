@@ -32,6 +32,33 @@
           "state": "frozen"
         }
       ]
+    },
+    "plurals.some plurals.item_0": {
+      "value": "Solo uno",
+      "targets": [
+        {
+          "id": "es",
+          "state": "frozen"
+        }
+      ]
+    },
+    "plurals.some plurals.item_1": {
+      "value": "Unos pocos",
+      "targets": [
+        {
+          "id": "es",
+          "state": "frozen"
+        }
+      ]
+    },
+    "plurals.some plurals.item_2": {
+      "value": "Algunos otros",
+      "targets": [
+        {
+          "id": "es",
+          "state": "frozen"
+        }
+      ]
     }
   }
 }

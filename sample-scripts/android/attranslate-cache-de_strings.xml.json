@@ -32,6 +32,33 @@
           "state": "frozen"
         }
       ]
+    },
+    "plurals.some plurals.item_0": {
+      "value": "Nur einer",
+      "targets": [
+        {
+          "id": "de",
+          "state": "frozen"
+        }
+      ]
+    },
+    "plurals.some plurals.item_1": {
+      "value": "Ein paar",
+      "targets": [
+        {
+          "id": "de",
+          "state": "frozen"
+        }
+      ]
+    },
+    "plurals.some plurals.item_2": {
+      "value": "Einige andere",
+      "targets": [
+        {
+          "id": "de",
+          "state": "frozen"
+        }
+      ]
     }
   }
 }

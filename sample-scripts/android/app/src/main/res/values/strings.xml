@@ -3,4 +3,9 @@
     <string name="apple">Apple</string>
     <string name="pear" formatted="false">Pear</string>
     <string name="banana" formatted="true">Banana</string>
+    <plurals name="some plurals">
+        <item quantity="one">Only one</item>
+        <item quantity="few">A few</item>
+        <item quantity="other">Some others</item>
+    </plurals>
 </resources>
