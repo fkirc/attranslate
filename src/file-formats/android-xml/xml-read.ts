@@ -42,7 +42,7 @@ export async function parseRawXML<T>(
   }
 }
 
-export interface XmlContext {
+export interface XmlReadContext {
   tSet: TSet;
   fileCache: XmlFileCache;
   args: ReadTFileArgs;
@@ -50,8 +50,9 @@ export interface XmlContext {
   parentTag: NamedXmlTag | null;
 }
 
-export function readResourceTag(xmlContext: XmlContext, tag: NamedXmlTag) {
+export function readResourceTag(xmlContext: XmlReadContext, tag: NamedXmlTag) {
   const cacheEntry: PartialCacheEntry = {
+    startedToWrite: false,
     arrayName: xmlContext.arrayName,
     parentTag: tag,
   };
@@ -72,7 +73,7 @@ export function readResourceTag(xmlContext: XmlContext, tag: NamedXmlTag) {
 }
 
 function readFlatTag(
-  xmlContext: XmlContext,
+  xmlContext: XmlReadContext,
   cacheEntry: PartialCacheEntry,
   tag: NamedXmlTag
 ) {
@@ -84,7 +85,7 @@ function readFlatTag(
 }
 
 function readStringArrayTag(
-  xmlContext: XmlContext,
+  xmlContext: XmlReadContext,
   cacheEntry: PartialCacheEntry,
   items: string[]
 ) {
@@ -103,7 +104,7 @@ function readStringArrayTag(
 }
 
 function readNestedTag(
-  xmlContext: XmlContext,
+  xmlContext: XmlReadContext,
   cacheEntry: PartialCacheEntry,
   childs: XmlTag[]
 ) {
@@ -146,7 +147,7 @@ function cacheEntryToJsonKey(cacheEntry: XmlCacheEntry): string {
 }
 
 function insertXmlContent(
-  xmlContext: XmlContext,
+  xmlContext: XmlReadContext,
   cacheEntry: XmlCacheEntry,
   value: string | null
 ) {

@@ -9,15 +9,17 @@ import {
   detectSpaceIndent,
   parseRawXML,
   readResourceTag,
-  XmlContext,
+  XmlReadContext,
 } from "./xml-read";
 import { FileCache, FormatCache } from "../common/format-cache";
 import { logParseError } from "../common/parse-utils";
 import { OptionsV2 } from "xml2js";
+import { writeResourceTag, writeXmlResourceFile } from "./xml-write";
 
 export type XmlTagType = "FLAT" | "STRING_ARRAY" | "NESTED";
 
 export interface PartialCacheEntry {
+  startedToWrite: boolean;
   arrayName: string;
   parentTag: NamedXmlTag;
 }
@@ -35,6 +37,7 @@ const globalCache = new FormatCache<
 >();
 
 export interface XmlTag {
+  shouldSurvive?: boolean;
   characterContent: string;
   attributes: Record<string, string>;
 }
@@ -63,9 +66,7 @@ export const DEFAULT_ANDROID_XML_INDENT = 4;
 const XML_KEY_SEPARATOR = "_";
 export const JSON_KEY_SEPARATOR = ".";
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-function jsonToXmlKey(jsonKey: string): string {
-  // TODO: Use
+export function jsonToXmlKey(jsonKey: string): string {
   return jsonKey.split(JSON_KEY_SEPARATOR).join(XML_KEY_SEPARATOR);
 }
 
@@ -91,7 +92,7 @@ export class AndroidXml implements TFileFormat {
     if (typeof resources !== "object") {
       logParseError("resources-tag is not an object", args);
     }
-    const xmlContext: XmlContext = {
+    const xmlContext: XmlReadContext = {
       tSet: new Map(),
       fileCache,
       args,
@@ -119,28 +120,17 @@ export class AndroidXml implements TFileFormat {
   }
 
   writeTFile(args: WriteTFileArgs): void {
-    //const resources: NamedXmlTag[] = [];
-    /*args.tSet.forEach((value, jsonKey) => {
-      const cachedResource = globalCache.lookup({
+    const resourceFile: XmlResourceFile = {
+      resources: {},
+    };
+    args.tSet.forEach((value, jsonKey) => {
+      const cacheEntry = globalCache.lookup({
         path: args.path,
         key: jsonKey,
       });
-      const xmlKey = jsonToXmlSeparators(jsonKey);
-      const newResource: NamedXmlTag = {
-        attributes: { ...cachedResource?.attributes, name: xmlKey },
-        characterContent: value ?? "",
-      };
-      resources.push(newResource);
+      writeResourceTag(resourceFile, cacheEntry, jsonKey, value);
     });
-    // TODO: Re-implement
-    const resourceFile: XmlResourceFile = {
-      resources: {
-        string: resources,
-      },
-    };
-    const intent =
-      globalCache.lookupAuxdata({ path: args.path })?.detectedIntent ??
-      DEFAULT_ANDROID_XML_INDENT;
-    writeXmlResourceFile(resourceFile, args, intent);*/
+    const auxData = globalCache.lookupAuxdata({ path: args.path });
+    writeXmlResourceFile(resourceFile, args, auxData);
   }
 }
