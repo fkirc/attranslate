@@ -68,7 +68,6 @@ function writeNestedTag(writeContext: XmlWriteContext) {
   cacheEntry.parentTag.characterContent = "";
   const childTag = cacheEntry.childTag;
   if (childTag) {
-    //childTag.shouldSurvive = true; // TODO: Implement a mark-and-sweep approach?
     childTag.characterContent = writeContext.value ?? "";
   }
   insertCachedResourceTag(writeContext);
@@ -150,6 +149,14 @@ export function writeXmlResourceFile(
   const mergedOptions = { ...options, xmlBuilderOptions };
   const builder: Builder = new xml2js.Builder(mergedOptions);
   const rawXmlString: string = builder.buildObject(resourceFile);
-  const xmlString = `${rawXmlString}\n`;
+  const xmlString = `${removeBlankLines(rawXmlString)}\n`;
   writeUf8File(args.path, xmlString);
+}
+
+function removeBlankLines(str: string) {
+  const lines = str.split("\n");
+  const filteredLines = lines.filter((line) => {
+    return line.trim().length >= 1;
+  });
+  return filteredLines.join("\n");
 }
