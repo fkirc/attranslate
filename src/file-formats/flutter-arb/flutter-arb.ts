@@ -12,12 +12,10 @@ const attributeCache = new FormatCache<unknown, Record<string, unknown>>();
 
 export class FlutterArb implements TFileFormat {
   readTFile(args: ReadTFileArgs): Promise<TSet> {
-    const json = readManagedJson(args.path);
+    const json: Record<string, unknown> = readManagedJson(args.path);
     const tMap = new Map<string, string>();
     const globalAttributes: Record<string, unknown> = {};
     for (const key of Object.keys(json)) {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
       const value = json[key];
       if (key.startsWith("@@")) {
         globalAttributes[key] = value;

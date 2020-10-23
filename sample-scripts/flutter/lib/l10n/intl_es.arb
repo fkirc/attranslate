@@ -1,4 +1,5 @@
 {
+  "@@context": "Global attribute",
   "apple": "manzana",
   "pear": "Pera",
   "banana": "Plátano",
