@@ -74,6 +74,9 @@ function parseiOSLine(
   };
 }
 
-function isComment(line: string) {
+function isComment(line: string): boolean {
+  if (line.startsWith("//")) {
+    return true;
+  }
   return line.includes("/*") && line.includes("*/");
 }
