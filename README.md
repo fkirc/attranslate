@@ -2,7 +2,7 @@
   <img alt="attranslate - Semi-automated Text Translator for Websites and Apps" src="docs/logo/attranslate_v1.png">
 </p>
 
-macOS/Ubuntu: [![Actions Status](https://github.com/fkirc/attranslate/workflows/Tests/badge.svg)](https://github.com/fkirc/attranslate/actions?query=branch%3Amaster)
+macOS/Ubuntu: [![Actions Status](https://github.com/fkirc/attranslate/workflows/Tests/badge.svg/?branch=master)](https://github.com/fkirc/attranslate/actions?query=branch%3Amaster)
 
 Automated translation-services can speedup traditional workflows.
 `attranslate` makes it easy to setup _semi-automated_ translation-workflows.
