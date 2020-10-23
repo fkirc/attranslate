@@ -3,7 +3,11 @@ import {
   runTranslateExpectFailure,
 } from "../test-util/test-util";
 import { readUtf8File } from "../../src/util/util";
-import { buildE2EArgs, defaultE2EArgs, offlineMaxTime } from "./e2e-common";
+import {
+  buildE2EArgs,
+  defaultE2EArgs,
+  offlineMaxTime,
+} from "../e2e/e2e-common";
 import { readHelpReference, readmeSnippets } from "../setup/doc-utils";
 
 test("ensure that README is up-to-date", () => {
