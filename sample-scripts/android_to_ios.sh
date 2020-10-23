@@ -27,4 +27,4 @@ ANDROID_TO_iOS=( "--srcFormat=android-xml" "--targetFormat=ios-strings" "--servi
 
 attranslate "${ANDROID_TO_iOS[@]}" --srcFile=$ANDROID_EN --targetFile=$iOS_EN --srcLng="en" --targetLng="en"
 attranslate "${ANDROID_TO_iOS[@]}" --srcFile=$ANDROID_DE --targetFile=$iOS_DE --srcLng="de" --targetLng="de"
-attranslate "${ANDROID_TO_iOS[@]}" --srcFile=$ANDROID_ES --targetFile=$iOS_ES --srcLng="es" --targetLng="es"
+attranslate "${ANDROID_TO_iOS[@]}" --srcFile=$ANDROID_ES --targetFile=$iOS_ES --srcLng="es" --targetLng="es" --manualReview=true

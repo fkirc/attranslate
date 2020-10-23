@@ -3,8 +3,28 @@ import { LineChunk } from "./ios-strings";
 import { VALUE_INDEX } from "./ios-read";
 import { writeUf8File } from "../../util/util";
 import { FormatCache } from "../common/format-cache";
+import { getNotReviewedValue, needsReview } from "../common/manual-review";
 
 const DEFAULT_APPENDIX: string[] = ["\n"];
+
+const reviewPrefix = "// reviewed:";
+
+function injectReviewComment(lineChunk: LineChunk) {
+  const lines = lineChunk.lines;
+  for (const line of lines) {
+    if (line.startsWith(reviewPrefix)) {
+      return; // Review-comment already there, avoid duplicates
+    }
+  }
+  if (!lines.length) {
+    return;
+  }
+  const linesBefore: string[] = lines.slice(0, lines.length - 1);
+  const reviewLine = `${reviewPrefix} ${getNotReviewedValue()}`;
+  const valueLine = lines[lines.length - 1];
+  const mergedLines = [...linesBefore, reviewLine, valueLine];
+  lineChunk.lines = mergedLines;
+}
 
 export function writeiOSFile(
   args: WriteTFileArgs,
@@ -18,6 +38,9 @@ export function writeiOSFile(
       newChunk = convertOldChunkIntoNewChunk(oldChunk, value);
     } else {
       newChunk = createNewChunk(key, value);
+    }
+    if (needsReview(args, key, value)) {
+      injectReviewComment(newChunk);
     }
     outLines.push(...newChunk.lines);
   });
