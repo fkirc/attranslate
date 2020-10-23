@@ -9,6 +9,6 @@ export function logParseError(rawMsg: string, args: ReadTFileArgs): never {
 }
 
 export function logParseWarning(rawMsg: string, args: ReadTFileArgs) {
-  const msg = `Warning: Parsing '${args.path}'': ${rawMsg}`;
+  const msg = `Warning: Parsing '${args.path}': ${rawMsg}`;
   console.log(msg);
 }

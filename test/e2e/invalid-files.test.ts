@@ -51,13 +51,15 @@ test("duplicate keys iOS", async () => {
     srcFormat: "ios-strings",
   };
   const output = await runTranslateExpectFailure(buildE2EArgs(args));
-  expect(output).toBe(
-    `Warning: Line 'other content' seems to be unexpected\nerror: Failed to parse ${getDebugPath(
+  const expectedOutput = joinLines([
+    `Warning: Parsing '${args.srcFile}': Line 'other content' seems to be unexpected`,
+    `error: Failed to parse ${getDebugPath(
       args.srcFile
     )} with expected format '${
       args.srcFormat
-    }': duplicate key 'dup_ios' -> Currently, the usage of duplicate translation-keys is discouraged.\n`
-  );
+    }': duplicate key 'dup_ios' -> Currently, the usage of duplicate translation-keys is discouraged.`,
+  ]);
+  expect(output).toBe(expectedOutput);
 });
 
 test("invalid iOS strings", async () => {
