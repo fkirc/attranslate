@@ -11,49 +11,46 @@ import {
 } from "./android-xml";
 import { writeUf8File } from "../../util/util";
 import { Builder, OptionsV2 } from "xml2js";
+import { getNotReviewedValue, needsReview } from "../common/manual-review";
 
-interface XmlWriteContext {
+export interface XmlWriteContext {
+  args: WriteTFileArgs;
   resourceFile: XmlResourceFile;
-  cacheEntry: XmlCacheEntry;
+  cacheEntry: XmlCacheEntry | null;
   jsonKey: string;
   value: string | null;
 }
 
-export function writeResourceTag(
-  resourceFile: XmlResourceFile,
-  cacheEntry: XmlCacheEntry | null,
-  jsonKey: string,
-  value: string | null
-) {
+export function writeResourceTag(writeContext: XmlWriteContext) {
+  const cacheEntry = writeContext.cacheEntry;
   if (!cacheEntry) {
-    return writeUncachedTag(resourceFile, jsonKey, value);
+    return writeUncachedTag(writeContext);
   }
-  const writeContext: XmlWriteContext = {
-    resourceFile,
-    cacheEntry,
-    jsonKey,
-    value,
-  };
   switch (cacheEntry.type) {
     case "STRING_ARRAY":
-      return writeStringArrayTag(writeContext);
+      return writeStringArrayTag(writeContext, cacheEntry);
     case "NESTED":
-      return writeNestedTag(writeContext);
+      return writeNestedTag(writeContext, cacheEntry);
     case "FLAT":
-      return writeFlatTag(writeContext);
+      return writeFlatTag(writeContext, cacheEntry);
   }
 }
 
-function writeFlatTag(writeContext: XmlWriteContext) {
-  const parentTag = writeContext.cacheEntry.parentTag;
+function writeFlatTag(
+  writeContext: XmlWriteContext,
+  cacheEntry: XmlCacheEntry
+) {
+  const parentTag = cacheEntry.parentTag;
   parentTag.characterContent = writeContext.value ?? "";
-  insertCachedResourceTag(writeContext);
+  insertCachedResourceTag(writeContext, cacheEntry);
 }
 
 const survivingTags: Set<NamedXmlTag> = new Set();
 
-function writeStringArrayTag(writeContext: XmlWriteContext) {
-  const cacheEntry = writeContext.cacheEntry;
+function writeStringArrayTag(
+  writeContext: XmlWriteContext,
+  cacheEntry: XmlCacheEntry
+) {
   const parentTag = cacheEntry.parentTag;
   parentTag.characterContent = "";
   if (!parentTag.item || !survivingTags.has(parentTag)) {
@@ -61,47 +58,48 @@ function writeStringArrayTag(writeContext: XmlWriteContext) {
     survivingTags.add(parentTag);
   }
   parentTag.item.push((writeContext.value ?? "") as string & XmlTag);
-  insertCachedResourceTag(writeContext);
+  insertCachedResourceTag(writeContext, cacheEntry);
 }
 
-function writeNestedTag(writeContext: XmlWriteContext) {
-  const cacheEntry = writeContext.cacheEntry;
+function writeNestedTag(
+  writeContext: XmlWriteContext,
+  cacheEntry: XmlCacheEntry
+) {
   cacheEntry.parentTag.characterContent = "";
   const childTag = cacheEntry.childTag;
   if (childTag) {
     childTag.characterContent = writeContext.value ?? "";
   }
-  insertCachedResourceTag(writeContext);
+  insertCachedResourceTag(writeContext, cacheEntry);
 }
 
-function writeUncachedTag(
-  resourceFile: XmlResourceFile,
-  jsonKey: string,
-  value: string | null
-) {
+function writeUncachedTag(writeContext: XmlWriteContext) {
   const newTag: NamedXmlTag = {
-    characterContent: value ?? "",
+    characterContent: writeContext.value ?? "",
     attributes: {
-      name: jsonKey,
+      name: writeContext.jsonKey,
     },
   };
-  insertRawResourceTag(resourceFile, "string", newTag);
+  insertRawResourceTag(writeContext, "string", newTag);
 }
 
-function insertCachedResourceTag(writeContext: XmlWriteContext) {
-  const cacheEntry = writeContext.cacheEntry;
+function insertCachedResourceTag(
+  writeContext: XmlWriteContext,
+  cacheEntry: XmlCacheEntry
+) {
   insertRawResourceTag(
-    writeContext.resourceFile,
+    writeContext,
     cacheEntry.arrayName,
     cacheEntry.parentTag
   );
 }
 
 function insertRawResourceTag(
-  resourceFile: XmlResourceFile,
+  writeContext: XmlWriteContext,
   arrayName: string,
   tag: NamedXmlTag
 ) {
+  const resourceFile = writeContext.resourceFile;
   let xmlArray = resourceFile.resources[arrayName];
   if (!Array.isArray(xmlArray)) {
     xmlArray = [];
@@ -115,7 +113,16 @@ function insertRawResourceTag(
     }
   }
   if (!tagFound) {
+    injectReviewAttribute(writeContext, tag);
     xmlArray.push(tag);
+  }
+}
+
+function injectReviewAttribute(writeContext: XmlWriteContext, tag: XmlTag) {
+  if (
+    needsReview(writeContext.args, writeContext.jsonKey, writeContext.value)
+  ) {
+    tag.attributes["reviewed"] = getNotReviewedValue();
   }
 }
 

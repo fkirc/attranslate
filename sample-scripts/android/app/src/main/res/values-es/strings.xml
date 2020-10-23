@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="category_apple">manzana</string>
-    <string name="category_sub_pear" formatted="false">Pera</string>
-    <string name="category_sub_sub_banana" formatted="true">Plátano</string>
-    <plurals name="some plurals">
+    <string name="category_apple" reviewed="false">manzana</string>
+    <string name="category_sub_pear" formatted="false" reviewed="false">Pera</string>
+    <string name="category_sub_sub_banana" formatted="true" reviewed="false">Plátano</string>
+    <plurals name="some plurals" reviewed="false">
         <item quantity="one">Solo uno</item>
         <item quantity="few">Unos pocos</item>
         <item quantity="other">Algunos otros</item>
     </plurals>
-    <string-array name="planets">
+    <string-array name="planets" reviewed="false">
         <item>Venus</item>
         <item>Tierra</item>
         <item>Marte</item>
