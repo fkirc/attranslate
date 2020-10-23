@@ -40,6 +40,9 @@ async function runMaxTime<T>(
   const before: number = window.performance.now();
   const res = await runnable();
   const passed = window.performance.now() - before;
+  if (process.platform === "darwin") {
+    maxMillis *= 2;
+  }
   if (passed > maxMillis) {
     fail(
       `Took ${passed} milliseconds - maximum is ${maxMillis} milliseconds: '${cmd}'`
