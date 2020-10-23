@@ -68,7 +68,7 @@ export function buildE2EArgs(args: E2EArgs, unsafe?: boolean): string {
     // @ts-ignore
     const argValue: string | undefined = args[argKey];
     if (argValue !== undefined && argKey !== "refTargetFile") {
-      cmdArgs.push(`--${argKey}='${argValue}'`);
+      cmdArgs.push(`--${argKey}=${argValue}`);
     }
   }
   return cmdArgs.join(" ");
