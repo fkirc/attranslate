@@ -2,7 +2,7 @@
   <img alt="attranslate - Semi-automated Text Translator for Websites and Apps" src="docs/logo/attranslate_v1.png">
 </p>
 
-<a href="https://github.com/fkirc/attranslate/actions?query=branch%3Amaster"><img alt="CI status" src="https://github.com/fkirc/attranslate/workflows/CI/badge.svg/?branch=master"></a>
+macOS/Ubuntu: [![Actions Status](https://github.com/fkirc/attranslate/workflows/Tests/badge.svg/?branch=master)](https://github.com/fkirc/attranslate/actions?query=branch%3Amaster)
 
 Automated translation-services can speedup traditional workflows.
 `attranslate` makes it easy to setup _semi-automated_ translation-workflows.
@@ -22,7 +22,7 @@ See [tools comparison](/docs/TOOL_COMPARISON.md) for an overview about translati
 ## Cross-platform Support
 
 `attranslate` is designed to translate any website or app with any toolchain.
-`attranslate` works for i18n, JavaScript-frameworks/Android/iOS/Flutter or any combination of platforms.
+`attranslate` works for i18n/JavaScript-frameworks/Android/iOS/Flutter or any combination of platforms.
 To make this possible, `attranslate` supports the following file formats:
 
 - Nested JSON
