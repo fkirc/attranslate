@@ -15,7 +15,11 @@ import {
 import { FileCache, FormatCache } from "../common/format-cache";
 import { logParseError } from "../common/parse-utils";
 import { OptionsV2 } from "xml2js";
-import { writeResourceTag, writeXmlResourceFile } from "./xml-write";
+import {
+  writeResourceTag,
+  writeXmlResourceFile,
+  XmlWriteContext,
+} from "./xml-write";
 
 export type XmlTagType = "FLAT" | "STRING_ARRAY" | "NESTED";
 
@@ -83,7 +87,7 @@ export class AndroidXml implements TFileFormat {
     if (typeof resources !== "object") {
       logParseError("resources-tag is not an object", args);
     }
-    const xmlContext: XmlReadContext = {
+    const readContext: XmlReadContext = {
       tSet: new Map(),
       fileCache,
       args,
@@ -100,14 +104,14 @@ export class AndroidXml implements TFileFormat {
             xmlTag.characterContent !== undefined &&
             typeof xmlTag.characterContent === "string"
           ) {
-            xmlContext.arrayName = arrayName;
-            readResourceTag(xmlContext, <NamedXmlTag>xmlTag);
+            readContext.arrayName = arrayName;
+            readResourceTag(readContext, <NamedXmlTag>xmlTag);
           }
         }
       }
     }
-    globalCache.insertFileCache(xmlContext.fileCache);
-    return xmlContext.tSet;
+    globalCache.insertFileCache(readContext.fileCache);
+    return readContext.tSet;
   }
 
   writeTFile(args: WriteTFileArgs): void {
@@ -115,12 +119,21 @@ export class AndroidXml implements TFileFormat {
     const resourceFile: XmlResourceFile = {
       resources: {},
     };
+    const writeContext: XmlWriteContext = {
+      args,
+      resourceFile,
+      cacheEntry: null,
+      jsonKey: "",
+      value: null,
+    };
     args.tSet.forEach((value, jsonKey) => {
-      const cacheEntry = globalCache.lookup({
+      writeContext.cacheEntry = globalCache.lookup({
         path: args.path,
         key: jsonKey,
       });
-      writeResourceTag(resourceFile, cacheEntry, jsonKey, value);
+      writeContext.jsonKey = jsonKey;
+      writeContext.value = value;
+      writeResourceTag(writeContext);
     });
     writeXmlResourceFile(resourceFile, args, auxData);
   }

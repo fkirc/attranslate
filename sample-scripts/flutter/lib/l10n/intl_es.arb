@@ -1,8 +1,16 @@
 {
+  "@@context": "Global attribute",
   "apple": "manzana",
+  "@apple": {
+    "x-reviewed": "false"
+  },
   "pear": "Pera",
+  "@pear": {
+    "x-reviewed": "false"
+  },
   "banana": "Plátano",
   "@banana": {
-    "type": "text"
+    "type": "text",
+    "x-reviewed": "false"
   }
 }

@@ -1,6 +1,7 @@
 import { ReadTFileArgs, WriteTFileArgs } from "../file-format-definitions";
 import { FormatCache } from "./format-cache";
 import { TSet } from "../../core/core-definitions";
+import { getNotReviewedValue, needsReview } from "./manual-review";
 
 const reviewCache = new FormatCache<string | null, void>();
 
@@ -40,20 +41,7 @@ export function writeJsonProp(
     json[reviewKey(key)] = oldReview;
     return;
   }
-  if (!args.manualReview) {
-    return;
-  }
-  if (!value) {
-    return;
-  }
-  const changeSet = args.changeSet;
-  const needsReview = changeSet.added.has(key) || changeSet.updated.has(key);
-  if (needsReview) {
+  if (needsReview(args, key, value)) {
     json[reviewKey(key)] = getNotReviewedValue();
   }
-}
-
-function getNotReviewedValue(): string {
-  // We use string instead of boolean because we do not want to mess with external tools.
-  return "false";
 }

@@ -1,7 +1,7 @@
 import { iOSFile, LineChunk } from "./ios-strings";
 import { ReadTFileArgs } from "../file-format-definitions";
 import { readUtf8File } from "../../util/util";
-import { logParseError } from "../common/parse-utils";
+import { logParseError, logParseWarning } from "../common/parse-utils";
 
 const KEY_INDEX = 1;
 export const VALUE_INDEX = 3;
@@ -19,7 +19,7 @@ export function parseiOSFile(args: ReadTFileArgs): iOSFile {
   };
   let currentChunk: string[] = [];
   lines.forEach((line) => {
-    const keyValue = parseiOSLine(line);
+    const keyValue = parseiOSLine(args, line);
     currentChunk.push(line);
     if (keyValue) {
       const key = keyValue.key;
@@ -48,6 +48,7 @@ export function parseiOSFile(args: ReadTFileArgs): iOSFile {
 }
 
 function parseiOSLine(
+  args: ReadTFileArgs,
   line: string
 ): { key: string; value: string | null } | null {
   if (!line.trim().length) {
@@ -58,12 +59,12 @@ function parseiOSLine(
   }
   const token = line.split('"');
   if (token.length < 5) {
-    console.log(`Warning: Line '${line}' seems to be unexpected`);
+    logParseWarning(`Line '${line}' seems to be unexpected`, args);
     return null;
   }
   const key = token[KEY_INDEX];
   if (!key || !key.trim().length) {
-    console.log(`Warning: Did not find a key in '${line}'`);
+    logParseWarning(`Did not find a key in '${line}'`, args);
     return null;
   }
   const value = token[VALUE_INDEX];
@@ -73,6 +74,9 @@ function parseiOSLine(
   };
 }
 
-function isComment(line: string) {
+function isComment(line: string): boolean {
+  if (line.startsWith("//")) {
+    return true;
+  }
   return line.includes("/*") && line.includes("*/");
 }
