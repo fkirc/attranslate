@@ -35,7 +35,7 @@
     "reformat": "yarn eslint -- --fix",
     "eslint": "./node_modules/.bin/eslint '**/*.{js,ts,tsx}' --ignore-path=.gitignore",
     "preTest": "jest --runTestsByPath test/setup/prepare-gcloud-keys.test.ts",
-    "test": "jest",
+    "test": "jest --testTimeout=10000",
     "test:generate_refs": "GENERATE_REFS=True yarn test",
     "generate_docs": "GENERATE_REFS=True jest --runTestsByPath test/setup/generate-docs.test.ts",
     "prepublishOnly": "git diff --exit-code"
