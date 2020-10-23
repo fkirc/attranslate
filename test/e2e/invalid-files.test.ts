@@ -69,16 +69,15 @@ test("invalid iOS strings", async () => {
     srcFormat: "ios-strings",
   };
   const output = await runTranslateExpectFailure(buildE2EArgs(args));
-  expect(output).toBe(
-    joinLines([
-      `Warning: Line '{}' seems to be unexpected`,
-      `error: Failed to parse ${getDebugPath(
-        "test-assets/invalid/empty.json"
-      )} with expected format '${
-        args.srcFormat
-      }': Did not find any Strings in the expected format`,
-    ])
-  );
+  const expectedOutput = joinLines([
+    `Warning: Parsing '${args.srcFile}': Line '{}' seems to be unexpected`,
+    `error: Failed to parse ${getDebugPath(
+      "test-assets/invalid/empty.json"
+    )} with expected format '${
+      args.srcFormat
+    }': Did not find any Strings in the expected format`,
+  ]);
+  expect(output).toBe(expectedOutput);
 });
 
 test("src empty JSON", async () => {
