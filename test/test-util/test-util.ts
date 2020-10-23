@@ -3,7 +3,11 @@ import { join } from "path";
 import { logFatal } from "../../src/util/util";
 
 export function buildTranslateCommand(args: string) {
-  return `${join(process.cwd(), "bin", "attranslate")} ${args}`;
+  if (process.platform === "win32") {
+    return `node "${join(process.cwd(), "bin", "attranslate")}" ${args}`;
+  } else {
+    return `${join(process.cwd(), "bin", "attranslate")} ${args}`;
+  }
 }
 
 export function mapToObject(map: Map<string, unknown>): unknown {
