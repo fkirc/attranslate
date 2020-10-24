@@ -1,0 +1,11 @@
+{
+  "apple": "Apple",
+  "nesting": {
+    "pear": "Pear"
+  },
+  "moreNesting": {
+    "innerNesting":{
+      "banana": "Banana"
+    }
+  }
+}
