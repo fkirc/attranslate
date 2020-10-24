@@ -1,5 +1,14 @@
 [
-  ["author.name.not_blank", "Please enter an author name."],
-  ["users.salutation", "Hello %{username}"],
-  ["Symfony2 is great", "J'aime Symfony2"]
+  [
+    "author.name.not_blank",
+    "Please enter an author name."
+  ],
+  [
+    "users.salutation",
+    "Hello %{username}"
+  ],
+  [
+    "Symfony2 is great",
+    "J'aime Symfony2"
+  ]
 ]
