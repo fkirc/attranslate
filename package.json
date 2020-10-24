@@ -1,7 +1,7 @@
 {
   "name": "attranslate",
   "version": "0.9.4",
-  "description": "Translate any website or app. Convert between file formats.",
+  "description": "Semi-automated Text Translator for Websites and Apps",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/fkirc/attranslate.git"
