@@ -85,7 +85,7 @@ describe.each(testArgs)("Read/write %p", (args) => {
     });
 
     const expectTSetPath = `${args.srcFile}__expected_tset.json`;
-    if (!process.env.GENERATE_REFS) {
+    if (process.env.GENERATE_REFS) {
       writeManagedJson({
         path: expectTSetPath,
         object: mapToObject(tSet),
