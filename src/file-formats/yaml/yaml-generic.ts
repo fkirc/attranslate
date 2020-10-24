@@ -5,7 +5,11 @@ import {
 } from "../file-format-definitions";
 import { TSet } from "../../core/core-definitions";
 import { readUtf8File, writeUf8File } from "../../util/util";
-import { Options, parse, stringify } from "yaml";
+import { Document, Options, parse, parseDocument, stringify } from "yaml";
+import { FormatCache } from "../common/format-cache";
+import Parsed = Document.Parsed;
+
+const documentCache = new FormatCache<unknown, Parsed>();
 
 export class YamlGeneric implements TFileFormat {
   readTFile(args: ReadTFileArgs): Promise<TSet> {
@@ -13,25 +17,45 @@ export class YamlGeneric implements TFileFormat {
     const options: Options = {
       keepCstNodes: true,
       keepNodeTypes: true,
+      keepUndefined: true,
       prettyErrors: true,
     };
     const tSet: TSet = new Map();
-    const obj: Record<string, unknown> = parse(ymlString, options);
-    for (const key of Object.keys(obj)) {
-      const value = obj[key];
+    const simpleParse: Record<string, unknown> = parse(ymlString, options);
+    const document: Parsed = parseDocument(ymlString, options);
+    documentCache.insertFileCache({
+      path: args.path,
+      entries: new Map(),
+      auxData: document,
+    });
+    for (const key of Object.keys(simpleParse)) {
+      const value = simpleParse[key];
       if (typeof value === "string") {
         tSet.set(key, value);
       }
     }
-    console.log(obj);
     return Promise.resolve(tSet);
   }
 
   writeTFile(args: WriteTFileArgs): void {
+    const doc = documentCache.lookupAuxdata({ path: args.path });
+    let ymlString: string;
+    if (doc) {
+      ymlString = this.createCachedYml(args, doc);
+    } else {
+      ymlString = this.createUncachedYml(args);
+    }
+    writeUf8File(args.path, ymlString);
+  }
+
+  createCachedYml(args: WriteTFileArgs, doc: Parsed): string {
+    return doc.toString();
+  }
+
+  createUncachedYml(args: WriteTFileArgs): string {
     const options: Options = {
       mapAsMap: true,
     };
-    const ymlString = stringify(args.tSet, options);
-    writeUf8File(args.path, ymlString);
+    return stringify(args.tSet, options);
   }
 }
