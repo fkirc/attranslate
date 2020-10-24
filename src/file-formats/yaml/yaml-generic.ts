@@ -5,9 +5,11 @@ import {
 } from "../file-format-definitions";
 import { TSet } from "../../core/core-definitions";
 import { readUtf8File, writeUf8File } from "../../util/util";
-import { Document, Options, parse, parseDocument, stringify } from "yaml";
+import { Document, Options, parseDocument, stringify } from "yaml";
 import { FormatCache } from "../common/format-cache";
 import Parsed = Document.Parsed;
+import { flatten } from "../../util/flatten";
+import { readJsonProp } from "../common/json-common";
 
 const documentCache = new FormatCache<unknown, Parsed>();
 
@@ -20,20 +22,18 @@ export class YamlGeneric implements TFileFormat {
       keepUndefined: true,
       prettyErrors: true,
     };
-    const tSet: TSet = new Map();
-    const simpleParse: Record<string, unknown> = parse(ymlString, options);
     const document: Parsed = parseDocument(ymlString, options);
     documentCache.insertFileCache({
       path: args.path,
       entries: new Map(),
       auxData: document,
     });
-    for (const key of Object.keys(simpleParse)) {
-      const value = simpleParse[key];
-      if (typeof value === "string") {
-        tSet.set(key, value);
-      }
-    }
+    const nestedJson = document.toJSON();
+    const flatJson: Record<string, string> = flatten(nestedJson);
+    const tSet: TSet = new Map();
+    Object.keys(flatJson).forEach((key) => {
+      readJsonProp(key, flatJson[key], tSet, args);
+    });
     return Promise.resolve(tSet);
   }
 
