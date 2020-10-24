@@ -31,10 +31,10 @@ jobs:
 
   ci:
     needs: pre_job
-    if: ${{ needs.pre_job.outputs.should_skip == 'false' }}
+    if: ${{ needs.pre_job.outputs.should_skip != 'true' }}
     strategy:
       matrix:
-        os: [ 'ubuntu-latest', 'macos-latest' ]
+        os: [ 'ubuntu-latest', 'macos-latest', 'windows-latest' ]
     runs-on: ${{ matrix.os }}
     timeout-minutes: 15
     steps:
@@ -51,16 +51,20 @@ jobs:
           path: '**/node_modules'
           key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
       - run: yarn install --frozen-lockfile
-      - run: yarn lint
+      - if: ${{ matrix.os != 'windows-latest' }}
+        run: yarn lint
       - run: yarn build
       - run: yarn link
       - run: yarn preTest
         env:
           GCLOUD_PRIVATE_KEY: ${{ secrets.GCLOUD_PRIVATE_KEY }}
-      - run: yarn test
+      - if: ${{ matrix.os != 'windows-latest' }}
+        run: yarn test
+      - if: ${{ matrix.os == 'windows-latest' }}
+        run: yarn test:windows
       - run: git diff --exit-code
       - name: Release
-        if: ${{ github.event.inputs.release == 'true' }}
+        if: ${{ github.event.inputs.release == 'true' && matrix.os == 'ubuntu-latest' }}
         run: |
           npm version ${{ github.event.inputs.new_version }} --git-tag-version=true
           npm config set '//registry.npmjs.org/:_authToken' "${NPM_TOKEN}"
