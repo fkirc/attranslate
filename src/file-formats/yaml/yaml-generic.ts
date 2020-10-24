@@ -16,13 +16,41 @@ import { FormatCache } from "../common/format-cache";
 import Parsed = Document.Parsed;
 import { flatten, unflatten } from "../../util/flatten";
 import { readJsonProp, writeJsonProp } from "../common/json-common";
-import { Pair, Scalar, YAMLMap } from "yaml/types";
+import { Collection, Node, Pair, Scalar, YAMLMap } from "yaml/types";
+import { recursiveNodeUpdate } from "./yaml-update-existing-nodes";
+import { Type } from "yaml/util";
 
-interface YmlWriteContext {
+export interface YmlWriteContext {
   args: WriteTFileArgs;
   doc: Parsed;
   currentPairs: Array<Pair>;
   currentJson: Record<string, unknown>;
+}
+
+export function isCollection(node: Node): node is Collection {
+  if (!node.type) {
+    return false;
+  }
+  return [
+    Type.MAP,
+    Type.FLOW_MAP,
+    Type.SEQ,
+    Type.FLOW_SEQ,
+    Type.DOCUMENT,
+  ].includes(node.type as Type);
+}
+
+export function isScalar(node: Node): node is Scalar {
+  if (!node.type) {
+    return false;
+  }
+  return [
+    Type.BLOCK_FOLDED,
+    Type.BLOCK_LITERAL,
+    Type.PLAIN,
+    Type.QUOTE_DOUBLE,
+    Type.QUOTE_SINGLE,
+  ].includes(node.type as Type);
 }
 
 const documentCache = new FormatCache<unknown, Parsed>();
@@ -94,32 +122,8 @@ export class YamlGeneric implements TFileFormat {
       currentPairs: contents.items,
       currentJson: nestedJson,
     };
-    this.recursiveReplace(writeContext);
+    recursiveNodeUpdate(writeContext);
     return doc.toString();
-  }
-
-  recursiveReplace(writeContext: YmlWriteContext) {
-    writeContext.currentPairs.forEach((pair) => {
-      const childJson = writeContext.currentJson[pair.key?.value];
-      if (childJson === undefined) {
-        return;
-      }
-      const value: YAMLMap | Scalar = pair.value;
-      if (
-        value.type === "MAP" ||
-        (value.type === "FLOW_MAP" && typeof childJson === "object")
-      ) {
-        const childContext: YmlWriteContext = {
-          ...writeContext,
-          currentJson: childJson as Record<string, unknown>,
-          currentPairs: pair.value.items,
-        };
-        this.recursiveReplace(childContext);
-      } else if (typeof childJson === "string" || childJson === null) {
-        (value as Scalar).value = childJson ?? "";
-      }
-    });
-    console.log(writeContext);
   }
 
   createUncachedYml(
