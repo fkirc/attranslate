@@ -14,8 +14,8 @@ import {
 } from "yaml";
 import { FormatCache } from "../common/format-cache";
 import Parsed = Document.Parsed;
-import { flatten } from "../../util/flatten";
-import { readJsonProp } from "../common/json-common";
+import { flatten, unflatten } from "../../util/flatten";
+import { readJsonProp, writeJsonProp } from "../common/json-common";
 
 const documentCache = new FormatCache<unknown, Parsed>();
 
@@ -68,9 +68,14 @@ export class YamlGeneric implements TFileFormat {
   }
 
   createUncachedYml(args: WriteTFileArgs): string {
+    const flatJson: Record<string, string | null> = {};
+    args.tSet.forEach((value, key) => {
+      writeJsonProp(flatJson, key, value, args);
+    });
+    const nestedJson = unflatten(flatJson);
     const options: Options = {
-      mapAsMap: true,
+      mapAsMap: false,
     };
-    return stringify(args.tSet, options);
+    return stringify(nestedJson, options);
   }
 }
