@@ -5,7 +5,13 @@ import {
 } from "../file-format-definitions";
 import { TSet } from "../../core/core-definitions";
 import { readUtf8File, writeUf8File } from "../../util/util";
-import { Document, Options, parseDocument, stringify } from "yaml";
+import {
+  Document,
+  Options,
+  parseDocument,
+  stringify,
+  scalarOptions,
+} from "yaml";
 import { FormatCache } from "../common/format-cache";
 import Parsed = Document.Parsed;
 import { flatten } from "../../util/flatten";
@@ -14,6 +20,15 @@ import { readJsonProp } from "../common/json-common";
 const documentCache = new FormatCache<unknown, Parsed>();
 
 export class YamlGeneric implements TFileFormat {
+  constructor() {
+    // Do not mess with user's line breaks; preserve everything as is!
+    scalarOptions.str.fold = { lineWidth: 0, minContentWidth: 0 };
+    scalarOptions.str.doubleQuoted = {
+      minMultiLineLength: 1000,
+      jsonEncoding: false,
+    };
+  }
+
   readTFile(args: ReadTFileArgs): Promise<TSet> {
     const ymlString = readUtf8File(args.path);
     const options: Options = {
