@@ -20,6 +20,10 @@ const testArgs: {
   fileFormat: TFileType;
 }[] = [
   {
+    srcFile: "test-assets/flat-yml/symfony2.yml",
+    fileFormat: "yaml",
+  },
+  {
     srcFile: "test-assets/android-xml/plurals.xml",
     fileFormat: "android-xml",
   },
