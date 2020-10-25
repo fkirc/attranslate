@@ -40,7 +40,7 @@ export function recursiveNodeInsert(writeContext: YmlWriteContext) {
     const childJson = writeContext.currentJson[jsonKey];
     const childNode = currentNodes.get(jsonKey);
     if (!childNode && typeof childJson === "string") {
-      insertScalarNode(writeContext, jsonKey, childJson);
+      insertScalarNode(writeContext, jsonKey);
     } else if (!childNode && childJson && typeof childJson === "object") {
       insertCollectionNode(writeContext, jsonKey);
     }
@@ -73,17 +73,54 @@ function extractNodeMap(writeContext: YmlWriteContext): Map<string, Node> {
   return nodeMap;
 }
 
-function insertScalarNode(
-  writeContext: YmlWriteContext,
-  key: string,
-  value: string | null
-) {
+function insertScalarNode(writeContext: YmlWriteContext, key: string) {
+  const value = writeContext.currentJson[key];
   const scalar = new Scalar(value);
   scalar.type = Type.QUOTE_SINGLE;
-  writeContext.currentPairs.push(new Pair(key, scalar));
+  insertPreserveOrder(writeContext, key, scalar);
 }
 
 function insertCollectionNode(writeContext: YmlWriteContext, key: string) {
   const yamlMap = new YAMLMap();
-  writeContext.currentPairs.push(new Pair(key, yamlMap));
+  insertPreserveOrder(writeContext, key, yamlMap);
+}
+
+function insertPreserveOrder(
+  writeContext: YmlWriteContext,
+  newKey: string,
+  newNode: Node
+) {
+  const newPair = new Pair(newKey, newNode);
+  const currentPairs = writeContext.currentPairs;
+  const keyBefore = findKeyBefore(writeContext.currentJson, newKey);
+  if (!keyBefore) {
+    writeContext.currentPairs = [newPair, ...currentPairs];
+    return;
+  }
+  for (let idx = 0; idx < currentPairs.length; idx++) {
+    const pair = currentPairs[idx];
+    if (pair.key === keyBefore) {
+      writeContext.currentPairs = [
+        ...currentPairs.slice(0, idx),
+        newPair,
+        ...currentPairs.slice(idx),
+      ];
+      return;
+    }
+  }
+  writeContext.currentPairs.push(newPair);
+}
+
+function findKeyBefore(
+  obj: Record<string, unknown>,
+  key: string
+): string | null {
+  let prevKey: string | null = null;
+  for (const objKey of Object.keys(obj)) {
+    if (objKey === key) {
+      return prevKey;
+    }
+    prevKey = objKey;
+  }
+  return null;
 }
