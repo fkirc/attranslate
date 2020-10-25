@@ -44,7 +44,11 @@ test("yml delete stale translations", async () => {
   const path = join(sampleDir, targetPaths[0]);
   injectPrefixLines({
     path,
-    lines: ["injected.1: 'first'", "injected.2: 'second'"],
+    lines: [
+      "injected.1: 'first'",
+      "injected_outer:",
+      "  injected_inner: 'inner val'",
+    ],
   });
   const output = await runSampleScript(ymlScript, [assetDir]);
   expect(output).toContain(`Delete 2 stale translations`);
