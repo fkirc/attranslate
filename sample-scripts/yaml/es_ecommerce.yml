@@ -1,22 +1,7 @@
-titles:
-  blog: 'Blog'
-  stories: 'Historias de éxito'
-  faq: 'Apoyo'
-  press: 'prensa'
-  impressum: 'Impressum'
-  gdpr: 'Reglamento de protección de datos'
-  certificates: 'Certificados'
-  delivery-terms: 'Pago y Entrega'
-  ifu: 'Instrucciones de uso'
-  contact: 'Soporte de contacto'
-  cancellation: 'Cancelación'
-  about: 'Sobre nosotros'
-  jobs: 'Carrera'
-  #betabugs: 'Beta Feedback'
-  errorpage: 'cuatro cero cuatro'
-  download: 'Descargar'
-  checkout: 'Revisa'
-  conditions: 'GT&C'
+subsections:
+  - 'Payment and Delivery'
+  - 'Success Stories'
+  - 'Certificates'
 
 titles_long:
   home: 'Sección de inicio'

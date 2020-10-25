@@ -6,98 +6,7 @@
     "minor": 0
   },
   "entries": {
-    "titles.blog": {
-      "value": "Blog",
-      "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
-          "id": "de",
-          "state": "frozen"
-        }
-      ]
-    },
-    "titles.stories": {
-      "value": "Success Stories",
-      "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
-          "id": "de",
-          "state": "frozen"
-        }
-      ]
-    },
-    "titles.faq": {
-      "value": "Support",
-      "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
-          "id": "de",
-          "state": "frozen"
-        }
-      ]
-    },
-    "titles.press": {
-      "value": "Press",
-      "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
-          "id": "de",
-          "state": "frozen"
-        }
-      ]
-    },
-    "titles.impressum": {
-      "value": "Impressum",
-      "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
-          "id": "de",
-          "state": "frozen"
-        }
-      ]
-    },
-    "titles.gdpr": {
-      "value": "Data Protection Regulation",
-      "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
-          "id": "de",
-          "state": "frozen"
-        }
-      ]
-    },
-    "titles.certificates": {
-      "value": "Certificates",
-      "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
-          "id": "de",
-          "state": "frozen"
-        }
-      ]
-    },
-    "titles.delivery-terms": {
+    "subsections[0]": {
       "value": "Payment and Delivery",
       "targets": [
         {
@@ -110,8 +19,8 @@
         }
       ]
     },
-    "titles.ifu": {
-      "value": "Instructions for Use",
+    "subsections[1]": {
+      "value": "Success Stories",
       "targets": [
         {
           "id": "es",
@@ -123,99 +32,8 @@
         }
       ]
     },
-    "titles.contact": {
-      "value": "Contact / Support",
-      "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
-          "id": "de",
-          "state": "frozen"
-        }
-      ]
-    },
-    "titles.cancellation": {
-      "value": "Cancellation",
-      "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
-          "id": "de",
-          "state": "frozen"
-        }
-      ]
-    },
-    "titles.about": {
-      "value": "About us",
-      "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
-          "id": "de",
-          "state": "frozen"
-        }
-      ]
-    },
-    "titles.jobs": {
-      "value": "Career",
-      "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
-          "id": "de",
-          "state": "frozen"
-        }
-      ]
-    },
-    "titles.errorpage": {
-      "value": "four zero four",
-      "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
-          "id": "de",
-          "state": "frozen"
-        }
-      ]
-    },
-    "titles.download": {
-      "value": "Download",
-      "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
-          "id": "de",
-          "state": "frozen"
-        }
-      ]
-    },
-    "titles.checkout": {
-      "value": "Checkout",
-      "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
-          "id": "de",
-          "state": "frozen"
-        }
-      ]
-    },
-    "titles.conditions": {
-      "value": "GT&C",
+    "subsections[2]": {
+      "value": "Certificates",
       "targets": [
         {
           "id": "es",

@@ -1,22 +1,7 @@
-titles:
-  blog: 'Blog'
-  stories: 'Erfolgsgeschichten'
-  faq: 'Unterstützung'
-  press: 'Drücken Sie'
-  impressum: 'Eindruck'
-  gdpr: 'Datenschutzverordnung'
-  certificates: 'Zertifikate'
-  delivery-terms: 'Zahlungs-und Lieferbedingungen'
-  ifu: 'Gebrauchsanweisung'
-  contact: 'Kontaktieren Sie Support'
-  cancellation: 'Stornierung'
-  about: 'Über uns'
-  jobs: 'Werdegang'
-  #betabugs: 'Beta Feedback'
-  errorpage: 'vier null vier'
-  download: 'Herunterladen'
-  checkout: 'Auschecken'
-  conditions: 'GT & C.'
+subsections:
+  - 'Payment and Delivery'
+  - 'Success Stories'
+  - 'Certificates'
 
 titles_long:
   home: 'Home-Bereich'
