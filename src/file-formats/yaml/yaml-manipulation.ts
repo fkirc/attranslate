@@ -35,15 +35,7 @@ export function deleteStaleNodes(writeContext: YmlWriteContext) {
 }
 
 export function recursiveNodeInsert(writeContext: YmlWriteContext) {
-  const currentNodes: Map<string, Node> = new Map();
-  writeContext.currentPairs.forEach((pair) => {
-    const subKey = pair.key?.value;
-    if (typeof subKey !== "string") {
-      return;
-    }
-    const flattenedSubkey = subKey.split(NESTED_JSON_SEPARATOR, 1)[0];
-    currentNodes.set(flattenedSubkey, pair.value);
-  });
+  const currentNodes = extractNodeMap(writeContext);
   for (const jsonKey of Object.keys(writeContext.currentJson)) {
     const childJson = writeContext.currentJson[jsonKey];
     const childNode = currentNodes.get(jsonKey);
@@ -66,6 +58,19 @@ export function recursiveNodeInsert(writeContext: YmlWriteContext) {
       recursiveNodeInsert(childContext);
     }
   });
+}
+
+function extractNodeMap(writeContext: YmlWriteContext): Map<string, Node> {
+  const nodeMap: Map<string, Node> = new Map();
+  writeContext.currentPairs.forEach((pair) => {
+    const subKey = pair.key?.value;
+    if (typeof subKey !== "string") {
+      return;
+    }
+    const flattenedSubkey = subKey.split(NESTED_JSON_SEPARATOR, 1)[0];
+    nodeMap.set(flattenedSubkey, pair.value);
+  });
+  return nodeMap;
 }
 
 function insertScalarNode(
