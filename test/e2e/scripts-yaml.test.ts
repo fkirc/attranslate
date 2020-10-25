@@ -1,5 +1,6 @@
 import {
   injectPrefixLines,
+  removeLines,
   runSampleScript,
   sampleDir,
 } from "./scripts-e2e-util";
@@ -47,5 +48,21 @@ test("yml delete stale translations", async () => {
   });
   const output = await runSampleScript(ymlScript, [assetDir]);
   expect(output).toContain(`Delete 2 stale translations`);
+  expect(output).toContain(`Write target ${getDebugPath(path)}`);
+});
+
+test("yml insert new translations", async () => {
+  const path = join(sampleDir, targetPaths[0]);
+  removeLines({
+    path,
+    linesToRemove: [
+      "  impressum: 'Impressum'",
+      "  gdpr: 'Reglamento de protección de datos'",
+      "  conditions: 'GT&C'",
+      "  cancellation: 'Cancelación'",
+    ],
+  });
+  const output = await runSampleScript(ymlScript, [assetDir]);
+  expect(output).toContain(`Add 8 new translations`);
   expect(output).toContain(`Write target ${getDebugPath(path)}`);
 });

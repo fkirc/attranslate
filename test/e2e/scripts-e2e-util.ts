@@ -21,3 +21,12 @@ export function injectPrefixLines(args: { path: string; lines: string[] }) {
   const modifiedStr = `${args.lines.join("\n")}\n${str}`;
   writeUf8File(args.path, modifiedStr);
 }
+
+export function removeLines(args: { path: string; linesToRemove: string[] }) {
+  const str = readUtf8File(args.path);
+  const lines = str.split("\n");
+  const filteredLines = lines.filter((line) => {
+    return !args.linesToRemove.includes(line);
+  });
+  writeUf8File(args.path, filteredLines.join("\n"));
+}
