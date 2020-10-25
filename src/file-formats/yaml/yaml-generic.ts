@@ -10,7 +10,7 @@ import { FormatCache } from "../common/format-cache";
 import Parsed = Document.Parsed;
 import { flatten, unflatten } from "../../util/flatten";
 import { readJsonProp } from "../common/json-common";
-import { Collection, Node, Pair, Scalar, YAMLMap } from "yaml/types";
+import { Node, Scalar, YAMLMap } from "yaml/types";
 import {
   deleteStaleNodes,
   recursiveNodeInsert,
@@ -22,17 +22,17 @@ import { parseYaml } from "./yaml-parse";
 export interface YmlWriteContext {
   args: WriteTFileArgs;
   doc: Parsed;
-  currentPairs: Array<Pair>;
+  currentNode: YAMLMap;
   currentJson: Record<string, unknown>;
 }
 
-export function isCollection(node: Node): node is Collection {
+export function isCollection(node: Node): node is YAMLMap {
   if (!node.type) {
     return false;
   }
   return [
     Type.MAP,
-    Type.FLOW_MAP,
+    //Type.FLOW_MAP,
     //Type.SEQ,
     //Type.FLOW_SEQ,
     //Type.DOCUMENT,
@@ -111,7 +111,7 @@ export class YamlGeneric implements TFileFormat {
     const writeContext: YmlWriteContext = {
       args,
       doc,
-      currentPairs: contents.items,
+      currentNode: contents as YAMLMap,
       currentJson: nestedJson,
     };
     deleteStaleNodes(writeContext);

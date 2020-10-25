@@ -3,10 +3,16 @@ import { isCollection, isScalar, YmlWriteContext } from "./yaml-generic";
 import { NESTED_JSON_SEPARATOR } from "../../util/flatten";
 import { Type } from "yaml/util";
 
+function getSubKey(pair: Pair): string {
+  if (typeof pair.key === "string") {
+    return pair.key;
+  }
+  return pair.key?.value;
+}
+
 export function recursiveNodeUpdate(writeContext: YmlWriteContext) {
-  writeContext.currentPairs.forEach((pair) => {
-    const subKey = pair.key;
-    const childJson = writeContext.currentJson[subKey?.value];
+  writeContext.currentNode.items.forEach((pair) => {
+    const childJson = writeContext.currentJson[getSubKey(pair)];
     if (childJson === undefined) {
       return;
     }
@@ -15,7 +21,7 @@ export function recursiveNodeUpdate(writeContext: YmlWriteContext) {
       const childContext: YmlWriteContext = {
         ...writeContext,
         currentJson: childJson as Record<string, unknown>,
-        currentPairs: node.items,
+        currentNode: node,
       };
       recursiveNodeUpdate(childContext);
     } else if (isScalar(node) && typeof childJson !== "object") {
@@ -45,15 +51,14 @@ export function recursiveNodeInsert(writeContext: YmlWriteContext) {
       insertCollectionNode(writeContext, jsonKey);
     }
   }
-  writeContext.currentPairs.forEach((pair) => {
-    const subKey = pair.key?.value;
-    const childJson = writeContext.currentJson[subKey];
+  writeContext.currentNode.items.forEach((pair) => {
+    const childJson = writeContext.currentJson[getSubKey(pair)];
     const node: Node = pair.value;
     if (isCollection(node) && childJson && typeof childJson === "object") {
       const childContext: YmlWriteContext = {
         ...writeContext,
         currentJson: childJson as Record<string, unknown>,
-        currentPairs: node.items,
+        currentNode: node,
       };
       recursiveNodeInsert(childContext);
     }
@@ -62,8 +67,8 @@ export function recursiveNodeInsert(writeContext: YmlWriteContext) {
 
 function extractNodeMap(writeContext: YmlWriteContext): Map<string, Node> {
   const nodeMap: Map<string, Node> = new Map();
-  writeContext.currentPairs.forEach((pair) => {
-    const subKey = pair.key?.value;
+  writeContext.currentNode.items.forEach((pair) => {
+    const subKey = getSubKey(pair);
     if (typeof subKey !== "string") {
       return;
     }
@@ -91,24 +96,24 @@ function insertPreserveOrder(
   newNode: Node
 ) {
   const newPair = new Pair(newKey, newNode);
-  const currentPairs = writeContext.currentPairs;
+  const currentPairs = writeContext.currentNode.items;
   const keyBefore = findKeyBefore(writeContext.currentJson, newKey);
   if (!keyBefore) {
-    writeContext.currentPairs = [newPair, ...currentPairs];
+    writeContext.currentNode.items = [newPair, ...currentPairs];
     return;
   }
-  for (let idx = 0; idx < currentPairs.length; idx++) {
+  for (let idx = 0; idx < currentPairs.length - 1; idx++) {
     const pair = currentPairs[idx];
-    if (pair.key === keyBefore) {
-      writeContext.currentPairs = [
-        ...currentPairs.slice(0, idx),
+    if (getSubKey(pair) === keyBefore) {
+      writeContext.currentNode.items = [
+        ...currentPairs.slice(0, idx + 1),
         newPair,
-        ...currentPairs.slice(idx),
+        ...currentPairs.slice(idx + 1),
       ];
       return;
     }
   }
-  writeContext.currentPairs.push(newPair);
+  writeContext.currentNode.items.push(newPair);
 }
 
 function findKeyBefore(
