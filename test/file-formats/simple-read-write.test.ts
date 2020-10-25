@@ -20,6 +20,10 @@ const testArgs: {
   fileFormat: TFileType;
 }[] = [
   {
+    srcFile: "test-assets/flat-yml/symfony2.yml",
+    fileFormat: "yaml",
+  },
+  {
     srcFile: "test-assets/nested-yml/country_array.yml",
     fileFormat: "yaml",
   },
@@ -29,10 +33,6 @@ const testArgs: {
   },
   {
     srcFile: "test-assets/nested-yml/rails_i18n.yml",
-    fileFormat: "yaml",
-  },
-  {
-    srcFile: "test-assets/flat-yml/symfony2.yml",
     fileFormat: "yaml",
   },
   {

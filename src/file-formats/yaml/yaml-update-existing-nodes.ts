@@ -1,5 +1,6 @@
 import { Node, Pair, Scalar, YAMLMap } from "yaml/types";
 import { isCollection, isScalar, YmlWriteContext } from "./yaml-generic";
+import { NESTED_JSON_SEPARATOR } from "../../util/flatten";
 
 export function recursiveNodeUpdate(writeContext: YmlWriteContext) {
   writeContext.currentPairs.forEach((pair) => {
@@ -36,7 +37,11 @@ export function recursiveNodeInsert(writeContext: YmlWriteContext) {
   const currentNodes: Map<string, Node> = new Map();
   writeContext.currentPairs.forEach((pair) => {
     const subKey = pair.key?.value;
-    currentNodes.set(subKey, pair.value);
+    if (typeof subKey !== "string") {
+      return;
+    }
+    const flattenedSubkey = subKey.split(NESTED_JSON_SEPARATOR, 1)[0];
+    currentNodes.set(flattenedSubkey, pair.value);
   });
   for (const jsonKey of Object.keys(writeContext.currentJson)) {
     const childJson = writeContext.currentJson[jsonKey];
