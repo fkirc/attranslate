@@ -92,14 +92,14 @@ Usage: attranslate [options]
 Options:
   --srcFile <sourceFile>             The source file to be translated
   --srcLng <sourceLanguage>          A language code for the source language
-  --srcFormat <sourceFileFormat>     One of "flat-json", "nested-json",
-                                     "flutter-arb", "android-xml",
-                                     "ios-strings"
+  --srcFormat <sourceFileFormat>     One of "flat-json", "nested-json", "yaml",
+                                     "android-xml", "ios-strings",
+                                     "flutter-arb"
   --targetFile <targetFile>          The target file for the translations
   --targetLng <targetLanguage>       A language code for the target language
-  --targetFormat <targetFileFormat>  One of "flat-json", "nested-json",
-                                     "flutter-arb", "android-xml",
-                                     "ios-strings"
+  --targetFormat <targetFileFormat>  One of "flat-json", "nested-json", "yaml",
+                                     "android-xml", "ios-strings",
+                                     "flutter-arb"
   --service <translationService>     One of "google-translate", "deepl",
                                      "azure", "manual",
                                      "sync-without-translate"

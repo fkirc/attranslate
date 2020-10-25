@@ -67,7 +67,7 @@ test("yml insert new translations", async () => {
     ],
   });
   const output = await runSampleScript(ymlScript, [assetDir]);
-  expect(output).toContain(`Add 8 new translations`);
+  expect(output).toContain(`Add 4 new translations`);
   expect(output).toContain(`Write target ${getDebugPath(path)}`);
 });
 
