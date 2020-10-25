@@ -1,71 +1,15 @@
 [
   [
-    "titles.blog",
-    "Blog"
-  ],
-  [
-    "titles.stories",
-    "Success Stories"
-  ],
-  [
-    "titles.faq",
-    "Support"
-  ],
-  [
-    "titles.press",
-    "Press"
-  ],
-  [
-    "titles.impressum",
-    "Impressum"
-  ],
-  [
-    "titles.gdpr",
-    "Data Protection Regulation"
-  ],
-  [
-    "titles.certificates",
-    "Certificates"
-  ],
-  [
-    "titles.delivery-terms",
+    "subsections[0]",
     "Payment and Delivery"
   ],
   [
-    "titles.ifu",
-    "Instructions for Use"
+    "subsections[1]",
+    "Success Stories"
   ],
   [
-    "titles.contact",
-    "Contact / Support"
-  ],
-  [
-    "titles.cancellation",
-    "Cancellation"
-  ],
-  [
-    "titles.about",
-    "About us"
-  ],
-  [
-    "titles.jobs",
-    "Career"
-  ],
-  [
-    "titles.errorpage",
-    "four zero four"
-  ],
-  [
-    "titles.download",
-    "Download"
-  ],
-  [
-    "titles.checkout",
-    "Checkout"
-  ],
-  [
-    "titles.conditions",
-    "GT&C"
+    "subsections[2]",
+    "Certificates"
   ],
   [
     "titles_long.home",
