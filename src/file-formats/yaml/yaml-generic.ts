@@ -33,9 +33,9 @@ export function isCollection(node: Node): node is Collection {
   return [
     Type.MAP,
     Type.FLOW_MAP,
-    Type.SEQ,
-    Type.FLOW_SEQ,
-    Type.DOCUMENT,
+    //Type.SEQ,
+    //Type.FLOW_SEQ,
+    //Type.DOCUMENT,
   ].includes(node.type as Type);
 }
 
