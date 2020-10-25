@@ -79,6 +79,18 @@ test("duplicate keys iOS", async () => {
   expect(output).toBe(expectedOutput);
 });
 
+test("duplicate keys yml", async () => {
+  const args: E2EArgs = {
+    ...defaultE2EArgs,
+    srcFile: "test-assets/invalid/duplicate-keys.yml",
+    srcFormat: "yaml",
+  };
+  const output = await runTranslateExpectFailure(buildE2EArgs(args));
+  expect(output).toContain(
+    'Map keys must be unique; "question" is repeated at line 1, column 1'
+  );
+});
+
 test("invalid iOS strings", async () => {
   const args: E2EArgs = {
     ...defaultE2EArgs,
