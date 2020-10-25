@@ -15,7 +15,7 @@ import {
   deleteStaleNodes,
   recursiveNodeInsert,
   recursiveNodeUpdate,
-} from "./yaml-update-existing-nodes";
+} from "./yaml-manipulation";
 import { Type } from "yaml/util";
 import { parseYaml } from "./yaml-parse";
 
