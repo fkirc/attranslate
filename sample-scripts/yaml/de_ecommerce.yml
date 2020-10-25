@@ -80,7 +80,7 @@ footer:
     inner_footer:
       inner_block1:
         inner_title: 'Legal'
-        inner_link1: 'Data Protection'
+        inner_link1: 'Datenschutz'
 
   block2:
     title: 'Information'
