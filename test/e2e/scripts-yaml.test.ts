@@ -29,6 +29,9 @@ test("yml clean", async () => {
 });
 
 test("yml re-create targets", async () => {
+  if (process.env.CI) {
+    return;
+  }
   targetPaths.forEach((path) => {
     unlinkSync(join(sampleDir, path));
   });
@@ -41,9 +44,6 @@ test("yml re-create targets", async () => {
 });
 
 test("yml delete stale translations", async () => {
-  if (process.env.CI) {
-    return;
-  }
   const path = join(sampleDir, targetPaths[0]);
   injectPrefixLines({
     path,
