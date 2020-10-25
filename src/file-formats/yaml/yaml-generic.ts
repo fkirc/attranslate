@@ -19,6 +19,7 @@ import { readJsonProp, writeJsonProp } from "../common/json-common";
 import { Collection, Node, Pair, Scalar, YAMLMap } from "yaml/types";
 import { recursiveNodeUpdate } from "./yaml-update-existing-nodes";
 import { Type } from "yaml/util";
+import { logParseError } from "../common/parse-utils";
 
 export interface YmlWriteContext {
   args: WriteTFileArgs;
@@ -73,7 +74,13 @@ export class YamlGeneric implements TFileFormat {
       keepUndefined: true,
       prettyErrors: true,
     };
-    const document: Parsed = parseDocument(ymlString, options);
+    let document: Parsed;
+    try {
+      document = parseDocument(ymlString, options);
+    } catch (e) {
+      console.error(e);
+      logParseError("YAML parsing error", args);
+    }
     documentCache.insertFileCache({
       path: args.path,
       entries: new Map(),
