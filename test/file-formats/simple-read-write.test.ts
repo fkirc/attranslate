@@ -20,15 +20,15 @@ const testArgs: {
   fileFormat: TFileType;
 }[] = [
   {
+    srcFile: "test-assets/nested-yml/jekyll_ecommerce.yml",
+    fileFormat: "yaml",
+  },
+  {
     srcFile: "test-assets/flat-yml/symfony2.yml",
     fileFormat: "yaml",
   },
   {
     srcFile: "test-assets/nested-yml/country_array.yml",
-    fileFormat: "yaml",
-  },
-  {
-    srcFile: "test-assets/nested-yml/jekyll_ecommerce.yml",
     fileFormat: "yaml",
   },
   {

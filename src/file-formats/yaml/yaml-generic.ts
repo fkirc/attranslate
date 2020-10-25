@@ -10,7 +10,7 @@ import { FormatCache } from "../common/format-cache";
 import Parsed = Document.Parsed;
 import { flatten, unflatten } from "../../util/flatten";
 import { readJsonProp } from "../common/json-common";
-import { Node, Scalar, YAMLMap } from "yaml/types";
+import { Collection, Node, Scalar } from "yaml/types";
 import { recursiveNodeUpdate } from "./yaml-manipulation";
 import { Type } from "yaml/util";
 import { parseYaml } from "./yaml-parse";
@@ -18,20 +18,20 @@ import { parseYaml } from "./yaml-parse";
 export interface YmlWriteContext {
   args: WriteTFileArgs;
   doc: Parsed;
-  currentNode: YAMLMap;
+  currentNode: Collection;
   currentJson: Record<string, unknown>;
 }
 
-export function isCollection(node: Node): node is YAMLMap {
+export function isCollection(node: Node): node is Collection {
   if (!node.type) {
     return false;
   }
   return [
     Type.MAP,
-    //Type.FLOW_MAP,
-    //Type.SEQ,
-    //Type.FLOW_SEQ,
-    //Type.DOCUMENT,
+    Type.FLOW_MAP,
+    Type.SEQ,
+    Type.FLOW_SEQ,
+    Type.DOCUMENT,
   ].includes(node.type as Type);
 }
 
@@ -101,14 +101,16 @@ export class YamlGeneric implements TFileFormat {
     if (!cachedYml.contents) {
       logFatal("no cached yml contents");
     }
-    const contents: Partial<YAMLMap> = cachedYml.contents as Partial<YAMLMap>;
+    const contents: Partial<Collection> = cachedYml.contents as Partial<
+      Collection
+    >;
     if (!contents.items || !Array.isArray(contents.items)) {
       logFatal("no cached yml items");
     }
     const writeContext: YmlWriteContext = {
       args,
       doc: cachedYml,
-      currentNode: contents as YAMLMap,
+      currentNode: contents as Collection,
       currentJson: nestedJson,
     };
     recursiveNodeUpdate(writeContext);
