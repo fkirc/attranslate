@@ -56,4 +56,10 @@ export class FormatCache<E, A> {
     }
     return null;
   }
+  getOldestAuxdata(): A | null {
+    if (!this.fileCaches.length) {
+      return null;
+    }
+    return this.fileCaches[0].auxData;
+  }
 }

@@ -11,11 +11,7 @@ import Parsed = Document.Parsed;
 import { flatten, unflatten } from "../../util/flatten";
 import { readJsonProp } from "../common/json-common";
 import { Node, Scalar, YAMLMap } from "yaml/types";
-import {
-  deleteStaleNodes,
-  recursiveNodeInsert,
-  recursiveNodeUpdate,
-} from "./yaml-manipulation";
+import { recursiveNodeUpdate } from "./yaml-manipulation";
 import { Type } from "yaml/util";
 import { parseYaml } from "./yaml-parse";
 
@@ -86,10 +82,10 @@ export class YamlGeneric implements TFileFormat {
       flatJson[key] = value;
     });
     const nestedJson = unflatten(flatJson);
-    const doc = documentCache.lookupAuxdata({ path: args.path });
+    const cachedYml = documentCache.getOldestAuxdata();
     let ymlString: string;
-    if (doc) {
-      ymlString = this.createCachedYml(args, doc, nestedJson);
+    if (cachedYml) {
+      ymlString = this.createCachedYml(args, cachedYml, nestedJson);
     } else {
       ymlString = this.createUncachedYml(args, nestedJson);
     }
@@ -98,26 +94,24 @@ export class YamlGeneric implements TFileFormat {
 
   createCachedYml(
     args: WriteTFileArgs,
-    doc: Parsed,
+    cachedYml: Parsed,
     nestedJson: Record<string, unknown>
   ): string {
-    if (!doc.contents) {
+    if (!cachedYml.contents) {
       logFatal("no cached yml contents");
     }
-    const contents: Partial<YAMLMap> = doc.contents as Partial<YAMLMap>;
+    const contents: Partial<YAMLMap> = cachedYml.contents as Partial<YAMLMap>;
     if (!contents.items || !Array.isArray(contents.items)) {
       logFatal("no cached yml items");
     }
     const writeContext: YmlWriteContext = {
       args,
-      doc,
+      doc: cachedYml,
       currentNode: contents as YAMLMap,
       currentJson: nestedJson,
     };
-    deleteStaleNodes(writeContext);
     recursiveNodeUpdate(writeContext);
-    recursiveNodeInsert(writeContext);
-    return doc.toString();
+    return cachedYml.toString();
   }
 
   createUncachedYml(
