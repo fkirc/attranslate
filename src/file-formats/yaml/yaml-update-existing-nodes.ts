@@ -21,3 +21,13 @@ export function recursiveNodeUpdate(writeContext: YmlWriteContext) {
     }
   });
 }
+
+export function deleteStaleNodes(writeContext: YmlWriteContext) {
+  const changeSet = writeContext.args.changeSet;
+  if (!changeSet?.deleted?.size) {
+    return;
+  }
+  changeSet.deleted.forEach((value, key) => {
+    writeContext.doc.delete(key);
+  });
+}

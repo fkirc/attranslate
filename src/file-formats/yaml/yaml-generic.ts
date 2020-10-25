@@ -11,7 +11,10 @@ import Parsed = Document.Parsed;
 import { flatten, unflatten } from "../../util/flatten";
 import { readJsonProp, writeJsonProp } from "../common/json-common";
 import { Collection, Node, Pair, Scalar, YAMLMap } from "yaml/types";
-import { recursiveNodeUpdate } from "./yaml-update-existing-nodes";
+import {
+  deleteStaleNodes,
+  recursiveNodeUpdate,
+} from "./yaml-update-existing-nodes";
 import { Type } from "yaml/util";
 import { parseYaml } from "./yaml-parse";
 
@@ -110,6 +113,7 @@ export class YamlGeneric implements TFileFormat {
       currentPairs: contents.items,
       currentJson: nestedJson,
     };
+    deleteStaleNodes(writeContext);
     recursiveNodeUpdate(writeContext);
     return doc.toString();
   }

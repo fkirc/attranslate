@@ -47,7 +47,5 @@ test("yml delete stale translations", async () => {
   });
   const output = await runSampleScript(ymlScript, [assetDir]);
   expect(output).toContain(`Delete 2 stale translations`);
-  expect(output).toContain(
-    `Write target ${getDebugPath(join(sampleDir, path))}`
-  );
+  expect(output).toContain(`Write target ${getDebugPath(path)}`);
 });
