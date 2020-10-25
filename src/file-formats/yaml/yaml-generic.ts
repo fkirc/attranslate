@@ -89,6 +89,7 @@ export class YamlGeneric implements TFileFormat {
     } else {
       ymlString = this.createUncachedYml(args, nestedJson);
     }
+    documentCache.purge();
     writeUf8File(args.path, ymlString);
   }
 
