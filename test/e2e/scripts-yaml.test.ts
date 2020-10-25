@@ -66,3 +66,19 @@ test("yml insert new translations", async () => {
   expect(output).toContain(`Add 8 new translations`);
   expect(output).toContain(`Write target ${getDebugPath(path)}`);
 });
+
+test("yml insert inner elements", async () => {
+  const path = join(sampleDir, targetPaths[0]);
+  removeLines({
+    path,
+    linesToRemove: [
+      "    inner_footer:",
+      "      inner_block1:",
+      "        inner_title: 'Legal'",
+      "        inner_link1: 'Protección de Datos'",
+    ],
+  });
+  const output = await runSampleScript(ymlScript, [assetDir]);
+  expect(output).toContain(`Add 2 new translations`);
+  expect(output).toContain(`Write target ${getDebugPath(path)}`);
+});
