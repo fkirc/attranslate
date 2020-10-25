@@ -760,6 +760,32 @@
         }
       ]
     },
+    "footer.block1.inner_footer.inner_block1.inner_title": {
+      "value": "Legal",
+      "targets": [
+        {
+          "id": "es",
+          "state": "frozen"
+        },
+        {
+          "id": "de",
+          "state": "frozen"
+        }
+      ]
+    },
+    "footer.block1.inner_footer.inner_block1.inner_link1": {
+      "value": "Data Protection",
+      "targets": [
+        {
+          "id": "es",
+          "state": "frozen"
+        },
+        {
+          "id": "de",
+          "state": "frozen"
+        }
+      ]
+    },
     "footer.block2.title": {
       "value": "Information",
       "targets": [
