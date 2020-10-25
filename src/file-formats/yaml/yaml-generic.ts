@@ -4,14 +4,8 @@ import {
   WriteTFileArgs,
 } from "../file-format-definitions";
 import { TSet } from "../../core/core-definitions";
-import { logFatal, readUtf8File, writeUf8File } from "../../util/util";
-import {
-  Document,
-  Options,
-  parseDocument,
-  stringify,
-  scalarOptions,
-} from "yaml";
+import { logFatal, writeUf8File } from "../../util/util";
+import { Document, Options, stringify, scalarOptions } from "yaml";
 import { FormatCache } from "../common/format-cache";
 import Parsed = Document.Parsed;
 import { flatten, unflatten } from "../../util/flatten";
@@ -19,7 +13,7 @@ import { readJsonProp, writeJsonProp } from "../common/json-common";
 import { Collection, Node, Pair, Scalar, YAMLMap } from "yaml/types";
 import { recursiveNodeUpdate } from "./yaml-update-existing-nodes";
 import { Type } from "yaml/util";
-import { logParseError } from "../common/parse-utils";
+import { parseYaml } from "./yaml-parse";
 
 export interface YmlWriteContext {
   args: WriteTFileArgs;
@@ -67,20 +61,7 @@ export class YamlGeneric implements TFileFormat {
   }
 
   readTFile(args: ReadTFileArgs): Promise<TSet> {
-    const ymlString = readUtf8File(args.path);
-    const options: Options = {
-      keepCstNodes: true,
-      keepNodeTypes: true,
-      keepUndefined: true,
-      prettyErrors: true,
-    };
-    let document: Parsed;
-    try {
-      document = parseDocument(ymlString, options);
-    } catch (e) {
-      console.error(e);
-      logParseError("YAML parsing error", args);
-    }
+    const document = parseYaml(args);
     documentCache.insertFileCache({
       path: args.path,
       entries: new Map(),
