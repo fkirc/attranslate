@@ -10,7 +10,7 @@ import { FormatCache } from "../common/format-cache";
 import Parsed = Document.Parsed;
 import { flatten, unflatten } from "../../util/flatten";
 import { readJsonProp } from "../common/json-common";
-import { Collection, Node, Scalar } from "yaml/types";
+import { Collection, Node, Pair, Scalar, YAMLSeq } from "yaml/types";
 import { recursiveNodeUpdate } from "./yaml-manipulation";
 import { Type } from "yaml/util";
 import { parseYaml } from "./yaml-parse";
@@ -18,8 +18,15 @@ import { parseYaml } from "./yaml-parse";
 export interface YmlWriteContext {
   args: WriteTFileArgs;
   doc: Parsed;
-  currentNode: Collection;
-  currentJson: Record<string, unknown>;
+  partialKey: string;
+  currentNode: Node;
+}
+
+export function isSequence(node: Collection): node is YAMLSeq {
+  if (!node.type) {
+    return false;
+  }
+  return [Type.SEQ, Type.FLOW_SEQ].includes(node.type as Type);
 }
 
 export function isCollection(node: Node): node is Collection {
@@ -33,6 +40,15 @@ export function isCollection(node: Node): node is Collection {
     Type.FLOW_SEQ,
     Type.DOCUMENT,
   ].includes(node.type as Type);
+}
+
+export function isPair(node: Node): node is Pair {
+  if (!node.type) {
+    return false;
+  }
+  return [Pair.Type.PAIR, Pair.Type.MERGE_PAIR].includes(
+    node.type as Pair.Type
+  );
 }
 
 export function isScalar(node: Node): node is Scalar {
@@ -110,8 +126,8 @@ export class YamlGeneric implements TFileFormat {
     const writeContext: YmlWriteContext = {
       args,
       doc: cachedYml,
+      partialKey: "",
       currentNode: contents as Collection,
-      currentJson: nestedJson,
     };
     recursiveNodeUpdate(writeContext);
     return cachedYml.toString();

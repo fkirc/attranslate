@@ -1,7 +1,7 @@
 subsections:
-  - 'Payment and Delivery'
-  - 'Success Stories'
-  - 'Certificates'
+  - 'Pago y Entrega'
+  - 'Historias de éxito'
+  - 'Certificados'
 
 titles_long:
   home: 'Sección de inicio'
@@ -35,8 +35,8 @@ banner:
   # to disable topbanner set text_short to ' '
   text_short: 'Oferta -15%'
   countries:
-    - 'DE'
-    - 'AT'
+    - 'Delaware'
+    - 'A'
     - 'NL'
     - 'DK'
   coupon: 'HERBST15'

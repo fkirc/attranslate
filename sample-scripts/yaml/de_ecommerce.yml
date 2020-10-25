@@ -1,7 +1,7 @@
 subsections:
-  - 'Payment and Delivery'
-  - 'Success Stories'
-  - 'Certificates'
+  - 'Zahlungs-und Lieferbedingungen'
+  - 'Erfolgsgeschichten'
+  - 'Zertifikate'
 
 titles_long:
   home: 'Home-Bereich'
@@ -36,7 +36,7 @@ banner:
   text_short: 'Verkauf -15%'
   countries:
     - 'DE'
-    - 'AT'
+    - 'BEIM'
     - 'NL'
     - 'DK'
   coupon: 'HERBST15'

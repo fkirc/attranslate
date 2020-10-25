@@ -1,5 +1,12 @@
 import { Node, Pair } from "yaml/types";
-import { isCollection, isScalar, YmlWriteContext } from "./yaml-generic";
+import {
+  isCollection,
+  isPair,
+  isScalar,
+  isSequence,
+  YmlWriteContext,
+} from "./yaml-generic";
+import { NESTED_JSON_SEPARATOR } from "../../util/flatten";
 
 function getSubKey(pair: Pair): string {
   if (typeof pair.key === "string") {
@@ -9,21 +16,38 @@ function getSubKey(pair: Pair): string {
 }
 
 export function recursiveNodeUpdate(writeContext: YmlWriteContext) {
-  writeContext.currentNode.items.forEach((pair) => {
-    const childJson = writeContext.currentJson[getSubKey(pair)];
-    if (childJson === undefined) {
-      return;
+  const node = writeContext.currentNode;
+  if (isScalar(node)) {
+    const value = writeContext.args.tSet.get(writeContext.partialKey);
+    if (value !== undefined) {
+      node.value = value;
     }
-    const node: Node = pair.value;
-    if (isCollection(node) && typeof childJson === "object") {
-      const childContext: YmlWriteContext = {
+  }
+  if (isPair(node)) {
+    const subKey = getSubKey(node);
+    let partialKey: string;
+    if (writeContext.partialKey.length) {
+      partialKey = writeContext.partialKey + NESTED_JSON_SEPARATOR + subKey;
+    } else {
+      partialKey = subKey;
+    }
+    recursiveNodeUpdate({
+      ...writeContext,
+      currentNode: node.value as Node,
+      partialKey,
+    });
+  }
+  if (isCollection(node)) {
+    node.items.forEach((childNode, idx) => {
+      let partialKey = `${writeContext.partialKey}`;
+      if (isSequence(node)) {
+        partialKey += `[${idx}]`;
+      }
+      recursiveNodeUpdate({
         ...writeContext,
-        currentJson: childJson as Record<string, unknown>,
-        currentNode: node,
-      };
-      recursiveNodeUpdate(childContext);
-    } else if (isScalar(node) && typeof childJson !== "object") {
-      node.value = childJson ?? "";
-    }
-  });
+        currentNode: childNode,
+        partialKey: partialKey,
+      });
+    });
+  }
 }
