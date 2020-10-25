@@ -87,6 +87,7 @@ function insertScalarNode(writeContext: YmlWriteContext, key: string) {
 
 function insertCollectionNode(writeContext: YmlWriteContext, key: string) {
   const yamlMap = new YAMLMap();
+  yamlMap.type = Type.MAP;
   insertPreserveOrder(writeContext, key, yamlMap);
 }
 
