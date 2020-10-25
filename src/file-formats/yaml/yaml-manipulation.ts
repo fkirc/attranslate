@@ -37,7 +37,38 @@ export function deleteStaleNodes(writeContext: YmlWriteContext) {
   }
   changeSet.deleted.forEach((value, key) => {
     writeContext.doc.delete(key);
+    recursiveNodeDelete(writeContext, key.split(NESTED_JSON_SEPARATOR));
   });
+}
+
+function recursiveNodeDelete(writeContext: YmlWriteContext, subKeys: string[]) {
+  if (!subKeys.length) {
+    return;
+  }
+  console.log("recursiveNodeDelete", subKeys);
+  const subKey = subKeys[0];
+  const subPair = writeContext.currentNode.items.find((pair) => {
+    return getSubKey(pair) === subKey;
+  });
+  if (!subPair) {
+    return;
+  }
+  const subNode: Node = subPair.value;
+  if (isCollection(subNode)) {
+    recursiveNodeDelete(
+      { ...writeContext, currentNode: subNode },
+      subKeys.slice(1)
+    );
+    if (!subNode.items.length) {
+      writeContext.currentNode.items = writeContext.currentNode.items.filter(
+        (pair) => pair !== subPair
+      );
+    }
+  } else if (subKeys.length === 1) {
+    writeContext.currentNode.items = writeContext.currentNode.items.filter(
+      (pair) => pair !== subPair
+    );
+  }
 }
 
 export function recursiveNodeInsert(writeContext: YmlWriteContext) {
