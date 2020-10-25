@@ -1,6 +1,7 @@
 import { Node, Pair, Scalar, YAMLMap } from "yaml/types";
 import { isCollection, isScalar, YmlWriteContext } from "./yaml-generic";
 import { NESTED_JSON_SEPARATOR } from "../../util/flatten";
+import { Type } from "yaml/util";
 
 export function recursiveNodeUpdate(writeContext: YmlWriteContext) {
   writeContext.currentPairs.forEach((pair) => {
@@ -72,7 +73,9 @@ function insertScalarNode(
   key: string,
   value: string | null
 ) {
-  writeContext.currentPairs.push(new Pair(key, new Scalar(value)));
+  const scalar = new Scalar(value);
+  scalar.type = Type.QUOTE_SINGLE;
+  writeContext.currentPairs.push(new Pair(key, scalar));
 }
 
 function insertCollectionNode(writeContext: YmlWriteContext, key: string) {
