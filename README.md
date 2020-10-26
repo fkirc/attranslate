@@ -22,7 +22,7 @@ See [tools comparison](/docs/TOOL_COMPARISON.md) for an overview about translati
 ## Cross-platform Support
 
 `attranslate` is designed to translate any website or app with any toolchain.
-`attranslate` works for i18n/JavaScript-frameworks/Android/iOS/Flutter/Ruby/Jekyll/Symfony and many other platforms.
+`attranslate` works for i18n/JavaScript-frameworks/Android/iOS/Flutter/Ruby/Jekyll/Symfony/Django/WordPress and many other platforms.
 To make this possible, `attranslate` supports the following file formats:
 
 - Flat or nested JSON
