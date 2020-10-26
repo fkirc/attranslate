@@ -54,7 +54,7 @@ test("unknown command with options", async () => {
 });
 
 test("unknown option without valid options", async () => {
-  const output = await runTranslateExpectFailure("--version");
+  const output = await runTranslateExpectFailure("--garbageOption");
   expect(output).toBe(
     "error: required option '--srcFile <sourceFile>' not specified\n"
   );
@@ -62,6 +62,8 @@ test("unknown option without valid options", async () => {
 
 test("unknown option + valid options", async () => {
   const validOptions = buildE2EArgs(defaultE2EArgs);
-  const output = await runTranslateExpectFailure(`${validOptions} --version`);
-  expect(output).toBe("error: unknown option '--version'\n");
+  const output = await runTranslateExpectFailure(
+    `${validOptions} --garbageOption`
+  );
+  expect(output).toBe("error: unknown option '--garbageOption'\n");
 });
