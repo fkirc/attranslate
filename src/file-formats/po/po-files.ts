@@ -6,8 +6,8 @@ import {
 import { TSet } from "../../core/core-definitions";
 import { GetTextTranslations, po } from "gettext-parser";
 import { FormatCache } from "../common/format-cache";
-import { poParse, PoParseContext } from "./po-parse";
 import { readManagedUtf8, writeManagedUtf8 } from "../common/managed-utf8";
+import { extractPotTranslations, parsePotFile } from "./po-ops";
 
 interface PotAuxData {
   potFile: GetTextTranslations;
@@ -18,11 +18,8 @@ const potCache = new FormatCache<unknown, PotAuxData>();
 export class PoFile implements TFileFormat {
   readTFile(args: ReadTFileArgs): Promise<TSet> {
     const rawFile = readManagedUtf8(args.path);
-    const context: PoParseContext = {
-      args,
-      raw: rawFile,
-    };
-    const { tSet, potFile } = poParse(context);
+    const potFile = parsePotFile(args, rawFile);
+    const tSet = extractPotTranslations(potFile);
     potCache.insertFileCache({
       path: args.path,
       entries: new Map(),

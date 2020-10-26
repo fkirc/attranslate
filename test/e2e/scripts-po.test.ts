@@ -14,7 +14,7 @@ const testScript = "./po_generic.sh";
 const targetPaths: string[] = [
   join(assetDir, "es.po"),
   join(assetDir, "de.po"),
-  join(assetDir, "nested-fruits.yml"),
+  join(assetDir, "nested-fruits.po"),
 ];
 
 test("po clean", async () => {
