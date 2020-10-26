@@ -4,8 +4,8 @@ import {
   WriteTFileArgs,
 } from "../file-format-definitions";
 import { TSet } from "../../core/core-definitions";
-import { readUtf8File } from "../../util/util";
-import { GetTextTranslations } from "gettext-parser";
+import { readUtf8File, writeUf8File } from "../../util/util";
+import { GetTextTranslations, po } from "gettext-parser";
 import { FormatCache } from "../common/format-cache";
 import { poParse, PoParseContext } from "./po-parse";
 
@@ -18,16 +18,32 @@ export class PoFile implements TFileFormat {
       args,
       raw,
     };
-    const { tSet, getTextFile } = poParse(context);
+    const { tSet, potFile } = poParse(context);
     potCache.insertFileCache({
       path: args.path,
       entries: new Map(),
-      auxData: getTextFile,
+      auxData: potFile,
     });
     return Promise.resolve(tSet);
   }
 
   writeTFile(args: WriteTFileArgs): void {
-    throw Error("not implemented");
+    const cachedPot = potCache.getOldestAuxdata();
+    let output: string;
+    if (!cachedPot) {
+      throw Error("uncached pot not implemented");
+    } else {
+      output = writeCachedPot(cachedPot);
+    }
+    writeUf8File(args.path, output);
   }
+}
+
+function writeCachedPot(cachedPot: GetTextTranslations): string {
+  const options = {
+    foldLength: false,
+    sort: false,
+  };
+  const buffer = po.compile(cachedPot, options);
+  return buffer.toString("utf-8");
 }

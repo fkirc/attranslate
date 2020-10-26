@@ -10,22 +10,24 @@ export interface PoParseContext {
 
 export function poParse(
   context: PoParseContext
-): { getTextFile: GetTextTranslations; tSet: TSet } {
-  const getTextFile = parseRawGetText(context);
-  const tSet = extractTranslations(getTextFile);
-  return { getTextFile, tSet };
+): { potFile: GetTextTranslations; tSet: TSet } {
+  const potFile = parseRawGetText(context);
+  const tSet = extractTranslations(potFile);
+  return { potFile, tSet };
 }
 
-function extractTranslations(getTextFile: GetTextTranslations): TSet {
+function extractTranslations(potFile: GetTextTranslations): TSet {
   const tSet = new Map();
-  for (const key of Object.keys(getTextFile.translations)) {
-    const getTextEntry: { [msgId: string]: GetTextTranslation } =
-      getTextFile.translations[key];
-    for (const innerKey of Object.keys(getTextEntry)) {
-      const getTextT: GetTextTranslation = getTextEntry[innerKey];
-      const key: string = getTextT.msgid;
-      const value: string = getTextT.msgstr.join();
-      tSet.set(key, value);
+  for (const outerKey of Object.keys(potFile.translations)) {
+    const potEntry: { [msgId: string]: GetTextTranslation } =
+      potFile.translations[outerKey];
+    for (const innerKey of Object.keys(potEntry)) {
+      const getText: GetTextTranslation = potEntry[innerKey];
+      const key: string = getText.msgid;
+      const value: string = getText.msgstr.join();
+      if (key) {
+        tSet.set(key, value);
+      }
     }
   }
   return tSet;
