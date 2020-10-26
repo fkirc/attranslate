@@ -1,5 +1,5 @@
 import { FormatCache } from "./format-cache";
-import { readUtf8File, writeUf8File } from "../../util/util";
+import { readUtf8File, writeUtf8File } from "../../util/util";
 import { EOL } from "os";
 
 interface ManagedUtf8 {
@@ -21,7 +21,7 @@ export function writeManagedUtf8(args: { path: string; utf8: string }): string {
     endings !== null
       ? replaceLineEndings({ str: args.utf8, endings })
       : args.utf8;
-  writeUf8File(args.path, expandedContent);
+  writeUtf8File(args.path, expandedContent);
   return expandedContent;
 }
 

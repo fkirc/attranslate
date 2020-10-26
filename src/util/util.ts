@@ -62,7 +62,7 @@ export function readUtf8File(path: string): string {
   return readFileSync(path, { encoding: "utf8", flag: "r" });
 }
 
-export function writeUf8File(path: string, content: string) {
+export function writeUtf8File(path: string, content: string) {
   writeFileSync(path, content, { encoding: "utf8" });
 }
 

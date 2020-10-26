@@ -1,4 +1,4 @@
-import { readUtf8File, writeUf8File } from "../../src/util/util";
+import { readUtf8File, writeUtf8File } from "../../src/util/util";
 import { join } from "path";
 import { sampleDir } from "../e2e/scripts-e2e-util";
 export const docAssets = join("test-assets", "doc-assets");
@@ -31,5 +31,5 @@ export function readHelpReference(): string {
 export function replaceReadme(search: string, replace: string) {
   const oldReadme = readUtf8File("README.md");
   const newReadme = oldReadme.replace(search, replace);
-  writeUf8File("README.md", newReadme);
+  writeUtf8File("README.md", newReadme);
 }

@@ -1,6 +1,6 @@
 import { assertPathNotChanged, runCommand } from "../test-util/test-util";
 import { join } from "path";
-import { readUtf8File, writeUf8File } from "../../src/util/util";
+import { readUtf8File, writeUtf8File } from "../../src/util/util";
 
 export const sampleDir = "sample-scripts";
 
@@ -19,7 +19,7 @@ export async function runSampleScript(
 export function injectPrefixLines(args: { path: string; lines: string[] }) {
   const str = readUtf8File(args.path);
   const modifiedStr = `${args.lines.join("\n")}\n${str}`;
-  writeUf8File(args.path, modifiedStr);
+  writeUtf8File(args.path, modifiedStr);
 }
 
 export function removeLines(args: { path: string; linesToRemove: string[] }) {
@@ -28,5 +28,5 @@ export function removeLines(args: { path: string; linesToRemove: string[] }) {
   const filteredLines = lines.filter((line) => {
     return !args.linesToRemove.includes(line);
   });
-  writeUf8File(args.path, filteredLines.join("\n"));
+  writeUtf8File(args.path, filteredLines.join("\n"));
 }

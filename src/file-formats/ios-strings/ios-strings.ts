@@ -8,14 +8,14 @@ import { parseiOSFile } from "./ios-read";
 import { writeiOSFile } from "./ios-write";
 import { FileCache, FormatCache } from "../common/format-cache";
 
-export type iOSFile = FileCache<LineChunk, string[]>;
+export type iOSFile = FileCache<LineChunk, unknown>;
 
 export interface LineChunk {
   value: string | null;
   lines: string[];
 }
 
-const iOSCache = new FormatCache<LineChunk, string[]>();
+const iOSCache = new FormatCache<LineChunk, unknown>();
 
 export class IosStrings implements TFileFormat {
   readTFile(args: ReadTFileArgs): Promise<TSet> {

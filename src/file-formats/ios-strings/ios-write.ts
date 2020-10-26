@@ -1,11 +1,9 @@
 import { WriteTFileArgs } from "../file-format-definitions";
 import { LineChunk } from "./ios-strings";
 import { VALUE_INDEX } from "./ios-read";
-import { writeUf8File } from "../../util/util";
 import { FormatCache } from "../common/format-cache";
 import { getNotReviewedValue, needsReview } from "../common/manual-review";
-
-const DEFAULT_APPENDIX: string[] = ["\n"];
+import { writeManagedUtf8 } from "../common/managed-utf8";
 
 const reviewPrefix = "// reviewed:";
 
@@ -22,13 +20,12 @@ function injectReviewComment(lineChunk: LineChunk) {
   const linesBefore: string[] = lines.slice(0, lines.length - 1);
   const reviewLine = `${reviewPrefix} ${getNotReviewedValue()}`;
   const valueLine = lines[lines.length - 1];
-  const mergedLines = [...linesBefore, reviewLine, valueLine];
-  lineChunk.lines = mergedLines;
+  lineChunk.lines = [...linesBefore, reviewLine, valueLine];
 }
 
 export function writeiOSFile(
   args: WriteTFileArgs,
-  cache: FormatCache<LineChunk, string[]>
+  cache: FormatCache<LineChunk, unknown>
 ) {
   const outLines: string[] = [];
   args.tSet.forEach((value, key) => {
@@ -44,10 +41,9 @@ export function writeiOSFile(
     }
     outLines.push(...newChunk.lines);
   });
-  const appendix = cache.lookupAuxdata({ path: args.path }) ?? DEFAULT_APPENDIX;
-  outLines.push(...appendix);
+  outLines.push("\n\n");
   const output = outLines.join("\n");
-  writeUf8File(args.path, output);
+  writeManagedUtf8({ path: args.path, utf8: output });
 }
 
 function createNewChunk(key: string, newValue: string | null): LineChunk {
