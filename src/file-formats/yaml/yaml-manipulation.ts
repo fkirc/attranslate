@@ -36,7 +36,7 @@ export function recursiveNodeUpdate(writeContext: YmlWriteContext) {
     }
     recursiveNodeUpdate({
       ...writeContext,
-      currentNode: node.value as Node,
+      currentNode: node.value as Node | null,
       partialKey,
     });
   }
