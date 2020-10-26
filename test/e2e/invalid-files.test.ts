@@ -64,7 +64,7 @@ test("duplicate keys XML", async () => {
   const args: E2EArgs = {
     ...defaultE2EArgs,
     srcFile: "test-assets/invalid/duplicate-keys.xml",
-    srcFormat: "android-xml",
+    srcFormat: "xml",
   };
   const output = await runTranslateExpectFailure(buildE2EArgs(args));
   expect(output).toBe(
