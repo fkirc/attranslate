@@ -47,7 +47,7 @@ export class PoFile implements TFileFormat {
 function writeCachedPot(auxData: PotAuxData): string {
   const lineLen = longestLineLen(auxData.rawFile);
   const options = {
-    foldLength: lineLen,
+    foldLength: lineLen >= 0 ? lineLen : 0,
     sort: false,
   };
   const buffer = po.compile(auxData.potFile, options);
