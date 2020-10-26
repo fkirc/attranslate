@@ -17,9 +17,10 @@ const possibleEndings = ["\n", "\r", EOL];
 export function writeManagedUtf8(args: { path: string; utf8: string }): string {
   const endings: string | null =
     utf8Cache.lookupAuxdata({ path: args.path })?.endings ?? null;
-  const expandedContent = endings
-    ? replaceLineEndings({ str: args.utf8, endings })
-    : args.utf8;
+  const expandedContent =
+    endings !== null
+      ? replaceLineEndings({ str: args.utf8, endings })
+      : args.utf8;
   writeUf8File(args.path, expandedContent);
   return expandedContent;
 }
