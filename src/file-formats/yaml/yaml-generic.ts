@@ -19,7 +19,7 @@ export interface YmlWriteContext {
   args: WriteTFileArgs;
   doc: Parsed;
   partialKey: string;
-  currentNode: Node;
+  currentNode: Node | null;
 }
 
 export function isSequence(node: Collection): node is YAMLSeq {
@@ -74,6 +74,7 @@ export class YamlGeneric implements TFileFormat {
       minMultiLineLength: 1000,
       jsonEncoding: false,
     };
+    scalarOptions.null.nullStr = "";
   }
 
   readTFile(args: ReadTFileArgs): Promise<TSet> {
@@ -93,27 +94,18 @@ export class YamlGeneric implements TFileFormat {
   }
 
   writeTFile(args: WriteTFileArgs): void {
-    const flatJson: Record<string, string | null> = {};
-    args.tSet.forEach((value, key) => {
-      flatJson[key] = value;
-    });
-    const nestedJson = unflatten(flatJson);
     const cachedYml = documentCache.getOldestAuxdata();
     let ymlString: string;
     if (cachedYml) {
-      ymlString = this.createCachedYml(args, cachedYml, nestedJson);
+      ymlString = this.createCachedYml(args, cachedYml);
     } else {
-      ymlString = this.createUncachedYml(args, nestedJson);
+      ymlString = this.createUncachedYml(args);
     }
     documentCache.purge();
     writeUtf8File(args.path, ymlString);
   }
 
-  createCachedYml(
-    args: WriteTFileArgs,
-    cachedYml: Parsed,
-    nestedJson: Record<string, unknown>
-  ): string {
+  createCachedYml(args: WriteTFileArgs, cachedYml: Parsed): string {
     if (!cachedYml.contents) {
       logFatal("no cached yml contents");
     }
@@ -133,10 +125,12 @@ export class YamlGeneric implements TFileFormat {
     return cachedYml.toString();
   }
 
-  createUncachedYml(
-    args: WriteTFileArgs,
-    nestedJson: Record<string, unknown>
-  ): string {
+  createUncachedYml(args: WriteTFileArgs): string {
+    const flatJson: Record<string, string | null> = {};
+    args.tSet.forEach((value, key) => {
+      flatJson[key] = value;
+    });
+    const nestedJson = unflatten(flatJson);
     const options: Options = {
       mapAsMap: false,
     };

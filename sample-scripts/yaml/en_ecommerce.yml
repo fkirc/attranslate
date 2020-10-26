@@ -5,6 +5,8 @@ subsections:
 
 titles_long:
   home: 'Home section'
+  nested:
+    empty:
   blog: 'Our Blog'
   stories: 'about our users'
   faq: 'Customer Support and Frequently Asked Questions'

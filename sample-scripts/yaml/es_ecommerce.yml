@@ -5,6 +5,8 @@ subsections:
 
 titles_long:
   home: 'Sección de inicio'
+  nested:
+    ? empty
   blog: 'Nuestro blog'
   stories: 'sobre nuestros usuarios'
   faq: 'Atención al cliente y preguntas frecuentes'
