@@ -39,43 +39,43 @@ const testArgs: {
     fileFormat: "yaml",
   },
   {
-    srcFile: "test-assets/android-xml/plurals.xml",
+    srcFile: join(testAssets, "android-xml", "plurals.xml"),
     fileFormat: "android-xml",
   },
   {
-    srcFile: "test-assets/android-xml/advanced.xml",
+    srcFile: join(testAssets, "android-xml", "advanced.xml"),
     fileFormat: "android-xml",
   },
   {
-    srcFile: "test-assets/flutter-arb/intl_en.arb",
-    fileFormat: "flutter-arb", // According to https://github.com/google/app-resource-bundle/wiki/ApplicationResourceBundleSpecification
+    srcFile: join(testAssets, "flutter-arb", "intl_en.arb"),
+    fileFormat: "flutter-arb",
   },
   {
-    srcFile: "test-assets/ios-strings/count-en-appendix.strings",
+    srcFile: join(testAssets, "ios-strings", "count-en-appendix.strings"),
     fileFormat: "ios-strings",
   },
   {
-    srcFile: "test-assets/ios-strings/count-en-slim.strings",
+    srcFile: join(testAssets, "ios-strings", "count-en-slim.strings"),
     fileFormat: "ios-strings",
   },
   {
-    srcFile: "test-assets/android-xml/sanitize.xml",
+    srcFile: join(testAssets, "android-xml", "sanitize.xml"),
     fileFormat: "android-xml",
   },
   {
-    srcFile: "test-assets/android-xml/count-en.indent4.nested.xml",
+    srcFile: join(testAssets, "android-xml", "count-en.indent4.nested.xml"),
     fileFormat: "android-xml",
   },
   {
-    srcFile: "test-assets/android-xml/count-en.indent2.flat.xml",
+    srcFile: join(testAssets, "android-xml", "count-en.indent2.flat.xml"),
     fileFormat: "android-xml",
   },
   {
-    srcFile: "test-assets/nested-json/count-en.json",
+    srcFile: join(testAssets, "nested-json", "count-en.json"),
     fileFormat: "nested-json",
   },
   {
-    srcFile: "test-assets/flat-json/count-empty-null.json",
+    srcFile: join(testAssets, "flat-json", "count-empty-null.json"),
     fileFormat: "flat-json",
   },
 ];
