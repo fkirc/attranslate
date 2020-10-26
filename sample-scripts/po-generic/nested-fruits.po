@@ -1,0 +1,11 @@
+msgid ""
+msgstr "Content-Type: text/plain\n"
+
+msgid "apple"
+msgstr "Apple"
+
+msgid "nesting.pear"
+msgstr "Pear"
+
+msgid "moreNesting.innerNesting.banana"
+msgstr "Banana"

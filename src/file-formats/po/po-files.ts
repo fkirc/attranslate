@@ -35,20 +35,39 @@ export class PoFile implements TFileFormat {
     const auxData = potCache.getOldestAuxdata();
     let output: string;
     if (!auxData) {
-      throw Error("uncached pot not implemented");
+      output = createUncachedPot(args);
     } else {
-      output = writeCachedPot(auxData);
+      output = createCachedPot(auxData);
     }
     writeManagedUtf8({ path: args.path, utf8: output });
     potCache.purge();
   }
 }
 
-function writeCachedPot(auxData: PotAuxData): string {
-  const options = {
-    foldLength: 100,
-    sort: false,
-  };
-  const buffer = po.compile(auxData.potFile, options);
+const compileOptions = {
+  foldLength: 100,
+  sort: false,
+};
+
+function createCachedPot(auxData: PotAuxData): string {
+  const buffer = po.compile(auxData.potFile, compileOptions);
   return buffer.toString("utf-8");
+}
+
+function createUncachedPot(args: WriteTFileArgs): string {
+  const potFile: GetTextTranslations = {
+    charset: "utf-8",
+    headers: {},
+    translations: {},
+  };
+  args.tSet.forEach((value, key) => {
+    potFile.translations[key] = {
+      key: {
+        msgid: key,
+        msgstr: [value ?? ""],
+      },
+    };
+  });
+  const buffer = po.compile(potFile, compileOptions);
+  return buffer.toString("utf-8") + "\n";
 }
