@@ -45,7 +45,7 @@ function replaceLineEndings(args: { str: string; endings: string }): string {
   if (beginOfEnd === null) {
     return `${args.str}${args.endings}`;
   }
-  const shorterStr = args.str.slice(beginOfEnd);
+  const shorterStr = args.str.slice(0, beginOfEnd);
   return `${shorterStr}${args.endings}`;
 }
 
