@@ -4,8 +4,8 @@ import { getDebugPath } from "../../src/util/util";
 import { runSampleScript, sampleDir } from "./scripts-e2e-util";
 import { join } from "path";
 
-test("simple_translate", async () => {
-  const output = await runSampleScript(`./simple_translate.sh`, ["json-raw"]);
+test("json simple", async () => {
+  const output = await runSampleScript(`./json_simple.sh`, ["json-raw"]);
   expect(output).toBe("Target is up-to-date: 'json-raw/fruits-de.json'\n");
 });
 
