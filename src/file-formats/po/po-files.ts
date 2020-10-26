@@ -6,7 +6,7 @@ import {
 import { TSet } from "../../core/core-definitions";
 import { GetTextTranslations, po } from "gettext-parser";
 import { FormatCache } from "../common/format-cache";
-import { longestLineLen, poParse, PoParseContext } from "./po-parse";
+import { poParse, PoParseContext } from "./po-parse";
 import { readManagedUtf8, writeManagedUtf8 } from "../common/managed-utf8";
 
 interface PotAuxData {
@@ -45,9 +45,8 @@ export class PoFile implements TFileFormat {
 }
 
 function writeCachedPot(auxData: PotAuxData): string {
-  const lineLen = longestLineLen(auxData.rawFile);
   const options = {
-    foldLength: lineLen >= 0 ? lineLen : 0,
+    foldLength: 100,
     sort: false,
   };
   const buffer = po.compile(auxData.potFile, options);

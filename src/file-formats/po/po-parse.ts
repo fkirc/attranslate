@@ -8,17 +8,6 @@ export interface PoParseContext {
   raw: string;
 }
 
-export function longestLineLen(str: string) {
-  const lines = str.split("\n");
-  let longestLine = 0;
-  lines.forEach((line) => {
-    if (line.length >= longestLine) {
-      longestLine = line.length;
-    }
-  });
-  return longestLine;
-}
-
 export function poParse(
   context: PoParseContext
 ): { potFile: GetTextTranslations; tSet: TSet } {
