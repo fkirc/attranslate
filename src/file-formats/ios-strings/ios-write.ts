@@ -41,7 +41,7 @@ export function writeiOSFile(
     }
     outLines.push(...newChunk.lines);
   });
-  outLines.push("\n\n");
+  outLines.push("\n");
   const output = outLines.join("\n");
   writeManagedUtf8({ path: args.path, utf8: output });
 }
