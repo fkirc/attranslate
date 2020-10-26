@@ -7,7 +7,7 @@
   },
   "entries": {
     "Made with ❤": {
-      "value": null,
+      "value": "",
       "targets": [
         {
           "id": "es",
@@ -20,7 +20,7 @@
       ]
     },
     "In case you run out of space, you can always continue in the next line.": {
-      "value": null,
+      "value": "",
       "targets": [
         {
           "id": "es",
@@ -46,7 +46,7 @@
       ]
     },
     "German": {
-      "value": null,
+      "value": "",
       "targets": [
         {
           "id": "es",

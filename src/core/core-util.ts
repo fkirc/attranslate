@@ -64,12 +64,7 @@ export async function readTFileCore(
   const keyRegExp = new RegExp(args.keySearch, "g");
   rawTSet.forEach((value, key) => {
     const replacedKey = key.replace(keyRegExp, args.keyReplace);
-    /**
-     * Empty JavaScript-strings evaluate to false, which is a source of bugs throughout this codebase.
-     * To mitigate such bugs, we eliminate empty strings as early as possible.
-     */
-    const replacedValue: string | null = value === "" ? null : value;
-    tSet.set(replacedKey, replacedValue);
+    tSet.set(replacedKey, value);
   });
   return tSet;
 }
