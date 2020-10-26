@@ -14,7 +14,7 @@ export interface ReadmeSnippet {
 export const readmeSnippets: ReadmeSnippet[] = [
   {
     refPath: join(docAssets, "simple_translate.snippet"),
-    srcPath: join(sampleDir, "simple_translate.sh"),
+    srcPath: join(sampleDir, "json_simple.sh"),
     firstLine: "attranslate ",
   },
   {

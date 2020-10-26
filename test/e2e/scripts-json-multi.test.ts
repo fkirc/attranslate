@@ -4,9 +4,9 @@ import { getDebugPath } from "../../src/util/util";
 import { runSampleScript, sampleDir } from "./scripts-e2e-util";
 import { join } from "path";
 
-test("simple_translate", async () => {
-  const output = await runSampleScript(`./simple_translate.sh`, ["json-raw"]);
-  expect(output).toBe("Target is up-to-date: 'json-raw/fruits-de.json'\n");
+test("json simple", async () => {
+  const output = await runSampleScript(`./json_simple.sh`, ["json-simple"]);
+  expect(output).toBe("Target is up-to-date: 'json-simple/fruits-de.json'\n");
 });
 
 const targetLngs = ["es", "zh", "de"];
@@ -101,7 +101,9 @@ test("multi_json propagate empty string from source", async () => {
     cachePath,
     bypassEmpty: true,
   });
-  const output = await runSampleScript(`./json_manual_review.sh`, ["json-raw"]); // Circumvent diff-check
+  const output = await runSampleScript(`./json_manual_review.sh`, [
+    "json-simple",
+  ]); // Circumvent diff-check
   expect(output).toBe(expectOutput);
   await recursiveDiff({
     pathActual: join(sampleDir, assetDir),

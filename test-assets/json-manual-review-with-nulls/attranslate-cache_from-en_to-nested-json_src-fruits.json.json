@@ -40,7 +40,7 @@
         }
       ]
     },
-    "banana": {
+    "nested.banana": {
       "value": "Banana",
       "targets": [
         {

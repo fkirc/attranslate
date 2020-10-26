@@ -30,7 +30,7 @@ googleplay:
   url: 'https://play.google.com/store/apps/details?id=sdsdsdsdsds'
 
 banner:
-  text_long: '¡Por un corto tiempo solo!'
+  text_long: '¡Por poco tiempo solo!'
   # text_short:
   # to disable topbanner set text_short to ' '
   text_short: 'Oferta -15%'
