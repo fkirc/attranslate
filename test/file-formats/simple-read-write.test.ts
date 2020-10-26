@@ -23,6 +23,10 @@ const testArgs: {
   fileFormat: TFileType;
 }[] = [
   {
+    srcFile: join(testAssets, "po", "sample.pot"),
+    fileFormat: "po",
+  },
+  {
     srcFile: join(testAssets, "yml", "jekyll_ecommerce.yml"),
     fileFormat: "yaml",
   },
