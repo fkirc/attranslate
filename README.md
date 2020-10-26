@@ -119,6 +119,7 @@ Options:
                                      file-format conversions) (default: "x")
   --keyReplace <string>              The replacement for occurrences of
                                      keySearch (default: "x")
+  -v, --version                      output the version number
   -h, --help                         display help for command
 ```
 
