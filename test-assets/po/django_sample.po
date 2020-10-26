@@ -40,11 +40,9 @@ msgstr "The device could not be activated, please try again"
 
 #: sample_backend/entitytracker/exceptions.py:14
 msgid ""
-"The device has is not usable due to its old firmware, please contact support to "
-"get compatible devicees"
-msgstr ""
-"The software on this device is out of date, please contact support to replace "
-"device"
+"The device has is not usable due to its old firmware, please contact support to get compatible "
+"devicees"
+msgstr "The software on this device is out of date, please contact support to replace device"
 
 #: sample_backend/entitytracker/exceptions.py:20
 msgid "Please update your OS to use the device."
@@ -173,11 +171,11 @@ msgstr "Warning"
 
 #: sample_backend/templates/account/email.html:46
 msgid ""
-"You currently do not have any e-mail address set up. You should really add an "
-"e-mail address so you can receive notifications, reset your password, etc."
+"You currently do not have any e-mail address set up. You should really add an e-mail address so you "
+"can receive notifications, reset your password, etc."
 msgstr ""
-"You do not have an email address set up to receive notifications or reset your "
-"password. Please add email address "
+"You do not have an email address set up to receive notifications or reset your password. Please add "
+"email address "
 
 #: sample_backend/templates/account/email.html:51
 msgid "Add E-mail Address"
@@ -197,16 +195,15 @@ msgid ""
 "Hello from %(site_name)s!\n"
 "\n"
 "\n"
-"You're receiving this e-mail because you or someone else has requested a "
-"password for your user account.\n"
+"You're receiving this e-mail because you or someone else has requested a password for your user "
+"account.\n"
 "\n"
-"It can be safely ignored if you did not request a password reset. Click the "
-"link below to reset your password."
+"It can be safely ignored if you did not request a password reset. Click the link below to reset "
+"your password."
 msgstr ""
-"Hello from %(site_name)s.You are recieving this message because someone has "
-"requested a password for your user account.If you requested this password you "
-"can safely ignore this message but if not, please click on the link below to "
-"change your password"
+"Hello from %(site_name)s.You are recieving this message because someone has requested a password "
+"for your user account.If you requested this password you can safely ignore this message but if not, "
+"please click on the link below to change your password"
 
 #: sample_backend/templates/account/email/password_reset_key_message.txt:13
 #, python-format
@@ -236,11 +233,11 @@ msgstr "Please confirm your email address"
 #: sample_backend/templates/account/email_confirm.html:16
 #, python-format
 msgid ""
-"Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an e-mail "
-"address for user %(user_display)s."
+"Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an e-mail address for user "
+"%(user_display)s."
 msgstr ""
-"Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is the email "
-"address for  %(user_display)s. "
+"Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is the email address for  "
+"%(user_display)s. "
 
 #: sample_backend/templates/account/email_confirm.html:20
 msgid "Confirm"
@@ -249,11 +246,11 @@ msgstr "Confirm"
 #: sample_backend/templates/account/email_confirm.html:27
 #, python-format
 msgid ""
-"This e-mail confirmation link expired or is invalid. Please <a "
-"href=\"%(email_url)s\">issue a new e-mail confirmation request</a>."
+"This e-mail confirmation link expired or is invalid. Please <a href=\"%(email_url)s\">issue a new "
+"e-mail confirmation request</a>."
 msgstr ""
-"This email confirmation link has expired or is invalid. Please <a "
-"href=\"%(email_url)s\">issue a new e-mail confirmation request</a>."
+"This email confirmation link has expired or is invalid. Please <a href=\"%(email_url)s\">issue a "
+"new e-mail confirmation request</a>."
 
 #: sample_backend/templates/account/login.html:7
 #: sample_backend/templates/account/login.html:11
@@ -266,13 +263,11 @@ msgstr "Sign in"
 #, python-format
 msgid ""
 "Please sign in with one\n"
-"of your existing third party accounts. Or, <a href=\"%(signup_url)s\">sign "
-"up</a>\n"
+"of your existing third party accounts. Or, <a href=\"%(signup_url)s\">sign up</a>\n"
 "for a %(site_name)s account and sign in below:"
 msgstr ""
 "Please sign in with one\n"
-"of your existing third party accounts. Or, <a href=\"%(signup_url)s\">sign "
-"up</a>\n"
+"of your existing third party accounts. Or, <a href=\"%(signup_url)s\">sign up</a>\n"
 "for a %(site_name)s account and sign in below:"
 
 #: sample_backend/templates/account/login.html:26
@@ -322,11 +317,11 @@ msgstr "Password Reset"
 
 #: sample_backend/templates/account/password_reset.html:16
 msgid ""
-"Forgotten your password? Enter your e-mail address below, and we'll send you an "
-"e-mail allowing you to reset it."
+"Forgotten your password? Enter your e-mail address below, and we'll send you an e-mail allowing you "
+"to reset it."
 msgstr ""
-"Forgotten your password? Enter your email address below and we will send you an "
-"email allowing you to change it"
+"Forgotten your password? Enter your email address below and we will send you an email allowing you "
+"to change it"
 
 #: sample_backend/templates/account/password_reset.html:21
 msgid "Reset My Password"
@@ -337,12 +332,8 @@ msgid "Please contact us if you have any trouble resetting your password."
 msgstr "Please contact us if you have any trouble resetting your password."
 
 #: sample_backend/templates/account/password_reset_done.html:15
-msgid ""
-"We have sent you an e-mail. Please contact us if you do not receive it within a "
-"few minutes."
-msgstr ""
-"We have sent you an e-mail. Please contact us again if you do not receive it "
-"within a few minutes."
+msgid "We have sent you an e-mail. Please contact us if you do not receive it within a few minutes."
+msgstr "We have sent you an e-mail. Please contact us again if you do not receive it within a few minutes."
 
 #: sample_backend/templates/account/password_reset_from_key.html:8
 msgid "Bad Token"
@@ -351,11 +342,11 @@ msgstr "Unable to reset password"
 #: sample_backend/templates/account/password_reset_from_key.html:12
 #, python-format
 msgid ""
-"The password reset link was invalid, possibly because it has already been used. "
-" Please request a <a href=\"%(passwd_reset_url)s\">new password reset</a>."
+"The password reset link was invalid, possibly because it has already been used.  Please request a "
+"<a href=\"%(passwd_reset_url)s\">new password reset</a>."
 msgstr ""
-"The password reset link was invalid, possibly because it has already been used. "
-" Please request a <a href=\"%(passwd_reset_url)s\">new password reset</a>."
+"The password reset link was invalid, possibly because it has already been used.  Please request a "
+"<a href=\"%(passwd_reset_url)s\">new password reset</a>."
 
 #: sample_backend/templates/account/password_reset_from_key.html:18
 msgid "change password"
@@ -405,13 +396,11 @@ msgstr "Please verify your email address"
 
 #: sample_backend/templates/account/verification_sent.html:10
 msgid ""
-"We have sent an e-mail to you for verification. Follow the link provided to "
-"finalize the signup process. Please contact us if you do not receive it within "
-"a few minutes."
+"We have sent an e-mail to you for verification. Follow the link provided to finalize the signup "
+"process. Please contact us if you do not receive it within a few minutes."
 msgstr ""
-"We have sent you an e-mail for verification. Follow the link provided to "
-"finalize the signup process. Please contact us if you do not receive it within "
-"a few minutes"
+"We have sent you an e-mail for verification. Follow the link provided to finalize the signup "
+"process. Please contact us if you do not receive it within a few minutes"
 
 #: sample_backend/templates/account/verified_email_required.html:12
 msgid ""
@@ -434,12 +423,8 @@ msgstr ""
 
 #: sample_backend/templates/account/verified_email_required.html:20
 #, python-format
-msgid ""
-"<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your "
-"e-mail address</a>."
-msgstr ""
-"<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your "
-"e-mail address</a>."
+msgid "<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your e-mail address</a>."
+msgstr "<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your e-mail address</a>."
 
 #: sample_backend/templates/base.html:55
 msgid "My Profile"
@@ -512,21 +497,19 @@ msgstr "Must include \"email\" and \"password\"."
 
 #: sample_backend/users/serializers.py:146
 msgid ""
-"AUTHENTICATION_METHOD must be set to AuthenticationMethod.EMAIL. See allauth "
-"docs. LoginSerializer was taken from django_rest_auth and code was removed to "
-"handle other ways to login."
+"AUTHENTICATION_METHOD must be set to AuthenticationMethod.EMAIL. See allauth docs. LoginSerializer "
+"was taken from django_rest_auth and code was removed to handle other ways to login."
 msgstr ""
-"AUTHENTICATION_METHOD must be set to AuthenticationMethod.EMAIL. See allauth "
-"docs. LoginSerializer was taken from django_rest_auth and code was removed to "
-"handle other ways to login."
+"AUTHENTICATION_METHOD must be set to AuthenticationMethod.EMAIL. See allauth docs. LoginSerializer "
+"was taken from django_rest_auth and code was removed to handle other ways to login."
 
 #: sample_backend/users/serializers.py:172
 msgid ""
-"allauth docs. LoginSerializer was taken from django_rest_auth and code was "
-"removed to handle other ways to login."
+"allauth docs. LoginSerializer was taken from django_rest_auth and code was removed to handle other "
+"ways to login."
 msgstr ""
-"allauth docs. LoginSerializer was taken from django_rest_auth and code was "
-"removed to handle other ways to login."
+"allauth docs. LoginSerializer was taken from django_rest_auth and code was removed to handle other "
+"ways to login."
 
 #: sample_backend/users/serializers.py:179
 msgid "User account is disabled."
