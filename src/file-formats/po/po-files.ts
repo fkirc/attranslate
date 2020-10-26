@@ -4,10 +4,10 @@ import {
   WriteTFileArgs,
 } from "../file-format-definitions";
 import { TSet } from "../../core/core-definitions";
-import { readUtf8File, writeUf8File } from "../../util/util";
 import { GetTextTranslations, po } from "gettext-parser";
 import { FormatCache } from "../common/format-cache";
 import { longestLineLen, poParse, PoParseContext } from "./po-parse";
+import { readManagedUtf8, writeManagedUtf8 } from "../common/managed-utf8";
 
 interface PotAuxData {
   potFile: GetTextTranslations;
@@ -17,7 +17,7 @@ const potCache = new FormatCache<unknown, PotAuxData>();
 
 export class PoFile implements TFileFormat {
   readTFile(args: ReadTFileArgs): Promise<TSet> {
-    const rawFile = readUtf8File(args.path);
+    const rawFile = readManagedUtf8(args.path);
     const context: PoParseContext = {
       args,
       raw: rawFile,
@@ -39,7 +39,7 @@ export class PoFile implements TFileFormat {
     } else {
       output = writeCachedPot(auxData);
     }
-    writeUf8File(args.path, output);
+    writeManagedUtf8({ path: args.path, utf8: output });
     potCache.purge();
   }
 }
