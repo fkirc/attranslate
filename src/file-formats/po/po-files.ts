@@ -36,12 +36,13 @@ export class PoFile implements TFileFormat {
       output = writeCachedPot(cachedPot);
     }
     writeUf8File(args.path, output);
+    potCache.purge();
   }
 }
 
 function writeCachedPot(cachedPot: GetTextTranslations): string {
   const options = {
-    foldLength: false,
+    foldLength: 100,
     sort: false,
   };
   const buffer = po.compile(cachedPot, options);
