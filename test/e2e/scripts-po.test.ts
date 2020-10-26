@@ -28,19 +28,13 @@ test("po clean", async () => {
   );
 });
 
-test("po re-create targets", async () => {
-  if (process.env.CI) {
-    return;
-  }
-  targetPaths.forEach((path) => {
-    unlinkSync(join(sampleDir, path));
-  });
+test("po re-create non-cached target", async () => {
+  const removeTarget = targetPaths[targetPaths.length - 1];
+  unlinkSync(join(sampleDir, removeTarget));
   const output = await runSampleScript(testScript, [assetDir]);
-  targetPaths.forEach((path) => {
-    expect(output).toContain(
-      `Write target ${getDebugPath(join(sampleDir, path))}`
-    );
-  });
+  expect(output).toContain(
+    `Write target ${getDebugPath(join(sampleDir, removeTarget))}`
+  );
 });
 
 test("po delete stale translations", async () => {
