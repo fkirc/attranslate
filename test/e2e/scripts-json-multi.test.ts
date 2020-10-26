@@ -6,7 +6,7 @@ import { join } from "path";
 
 test("json simple", async () => {
   const output = await runSampleScript(`./json_simple.sh`, ["json-raw"]);
-  expect(output).toBe("Target is up-to-date: 'json-raw/fruits-de.json'\n");
+  expect(output).toBe("Target is up-to-date: 'json-simple/fruits-de.json'\n");
 });
 
 const targetLngs = ["es", "zh", "de"];
@@ -101,7 +101,9 @@ test("multi_json propagate empty string from source", async () => {
     cachePath,
     bypassEmpty: true,
   });
-  const output = await runSampleScript(`./json_manual_review.sh`, ["json-raw"]); // Circumvent diff-check
+  const output = await runSampleScript(`./json_manual_review.sh`, [
+    "json-simple",
+  ]); // Circumvent diff-check
   expect(output).toBe(expectOutput);
   await recursiveDiff({
     pathActual: join(sampleDir, assetDir),
