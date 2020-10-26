@@ -26,10 +26,11 @@ See [tools comparison](/docs/TOOL_COMPARISON.md) for an overview about translati
 To make this possible, `attranslate` supports the following file formats:
 
 - Flat or nested JSON
-- Flat or nested YAML
-- Flutter-ARB
+- Flat or nested YAM
+- PO/POT-files
 - Android-XML
 - iOS-Strings
+- Flutter-ARB
 
 ## Allow Manual Overwrites
 
