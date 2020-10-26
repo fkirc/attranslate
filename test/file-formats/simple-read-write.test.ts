@@ -48,15 +48,15 @@ const testArgs: {
   },
   {
     srcFile: join(testAssets, "android-xml", "plurals.xml"),
-    fileFormat: "android-xml",
+    fileFormat: "xml",
   },
   {
     srcFile: join(testAssets, "android-xml", "advanced.xml"),
-    fileFormat: "android-xml",
+    fileFormat: "xml",
   },
   {
     srcFile: join(testAssets, "flutter-arb", "intl_en.arb"),
-    fileFormat: "flutter-arb",
+    fileFormat: "arb",
   },
   {
     srcFile: join(testAssets, "ios-strings", "count-en-appendix.strings"),
@@ -68,15 +68,15 @@ const testArgs: {
   },
   {
     srcFile: join(testAssets, "android-xml", "sanitize.xml"),
-    fileFormat: "android-xml",
+    fileFormat: "xml",
   },
   {
     srcFile: join(testAssets, "android-xml", "count-en.indent4.nested.xml"),
-    fileFormat: "android-xml",
+    fileFormat: "xml",
   },
   {
     srcFile: join(testAssets, "android-xml", "count-en.indent2.flat.xml"),
-    fileFormat: "android-xml",
+    fileFormat: "xml",
   },
   {
     srcFile: join(testAssets, "nested-json", "count-en.json"),
