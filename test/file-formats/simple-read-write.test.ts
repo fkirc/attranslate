@@ -14,25 +14,28 @@ import {
   readRawJson,
   writeManagedJson,
 } from "../../src/file-formats/common/managed-json";
+import { join } from "path";
+
+const testAssets = "test-assets";
 
 const testArgs: {
   srcFile: string;
   fileFormat: TFileType;
 }[] = [
   {
-    srcFile: "test-assets/nested-yml/jekyll_ecommerce.yml",
+    srcFile: join(testAssets, "yml", "jekyll_ecommerce.yml"),
     fileFormat: "yaml",
   },
   {
-    srcFile: "test-assets/flat-yml/symfony2.yml",
+    srcFile: join(testAssets, "yml", "symfony2.yml"),
     fileFormat: "yaml",
   },
   {
-    srcFile: "test-assets/nested-yml/country_array.yml",
+    srcFile: join(testAssets, "yml", "country_array.yml"),
     fileFormat: "yaml",
   },
   {
-    srcFile: "test-assets/nested-yml/rails_i18n.yml",
+    srcFile: join(testAssets, "yml", "rails_i18n.yml"),
     fileFormat: "yaml",
   },
   {
