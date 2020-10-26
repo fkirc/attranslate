@@ -26,7 +26,7 @@ See [tools comparison](/docs/TOOL_COMPARISON.md) for an overview about translati
 To make this possible, `attranslate` supports the following file formats:
 
 - Flat or nested JSON
-- Flat or nested YAM
+- Flat or nested YAML
 - PO/POT-files
 - Android-XML
 - iOS-Strings
