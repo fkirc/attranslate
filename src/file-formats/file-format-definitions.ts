@@ -34,9 +34,9 @@ const fileFormatMap = {
   "nested-json": null,
   yaml: null,
   po: null,
-  "android-xml": null,
+  xml: null,
   "ios-strings": null,
-  "flutter-arb": null,
+  arb: null,
 };
 
 export async function instantiateTFileFormat(
@@ -54,9 +54,9 @@ export async function instantiateTFileFormat(
       return new (await import("./yaml/yaml-generic")).YamlGeneric();
     case "po":
       return new (await import("./po/po-files")).PoFile();
-    case "flutter-arb":
+    case "arb":
       return new (await import("./flutter-arb/flutter-arb")).FlutterArb();
-    case "android-xml":
+    case "xml":
       return new (await import("./android-xml/android-xml")).AndroidXml();
     case "ios-strings":
       return new (await import("./ios-strings/ios-strings")).IosStrings();
