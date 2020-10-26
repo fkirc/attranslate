@@ -43,7 +43,7 @@
       ]
     },
     "emptyProp": {
-      "value": null,
+      "value": "",
       "targets": [
         {
           "id": "de",
