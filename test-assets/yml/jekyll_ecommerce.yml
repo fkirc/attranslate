@@ -4,6 +4,7 @@ subsections:
   - 'Certificates'
 
 titles_long:
+  emptystuff:
   home: 'Home section'
   blog: 'Our Blog'
   stories: 'about our users'
