@@ -19,7 +19,7 @@ export interface YmlWriteContext {
   args: WriteTFileArgs;
   doc: Parsed;
   partialKey: string;
-  currentNode: Node;
+  currentNode: Node | null;
 }
 
 export function isSequence(node: Collection): node is YAMLSeq {
@@ -74,6 +74,7 @@ export class YamlGeneric implements TFileFormat {
       minMultiLineLength: 1000,
       jsonEncoding: false,
     };
+    scalarOptions.null.nullStr = "";
   }
 
   readTFile(args: ReadTFileArgs): Promise<TSet> {

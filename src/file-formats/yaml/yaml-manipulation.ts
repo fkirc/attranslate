@@ -17,6 +17,9 @@ function getSubKey(pair: Pair): string {
 
 export function recursiveNodeUpdate(writeContext: YmlWriteContext) {
   const node = writeContext.currentNode;
+  if (!node) {
+    return;
+  }
   if (isScalar(node)) {
     const value = writeContext.args.tSet.get(writeContext.partialKey);
     if (value !== undefined) {
