@@ -1,3 +1,6 @@
+msgid ""
+msgstr "Content-Type: text/plain\n"
+
 msgid "A section of text like this is known as a text segment."
 msgstr "First"
 
@@ -10,6 +13,5 @@ msgid "Made with ❤"
 msgstr ""
 
 # multiline values
-msgid "In case you run out of space, you can always"
-" continue in the next line."
+msgid "In case you run out of space, you can always continue in the next line."
 msgstr ""
