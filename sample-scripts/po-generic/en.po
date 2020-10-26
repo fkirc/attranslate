@@ -1,0 +1,211 @@
+# SOME DESCRIPTIVE TITLE.
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-01-16 23:23+0000\n"
+"PO-Revision-Date: 2019-12-04 12:12+0000\n"
+"Last-Translator: Orla\n"
+"Language-Team: English <http://197.167.0.100/projects/\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.8\n"
+
+# lh-check { min: 10, max: 15 }
+msgid "Made with ❤"
+msgstr ""
+
+# multiline values
+msgid "In case you run out of space, you can always continue in the next line."
+msgstr ""
+
+#: config/settings/base.py:100
+msgid "English"
+msgstr "English"
+
+#: config/settings/base.py:101
+msgid "German"
+msgstr ""
+
+#: config/settings/base.py:102
+msgid "Spanish"
+msgstr "Spanish"
+
+#: config/settings/base.py:103
+msgid "French"
+msgstr "some value"
+
+#: sample_backend/templates/account/email/password_reset_key_message.txt:2
+#, python-format
+msgid ""
+"Hello from %(site_name)s!\n"
+"\n"
+"\n"
+"You're receiving this e-mail because you or someone else has requested a password for your user "
+"account.\n"
+"\n"
+"It can be safely ignored if you did not request a password reset. Click the link below to reset "
+"your password."
+msgstr ""
+"Hello from %(site_name)s.You are recieving this message because someone has requested a password "
+"for your user account.If you requested this password you can safely ignore this message but if not, "
+"please click on the link below to change your password"
+
+#: sample_backend/templates/account/email/password_reset_key_message.txt:13
+#, python-format
+msgid "In case you forgot, your username is %(username)s."
+msgstr "Just in case you have forgotten your username is %(username)s."
+
+#: sample_backend/templates/account/email/password_reset_key_message.txt:16
+#, python-format
+msgid ""
+"Thank you for using %(site_name)s!\n"
+"\n"
+"%(site_domain)s"
+msgstr ""
+"Thank you for using %(site_name)s!\n"
+"\n"
+"%(site_domain)s"
+
+#: sample_backend/templates/account/email/password_reset_key_subject.txt:3
+msgid "Password Reset Confirmation E-mail"
+msgstr "Password Reset Confirmation E-mail"
+
+#: sample_backend/templates/account/email_confirm.html:6
+#: sample_backend/templates/account/email_confirm.html:10
+msgid "Confirm E-mail Address"
+msgstr "Please confirm your email address"
+
+#: sample_backend/templates/account/email_confirm.html:16
+#, python-format
+msgid ""
+"Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an e-mail address for user "
+"%(user_display)s."
+msgstr ""
+"Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is the email address for  "
+"%(user_display)s. "
+
+#: sample_backend/templates/account/login.html:16
+#, python-format
+msgid ""
+"Please sign in with one\n"
+"of your existing third party accounts. Or, <a href=\"%(signup_url)s\">sign up</a>\n"
+"for a %(site_name)s account and sign in below:"
+msgstr ""
+"Please sign in with one\n"
+"of your existing third party accounts. Or, <a href=\"%(signup_url)s\">sign up</a>\n"
+"for a %(site_name)s account and sign in below:"
+
+#: sample_backend/templates/account/login.html:26
+msgid "or"
+msgstr "or"
+
+#: sample_backend/templates/account/login.html:33
+#, python-format
+msgid ""
+"If you have not created an account yet, then please\n"
+"<a href=\"%(signup_url)s\">sign up</a> first."
+msgstr ""
+"If you have not created an account yet, then please\n"
+"<a href=\"%(signup_url)s\">sign up</a> first."
+
+msgid "Change Password"
+msgstr "Change Password"
+
+msgid "Password Reset"
+msgstr "Password Reset"
+
+#: sample_backend/templates/account/password_reset.html:16
+msgid ""
+"Forgotten your password? Enter your e-mail address below, and we'll send you an e-mail allowing you "
+"to reset it."
+msgstr ""
+"Forgotten your password? Enter your email address below and we will send you an email allowing you "
+"to change it"
+
+#: sample_backend/templates/account/password_reset.html:21
+msgid "Reset My Password"
+msgstr "Reset my Password"
+
+#: sample_backend/templates/account/password_reset_from_key.html:8
+msgid "Bad Token"
+msgstr "Unable to reset password"
+
+#: sample_backend/templates/account/password_reset_from_key.html:12
+#, python-format
+msgid ""
+"The password reset link was invalid, possibly because it has already been used.  Please request a "
+"<a href=\"%(passwd_reset_url)s\">new password reset</a>."
+msgstr ""
+"The password reset link was invalid, possibly because it has already been used.  Please request a "
+"<a href=\"%(passwd_reset_url)s\">new password reset</a>."
+
+#: sample_backend/templates/account/signup_closed.html:10
+msgid "We are sorry, but the sign up is currently closed."
+msgstr "We are sorry, but the sign up is currently closed"
+
+msgid "Verify Your E-mail Address"
+msgstr "Please verify your email address"
+
+#: sample_backend/templates/account/verified_email_required.html:16
+msgid ""
+"We have sent an e-mail to you for\n"
+"verification. Please click on the link inside this e-mail. Please\n"
+"contact us if you do not receive it within a few minutes."
+msgstr ""
+"We have sent you an email for\n"
+"verification. Please click on the link in this email. Please\n"
+"contact us if you do not receive it within a few minutes."
+
+#: sample_backend/templates/account/verified_email_required.html:20
+#, python-format
+msgid "<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your e-mail address</a>."
+msgstr "<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your e-mail address</a>."
+
+#: sample_backend/templates/base.html:55
+msgid "My Profile"
+msgstr "My Profile"
+
+#: sample_backend/templates/shop/email/invoice_message.txt:1
+#, python-format
+msgid ""
+"Dear %(first_name)s,\n"
+"\n"
+"Thank you for using sample.\n"
+"Please find in the attachment the invoice to your order."
+msgstr ""
+"Dear %(first_name)s,\n"
+"\n"
+"Thank you for using sample.\n"
+"Please find in the attachment the invoice to your order."
+
+#: sample_backend/templates/shop/email/invoice_message.txt:9
+msgid ""
+"Kind regards,\n"
+"Your sample Team"
+msgstr ""
+"Kind regards,\n"
+"Your sample Team"
+
+#: sample_backend/users/models.py:45
+msgid "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."
+msgstr "Required: 150 characters or fewer. Letters, digits and @/./+/-/_ only."
+
+#: sample_backend/users/serializers.py:128
+msgid "Must include \"email\" and \"password\"."
+msgstr "Must include \"email\" and \"password\"."
+
+#: sample_backend/users/serializers.py:172
+msgid ""
+"allauth docs. LoginSerializer was taken from django_rest_auth and code was removed to handle other "
+"ways to login."
+msgstr ""
+"allauth docs. LoginSerializer was taken from django_rest_auth and code was removed to handle other "
+"ways to login."
+
+#: sample_backend/users/serializers.py:179
+msgid "User account is disabled."
+msgstr "This user account has been disabled."

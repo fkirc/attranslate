@@ -9,7 +9,7 @@ import {
   XmlResourceFile,
   XmlTag,
 } from "./android-xml";
-import { writeUf8File } from "../../util/util";
+import { writeUtf8File } from "../../util/util";
 import { Builder, OptionsV2 } from "xml2js";
 import { getNotReviewedValue, needsReview } from "../common/manual-review";
 
@@ -154,7 +154,7 @@ export function writeXmlResourceFile(
   const rawXmlString: string = builder.buildObject(resourceFile);
   const xmlHeader: string = auxData?.xmlHeader ?? DEFAULT_XML_HEADER;
   const xmlString = `${xmlHeader}\n${removeBlankLines(rawXmlString)}\n`;
-  writeUf8File(args.path, xmlString);
+  writeUtf8File(args.path, xmlString);
 }
 
 function removeBlankLines(str: string) {

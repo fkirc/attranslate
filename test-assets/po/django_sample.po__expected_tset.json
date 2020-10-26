@@ -1,0 +1,386 @@
+[
+  [
+    "English",
+    "English"
+  ],
+  [
+    "German",
+    ""
+  ],
+  [
+    "Spanish",
+    ""
+  ],
+  [
+    "French",
+    ""
+  ],
+  [
+    "The device has not been started, please try again",
+    "The device could not be activated, please try again"
+  ],
+  [
+    "The device has is not usable due to its old firmware, please contact support to get compatible devicees",
+    "The software on this device is out of date, please contact support to replace device"
+  ],
+  [
+    "Please update your OS to use the device.",
+    ""
+  ],
+  [
+    "This device has already been used, please try another one",
+    "This device has already been used, please try another one"
+  ],
+  [
+    "This entity has already been connected to a tag.",
+    "This entity has already been linked to another device"
+  ],
+  [
+    "No current entity found",
+    "No current entity found"
+  ],
+  [
+    "Unknown user agent",
+    "Unknown user agent"
+  ],
+  [
+    "device already running",
+    ""
+  ],
+  [
+    "device contains values",
+    ""
+  ],
+  [
+    "device contains invalid Data",
+    ""
+  ],
+  [
+    "minimum entity length must be shorter than maximum entity length",
+    "Minimum entity length must be shorter than maximum entity length"
+  ],
+  [
+    "A paid order can not be cancelled",
+    "Once paid an order can no longer be cancelled, it must be refunded"
+  ],
+  [
+    "This order has already been paid.",
+    "This order has already been paid"
+  ],
+  [
+    "Your payment is pending.",
+    "Your payment is pending"
+  ],
+  [
+    "An order item could not be found",
+    "An order item could not be found"
+  ],
+  [
+    "Invalid order item",
+    "Invalid item"
+  ],
+  [
+    "Order is empty",
+    "Order is empty"
+  ],
+  [
+    "Invalid coupon",
+    "Invalid discount code"
+  ],
+  [
+    "Email address is missing",
+    "Please enter email address"
+  ],
+  [
+    "Currency is missing",
+    "Please enter currency"
+  ],
+  [
+    "Expired coupon",
+    "Discount code has expired"
+  ],
+  [
+    "Account Inactive",
+    "Account inactive"
+  ],
+  [
+    "This account is inactive.",
+    "This account is inactive"
+  ],
+  [
+    "Account",
+    "Account"
+  ],
+  [
+    "E-mail Addresses",
+    "email Addresses"
+  ],
+  [
+    "The following e-mail addresses are associated with your account:",
+    "The following email addresses are associated with your account:"
+  ],
+  [
+    "Verified",
+    "Verified"
+  ],
+  [
+    "Unverified",
+    "Unverified"
+  ],
+  [
+    "Primary",
+    "Primary"
+  ],
+  [
+    "Make Primary",
+    "Make Primary"
+  ],
+  [
+    "Re-send Verification",
+    "Re-send verification"
+  ],
+  [
+    "Remove",
+    "Remove"
+  ],
+  [
+    "Warning:",
+    "Warning"
+  ],
+  [
+    "You currently do not have any e-mail address set up. You should really add an e-mail address so you can receive notifications, reset your password, etc.",
+    "You do not have an email address set up to receive notifications or reset your password. Please add email address "
+  ],
+  [
+    "Add E-mail Address",
+    "Add email address"
+  ],
+  [
+    "Add E-mail",
+    "Add email"
+  ],
+  [
+    "Do you really want to remove the selected e-mail address?",
+    "Do you really want to remove the selected email address?"
+  ],
+  [
+    "Hello from %(site_name)s!\n\n\nYou're receiving this e-mail because you or someone else has requested a password for your user account.\n\nIt can be safely ignored if you did not request a password reset. Click the link below to reset your password.",
+    "Hello from %(site_name)s.You are recieving this message because someone has requested a password for your user account.If you requested this password you can safely ignore this message but if not, please click on the link below to change your password"
+  ],
+  [
+    "In case you forgot, your username is %(username)s.",
+    "Just in case you have forgotten your username is %(username)s."
+  ],
+  [
+    "Thank you for using %(site_name)s!\n\n%(site_domain)s",
+    "Thank you for using %(site_name)s!\n\n%(site_domain)s"
+  ],
+  [
+    "Password Reset Confirmation E-mail",
+    "Password Reset Confirmation E-mail"
+  ],
+  [
+    "Confirm E-mail Address",
+    "Please confirm your email address"
+  ],
+  [
+    "Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an e-mail address for user %(user_display)s.",
+    "Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is the email address for  %(user_display)s. "
+  ],
+  [
+    "Confirm",
+    "Confirm"
+  ],
+  [
+    "This e-mail confirmation link expired or is invalid. Please <a href=\"%(email_url)s\">issue a new e-mail confirmation request</a>.",
+    "This email confirmation link has expired or is invalid. Please <a href=\"%(email_url)s\">issue a new e-mail confirmation request</a>."
+  ],
+  [
+    "Sign In",
+    "Sign in"
+  ],
+  [
+    "Please sign in with one\nof your existing third party accounts. Or, <a href=\"%(signup_url)s\">sign up</a>\nfor a %(site_name)s account and sign in below:",
+    "Please sign in with one\nof your existing third party accounts. Or, <a href=\"%(signup_url)s\">sign up</a>\nfor a %(site_name)s account and sign in below:"
+  ],
+  [
+    "or",
+    "or"
+  ],
+  [
+    "If you have not created an account yet, then please\n<a href=\"%(signup_url)s\">sign up</a> first.",
+    "If you have not created an account yet, then please\n<a href=\"%(signup_url)s\">sign up</a> first."
+  ],
+  [
+    "Forgot Password?",
+    "Forgot Password?"
+  ],
+  [
+    "Sign Out",
+    "Log Out"
+  ],
+  [
+    "Are you sure you want to sign out?",
+    "Are you sure you want to log out?"
+  ],
+  [
+    "Change Password",
+    "Change Password"
+  ],
+  [
+    "Password Reset",
+    "Password Reset"
+  ],
+  [
+    "Forgotten your password? Enter your e-mail address below, and we'll send you an e-mail allowing you to reset it.",
+    "Forgotten your password? Enter your email address below and we will send you an email allowing you to change it"
+  ],
+  [
+    "Reset My Password",
+    "Reset my Password"
+  ],
+  [
+    "Please contact us if you have any trouble resetting your password.",
+    "Please contact us if you have any trouble resetting your password."
+  ],
+  [
+    "We have sent you an e-mail. Please contact us if you do not receive it within a few minutes.",
+    "We have sent you an e-mail. Please contact us again if you do not receive it within a few minutes."
+  ],
+  [
+    "Bad Token",
+    "Unable to reset password"
+  ],
+  [
+    "The password reset link was invalid, possibly because it has already been used.  Please request a <a href=\"%(passwd_reset_url)s\">new password reset</a>.",
+    "The password reset link was invalid, possibly because it has already been used.  Please request a <a href=\"%(passwd_reset_url)s\">new password reset</a>."
+  ],
+  [
+    "change password",
+    "Change Password"
+  ],
+  [
+    "Your password is now changed.",
+    "Your password has been changed"
+  ],
+  [
+    "Set Password",
+    "Set Password"
+  ],
+  [
+    "Signup",
+    "Sign up"
+  ],
+  [
+    "Sign Up",
+    "Sign up"
+  ],
+  [
+    "Already have an account? Then please <a href=\"%(login_url)s\">sign in</a>.",
+    "Already have an account? Then please <a href=\"%(login_url)s\">sign in</a>."
+  ],
+  [
+    "Sign Up Closed",
+    "Sign up closed"
+  ],
+  [
+    "We are sorry, but the sign up is currently closed.",
+    "We are sorry, but the sign up is currently closed"
+  ],
+  [
+    "Verify Your E-mail Address",
+    "Please verify your email address"
+  ],
+  [
+    "We have sent an e-mail to you for verification. Follow the link provided to finalize the signup process. Please contact us if you do not receive it within a few minutes.",
+    "We have sent you an e-mail for verification. Follow the link provided to finalize the signup process. Please contact us if you do not receive it within a few minutes"
+  ],
+  [
+    "This part of the site requires us to verify that\nyou are who you claim to be. For this purpose, we require that you\nverify ownership of your e-mail address. ",
+    "you are who you claim to be. For this purpose, we require that you\nverify ownership of your email address."
+  ],
+  [
+    "We have sent an e-mail to you for\nverification. Please click on the link inside this e-mail. Please\ncontact us if you do not receive it within a few minutes.",
+    "We have sent you an email for\nverification. Please click on the link in this email. Please\ncontact us if you do not receive it within a few minutes."
+  ],
+  [
+    "<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your e-mail address</a>.",
+    "<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your e-mail address</a>."
+  ],
+  [
+    "My Profile",
+    "My Profile"
+  ],
+  [
+    "Dear %(first_name)s,\n\nThank you for using sample.\nPlease find in the attachment the invoice to your order.",
+    "Dear %(first_name)s,\n\nThank you for using sample.\nPlease find in the attachment the invoice to your order."
+  ],
+  [
+    "Kind regards,\nYour sample Team",
+    "Kind regards,\nYour sample Team"
+  ],
+  [
+    "Your sample invoice",
+    "Your sample invoice"
+  ],
+  [
+    "Personal info",
+    "Person al Information"
+  ],
+  [
+    "Permissions",
+    "Permissions"
+  ],
+  [
+    "Important dates",
+    "Important Dates"
+  ],
+  [
+    "username",
+    "User Name"
+  ],
+  [
+    "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.",
+    "Required: 150 characters or fewer. Letters, digits and @/./+/-/_ only."
+  ],
+  [
+    "A user with that username already exists.",
+    "That user name already exists, please choose another user name"
+  ],
+  [
+    "Name of User",
+    "Name of User"
+  ],
+  [
+    "email address",
+    "email address"
+  ],
+  [
+    "A user is already registered with this e-mail address.",
+    "A user is already registered with this e-mail address."
+  ],
+  [
+    "Must include \"email\" and \"password\".",
+    "Must include \"email\" and \"password\"."
+  ],
+  [
+    "AUTHENTICATION_METHOD must be set to AuthenticationMethod.EMAIL. See allauth docs. LoginSerializer was taken from django_rest_auth and code was removed to handle other ways to login.",
+    "AUTHENTICATION_METHOD must be set to AuthenticationMethod.EMAIL. See allauth docs. LoginSerializer was taken from django_rest_auth and code was removed to handle other ways to login."
+  ],
+  [
+    "allauth docs. LoginSerializer was taken from django_rest_auth and code was removed to handle other ways to login.",
+    "allauth docs. LoginSerializer was taken from django_rest_auth and code was removed to handle other ways to login."
+  ],
+  [
+    "User account is disabled.",
+    "This user account has been disabled."
+  ],
+  [
+    "Unable to log in with provided credentials.",
+    "Unable to log in with provided credentials."
+  ],
+  [
+    "E-mail is not verified.",
+    "Email could not be verified"
+  ]
+]

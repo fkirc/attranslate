@@ -7,7 +7,7 @@
   },
   "entries": {
     "one": {
-      "value": null,
+      "value": "",
       "targets": [
         {
           "id": "de",

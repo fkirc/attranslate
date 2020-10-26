@@ -1,13 +1,13 @@
 import { iOSFile, LineChunk } from "./ios-strings";
 import { ReadTFileArgs } from "../file-format-definitions";
-import { readUtf8File } from "../../util/util";
 import { logParseError, logParseWarning } from "../common/parse-utils";
+import { readManagedUtf8 } from "../common/managed-utf8";
 
 const KEY_INDEX = 1;
 export const VALUE_INDEX = 3;
 
 export function parseiOSFile(args: ReadTFileArgs): iOSFile {
-  const rawString = readUtf8File(args.path);
+  const rawString = readManagedUtf8(args.path);
   const lines = rawString.split("\n");
   if (!lines.length) {
     logParseError("Empty file", args);
@@ -38,9 +38,6 @@ export function parseiOSFile(args: ReadTFileArgs): iOSFile {
       currentChunk = [];
     }
   });
-  if (currentChunk.length) {
-    iosFile.auxData = currentChunk;
-  }
   if (!iosFile.entries.size) {
     logParseError("Did not find any Strings in the expected format", args);
   }

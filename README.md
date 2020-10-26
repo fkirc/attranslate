@@ -1,5 +1,5 @@
 <p align="center">
-  <img alt="attranslate - Semi-automated Text Translator for Websites and Apps" src="docs/logo/attranslate_v1.png">
+  <img alt="attranslate - Semi-automated Text Translator for Websites and Apps" src="docs/logo/attranslate_logo.png">
 </p>
 
 macOS/Ubuntu/Windows: [![Actions Status](https://github.com/fkirc/attranslate/workflows/Tests/badge.svg/?branch=master)](https://github.com/fkirc/attranslate/actions?query=branch%3Amaster)
@@ -22,14 +22,15 @@ See [tools comparison](/docs/TOOL_COMPARISON.md) for an overview about translati
 ## Cross-platform Support
 
 `attranslate` is designed to translate any website or app with any toolchain.
-`attranslate` works for i18n/JavaScript-frameworks/Android/iOS/Flutter/Ruby/Jekyll/Symfony and many other platforms.
+`attranslate` works for i18n/JavaScript-frameworks/Android/iOS/Flutter/Ruby/Jekyll/Symfony/Django/WordPress and many other platforms.
 To make this possible, `attranslate` supports the following file formats:
 
 - Flat or nested JSON
 - Flat or nested YAML
-- Flutter-ARB
+- PO/POT-files
 - Android-XML
 - iOS-Strings
+- Flutter-ARB
 
 ## Allow Manual Overwrites
 
@@ -93,12 +94,12 @@ Options:
   --srcFile <sourceFile>             The source file to be translated
   --srcLng <sourceLanguage>          A language code for the source language
   --srcFormat <sourceFileFormat>     One of "flat-json", "nested-json", "yaml",
-                                     "android-xml", "ios-strings",
+                                     "po", "android-xml", "ios-strings",
                                      "flutter-arb"
   --targetFile <targetFile>          The target file for the translations
   --targetLng <targetLanguage>       A language code for the target language
   --targetFormat <targetFileFormat>  One of "flat-json", "nested-json", "yaml",
-                                     "android-xml", "ios-strings",
+                                     "po", "android-xml", "ios-strings",
                                      "flutter-arb"
   --service <translationService>     One of "google-translate", "deepl",
                                      "azure", "manual",

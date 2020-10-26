@@ -1,0 +1,524 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-01-16 23:23+0000\n"
+"PO-Revision-Date: 2019-12-04 12:12+0000\n"
+"Last-Translator: Orla\n"
+"Language-Team: English <http://197.167.0.100/projects/\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.8\n"
+
+#: config/settings/base.py:100
+msgid "English"
+msgstr "English"
+
+#: config/settings/base.py:101
+msgid "German"
+msgstr ""
+
+#: config/settings/base.py:102
+msgid "Spanish"
+msgstr ""
+
+#: config/settings/base.py:103
+msgid "French"
+msgstr ""
+
+#: sample_backend/entitytracker/exceptions.py:8
+msgid "The device has not been started, please try again"
+msgstr "The device could not be activated, please try again"
+
+#: sample_backend/entitytracker/exceptions.py:14
+msgid ""
+"The device has is not usable due to its old firmware, please contact support to get compatible "
+"devicees"
+msgstr "The software on this device is out of date, please contact support to replace device"
+
+#: sample_backend/entitytracker/exceptions.py:20
+msgid "Please update your OS to use the device."
+msgstr ""
+
+#: sample_backend/entitytracker/exceptions.py:26
+msgid "This device has already been used, please try another one"
+msgstr "This device has already been used, please try another one"
+
+#: sample_backend/entitytracker/exceptions.py:32
+msgid "This entity has already been connected to a tag."
+msgstr "This entity has already been linked to another device"
+
+#: sample_backend/entitytracker/exceptions.py:38
+msgid "No current entity found"
+msgstr "No current entity found"
+
+#: sample_backend/entitytracker/exceptions.py:44
+msgid "Unknown user agent"
+msgstr "Unknown user agent"
+
+#: sample_backend/entitytracker/exceptions.py:50
+msgid "device already running"
+msgstr ""
+
+#: sample_backend/entitytracker/exceptions.py:56
+msgid "device contains values"
+msgstr ""
+
+#: sample_backend/entitytracker/exceptions.py:62
+msgid "device contains invalid Data"
+msgstr ""
+
+#: sample_backend/entitytracker/serializers.py:35
+msgid "minimum entity length must be shorter than maximum entity length"
+msgstr "Minimum entity length must be shorter than maximum entity length"
+
+#: sample_backend/shop/exceptions.py:8
+msgid "A paid order can not be cancelled"
+msgstr "Once paid an order can no longer be cancelled, it must be refunded"
+
+#: sample_backend/shop/exceptions.py:14
+msgid "This order has already been paid."
+msgstr "This order has already been paid"
+
+#: sample_backend/shop/exceptions.py:26
+msgid "Your payment is pending."
+msgstr "Your payment is pending"
+
+#: sample_backend/shop/exceptions.py:32
+msgid "An order item could not be found"
+msgstr "An order item could not be found"
+
+#: sample_backend/shop/exceptions.py:38
+msgid "Invalid order item"
+msgstr "Invalid item"
+
+#: sample_backend/shop/exceptions.py:44
+msgid "Order is empty"
+msgstr "Order is empty"
+
+#: sample_backend/shop/exceptions.py:50
+msgid "Invalid coupon"
+msgstr "Invalid discount code"
+
+#: sample_backend/shop/exceptions.py:56
+msgid "Email address is missing"
+msgstr "Please enter email address"
+
+#: sample_backend/shop/exceptions.py:62
+msgid "Currency is missing"
+msgstr "Please enter currency"
+
+#: sample_backend/shop/exceptions.py:68
+msgid "Expired coupon"
+msgstr "Discount code has expired"
+
+#: sample_backend/templates/account/account_inactive.html:5
+#: sample_backend/templates/account/account_inactive.html:8
+msgid "Account Inactive"
+msgstr "Account inactive"
+
+#: sample_backend/templates/account/account_inactive.html:10
+msgid "This account is inactive."
+msgstr "This account is inactive"
+
+#: sample_backend/templates/account/email.html:7
+msgid "Account"
+msgstr "Account"
+
+#: sample_backend/templates/account/email.html:10
+msgid "E-mail Addresses"
+msgstr "email Addresses"
+
+#: sample_backend/templates/account/email.html:13
+msgid "The following e-mail addresses are associated with your account:"
+msgstr "The following email addresses are associated with your account:"
+
+#: sample_backend/templates/account/email.html:27
+msgid "Verified"
+msgstr "Verified"
+
+#: sample_backend/templates/account/email.html:29
+msgid "Unverified"
+msgstr "Unverified"
+
+#: sample_backend/templates/account/email.html:31
+msgid "Primary"
+msgstr "Primary"
+
+#: sample_backend/templates/account/email.html:37
+msgid "Make Primary"
+msgstr "Make Primary"
+
+#: sample_backend/templates/account/email.html:38
+msgid "Re-send Verification"
+msgstr "Re-send verification"
+
+#: sample_backend/templates/account/email.html:39
+msgid "Remove"
+msgstr "Remove"
+
+#: sample_backend/templates/account/email.html:46
+msgid "Warning:"
+msgstr "Warning"
+
+#: sample_backend/templates/account/email.html:46
+msgid ""
+"You currently do not have any e-mail address set up. You should really add an e-mail address so you "
+"can receive notifications, reset your password, etc."
+msgstr ""
+"You do not have an email address set up to receive notifications or reset your password. Please add "
+"email address "
+
+#: sample_backend/templates/account/email.html:51
+msgid "Add E-mail Address"
+msgstr "Add email address"
+
+#: sample_backend/templates/account/email.html:56
+msgid "Add E-mail"
+msgstr "Add email"
+
+#: sample_backend/templates/account/email.html:66
+msgid "Do you really want to remove the selected e-mail address?"
+msgstr "Do you really want to remove the selected email address?"
+
+#: sample_backend/templates/account/email/password_reset_key_message.txt:2
+#, python-format
+msgid ""
+"Hello from %(site_name)s!\n"
+"\n"
+"\n"
+"You're receiving this e-mail because you or someone else has requested a password for your user "
+"account.\n"
+"\n"
+"It can be safely ignored if you did not request a password reset. Click the link below to reset "
+"your password."
+msgstr ""
+"Hello from %(site_name)s.You are recieving this message because someone has requested a password "
+"for your user account.If you requested this password you can safely ignore this message but if not, "
+"please click on the link below to change your password"
+
+#: sample_backend/templates/account/email/password_reset_key_message.txt:13
+#, python-format
+msgid "In case you forgot, your username is %(username)s."
+msgstr "Just in case you have forgotten your username is %(username)s."
+
+#: sample_backend/templates/account/email/password_reset_key_message.txt:16
+#, python-format
+msgid ""
+"Thank you for using %(site_name)s!\n"
+"\n"
+"%(site_domain)s"
+msgstr ""
+"Thank you for using %(site_name)s!\n"
+"\n"
+"%(site_domain)s"
+
+#: sample_backend/templates/account/email/password_reset_key_subject.txt:3
+msgid "Password Reset Confirmation E-mail"
+msgstr "Password Reset Confirmation E-mail"
+
+#: sample_backend/templates/account/email_confirm.html:6
+#: sample_backend/templates/account/email_confirm.html:10
+msgid "Confirm E-mail Address"
+msgstr "Please confirm your email address"
+
+#: sample_backend/templates/account/email_confirm.html:16
+#, python-format
+msgid ""
+"Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an e-mail address for user "
+"%(user_display)s."
+msgstr ""
+"Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is the email address for  "
+"%(user_display)s. "
+
+#: sample_backend/templates/account/email_confirm.html:20
+msgid "Confirm"
+msgstr "Confirm"
+
+#: sample_backend/templates/account/email_confirm.html:27
+#, python-format
+msgid ""
+"This e-mail confirmation link expired or is invalid. Please <a href=\"%(email_url)s\">issue a new "
+"e-mail confirmation request</a>."
+msgstr ""
+"This email confirmation link has expired or is invalid. Please <a href=\"%(email_url)s\">issue a "
+"new e-mail confirmation request</a>."
+
+#: sample_backend/templates/account/login.html:7
+#: sample_backend/templates/account/login.html:11
+#: sample_backend/templates/account/login.html:44
+#: sample_backend/templates/base.html:68
+msgid "Sign In"
+msgstr "Sign in"
+
+#: sample_backend/templates/account/login.html:16
+#, python-format
+msgid ""
+"Please sign in with one\n"
+"of your existing third party accounts. Or, <a href=\"%(signup_url)s\">sign up</a>\n"
+"for a %(site_name)s account and sign in below:"
+msgstr ""
+"Please sign in with one\n"
+"of your existing third party accounts. Or, <a href=\"%(signup_url)s\">sign up</a>\n"
+"for a %(site_name)s account and sign in below:"
+
+#: sample_backend/templates/account/login.html:26
+msgid "or"
+msgstr "or"
+
+#: sample_backend/templates/account/login.html:33
+#, python-format
+msgid ""
+"If you have not created an account yet, then please\n"
+"<a href=\"%(signup_url)s\">sign up</a> first."
+msgstr ""
+"If you have not created an account yet, then please\n"
+"<a href=\"%(signup_url)s\">sign up</a> first."
+
+#: sample_backend/templates/account/login.html:43
+msgid "Forgot Password?"
+msgstr "Forgot Password?"
+
+#: sample_backend/templates/account/logout.html:5
+#: sample_backend/templates/account/logout.html:8
+#: sample_backend/templates/account/logout.html:17
+#: sample_backend/templates/base.html:59
+msgid "Sign Out"
+msgstr "Log Out"
+
+#: sample_backend/templates/account/logout.html:10
+msgid "Are you sure you want to sign out?"
+msgstr "Are you sure you want to log out?"
+
+#: sample_backend/templates/account/password_change.html:6
+#: sample_backend/templates/account/password_change.html:9
+#: sample_backend/templates/account/password_change.html:14
+#: sample_backend/templates/account/password_reset_from_key.html:5
+#: sample_backend/templates/account/password_reset_from_key.html:8
+#: sample_backend/templates/account/password_reset_from_key_done.html:4
+#: sample_backend/templates/account/password_reset_from_key_done.html:7
+msgid "Change Password"
+msgstr "Change Password"
+
+#: sample_backend/templates/account/password_reset.html:7
+#: sample_backend/templates/account/password_reset.html:11
+#: sample_backend/templates/account/password_reset_done.html:6
+#: sample_backend/templates/account/password_reset_done.html:9
+msgid "Password Reset"
+msgstr "Password Reset"
+
+#: sample_backend/templates/account/password_reset.html:16
+msgid ""
+"Forgotten your password? Enter your e-mail address below, and we'll send you an e-mail allowing you "
+"to reset it."
+msgstr ""
+"Forgotten your password? Enter your email address below and we will send you an email allowing you "
+"to change it"
+
+#: sample_backend/templates/account/password_reset.html:21
+msgid "Reset My Password"
+msgstr "Reset my Password"
+
+#: sample_backend/templates/account/password_reset.html:24
+msgid "Please contact us if you have any trouble resetting your password."
+msgstr "Please contact us if you have any trouble resetting your password."
+
+#: sample_backend/templates/account/password_reset_done.html:15
+msgid "We have sent you an e-mail. Please contact us if you do not receive it within a few minutes."
+msgstr "We have sent you an e-mail. Please contact us again if you do not receive it within a few minutes."
+
+#: sample_backend/templates/account/password_reset_from_key.html:8
+msgid "Bad Token"
+msgstr "Unable to reset password"
+
+#: sample_backend/templates/account/password_reset_from_key.html:12
+#, python-format
+msgid ""
+"The password reset link was invalid, possibly because it has already been used.  Please request a "
+"<a href=\"%(passwd_reset_url)s\">new password reset</a>."
+msgstr ""
+"The password reset link was invalid, possibly because it has already been used.  Please request a "
+"<a href=\"%(passwd_reset_url)s\">new password reset</a>."
+
+#: sample_backend/templates/account/password_reset_from_key.html:18
+msgid "change password"
+msgstr "Change Password"
+
+#: sample_backend/templates/account/password_reset_from_key.html:21
+#: sample_backend/templates/account/password_reset_from_key_done.html:8
+msgid "Your password is now changed."
+msgstr "Your password has been changed"
+
+#: sample_backend/templates/account/password_set.html:6
+#: sample_backend/templates/account/password_set.html:9
+#: sample_backend/templates/account/password_set.html:14
+msgid "Set Password"
+msgstr "Set Password"
+
+#: sample_backend/templates/account/signup.html:6
+msgid "Signup"
+msgstr "Sign up"
+
+#: sample_backend/templates/account/signup.html:9
+#: sample_backend/templates/account/signup.html:19
+#: sample_backend/templates/base.html:64
+msgid "Sign Up"
+msgstr "Sign up"
+
+#: sample_backend/templates/account/signup.html:11
+#, python-format
+msgid "Already have an account? Then please <a href=\"%(login_url)s\">sign in</a>."
+msgstr "Already have an account? Then please <a href=\"%(login_url)s\">sign in</a>."
+
+#: sample_backend/templates/account/signup_closed.html:5
+#: sample_backend/templates/account/signup_closed.html:8
+msgid "Sign Up Closed"
+msgstr "Sign up closed"
+
+#: sample_backend/templates/account/signup_closed.html:10
+msgid "We are sorry, but the sign up is currently closed."
+msgstr "We are sorry, but the sign up is currently closed"
+
+#: sample_backend/templates/account/verification_sent.html:5
+#: sample_backend/templates/account/verification_sent.html:8
+#: sample_backend/templates/account/verified_email_required.html:5
+#: sample_backend/templates/account/verified_email_required.html:8
+msgid "Verify Your E-mail Address"
+msgstr "Please verify your email address"
+
+#: sample_backend/templates/account/verification_sent.html:10
+msgid ""
+"We have sent an e-mail to you for verification. Follow the link provided to finalize the signup "
+"process. Please contact us if you do not receive it within a few minutes."
+msgstr ""
+"We have sent you an e-mail for verification. Follow the link provided to finalize the signup "
+"process. Please contact us if you do not receive it within a few minutes"
+
+#: sample_backend/templates/account/verified_email_required.html:12
+msgid ""
+"This part of the site requires us to verify that\n"
+"you are who you claim to be. For this purpose, we require that you\n"
+"verify ownership of your e-mail address. "
+msgstr ""
+"you are who you claim to be. For this purpose, we require that you\n"
+"verify ownership of your email address."
+
+#: sample_backend/templates/account/verified_email_required.html:16
+msgid ""
+"We have sent an e-mail to you for\n"
+"verification. Please click on the link inside this e-mail. Please\n"
+"contact us if you do not receive it within a few minutes."
+msgstr ""
+"We have sent you an email for\n"
+"verification. Please click on the link in this email. Please\n"
+"contact us if you do not receive it within a few minutes."
+
+#: sample_backend/templates/account/verified_email_required.html:20
+#, python-format
+msgid "<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your e-mail address</a>."
+msgstr "<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your e-mail address</a>."
+
+#: sample_backend/templates/base.html:55
+msgid "My Profile"
+msgstr "My Profile"
+
+#: sample_backend/templates/shop/email/invoice_message.txt:1
+#, python-format
+msgid ""
+"Dear %(first_name)s,\n"
+"\n"
+"Thank you for using sample.\n"
+"Please find in the attachment the invoice to your order."
+msgstr ""
+"Dear %(first_name)s,\n"
+"\n"
+"Thank you for using sample.\n"
+"Please find in the attachment the invoice to your order."
+
+#: sample_backend/templates/shop/email/invoice_message.txt:9
+msgid ""
+"Kind regards,\n"
+"Your sample Team"
+msgstr ""
+"Kind regards,\n"
+"Your sample Team"
+
+#: sample_backend/templates/shop/email/invoice_subject.txt:3
+msgid "Your sample invoice"
+msgstr "Your sample invoice"
+
+#: sample_backend/users/admin.py:19
+msgid "Personal info"
+msgstr "Person al Information"
+
+#: sample_backend/users/admin.py:20
+msgid "Permissions"
+msgstr "Permissions"
+
+#: sample_backend/users/admin.py:22
+msgid "Important dates"
+msgstr "Important Dates"
+
+#: sample_backend/users/models.py:43
+msgid "username"
+msgstr "User Name"
+
+#: sample_backend/users/models.py:45
+msgid "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."
+msgstr "Required: 150 characters or fewer. Letters, digits and @/./+/-/_ only."
+
+#: sample_backend/users/models.py:48
+msgid "A user with that username already exists."
+msgstr "That user name already exists, please choose another user name"
+
+#: sample_backend/users/models.py:54
+msgid "Name of User"
+msgstr "Name of User"
+
+#: sample_backend/users/models.py:56
+msgid "email address"
+msgstr "email address"
+
+#: sample_backend/users/serializers.py:48
+msgid "A user is already registered with this e-mail address."
+msgstr "A user is already registered with this e-mail address."
+
+#: sample_backend/users/serializers.py:128
+msgid "Must include \"email\" and \"password\"."
+msgstr "Must include \"email\" and \"password\"."
+
+#: sample_backend/users/serializers.py:146
+msgid ""
+"AUTHENTICATION_METHOD must be set to AuthenticationMethod.EMAIL. See allauth docs. LoginSerializer "
+"was taken from django_rest_auth and code was removed to handle other ways to login."
+msgstr ""
+"AUTHENTICATION_METHOD must be set to AuthenticationMethod.EMAIL. See allauth docs. LoginSerializer "
+"was taken from django_rest_auth and code was removed to handle other ways to login."
+
+#: sample_backend/users/serializers.py:172
+msgid ""
+"allauth docs. LoginSerializer was taken from django_rest_auth and code was removed to handle other "
+"ways to login."
+msgstr ""
+"allauth docs. LoginSerializer was taken from django_rest_auth and code was removed to handle other "
+"ways to login."
+
+#: sample_backend/users/serializers.py:179
+msgid "User account is disabled."
+msgstr "This user account has been disabled."
+
+#: sample_backend/users/serializers.py:182
+msgid "Unable to log in with provided credentials."
+msgstr "Unable to log in with provided credentials."
+
+#: sample_backend/users/serializers.py:191
+msgid "E-mail is not verified."
+msgstr "Email could not be verified"

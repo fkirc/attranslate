@@ -1,0 +1,18 @@
+[
+  [
+    "A section of text like this is known as a text segment.",
+    "First"
+  ],
+  [
+    "Comments in a file (depending on file type) are included upon import to provide the translators with more information. They are imported as a description, visible in the side panel.",
+    "Second"
+  ],
+  [
+    "Made with ❤",
+    ""
+  ],
+  [
+    "In case you run out of space, you can always continue in the next line.",
+    ""
+  ]
+]

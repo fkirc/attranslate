@@ -4,7 +4,7 @@ import {
   WriteTFileArgs,
 } from "../file-format-definitions";
 import { TSet } from "../../core/core-definitions";
-import { logFatal, writeUf8File } from "../../util/util";
+import { logFatal, writeUtf8File } from "../../util/util";
 import { Document, Options, stringify, scalarOptions } from "yaml";
 import { FormatCache } from "../common/format-cache";
 import Parsed = Document.Parsed;
@@ -106,7 +106,7 @@ export class YamlGeneric implements TFileFormat {
       ymlString = this.createUncachedYml(args, nestedJson);
     }
     documentCache.purge();
-    writeUf8File(args.path, ymlString);
+    writeUtf8File(args.path, ymlString);
   }
 
   createCachedYml(

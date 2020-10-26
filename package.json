@@ -45,12 +45,14 @@
     "@google-cloud/translate": "^6.0.3",
     "commander": "^6.1.0",
     "detect-indent": "^6.0.0",
+    "gettext-parser": "^4.0.4",
     "inquirer": "^7.3.3",
     "messageformat-parser": "^4.1.0",
     "xml2js": "https://github.com/fkirc/node-xml2js/tarball/21de47581c46ce5b5659448ab198501786d2117d",
     "yaml": "^2.0.0-1"
   },
   "devDependencies": {
+    "@types/gettext-parser": "^4.0.0",
     "@types/inquirer": "^7.3.1",
     "@types/jest": "^26.0.14",
     "@types/lodash": "^4.14.162",

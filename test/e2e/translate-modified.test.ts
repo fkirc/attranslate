@@ -98,10 +98,13 @@ describe.each(testArray)("translate modified %p", (commonArgs) => {
   });
 
   test("modified target - outdated cache", async () => {
-    const args: E2EArgs = { ...commonArgs.args, cacheDir: cacheDirOutdated };
+    const tempCacheDir = "temp-cache-dir";
+    await runCommand(`mkdir ${tempCacheDir}`);
+    await runCommand(`cp -r ${cacheDirOutdated + "/*"} ${tempCacheDir}`);
+    const args: E2EArgs = { ...commonArgs.args, cacheDir: tempCacheDir };
     const output = await runModifiedTarget(args, false);
     expect(output).toContain("Update 1 existing translations");
-    await runCommand(`git checkout ${args.cacheDir}`);
+    await runCommand(`rm -r ${tempCacheDir}`);
   });
 
   test("modified target - missing cache", async () => {

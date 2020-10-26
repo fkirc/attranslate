@@ -6,7 +6,7 @@ import {
   readmeSnippets,
   replaceReadme,
 } from "./doc-utils";
-import { readUtf8File, writeUf8File } from "../../src/util/util";
+import { readUtf8File, writeUtf8File } from "../../src/util/util";
 
 function extractNewReadmeSnippet(snippet: ReadmeSnippet): string {
   const script = readUtf8File(snippet.srcPath);
@@ -29,7 +29,7 @@ function generateReadmeSnippet(snippet: ReadmeSnippet) {
   const oldSnippet = readUtf8File(snippet.refPath);
   const newSnippet = extractNewReadmeSnippet(snippet);
   replaceReadme(oldSnippet, newSnippet);
-  writeUf8File(snippet.refPath, newSnippet);
+  writeUtf8File(snippet.refPath, newSnippet);
 }
 
 test("generate README snippets", () => {
