@@ -7,7 +7,11 @@ import { TSet } from "../../core/core-definitions";
 import { GetTextTranslations, po } from "gettext-parser";
 import { FormatCache } from "../common/format-cache";
 import { readManagedUtf8, writeManagedUtf8 } from "../common/managed-utf8";
-import { extractPotTranslations, parsePotFile } from "./po-ops";
+import {
+  extractPotTranslations,
+  parsePotFile,
+  updatePotTranslations,
+} from "./po-ops";
 
 interface PotAuxData {
   potFile: GetTextTranslations;
@@ -34,7 +38,7 @@ export class PoFile implements TFileFormat {
     if (!auxData) {
       output = createUncachedPot(args);
     } else {
-      output = createCachedPot(auxData);
+      output = createCachedPot(args, auxData);
     }
     writeManagedUtf8({ path: args.path, utf8: output });
     potCache.purge();
@@ -46,7 +50,8 @@ const compileOptions = {
   sort: false,
 };
 
-function createCachedPot(auxData: PotAuxData): string {
+function createCachedPot(args: WriteTFileArgs, auxData: PotAuxData): string {
+  updatePotTranslations(auxData.potFile, args.tSet);
   const buffer = po.compile(auxData.potFile, compileOptions);
   return buffer.toString("utf-8");
 }
