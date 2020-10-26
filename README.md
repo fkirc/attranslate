@@ -1,5 +1,5 @@
 <p align="center">
-  <img alt="attranslate - Semi-automated Text Translator for Websites and Apps" src="docs/logo/attranslate_v1.png">
+  <img alt="attranslate - Semi-automated Text Translator for Websites and Apps" src="docs/logo/attranslate_logo.png">
 </p>
 
 macOS/Ubuntu/Windows: [![Actions Status](https://github.com/fkirc/attranslate/workflows/Tests/badge.svg/?branch=master)](https://github.com/fkirc/attranslate/actions?query=branch%3Amaster)
