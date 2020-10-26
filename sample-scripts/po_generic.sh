@@ -10,5 +10,5 @@ COMMON_ARGS=( "--srcFile=$BASE_DIR/en.po" "--srcLng=en" "--srcFormat=po" "--targ
 attranslate "${COMMON_ARGS[@]}" --targetFile=$BASE_DIR/es.po --targetLng=es
 attranslate "${COMMON_ARGS[@]}" --targetFile=$BASE_DIR/de.po --targetLng=de --manualReview=true
 
-# Convert a JSON to PO (just for the sake of test-coverage)
-attranslate --srcFile="$BASE_DIR/nested-fruits.json" --srcFormat=nested-json --srcLng=x --targetFile=$BASE_DIR/nested-fruits.po --targetFormat=po --targetLng=x --service=sync-without-translate --cacheDir=$BASE_DIR
+# Convert a YAML to PO (just for the sake of test-coverage)
+attranslate --srcFile="$BASE_DIR/nested-fruits.yml" --srcFormat=yaml --srcLng=x --targetFile=$BASE_DIR/nested-fruits.po --targetFormat=po --targetLng=x --service=sync-without-translate --cacheDir=$BASE_DIR
