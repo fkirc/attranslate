@@ -32,11 +32,11 @@ msgstr ""
 
 #: config/settings/base.py:102
 msgid "Spanish"
-msgstr ""
+msgstr "Spanish"
 
 #: config/settings/base.py:103
 msgid "French"
-msgstr ""
+msgstr "some value"
 
 #: sample_backend/templates/account/email/password_reset_key_message.txt:2
 #, python-format

@@ -59,7 +59,7 @@
       ]
     },
     "Spanish": {
-      "value": null,
+      "value": "Spanish",
       "targets": [
         {
           "id": "es",
@@ -72,7 +72,7 @@
       ]
     },
     "French": {
-      "value": null,
+      "value": "some value",
       "targets": [
         {
           "id": "es",
