@@ -28,6 +28,23 @@ test("src not an XML", async () => {
   );
 });
 
+test("src not a YAML", async () => {
+  const args: E2EArgs = {
+    ...defaultE2EArgs,
+    srcFile: "test-assets/android-xml/advanced.xml",
+    srcFormat: "yaml",
+  };
+  const output = await runTranslateExpectFailure(buildE2EArgs(args));
+  expect(output).toContain(
+    `error: Failed to parse ${getDebugPath(
+      args.srcFile
+    )} with expected format '${args.srcFormat}'`
+  );
+  expect(output).toContain(
+    "Implicit map keys need to be followed by map values"
+  );
+});
+
 test("duplicate keys XML", async () => {
   const args: E2EArgs = {
     ...defaultE2EArgs,
@@ -60,6 +77,18 @@ test("duplicate keys iOS", async () => {
     }': duplicate key 'dup_ios' -> Currently, the usage of duplicate translation-keys is discouraged.`,
   ]);
   expect(output).toBe(expectedOutput);
+});
+
+test("duplicate keys yml", async () => {
+  const args: E2EArgs = {
+    ...defaultE2EArgs,
+    srcFile: "test-assets/invalid/duplicate-keys.yml",
+    srcFormat: "yaml",
+  };
+  const output = await runTranslateExpectFailure(buildE2EArgs(args));
+  expect(output).toContain(
+    'Map keys must be unique; "question" is repeated at line 1, column 1'
+  );
 });
 
 test("invalid iOS strings", async () => {

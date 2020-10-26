@@ -1,0 +1,514 @@
+[
+  [
+    "subsections[0]",
+    "Payment and Delivery"
+  ],
+  [
+    "subsections[1]",
+    "Success Stories"
+  ],
+  [
+    "subsections[2]",
+    "Certificates"
+  ],
+  [
+    "titles_long.home",
+    "Home section"
+  ],
+  [
+    "titles_long.blog",
+    "Our Blog"
+  ],
+  [
+    "titles_long.stories",
+    "about our users"
+  ],
+  [
+    "titles_long.faq",
+    "Customer Support and Frequently Asked Questions"
+  ],
+  [
+    "titles_long.press",
+    "Press"
+  ],
+  [
+    "titles_long.impressum",
+    "Impressum"
+  ],
+  [
+    "titles_long.gdpr",
+    "Data Protection Regulation"
+  ],
+  [
+    "titles_long.certificates",
+    "Certificates"
+  ],
+  [
+    "titles_long.delivery-terms",
+    "Payment and Delivery"
+  ],
+  [
+    "titles_long.ifu",
+    "Instructions for Use"
+  ],
+  [
+    "titles_long.contact",
+    "Contact / Support"
+  ],
+  [
+    "titles_long.cancellation",
+    "Cancellation"
+  ],
+  [
+    "titles_long.about",
+    "About us - the team"
+  ],
+  [
+    "titles_long.jobs",
+    "Career"
+  ],
+  [
+    "titles_long.errorpage",
+    "four zero four"
+  ],
+  [
+    "titles_long.download",
+    "Download"
+  ],
+  [
+    "titles_long.checkout",
+    "Checkout"
+  ],
+  [
+    "titles_long.conditions",
+    "GT&C"
+  ],
+  [
+    "itunes.url",
+    "https://itunes.apple.com/gb/app/sdsdsdsdsds"
+  ],
+  [
+    "googleplay.url",
+    "https://play.google.com/store/apps/details?id=sdsdsdsdsds"
+  ],
+  [
+    "banner.text_long",
+    "For a short time ony!"
+  ],
+  [
+    "banner.text_short",
+    "Sale -15%"
+  ],
+  [
+    "banner.countries[0]",
+    "DE"
+  ],
+  [
+    "banner.countries[1]",
+    "AT"
+  ],
+  [
+    "banner.countries[2]",
+    "NL"
+  ],
+  [
+    "banner.countries[3]",
+    "DK"
+  ],
+  [
+    "banner.coupon",
+    "HERBST15"
+  ],
+  [
+    "banner.bestvalue",
+    "#sale"
+  ],
+  [
+    "banner.quantity",
+    "3"
+  ],
+  [
+    "banner.button",
+    "buy now"
+  ],
+  [
+    "shop.button",
+    "Buy now"
+  ],
+  [
+    "blog.title",
+    "talking"
+  ],
+  [
+    "blog.subtitle",
+    "Some blog"
+  ],
+  [
+    "blog.related-posts",
+    "You May Also Enjoy"
+  ],
+  [
+    "stories.title",
+    "Success Stories"
+  ],
+  [
+    "stories.subtitle",
+    "Read the stories of our users"
+  ],
+  [
+    "footer.block1.title",
+    "Legal"
+  ],
+  [
+    "footer.block1.link1",
+    "Data Protection"
+  ],
+  [
+    "footer.block1.link2",
+    "GT & C"
+  ],
+  [
+    "footer.block1.link3",
+    "Cancellation"
+  ],
+  [
+    "footer.block1.link4",
+    "Legal Notice"
+  ],
+  [
+    "footer.block2.title",
+    "Information"
+  ],
+  [
+    "footer.block2.link1",
+    "IFU"
+  ],
+  [
+    "footer.block2.link2",
+    "FAQ"
+  ],
+  [
+    "footer.block2.link3",
+    "Payment and Delivery"
+  ],
+  [
+    "footer.block2.link4",
+    "Recycling"
+  ],
+  [
+    "footer.block3.title",
+    "App"
+  ],
+  [
+    "footer.block3.link1",
+    "Apple AppStore"
+  ],
+  [
+    "footer.block3.link2",
+    "Google PlayStore"
+  ],
+  [
+    "footer.block4.title",
+    "Payment"
+  ],
+  [
+    "footer.block5.link1",
+    "About us"
+  ],
+  [
+    "footer.block5.link2",
+    "Contact"
+  ],
+  [
+    "footer.block5.link3",
+    "Press"
+  ],
+  [
+    "footer.block5.link4",
+    "Certificates"
+  ],
+  [
+    "footer.block5.link6",
+    "Career"
+  ],
+  [
+    "footer.copyright",
+    "© company"
+  ],
+  [
+    "cookie.msg",
+    "This website uses cookies to ensure you get the best experience on our website."
+  ],
+  [
+    "cookie.learnmore",
+    "Learn more"
+  ],
+  [
+    "cookie.close",
+    "Okay"
+  ],
+  [
+    "checkout.heading",
+    "Order now"
+  ],
+  [
+    "checkout.button_order_create",
+    "Continue to Purchase"
+  ],
+  [
+    "checkout.button_order_pay",
+    "Pay and Purchase"
+  ],
+  [
+    "checkout.shippingbilling.title",
+    "Shipping &amp; Billing Information"
+  ],
+  [
+    "checkout.shippingbilling.first_name",
+    "First Name"
+  ],
+  [
+    "checkout.shippingbilling.first_name_ex",
+    "Emma"
+  ],
+  [
+    "checkout.shippingbilling.last_name",
+    "Last Name"
+  ],
+  [
+    "checkout.shippingbilling.last_name_ex",
+    "Miller"
+  ],
+  [
+    "checkout.shippingbilling.email",
+    "E-Mail"
+  ],
+  [
+    "checkout.shippingbilling.email_ex",
+    "emma@themillers.com"
+  ],
+  [
+    "checkout.shippingbilling.address",
+    "Address"
+  ],
+  [
+    "checkout.shippingbilling.address_ex",
+    "10 Piccadilly"
+  ],
+  [
+    "checkout.shippingbilling.city",
+    "City"
+  ],
+  [
+    "checkout.shippingbilling.city_ex",
+    "London"
+  ],
+  [
+    "checkout.shippingbilling.state",
+    "State"
+  ],
+  [
+    "checkout.shippingbilling.state_ex",
+    "London"
+  ],
+  [
+    "checkout.shippingbilling.zip",
+    "ZIP"
+  ],
+  [
+    "checkout.shippingbilling.zip_ex",
+    "W1J00DD"
+  ],
+  [
+    "checkout.shippingbilling.country",
+    "Country"
+  ],
+  [
+    "checkout.shippingbilling.country_ex",
+    "GB"
+  ],
+  [
+    "checkout.shippingbilling.coupon",
+    "Discount Code"
+  ],
+  [
+    "checkout.paymentinfo.title",
+    "Payment Information"
+  ],
+  [
+    "checkout.paymentinfo.card",
+    "Credit Card"
+  ],
+  [
+    "checkout.paymentinfo.redirect",
+    "You will be redirected to your bank to complete payment."
+  ],
+  [
+    "checkout.paymentinfo.receiver",
+    "Payment information will be provided after you place your order."
+  ],
+  [
+    "checkout.summary.title",
+    "Order Summary"
+  ],
+  [
+    "checkout.summary.subtotal",
+    "Subtotal"
+  ],
+  [
+    "checkout.summary.shipping",
+    "Shipping"
+  ],
+  [
+    "checkout.summary.shipping_free",
+    "Free"
+  ],
+  [
+    "checkout.summary.coupon",
+    "Discount Code"
+  ],
+  [
+    "checkout.summary.total",
+    "Total"
+  ],
+  [
+    "checkout.confirmation.processing.title",
+    "Completing your order…"
+  ],
+  [
+    "checkout.confirmation.processing.text1",
+    "We are just waiting for confirmation from your bank… This might take a moment."
+  ],
+  [
+    "checkout.confirmation.processing.text2",
+    "We will send your receipt via email shortly."
+  ],
+  [
+    "checkout.confirmation.success.title",
+    "Thank you for your order!"
+  ],
+  [
+    "checkout.confirmation.success.text1",
+    "Thank you for your patience. Your payment is now complete and your order is being processed."
+  ],
+  [
+    "checkout.confirmation.success.text2",
+    "We have sent your receipt to your email address, and your items will be on their way shortly."
+  ],
+  [
+    "checkout.confirmation.receiver.title",
+    "Thank you. Just one last step!"
+  ],
+  [
+    "checkout.confirmation.receiver.text",
+    "Please make a payment using the details below to complete your order."
+  ],
+  [
+    "checkout.confirmation.error.title",
+    "Oops, payment failed."
+  ],
+  [
+    "checkout.confirmation.error.text",
+    "It looks like your order could not be paid at this time. Please try again or select a different payment option."
+  ],
+  [
+    "about.title",
+    "About us"
+  ],
+  [
+    "about.text1",
+    "we explain\nin multiple lines\nwho we are"
+  ],
+  [
+    "about.team.title",
+    "Our team"
+  ],
+  [
+    "about.team.text",
+    "Our highly skilled team draws on decades of experience and is committed to making a\nvaluable contribution to society. We are driven by the desire to positively shape the everyday life with a series of\ninnovative products."
+  ],
+  [
+    "about.team.img1.link",
+    "ceo.png"
+  ],
+  [
+    "about.team.img1.text",
+    " fk"
+  ],
+  [
+    "about.team.img1.author",
+    "fk"
+  ],
+  [
+    "about.team.img1.title",
+    "CEO & Founder"
+  ],
+  [
+    "about.partner.title",
+    "Our partners..."
+  ],
+  [
+    "errorpage.notfound",
+    "404 – page not found"
+  ],
+  [
+    "errorpage.details",
+    "We’re sorry, but the party you’re looking for seems to be happening elsewhere! Maybe you`ll find what you`re looking for on the Homepage."
+  ],
+  [
+    "invoice.invoice_date",
+    "Invoice Date:"
+  ],
+  [
+    "invoice.shipping_date",
+    "Shipping Date:"
+  ],
+  [
+    "invoice.order_number",
+    "Order Number:"
+  ],
+  [
+    "invoice.invoice_number",
+    "Invoice Number:"
+  ],
+  [
+    "invoice.content.heading",
+    "Invoice"
+  ],
+  [
+    "invoice.content.text",
+    "Thank you for using."
+  ],
+  [
+    "invoice.content.piece",
+    "Pcs"
+  ],
+  [
+    "invoice.content.name",
+    "Product Name"
+  ],
+  [
+    "invoice.content.price",
+    "Price/Unit"
+  ],
+  [
+    "invoice.content.payment",
+    "Payment"
+  ],
+  [
+    "invoice.content.subtotal",
+    "Subtotal"
+  ],
+  [
+    "invoice.content.tax",
+    "Tax Rate"
+  ],
+  [
+    "invoice.content.shipping",
+    "Shipping"
+  ],
+  [
+    "invoice.content.total",
+    "Total"
+  ]
+]

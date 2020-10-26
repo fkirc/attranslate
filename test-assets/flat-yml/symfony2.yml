@@ -1,0 +1,8 @@
+# a generic key
+author.name.not_blank: Please enter an author name.
+
+# placeholder example
+users.salutation: "Hello %{username}"
+
+# source language text used as key
+"Symfony2 is great": J'aime Symfony2

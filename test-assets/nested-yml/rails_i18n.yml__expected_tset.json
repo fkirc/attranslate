@@ -1,0 +1,38 @@
+[
+  [
+    "en.header.hello_user",
+    "Hello %{username}"
+  ],
+  [
+    "en.header.welcome",
+    "Welcome to attranslate!"
+  ],
+  [
+    "en.about.features_array[0]",
+    "Reach billions with your apps!"
+  ],
+  [
+    "en.about.features_array[1]",
+    "Android, iOS & Co!"
+  ],
+  [
+    "en.about.features_array[2]",
+    "Clever Github integration!"
+  ],
+  [
+    "en.about.another_array[0]",
+    "one"
+  ],
+  [
+    "en.about.another_array[1]",
+    "two"
+  ],
+  [
+    "en.about.another_array[2]",
+    "three"
+  ],
+  [
+    "en.about.multi_line",
+    "A multi\nline value\n"
+  ]
+]

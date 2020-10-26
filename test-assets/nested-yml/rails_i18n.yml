@@ -1,0 +1,19 @@
+# this comment is ignored because it is not directly followed by a key-value pair
+en:
+  # this comment is also ignored,
+  # because it is followed by a key that has children nodes
+  header:
+    hello_user: Hello %{username}
+    # comments are treated as translation descriptions
+    # belonging to the key-value pair
+    welcome: Welcome to attranslate!
+  about:
+    # example of an array in YAML
+    features_array:
+      - Reach billions with your apps!
+      - Android, iOS & Co!
+      - Clever Github integration!
+    another_array: [ 'one', 'two', 'three' ]
+    multi_line: |
+      A multi
+      line value

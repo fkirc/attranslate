@@ -14,7 +14,7 @@ export class FormatCache<E, A> {
   constructor() {
     this.fileCaches = [];
   }
-  private readonly fileCaches: FileCache<E, A>[];
+  private fileCaches: FileCache<E, A>[];
   findFileCache(path: string): FileCache<E, A> | null {
     return this.fileCaches.find((fileCache) => fileCache.path === path) ?? null;
   }
@@ -55,5 +55,14 @@ export class FormatCache<E, A> {
       return this.fileCaches[this.fileCaches.length - 1].auxData;
     }
     return null;
+  }
+  getOldestAuxdata(): A | null {
+    if (!this.fileCaches.length) {
+      return null;
+    }
+    return this.fileCaches[0].auxData;
+  }
+  purge() {
+    this.fileCaches = [];
   }
 }
