@@ -59,7 +59,7 @@ test("po insert new translations", async () => {
     path,
     linesToRemove: [
       'msgid "Confirm E-mail Address"',
-      'msgstr "Please confirm your email address"', // TODO: change to spanish
+      'msgstr "Por favor confirme su dirección de correo electrónico"',
     ],
   });
   const output = await runSampleScript(testScript, [assetDir]);
