@@ -63,14 +63,13 @@ test("yml insert new translations", async () => {
   removeLines({
     path,
     linesToRemove: [
-      "  impressum: 'Impressum'",
-      "  gdpr: 'Reglamento de protección de datos'",
-      "  conditions: 'GT&C'",
+      "  - 'Certificados'",
+      "  jobs: 'Carrera'",
       "  cancellation: 'Cancelación'",
     ],
   });
   const output = await runSampleScript(ymlScript, [assetDir]);
-  expect(output).toContain(`Add 4 new translations`);
+  expect(output).toContain(`Add 3 new translations`);
   expect(output).toContain(`Write target ${getDebugPath(path)}`);
 });
 
