@@ -28,19 +28,13 @@ test("yml clean", async () => {
   );
 });
 
-test("yml re-create targets", async () => {
-  if (process.env.CI) {
-    return;
-  }
-  targetPaths.forEach((path) => {
-    unlinkSync(join(sampleDir, path));
-  });
+test("yml re-create target", async () => {
+  const targetPath = targetPaths[targetPaths.length - 1];
+  unlinkSync(join(sampleDir, targetPath));
   const output = await runSampleScript(ymlScript, [assetDir]);
-  targetPaths.forEach((path) => {
-    expect(output).toContain(
-      `Write target ${getDebugPath(join(sampleDir, path))}`
-    );
-  });
+  expect(output).toContain(
+    `Write target ${getDebugPath(join(sampleDir, targetPath))}`
+  );
 });
 
 test("yml delete stale translations", async () => {

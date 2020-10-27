@@ -7,7 +7,7 @@ set -e
 # Step 1: Translate an english XML into a spanish XML and a german XML.
 # Step 2: Covert those Android-XMLs into iOS-Strings, without changing the language.
 
-SERVICE_ACCOUNT_KEY="../gcloud/gcloud_service_account.json"
+SERVICE_ACCOUNT_KEY="gcloud/gcloud_service_account.json"
 
 # Paths to app-specific XML-files:
 ANDROID_EN="android/app/src/main/res/values/strings.xml"
