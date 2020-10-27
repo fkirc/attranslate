@@ -4,6 +4,7 @@ import { getTFileFormatList } from "./file-formats/file-format-definitions";
 import { CliArgs } from "./core/core-definitions";
 import { getTServiceList } from "./services/service-definitions";
 import { getTMatcherList } from "./matchers/matcher-definitions";
+import { extractVersion } from "./util/extract-version";
 
 process.on("unhandledRejection", (error) => {
   console.error("[fatal]", error);
@@ -79,6 +80,7 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
       "The replacement for occurrences of keySearch",
       "x"
     )
+    .version(extractVersion({ cliBinDir }), "-v, --version")
     .parse(process.argv);
 
   if (commander.args?.length) {
