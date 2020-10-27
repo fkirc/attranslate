@@ -33,3 +33,10 @@ Azure account if you don't have one already.
 DeepL's API-keys are only available to DeepL Pro API users.
 If you don't have a developer account yet, you can create one
 [here](https://www.deepl.com/en/pro.html#developer).
+
+# Service Tuning
+
+Enterprise users can tune translation-services according to their needs.
+For example, enterprise users can deploy custom glossaries with domain-specific vocabulary, or they can even train their own machine-learning models.
+However, for entry-level users, it is often faster to skip service-tuning and do a few more manual corrections instead.
+This is why `attranslate` provides first-class support for manual corrections.
