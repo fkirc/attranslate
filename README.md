@@ -62,7 +62,7 @@ This does not only speedup your workflow, but also saves cost for paid translati
 Translating a single file is as simple as the following line:
 
 ```
-attranslate --srcFile='json-simple/fruits-en.json' --srcLng='en' --srcFormat='nested-json' --targetFile='json-simple/fruits-de.json' --targetLng='de' --targetFormat='nested-json' --service='manual'
+attranslate --srcFile=json-simple/fruits-en.json --srcLng=en --srcFormat=nested-json --targetFile=json-simple/fruits-de.json --targetLng=de --targetFormat=nested-json --service=manual
 ```
 
 If you have multiple target-languages, then you will need multiple calls to `attranslate`.
