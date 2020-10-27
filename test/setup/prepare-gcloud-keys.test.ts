@@ -7,7 +7,7 @@ import {
 } from "../../src/file-formats/common/managed-json";
 
 test("setupGcloudPrivateKey", () => {
-  const gcloudTemplatePath = "gcloud/gcloud_service_account_template.json";
+  const gcloudTemplatePath = getGCloudKeyPath() + "_template.json";
   const privateKey = process.env.GCLOUD_PRIVATE_KEY;
   if (!privateKey) {
     console.log("Did not find GCLOUD_PRIVATE_KEY");

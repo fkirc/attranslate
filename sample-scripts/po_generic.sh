@@ -2,7 +2,7 @@
 set -e
 
 # This example translates an english PO-file into spanish and german. It uses Google Cloud Translate.
-SERVICE_ACCOUNT_KEY="../gcloud/gcloud_service_account.json"
+SERVICE_ACCOUNT_KEY="gcloud/gcloud_service_account.json"
 BASE_DIR=po-generic
 COMMON_ARGS=( "--srcFile=$BASE_DIR/en.po" "--srcLng=en" "--srcFormat=po" "--targetFormat=po" "--service=google-translate" "--serviceConfig=$SERVICE_ACCOUNT_KEY" "--cacheDir=$BASE_DIR" )
 

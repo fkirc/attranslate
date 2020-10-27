@@ -7,7 +7,5 @@ test("json simple windows", async () => {
   const output = await runSampleScript(`json_simple_windows.bat`, [
     "json-simple",
   ]);
-  expect(output).toContain(
-    "Target is up-to-date: 'json-simple/fruits-de.json'\n"
-  );
+  expect(output).toContain("Target is up-to-date: 'json-simple/de.json'\n");
 });
