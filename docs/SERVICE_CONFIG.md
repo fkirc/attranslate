@@ -38,5 +38,5 @@ If you don't have a developer account yet, you can create one
 
 Enterprise users can tune translation-services according to their needs.
 For example, enterprise users can deploy custom glossaries with domain-specific vocabulary, or they can even train their own machine-learning models.
-However, for entry-level users, it is often faster to skip service-tuning and do a few more manual corrections instead.
+However, for entry-level users, it is often faster to omit service-tuning and do a few more manual corrections instead.
 This is why `attranslate` provides first-class support for manual corrections.
