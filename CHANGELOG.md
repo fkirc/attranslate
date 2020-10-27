@@ -7,4 +7,4 @@ Please see https://github.com/fkirc/attranslate/releases for the complete list o
 
 # 1.0.0
 
-Stability milestone reached. From now on, breaking changes will only happen after careful consideration and public annoucements.
+Stability milestone reached. From now on, breaking changes will only happen after careful consideration and public announcements.
