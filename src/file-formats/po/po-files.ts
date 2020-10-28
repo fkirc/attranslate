@@ -26,12 +26,12 @@ export class PoFile implements TFileFormat {
   readTFile(args: ReadTFileArgs): Promise<TSet> {
     const rawFile = readManagedUtf8(args.path);
     const potFile = parsePotFile(args, rawFile);
-    const tSet = extractPotTranslations(args, potFile);
     potCache.insertFileCache({
       path: args.path,
       entries: new Map(),
       auxData: { potFile, rawFile },
     });
+    const tSet = extractPotTranslations(args, potFile);
     return Promise.resolve(tSet);
   }
 
