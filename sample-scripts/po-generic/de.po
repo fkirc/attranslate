@@ -14,7 +14,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 3.8\n"
 
-# lh-check { min: 10, max: 15 }
+# Ein deutscher Kommentar, welcher die Transformation überleben soll
 msgid "Made with ❤"
 msgstr ""
 
