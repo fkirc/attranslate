@@ -11,7 +11,7 @@ import Parsed = Document.Parsed;
 import { flatten, unflatten } from "../../util/flatten";
 import { readJsonProp } from "../common/json-common";
 import { Collection, Node, Pair, Scalar, YAMLSeq } from "yaml/types";
-import { recursiveNodeUpdate } from "./yaml-manipulation";
+import { updateYmlNodes } from "./yaml-manipulation";
 import { Type } from "yaml/util";
 import { parseYaml } from "./yaml-parse";
 
@@ -121,7 +121,7 @@ export class YamlGeneric implements TFileFormat {
       partialKey: "",
       currentNode: contents as Collection,
     };
-    recursiveNodeUpdate(writeContext);
+    updateYmlNodes(writeContext);
     return cachedYml.toString();
   }
 
