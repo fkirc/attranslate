@@ -21,7 +21,10 @@ export function isSequence(node: Collection): node is YAMLSeq {
   return [Type.SEQ, Type.FLOW_SEQ].includes(node.type as Type);
 }
 
-export function isCollection(node: Node): node is Collection {
+export function isCollection(node: Node | null): node is Collection {
+  if (!node) {
+    return false;
+  }
   if (!node.type) {
     return false;
   }
@@ -34,7 +37,10 @@ export function isCollection(node: Node): node is Collection {
   ].includes(node.type as Type);
 }
 
-export function isPair(node: Node): node is Pair {
+export function isPair(node: Node | null): node is Pair {
+  if (!node) {
+    return false;
+  }
   if (!node.type) {
     return false;
   }
@@ -81,10 +87,10 @@ export class YamlGeneric implements TFileFormat {
   }
 
   writeTFile(args: WriteTFileArgs): void {
-    const cachedYml = documentCache.getOldestAuxdata();
+    const sourceYml = documentCache.getOldestAuxdata();
     let ymlString: string;
-    if (cachedYml) {
-      ymlString = this.createCachedYml(args, cachedYml);
+    if (sourceYml) {
+      ymlString = this.createCachedYml(args, sourceYml);
     } else {
       ymlString = this.createUncachedYml(args);
     }
@@ -92,9 +98,12 @@ export class YamlGeneric implements TFileFormat {
     writeUtf8File(args.path, ymlString);
   }
 
-  createCachedYml(args: WriteTFileArgs, cachedYml: Parsed): string {
-    updateYmlNodes(args, cachedYml);
-    return cachedYml.toString();
+  createCachedYml(args: WriteTFileArgs, sourceYml: Parsed): string {
+    const oldTargetYml = documentCache.lookupSameFileAuxdata({
+      path: args.path,
+    });
+    updateYmlNodes({ args, sourceYml, oldTargetYml });
+    return sourceYml.toString();
   }
 
   createUncachedYml(args: WriteTFileArgs): string {

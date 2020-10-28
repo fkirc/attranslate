@@ -23,14 +23,18 @@ export function extractYmlNodes(document: Parsed): TSet {
   return tSet;
 }
 
-export function updateYmlNodes(args: WriteTFileArgs, document: Parsed) {
+export function updateYmlNodes(args: {
+  args: WriteTFileArgs;
+  sourceYml: Parsed;
+  oldTargetYml: Parsed | null;
+}) {
   const rootContext: TraverseYmlContext = {
     partialKey: "",
-    node: getRootNode(document),
-    oldTargetNode: null,
+    node: getRootNode(args.sourceYml),
+    oldTargetNode: args.oldTargetYml ? getRootNode(args.oldTargetYml) : null,
   };
   traverseYml(rootContext, (innerContext, scalar) => {
-    const value = args.tSet.get(innerContext.partialKey);
+    const value = args.args.tSet.get(innerContext.partialKey);
     if (value !== undefined) {
       scalar.value = value;
     }
@@ -62,6 +66,21 @@ function traverseYml(
   if (!node) {
     return;
   }
+  if (context.oldTargetNode?.type !== node.type) {
+    context.oldTargetNode = null; // Just a safety measure
+  }
+  if (context.oldTargetNode?.comment) {
+    node.comment = context.oldTargetNode.comment;
+  }
+  if (context.oldTargetNode?.commentBefore) {
+    node.commentBefore = context.oldTargetNode.commentBefore;
+  }
+  if (context.oldTargetNode?.spaceBefore) {
+    node.spaceBefore = context.oldTargetNode.spaceBefore;
+  }
+  // if (context.oldTargetNode?.cstNode) {
+  //   node.cstNode = context.oldTargetNode.cstNode;
+  // }
   if (isScalar(node)) {
     operation(context, node);
   }
@@ -73,30 +92,72 @@ function traverseYml(
     } else {
       partialKey = pairKey;
     }
+    let oldTargetPair: Pair | null = null;
+    if (
+      isPair(context.oldTargetNode) &&
+      getPairKey(context.oldTargetNode) === pairKey
+    ) {
+      oldTargetPair = context.oldTargetNode;
+    }
     traverseYml(
       {
-        ...context,
         node: node.value as Node | null,
+        oldTargetNode: oldTargetPair
+          ? (oldTargetPair.value as Node | null)
+          : null,
         partialKey,
       },
       operation
     );
   }
   if (isCollection(node)) {
-    node.items.forEach((childNode, idx) => {
+    node.items.forEach((childNode: Node, idx) => {
       let partialKey = `${context.partialKey}`;
       if (isSequence(node)) {
         partialKey += `[${idx}]`;
       }
+      let oldTargetChild: Node | null = null;
+      if (isCollection(context.oldTargetNode)) {
+        oldTargetChild = findMatchingOldTargetChild(
+          context.oldTargetNode.items,
+          childNode,
+          idx
+        );
+      }
       traverseYml(
         {
-          ...context,
           node: childNode,
+          oldTargetNode: oldTargetChild,
           partialKey: partialKey,
         },
         operation
       );
     });
+  }
+}
+
+function findMatchingOldTargetChild(
+  oldTargetItems: Node[],
+  child: Node,
+  idx: number
+): Node | null {
+  if (!isPair(child)) {
+    if (idx >= oldTargetItems.length) {
+      return null;
+    }
+    const candidateChild = oldTargetItems[idx];
+    if (candidateChild.type !== child.type) {
+      return null;
+    }
+    return candidateChild;
+  } else {
+    const candidatePairs: Pair[] = oldTargetItems.filter((node) =>
+      isPair(node)
+    ) as Pair[];
+    const matchingPair = candidatePairs.find(
+      (pair) => getPairKey(pair) === getPairKey(child)
+    );
+    return matchingPair ?? null;
   }
 }
 
