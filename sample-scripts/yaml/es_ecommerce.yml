@@ -8,7 +8,7 @@ titles_long:
   home: 'Sección de inicio'
   nested:
     ? empty
-  blog: 'Nuestro blog'
+  blog: 'Nuestro blog' # Some comment
   stories: 'sobre nuestros usuarios'
   faq: 'Atención al cliente y preguntas frecuentes'
   press: 'prensa'

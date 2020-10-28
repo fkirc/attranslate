@@ -8,7 +8,7 @@ titles_long:
   home: 'Home section'
   nested:
     empty:
-  blog: 'Our Blog'
+  blog: 'Our Blog' # Some comment
   stories: 'about our users'
   faq: 'Customer Support and Frequently Asked Questions'
   press: 'Press'
