@@ -74,13 +74,10 @@ msgstr ""
 msgid "Password Reset Confirmation E-mail"
 msgstr "Correo electrónico de confirmación de restablecimiento de contraseña"
 
-#: sample_backend/templates/account/email_confirm.html:6
-#: sample_backend/templates/account/email_confirm.html:10
 msgid "Confirm E-mail Address"
 msgstr "Por favor confirme su dirección de correo electrónico"
 
-#: sample_backend/templates/account/email_confirm.html:16
-#, python-format
+# Next comment
 msgid ""
 "Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an e-mail address for user "
 "%(user_display)s."
