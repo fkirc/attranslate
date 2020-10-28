@@ -1,9 +1,36 @@
-import { GetTextTranslation, GetTextTranslations, po } from "gettext-parser";
+import {
+  GetTextComment,
+  GetTextTranslation,
+  GetTextTranslations,
+  po,
+} from "gettext-parser";
 import { TSet } from "../../core/core-definitions";
-import { ReadTFileArgs } from "../file-format-definitions";
+import { ReadTFileArgs, WriteTFileArgs } from "../file-format-definitions";
 import { logParseError } from "../common/parse-utils";
+import { potCache } from "./po-files";
 
-export function extractPotTranslations(potFile: GetTextTranslations): TSet {
+function mergePotComments(args: {
+  source: GetTextComment | null;
+  oldTarget: GetTextComment;
+}): GetTextComment {
+  if (!args.source) {
+    return args.oldTarget;
+  }
+  const source = (args.source as unknown) as Record<string, string>;
+  const oldTarget = (args.oldTarget as unknown) as Record<string, string>;
+  for (const key of Object.keys(source)) {
+    const sourceValue = source[key];
+    if (!oldTarget[key]) {
+      oldTarget[key] = sourceValue;
+    }
+  }
+  return args.oldTarget;
+}
+
+export function extractPotTranslations(
+  args: ReadTFileArgs,
+  potFile: GetTextTranslations
+): TSet {
   const tSet: TSet = new Map();
   traversePot(potFile, (getText) => {
     const key: string = getText.msgid;
@@ -11,22 +38,33 @@ export function extractPotTranslations(potFile: GetTextTranslations): TSet {
     if (key) {
       tSet.set(key, value);
     }
+    const comments = getText.comments;
+    if (comments) {
+      potCache.insert({ path: args.path, key, entry: { comments } });
+    }
   });
   return tSet;
 }
 
 export function updatePotTranslations(
-  potFile: GetTextTranslations,
-  tSet: TSet
+  args: WriteTFileArgs,
+  potFile: GetTextTranslations
 ) {
   traversePot(potFile, (getText) => {
     const key: string = getText.msgid;
-    const value = tSet.get(key);
+    const value = args.tSet.get(key);
     if (value !== undefined) {
       getText.msgstr = [value ?? ""];
     }
+    const oldTargetComments = potCache.lookup({ path: args.path, key })
+      ?.comments;
+    if (oldTargetComments) {
+      getText.comments = mergePotComments({
+        source: getText.comments ?? null,
+        oldTarget: oldTargetComments,
+      });
+    }
   });
-  return tSet;
 }
 
 export function parsePotFile(

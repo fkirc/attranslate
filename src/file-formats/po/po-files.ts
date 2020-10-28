@@ -4,7 +4,7 @@ import {
   WriteTFileArgs,
 } from "../file-format-definitions";
 import { TSet } from "../../core/core-definitions";
-import { GetTextTranslations, po } from "gettext-parser";
+import { GetTextComment, GetTextTranslations, po } from "gettext-parser";
 import { FormatCache } from "../common/format-cache";
 import { readManagedUtf8, writeManagedUtf8 } from "../common/managed-utf8";
 import {
@@ -17,13 +17,16 @@ interface PotAuxData {
   potFile: GetTextTranslations;
   rawFile: string;
 }
-const potCache = new FormatCache<unknown, PotAuxData>();
+interface PotCacheEntry {
+  comments: GetTextComment;
+}
+export const potCache = new FormatCache<PotCacheEntry, PotAuxData>();
 
 export class PoFile implements TFileFormat {
   readTFile(args: ReadTFileArgs): Promise<TSet> {
     const rawFile = readManagedUtf8(args.path);
     const potFile = parsePotFile(args, rawFile);
-    const tSet = extractPotTranslations(potFile);
+    const tSet = extractPotTranslations(args, potFile);
     potCache.insertFileCache({
       path: args.path,
       entries: new Map(),
@@ -51,7 +54,7 @@ const compileOptions = {
 };
 
 function createCachedPot(args: WriteTFileArgs, auxData: PotAuxData): string {
-  updatePotTranslations(auxData.potFile, args.tSet);
+  updatePotTranslations(args, auxData.potFile);
   const buffer = po.compile(auxData.potFile, compileOptions);
   return buffer.toString("utf-8");
 }
