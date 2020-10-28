@@ -1,7 +1,7 @@
 subsections:
   - 'Payment and Delivery'
-  - 'Success Stories'
-  - 'Certificates' # Individual comments should be transmitted to targets, but *not* overwritten
+  - 'Success Stories' # Individual comments should be transmitted to targets, but *not* overwritten
+  - 'Certificates'
 
 # An english comment that should *not* overwrite comments in target-files
 titles_long:
