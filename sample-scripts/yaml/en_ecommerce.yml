@@ -1,9 +1,9 @@
 subsections:
   - 'Payment and Delivery'
   - 'Success Stories'
-  - 'Certificates'
+  - 'Certificates' # Individual comments should be transmitted to targets, but *not* overwritten
 
-# An english comment that should *not* override comments in target-files
+# An english comment that should *not* overwrite comments in target-files
 titles_long:
   home: 'Home section'
   nested:

@@ -1,7 +1,7 @@
 subsections:
   - 'Pago y Entrega'
   - 'Historias de éxito'
-  - 'Certificados'
+  - 'Certificados' # A comment that should *not* be overridden
 
 # Another comment that should not be overridden
 titles_long:
