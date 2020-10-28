@@ -74,8 +74,6 @@ msgstr ""
 msgid "Password Reset Confirmation E-mail"
 msgstr "Password Reset Confirmation E-mail"
 
-#: sample_backend/templates/account/email_confirm.html:6
-#: sample_backend/templates/account/email_confirm.html:10
 msgid "Confirm E-mail Address"
 msgstr "Please confirm your email address"
 
