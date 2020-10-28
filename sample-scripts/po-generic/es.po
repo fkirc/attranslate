@@ -2,9 +2,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"Shortened stuff compared to english"
-"X-Generator: attranslate\n"
+"Shortened stuff compared to englishX-Generator: attranslate\n"
 "Content-Type: text/plain\n"
+"X-Generator: attranslate\n"
 
 # Another comment that should survive transformations
 msgid "Made with ❤"
