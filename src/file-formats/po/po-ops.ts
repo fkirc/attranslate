@@ -39,7 +39,7 @@ export function extractPotTranslations(
       tSet.set(key, value);
     }
     const comments = getText.comments;
-    if (key && comments) {
+    if (typeof key === "string" && comments) {
       potCache.insert({ path: args.path, key, entry: { comments } });
     }
   });
@@ -58,7 +58,7 @@ export function updatePotTranslations(
     }
     const oldTargetComments = potCache.lookup({ path: args.path, key })
       ?.comments;
-    if (key && oldTargetComments) {
+    if (typeof key === "string" && oldTargetComments) {
       getText.comments = mergePotComments({
         source: getText.comments ?? null,
         oldTarget: oldTargetComments,
