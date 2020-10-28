@@ -50,6 +50,10 @@ export function updatePotTranslations(
   args: WriteTFileArgs,
   potFile: GetTextTranslations
 ) {
+  const oldTarget = potCache.lookupSameFileAuxdata({ path: args.path });
+  if (oldTarget) {
+    potFile.headers = oldTarget.potFile.headers;
+  }
   traversePot(potFile, (getText) => {
     const key: string = getText.msgid;
     const value = args.tSet.get(key);
@@ -72,7 +76,9 @@ export function parsePotFile(
   rawFile: string
 ): GetTextTranslations {
   try {
-    return po.parse(rawFile);
+    const potFile = po.parse(rawFile);
+    potFile.headers["X-Generator"] = "attranslate";
+    return potFile;
   } catch (e) {
     console.error(e);
     logParseError("GetText parsing error", args);
