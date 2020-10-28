@@ -3,6 +3,10 @@ subsections:
   - 'Historias de éxito' # A comment that should *not* be overridden
   - 'Certificados'
 
+
+# Spaces in target-files should be preserved
+
+
 # Another comment that should not be overridden
 titles_long:
   home: 'Sección de inicio'
