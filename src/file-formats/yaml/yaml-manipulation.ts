@@ -1,25 +1,51 @@
 import { Node, Pair, Scalar } from "yaml/types";
-import {
-  isCollection,
-  isPair,
-  isScalar,
-  isSequence,
-  YmlWriteContext,
-} from "./yaml-generic";
+import { isCollection, isPair, isScalar, isSequence } from "./yaml-generic";
 import { NESTED_JSON_SEPARATOR } from "../../util/flatten";
+import { Document } from "yaml";
+import Parsed = Document.Parsed;
+import { TSet } from "../../core/core-definitions";
+import { logFatal } from "../../util/util";
+import { WriteTFileArgs } from "../file-format-definitions";
 
-export function updateYmlNodes(writeContext: YmlWriteContext) {
-  const outerContext: TraverseYmlContext = {
+export function extractYmlNodes(document: Parsed): TSet {
+  const tSet: TSet = new Map();
+  const rootContext: TraverseYmlContext = {
     partialKey: "",
-    node: writeContext.currentNode,
+    node: getRootNode(document),
     oldTargetNode: null,
   };
-  traverseYml(outerContext, (innerContext, scalar) => {
-    const value = writeContext.args.tSet.get(innerContext.partialKey);
+  traverseYml(rootContext, (innerContext, scalar) => {
+    const value = scalar.value;
+    if (typeof value === "string") {
+      tSet.set(innerContext.partialKey, value);
+    }
+  });
+  return tSet;
+}
+
+export function updateYmlNodes(args: WriteTFileArgs, document: Parsed) {
+  const rootContext: TraverseYmlContext = {
+    partialKey: "",
+    node: getRootNode(document),
+    oldTargetNode: null,
+  };
+  traverseYml(rootContext, (innerContext, scalar) => {
+    const value = args.tSet.get(innerContext.partialKey);
     if (value !== undefined) {
       scalar.value = value;
     }
   });
+}
+
+function getRootNode(document: Parsed): Node {
+  const root: Node | null = document.contents;
+  if (!root) {
+    logFatal("root node not found");
+  }
+  if (!isScalar(root) && !isCollection(root) && !isPair(root)) {
+    logFatal("root node invalid");
+  }
+  return root;
 }
 
 interface TraverseYmlContext {

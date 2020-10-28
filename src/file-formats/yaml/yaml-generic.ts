@@ -4,23 +4,15 @@ import {
   WriteTFileArgs,
 } from "../file-format-definitions";
 import { TSet } from "../../core/core-definitions";
-import { logFatal, writeUtf8File } from "../../util/util";
+import { writeUtf8File } from "../../util/util";
 import { Document, Options, stringify, scalarOptions } from "yaml";
 import { FormatCache } from "../common/format-cache";
 import Parsed = Document.Parsed;
-import { flatten, unflatten } from "../../util/flatten";
-import { readJsonProp } from "../common/json-common";
+import { unflatten } from "../../util/flatten";
 import { Collection, Node, Pair, Scalar, YAMLSeq } from "yaml/types";
-import { updateYmlNodes } from "./yaml-manipulation";
+import { extractYmlNodes, updateYmlNodes } from "./yaml-manipulation";
 import { Type } from "yaml/util";
 import { parseYaml } from "./yaml-parse";
-
-export interface YmlWriteContext {
-  args: WriteTFileArgs;
-  doc: Parsed;
-  partialKey: string;
-  currentNode: Node | null;
-}
 
 export function isSequence(node: Collection): node is YAMLSeq {
   if (!node.type) {
@@ -84,12 +76,7 @@ export class YamlGeneric implements TFileFormat {
       entries: new Map(),
       auxData: document,
     });
-    const nestedJson = document.toJSON();
-    const flatJson: Record<string, string> = flatten(nestedJson);
-    const tSet: TSet = new Map();
-    Object.keys(flatJson).forEach((key) => {
-      readJsonProp(key, flatJson[key], tSet, args);
-    });
+    const tSet: TSet = extractYmlNodes(document);
     return Promise.resolve(tSet);
   }
 
@@ -106,22 +93,7 @@ export class YamlGeneric implements TFileFormat {
   }
 
   createCachedYml(args: WriteTFileArgs, cachedYml: Parsed): string {
-    if (!cachedYml.contents) {
-      logFatal("no cached yml contents");
-    }
-    const contents: Partial<Collection> = cachedYml.contents as Partial<
-      Collection
-    >;
-    if (!contents.items || !Array.isArray(contents.items)) {
-      logFatal("no cached yml items");
-    }
-    const writeContext: YmlWriteContext = {
-      args,
-      doc: cachedYml,
-      partialKey: "",
-      currentNode: contents as Collection,
-    };
-    updateYmlNodes(writeContext);
+    updateYmlNodes(args, cachedYml);
     return cachedYml.toString();
   }
 
