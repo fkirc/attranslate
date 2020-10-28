@@ -3,6 +3,7 @@ subsections:
   - 'Historias de éxito' # A comment that should *not* be overridden
   - 'Certificados'
 
+# Some comment
 # Another comment that should not be overridden
 titles_long:
 
