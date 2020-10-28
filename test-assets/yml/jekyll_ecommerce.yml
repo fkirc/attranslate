@@ -1,10 +1,11 @@
+# Initial comment
 subsections:
   - 'Payment and Delivery'
   - 'Success Stories'
   - 'Certificates'
 
 titles_long:
-  emptystuff: 
+  emptystuff:
   home: 'Home section'
   blog: 'Our Blog'
   stories: 'about our users'
