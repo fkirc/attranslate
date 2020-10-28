@@ -1,5 +1,9 @@
 [
   [
+    "",
+    "Content-Type: text/plain\n"
+  ],
+  [
     "A section of text like this is known as a text segment.",
     "First"
   ],
