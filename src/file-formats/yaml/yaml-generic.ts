@@ -4,23 +4,15 @@ import {
   WriteTFileArgs,
 } from "../file-format-definitions";
 import { TSet } from "../../core/core-definitions";
-import { logFatal, writeUtf8File } from "../../util/util";
+import { writeUtf8File } from "../../util/util";
 import { Document, Options, stringify, scalarOptions } from "yaml";
 import { FormatCache } from "../common/format-cache";
 import Parsed = Document.Parsed;
-import { flatten, unflatten } from "../../util/flatten";
-import { readJsonProp } from "../common/json-common";
+import { unflatten } from "../../util/flatten";
 import { Collection, Node, Pair, Scalar, YAMLSeq } from "yaml/types";
-import { recursiveNodeUpdate } from "./yaml-manipulation";
+import { extractYmlNodes, updateYmlNodes } from "./yaml-manipulation";
 import { Type } from "yaml/util";
 import { parseYaml } from "./yaml-parse";
-
-export interface YmlWriteContext {
-  args: WriteTFileArgs;
-  doc: Parsed;
-  partialKey: string;
-  currentNode: Node | null;
-}
 
 export function isSequence(node: Collection): node is YAMLSeq {
   if (!node.type) {
@@ -29,7 +21,10 @@ export function isSequence(node: Collection): node is YAMLSeq {
   return [Type.SEQ, Type.FLOW_SEQ].includes(node.type as Type);
 }
 
-export function isCollection(node: Node): node is Collection {
+export function isCollection(node: Node | null): node is Collection {
+  if (!node) {
+    return false;
+  }
   if (!node.type) {
     return false;
   }
@@ -42,7 +37,10 @@ export function isCollection(node: Node): node is Collection {
   ].includes(node.type as Type);
 }
 
-export function isPair(node: Node): node is Pair {
+export function isPair(node: Node | null): node is Pair {
+  if (!node) {
+    return false;
+  }
   if (!node.type) {
     return false;
   }
@@ -84,45 +82,28 @@ export class YamlGeneric implements TFileFormat {
       entries: new Map(),
       auxData: document,
     });
-    const nestedJson = document.toJSON();
-    const flatJson: Record<string, string> = flatten(nestedJson);
-    const tSet: TSet = new Map();
-    Object.keys(flatJson).forEach((key) => {
-      readJsonProp(key, flatJson[key], tSet, args);
-    });
+    const tSet: TSet = extractYmlNodes(document);
     return Promise.resolve(tSet);
   }
 
   writeTFile(args: WriteTFileArgs): void {
-    const cachedYml = documentCache.getOldestAuxdata();
+    const sourceYml = documentCache.getOldestAuxdata();
     let ymlString: string;
-    if (cachedYml) {
-      ymlString = this.createCachedYml(args, cachedYml);
+    if (sourceYml) {
+      ymlString = this.createCachedYml(args, sourceYml);
     } else {
       ymlString = this.createUncachedYml(args);
     }
-    documentCache.purge();
     writeUtf8File(args.path, ymlString);
+    documentCache.purge();
   }
 
-  createCachedYml(args: WriteTFileArgs, cachedYml: Parsed): string {
-    if (!cachedYml.contents) {
-      logFatal("no cached yml contents");
-    }
-    const contents: Partial<Collection> = cachedYml.contents as Partial<
-      Collection
-    >;
-    if (!contents.items || !Array.isArray(contents.items)) {
-      logFatal("no cached yml items");
-    }
-    const writeContext: YmlWriteContext = {
-      args,
-      doc: cachedYml,
-      partialKey: "",
-      currentNode: contents as Collection,
-    };
-    recursiveNodeUpdate(writeContext);
-    return cachedYml.toString();
+  createCachedYml(args: WriteTFileArgs, sourceYml: Parsed): string {
+    const oldTargetYml = documentCache.lookupSameFileAuxdata({
+      path: args.path,
+    });
+    updateYmlNodes({ args, sourceYml, oldTargetYml });
+    return sourceYml.toString();
   }
 
   createUncachedYml(args: WriteTFileArgs): string {

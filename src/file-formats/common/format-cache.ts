@@ -46,10 +46,13 @@ export class FormatCache<E, A> {
     }
     return null;
   }
+  lookupSameFileAuxdata(args: { path: string }): A | null {
+    return this.findFileCache(args.path)?.auxData ?? null;
+  }
   lookupAuxdata(args: { path: string }): A | null {
-    const sameFileCache = this.findFileCache(args.path);
-    if (sameFileCache) {
-      return sameFileCache.auxData;
+    const sameFileAuxdata = this.lookupSameFileAuxdata(args);
+    if (sameFileAuxdata) {
+      return sameFileAuxdata;
     }
     if (this.fileCaches.length) {
       return this.fileCaches[this.fileCaches.length - 1].auxData;

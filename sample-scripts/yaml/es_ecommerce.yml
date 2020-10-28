@@ -1,14 +1,18 @@
 subsections:
   - 'Pago y Entrega'
-  - 'Historias de éxito'
+  - 'Historias de éxito' # A comment that should *not* be overridden
   - 'Certificados'
 
+# Some comment
+# Another comment that should not be overridden
 titles_long:
+
   home: 'Sección de inicio'
   nested:
     ? empty
-  blog: 'Nuestro blog'
+  blog: 'Nuestro blog' # Some comment
   stories: 'sobre nuestros usuarios'
+
   faq: 'Atención al cliente y preguntas frecuentes'
   press: 'prensa'
   impressum: 'Impressum'
