@@ -3,7 +3,7 @@ subsections:
   - 'Historias de éxito'
   - 'Certificados'
 
-# First comment
+# Another comment that should not be overridden
 titles_long:
   home: 'Sección de inicio'
   nested:

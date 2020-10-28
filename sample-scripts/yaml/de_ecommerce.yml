@@ -3,7 +3,7 @@ subsections:
   - 'Erfolgsgeschichten'
   - 'Zertifikate'
 
-# First comment
+# Ein deutsches Kommentar, welches die Transformation überleben soll
 titles_long:
   home: 'Home-Bereich'
   nested:

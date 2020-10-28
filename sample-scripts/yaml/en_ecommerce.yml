@@ -3,7 +3,7 @@ subsections:
   - 'Success Stories'
   - 'Certificates'
 
-# First comment
+# An english comment that should *not* override comments in target-files
 titles_long:
   home: 'Home section'
   nested:

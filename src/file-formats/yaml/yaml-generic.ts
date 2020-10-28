@@ -94,8 +94,8 @@ export class YamlGeneric implements TFileFormat {
     } else {
       ymlString = this.createUncachedYml(args);
     }
-    documentCache.purge();
     writeUtf8File(args.path, ymlString);
+    documentCache.purge();
   }
 
   createCachedYml(args: WriteTFileArgs, sourceYml: Parsed): string {

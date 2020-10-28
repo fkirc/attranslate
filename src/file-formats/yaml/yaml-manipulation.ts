@@ -67,7 +67,7 @@ function traverseYml(
     return;
   }
   if (context.oldTargetNode?.type !== node.type) {
-    context.oldTargetNode = null; // Just a safety measure
+    context.oldTargetNode = null;
   }
   if (context.oldTargetNode?.comment) {
     node.comment = context.oldTargetNode.comment;
@@ -145,11 +145,7 @@ function findMatchingOldTargetChild(
     if (idx >= oldTargetItems.length) {
       return null;
     }
-    const candidateChild = oldTargetItems[idx];
-    if (candidateChild.type !== child.type) {
-      return null;
-    }
-    return candidateChild;
+    return oldTargetItems[idx];
   } else {
     const candidatePairs: Pair[] = oldTargetItems.filter((node) =>
       isPair(node)
