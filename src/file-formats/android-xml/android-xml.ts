@@ -68,9 +68,9 @@ export const DEFAULT_XML_INDENT = 4;
 export const DEFAULT_XML_HEADER = '<?xml version="1.0" encoding="utf-8"?>';
 
 export class AndroidXml implements TFileFormat {
-  async readTFile(args: ReadTFileArgs): Promise<TSet> {
+  readTFile(args: ReadTFileArgs): Promise<TSet> {
     const xmlString = readUtf8File(args.path);
-    const resourceFile = await parseRawXML<XmlResourceFile>(xmlString, args);
+    const resourceFile = parseRawXML<XmlResourceFile>(xmlString, args);
     const fileCache: XmlFileCache = {
       path: args.path,
       auxData: {
@@ -111,7 +111,7 @@ export class AndroidXml implements TFileFormat {
       }
     }
     globalCache.insertFileCache(readContext.fileCache);
-    return readContext.tSet;
+    return Promise.resolve(readContext.tSet);
   }
 
   writeTFile(args: WriteTFileArgs): void {

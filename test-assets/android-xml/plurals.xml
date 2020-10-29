@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Some comment -->
     <plurals name="some_plural_headLine">
         <item quantity="one">%d till today</item>
         <item quantity="other">Another %d days till today</item>

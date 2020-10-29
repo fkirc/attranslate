@@ -1,7 +1,6 @@
 import {
   DEFAULT_XML_INDENT,
   NamedXmlTag,
-  sharedXmlOptions,
   XmlFileCache,
   XmlTag,
   XmlCacheEntry,
@@ -10,30 +9,23 @@ import {
 import { ReadTFileArgs } from "../file-format-definitions";
 import { TSet } from "../../core/core-definitions";
 import { logParseError } from "../common/parse-utils";
-import { OptionsV2 } from "xml2js";
+import { parse, X2jOptionsOptional } from "fast-xml-parser";
 import { NESTED_JSON_SEPARATOR } from "../../util/flatten";
 
-export async function parseRawXML<T>(
+export function parseRawXML<T>(
   xmlString: string,
   args: ReadTFileArgs
-): Promise<Partial<T>> {
+): Partial<T> {
   try {
-    const options: OptionsV2 = {
-      ...sharedXmlOptions,
-      strict: true,
-      async: false,
-      //explicitChildren: true, // if true, then the resulting object will be entirely different
-      preserveChildrenOrder: true,
-      headless: true,
-      //emptyTag: " ",
-      includeWhiteChars: true,
-      trim: false,
-      normalize: false,
-      normalizeTags: false,
+    const options: X2jOptionsOptional = {
+      ignoreNameSpace: true,
+      ignoreAttributes: false,
+      allowBooleanAttributes: true,
+      parseNodeValue: false,
+      parseAttributeValue: false,
+      trimValues: false,
     };
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const xml2js = require("xml2js");
-    const result = await xml2js.parseStringPromise(xmlString, options);
+    const result = parse(xmlString, options, true);
     return result as Partial<T>;
   } catch (e) {
     console.error(e);
