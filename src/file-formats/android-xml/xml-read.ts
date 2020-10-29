@@ -9,7 +9,12 @@ import {
 import { ReadTFileArgs } from "../file-format-definitions";
 import { TSet } from "../../core/core-definitions";
 import { logParseError } from "../common/parse-utils";
-import { parse, X2jOptionsOptional } from "fast-xml-parser";
+import {
+  parse,
+  X2jOptionsOptional,
+  j2xParser,
+  J2xOptionsOptional,
+} from "fast-xml-parser";
 import { NESTED_JSON_SEPARATOR } from "../../util/flatten";
 
 export function parseRawXML<T>(
@@ -24,8 +29,15 @@ export function parseRawXML<T>(
       parseNodeValue: false,
       parseAttributeValue: false,
       trimValues: false,
+      arrayMode: false,
     };
     const result = parse(xmlString, options, true);
+    const j2xOptions: J2xOptionsOptional = {
+      format: true,
+    };
+    const parseBack = new j2xParser(j2xOptions);
+    const xmlAgain = parseBack.parse(result);
+    console.log(xmlAgain);
     return result as Partial<T>;
   } catch (e) {
     console.error(e);
