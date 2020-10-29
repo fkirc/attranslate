@@ -1,5 +1,7 @@
 msgid ""
-msgstr "Content-Type: text/plain\n"
+msgstr ""
+"Content-Type: text/plain\n"
+"X-Generator: attranslate\n"
 
 msgid "A section of text like this is known as a text segment."
 msgstr "First"
@@ -17,3 +19,4 @@ msgstr ""
 # multiline values
 msgid "In case you run out of space, you can always continue in the next line."
 msgstr ""
+

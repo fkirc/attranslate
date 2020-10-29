@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.8\n"
+"X-Generator: attranslate\n"
 
 # lh-check { min: 10, max: 15 }
 msgid "Made with ❤"
@@ -74,13 +74,9 @@ msgstr ""
 msgid "Password Reset Confirmation E-mail"
 msgstr "Password Reset Confirmation E-mail"
 
-#: sample_backend/templates/account/email_confirm.html:6
-#: sample_backend/templates/account/email_confirm.html:10
 msgid "Confirm E-mail Address"
 msgstr "Please confirm your email address"
 
-#: sample_backend/templates/account/email_confirm.html:16
-#, python-format
 msgid ""
 "Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an e-mail address for user "
 "%(user_display)s."
