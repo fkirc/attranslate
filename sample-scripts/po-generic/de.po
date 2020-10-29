@@ -12,13 +12,11 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.8\n"
+"X-Generator: attranslate\n"
 
 # Ein deutscher Kommentar, welcher die Transformation überleben soll
 msgid "Made with ❤"
 msgstr ""
-
-
 
 # multiline values
 msgid "In case you run out of space, you can always continue in the next line."
