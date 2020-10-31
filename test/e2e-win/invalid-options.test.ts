@@ -70,6 +70,17 @@ test("cacheDir not a dir", async () => {
   );
 });
 
+test("targetDir not a dir", async () => {
+  const args: E2EArgs = {
+    ...defaultE2EArgs,
+    targetFile: "LICENSE/random_target.txt",
+  };
+  const output = await runTranslateExpectFailure(buildE2EArgs(args));
+  expect(output).toBe(
+    `error: ${getDebugPath("LICENSE")} is not a directory.\n`
+  );
+});
+
 test("unknown service", async () => {
   const args: E2EArgs = {
     ...defaultE2EArgs,
