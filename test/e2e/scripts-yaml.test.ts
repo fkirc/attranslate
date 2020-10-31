@@ -11,10 +11,12 @@ import { getDebugPath } from "../../src/util/util";
 
 const assetDir = "yaml";
 const ymlScript = "./yaml_ecommerce.sh";
+const mainTarget = join(assetDir, "es_ecommerce.yml");
+const nonCachedTarget = join(assetDir, "nested-fruits.yml");
 const targetPaths: string[] = [
-  join(assetDir, "es_ecommerce.yml"),
+  mainTarget,
   join(assetDir, "de_ecommerce.yml"),
-  join(assetDir, "nested-fruits.yml"),
+  nonCachedTarget,
 ];
 
 test("yml clean", async () => {
@@ -29,7 +31,7 @@ test("yml clean", async () => {
 });
 
 test("yml re-create target", async () => {
-  const targetPath = targetPaths[targetPaths.length - 1];
+  const targetPath = nonCachedTarget;
   unlinkSync(join(sampleDir, targetPath));
   const output = await runSampleScript(ymlScript, [assetDir]);
   expect(output).toContain(
@@ -38,7 +40,7 @@ test("yml re-create target", async () => {
 });
 
 test("yml delete stale translations", async () => {
-  const path = join(sampleDir, targetPaths[0]);
+  const path = join(sampleDir, mainTarget);
   injectPrefixLines({
     path,
     lines: [
@@ -53,7 +55,7 @@ test("yml delete stale translations", async () => {
 });
 
 test("yml insert new translations", async () => {
-  const path = join(sampleDir, targetPaths[0]);
+  const path = join(sampleDir, mainTarget);
   removeLines({
     path,
     linesToRemove: [
@@ -68,7 +70,7 @@ test("yml insert new translations", async () => {
 });
 
 test("yml insert inner elements", async () => {
-  const path = join(sampleDir, targetPaths[0]);
+  const path = join(sampleDir, mainTarget);
   removeLines({
     path,
     linesToRemove: [
