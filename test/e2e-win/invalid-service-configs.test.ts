@@ -25,7 +25,9 @@ test("non existing gcloud-config", async () => {
   expect(output).toBe(
     joinLines([
       `Invoke 'google-translate' from 'en' to 'de' with 3 inputs...`,
-      `error: ${getDebugPath("not-existing-config")} does not exist.`,
+      `error: serviceConfig ${getDebugPath(
+        "not-existing-config"
+      )} does not exist.`,
     ])
   );
 });
@@ -95,7 +97,7 @@ test("invalid gcloud-config", async () => {
   expect(output).toBe(
     joinLines([
       `Invoke 'google-translate' from 'en' to 'de' with 3 inputs...`,
-      `error: ${getDebugPath(
+      `error: serviceConfig ${getDebugPath(
         "test-assets/invalid/empty.json"
       )} does not contain a project_id`,
     ])

@@ -9,7 +9,7 @@ import { google } from "@google-cloud/translate/build/protos/protos";
 import ITranslateTextRequest = google.cloud.translation.v3.ITranslateTextRequest;
 import { ClientOptions } from "google-gax";
 import ITranslation = google.cloud.translation.v3.ITranslation;
-import { getDebugPath, logFatal } from "../util/util";
+import { checkNotDir, getDebugPath, logFatal } from "../util/util";
 import { chunk, flatten } from "lodash";
 import * as v3 from "@google-cloud/translate/build/src/v3";
 import { readRawJson } from "../file-formats/common/managed-json";
@@ -26,10 +26,13 @@ export class GoogleTranslate implements TService {
         "Set '--serviceConfig' to a path that points to a GCloud service account JSON file"
       );
     }
+    checkNotDir(args.serviceConfig, { errorHint: "serviceConfig" });
     const keyFile = readRawJson<GCloudKeyFile>(args.serviceConfig).object;
     if (!keyFile.project_id) {
       logFatal(
-        `${getDebugPath(args.serviceConfig)} does not contain a project_id`
+        `serviceConfig ${getDebugPath(
+          args.serviceConfig
+        )} does not contain a project_id`
       );
     }
     const projectId: string = keyFile.project_id;
