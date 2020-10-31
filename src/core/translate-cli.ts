@@ -22,7 +22,7 @@ async function resolveOldTarget(
   checkDir(targetDir);
   if (existsSync(targetPath)) {
     return await readTFileCore(targetFileFormat, {
-      path: targetPath,
+      path: args.targetFile,
       lng: args.targetLng,
       format: targetFileFormat,
       keySearch: "x",

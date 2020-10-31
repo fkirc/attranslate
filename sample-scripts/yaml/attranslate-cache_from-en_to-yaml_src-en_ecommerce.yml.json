@@ -58,19 +58,6 @@
         }
       ]
     },
-    "titles_long.nested.empty": {
-      "value": null,
-      "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
-          "id": "de",
-          "state": "frozen"
-        }
-      ]
-    },
     "titles_long.blog": {
       "value": "Our Blog",
       "targets": [

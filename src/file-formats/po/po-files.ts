@@ -4,7 +4,7 @@ import {
   WriteTFileArgs,
 } from "../file-format-definitions";
 import { TSet } from "../../core/core-definitions";
-import { GetTextTranslations, po } from "gettext-parser";
+import { GetTextComment, GetTextTranslations, po } from "gettext-parser";
 import { FormatCache } from "../common/format-cache";
 import { readManagedUtf8, writeManagedUtf8 } from "../common/managed-utf8";
 import {
@@ -17,28 +17,31 @@ interface PotAuxData {
   potFile: GetTextTranslations;
   rawFile: string;
 }
-const potCache = new FormatCache<unknown, PotAuxData>();
+interface PotCacheEntry {
+  comments: GetTextComment;
+}
+export const potCache = new FormatCache<PotCacheEntry, PotAuxData>();
 
 export class PoFile implements TFileFormat {
   readTFile(args: ReadTFileArgs): Promise<TSet> {
     const rawFile = readManagedUtf8(args.path);
     const potFile = parsePotFile(args, rawFile);
-    const tSet = extractPotTranslations(potFile);
     potCache.insertFileCache({
       path: args.path,
       entries: new Map(),
       auxData: { potFile, rawFile },
     });
+    const tSet = extractPotTranslations(args, potFile);
     return Promise.resolve(tSet);
   }
 
   writeTFile(args: WriteTFileArgs): void {
-    const auxData = potCache.getOldestAuxdata();
+    const sourcePot = potCache.getOldestAuxdata()?.potFile;
     let output: string;
-    if (!auxData) {
+    if (!sourcePot) {
       output = createUncachedPot(args);
     } else {
-      output = createCachedPot(args, auxData);
+      output = createCachedPot(args, sourcePot);
     }
     writeManagedUtf8({ path: args.path, utf8: output });
     potCache.purge();
@@ -50,9 +53,12 @@ const compileOptions = {
   sort: false,
 };
 
-function createCachedPot(args: WriteTFileArgs, auxData: PotAuxData): string {
-  updatePotTranslations(auxData.potFile, args.tSet);
-  const buffer = po.compile(auxData.potFile, compileOptions);
+function createCachedPot(
+  args: WriteTFileArgs,
+  sourcePot: GetTextTranslations
+): string {
+  updatePotTranslations(args, sourcePot);
+  const buffer = po.compile(sourcePot, compileOptions);
   return buffer.toString("utf-8");
 }
 

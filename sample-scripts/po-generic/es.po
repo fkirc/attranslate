@@ -1,20 +1,12 @@
-# SOME DESCRIPTIVE TITLE.
+# SOME DESCRIPTIVE MODIFIED TITLE.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-16 23:23+0000\n"
-"PO-Revision-Date: 2019-12-04 12:12+0000\n"
-"Last-Translator: Orla\n"
-"Language-Team: English <http://197.167.0.100/projects/\n"
-"Language: en\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.8\n"
+"Shortened stuff compared to englishX-Generator: attranslate\n"
+"Content-Type: text/plain\n"
+"X-Generator: attranslate\n"
 
-# lh-check { min: 10, max: 15 }
+# Another comment that should survive transformations
 msgid "Made with ❤"
 msgstr ""
 
@@ -74,13 +66,10 @@ msgstr ""
 msgid "Password Reset Confirmation E-mail"
 msgstr "Correo electrónico de confirmación de restablecimiento de contraseña"
 
-#: sample_backend/templates/account/email_confirm.html:6
-#: sample_backend/templates/account/email_confirm.html:10
 msgid "Confirm E-mail Address"
 msgstr "Por favor confirme su dirección de correo electrónico"
 
-#: sample_backend/templates/account/email_confirm.html:16
-#, python-format
+# Next comment
 msgid ""
 "Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an e-mail address for user "
 "%(user_display)s."
