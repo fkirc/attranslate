@@ -36,10 +36,10 @@ export function checkDir(dir: string, hint?: { errorHint: string }): void {
   }
 }
 
-export function checkNotDir(path: string): void {
-  checkExists(path);
+export function checkNotDir(path: string, hint?: { errorHint: string }): void {
+  checkExists(path, hint);
   if (isDirectory(path)) {
-    logFatal(`${getDebugPath(path)} is a directory.`);
+    logFatal(`${extractHint(hint)}${getDebugPath(path)} is a directory.`);
   }
 }
 
