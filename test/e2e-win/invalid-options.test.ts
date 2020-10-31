@@ -66,7 +66,7 @@ test("cacheDir not a dir", async () => {
   };
   const output = await runTranslateExpectFailure(buildE2EArgs(args));
   expect(output).toBe(
-    `error: ${getDebugPath("README.md")} is not a directory.\n`
+    `error: cacheDir ${getDebugPath("README.md")} is not a directory.\n`
   );
 });
 
@@ -77,7 +77,7 @@ test("targetDir not a dir", async () => {
   };
   const output = await runTranslateExpectFailure(buildE2EArgs(args));
   expect(output).toBe(
-    `error: ${getDebugPath("LICENSE")} is not a directory.\n`
+    `error: Target path ${getDebugPath("LICENSE")} is not a directory.\n`
   );
 });
 

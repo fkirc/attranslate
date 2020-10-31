@@ -22,10 +22,17 @@ function isDirectory(path: string): boolean {
   }
 }
 
-export function checkDir(dir: string): void {
-  checkExists(dir);
+function extractHint(hint?: { errorHint: string }): string {
+  if (!hint) {
+    return "";
+  }
+  return hint.errorHint + " ";
+}
+
+export function checkDir(dir: string, hint?: { errorHint: string }): void {
+  checkExists(dir, hint);
   if (!isDirectory(dir)) {
-    logFatal(`${getDebugPath(dir)} is not a directory.`);
+    logFatal(`${extractHint(hint)}${getDebugPath(dir)} is not a directory.`);
   }
 }
 
@@ -36,9 +43,9 @@ export function checkNotDir(path: string): void {
   }
 }
 
-function checkExists(path: string): void {
+function checkExists(path: string, hint?: { errorHint: string }): void {
   if (!existsSync(path)) {
-    logFatal(`${getDebugPath(path)} does not exist.`);
+    logFatal(`${extractHint(hint)}${getDebugPath(path)} does not exist.`);
   }
 }
 

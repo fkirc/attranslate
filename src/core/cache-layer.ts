@@ -29,7 +29,7 @@ let tCacheTargetMiss = false;
 
 function resolveCachePath(args: CliArgs): string {
   const cacheDir = args.cacheDir;
-  checkDir(cacheDir);
+  checkDir(cacheDir, { errorHint: "cacheDir" });
   const baseName = path.basename(args.srcFile);
   const cacheName = `attranslate-cache_from-${args.srcLng}_to-${args.targetFormat}_src-${baseName}.json`;
   return path.resolve(cacheDir, cacheName);

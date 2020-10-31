@@ -19,7 +19,7 @@ async function resolveOldTarget(
 ): Promise<TSet | null> {
   const targetPath = path.resolve(args.targetFile);
   const targetDir = path.dirname(targetPath);
-  checkDir(targetDir);
+  checkDir(targetDir, { errorHint: "Target path" });
   if (existsSync(targetPath)) {
     return await readTFileCore(targetFileFormat, {
       path: args.targetFile,
