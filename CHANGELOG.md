@@ -1,3 +1,8 @@
+# 1.0.0
+
+- Stability milestone reached: From now on, breaking changes will only happen after careful consideration and public announcements.
+- Improve error messages
+
 # 0.9.7
 
 - Improve PO/POT: Preserve comments and headers
