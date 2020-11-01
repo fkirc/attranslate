@@ -11,10 +11,12 @@ import { getDebugPath } from "../../src/util/util";
 
 const assetDir = "po-generic";
 const testScript = "./po_generic.sh";
+const mainTarget = join(assetDir, "es.po");
+const nonCachedTarget = join(assetDir, "nested-fruits.po");
 const targetPaths: string[] = [
-  join(assetDir, "es.po"),
+  mainTarget,
   join(assetDir, "de.po"),
-  join(assetDir, "nested-fruits.po"),
+  nonCachedTarget,
 ];
 
 test("po clean", async () => {
@@ -29,7 +31,7 @@ test("po clean", async () => {
 });
 
 test("po re-create non-cached target", async () => {
-  const removeTarget = targetPaths[targetPaths.length - 1];
+  const removeTarget = nonCachedTarget;
   unlinkSync(join(sampleDir, removeTarget));
   const output = await runSampleScript(testScript, [assetDir]);
   expect(output).toContain(
@@ -38,9 +40,8 @@ test("po re-create non-cached target", async () => {
 });
 
 test("po delete stale translations", async () => {
-  const path = join(sampleDir, targetPaths[0]);
   injectPrefixLines({
-    path,
+    path: join(sampleDir, mainTarget),
     lines: ['msgid "some new id"', 'msgstr "some new msg"'],
   });
   const output = await runSampleScript(testScript, [assetDir]);
@@ -48,9 +49,8 @@ test("po delete stale translations", async () => {
 });
 
 test("po insert new translations", async () => {
-  const path = join(sampleDir, targetPaths[0]);
   removeLines({
-    path,
+    path: join(sampleDir, mainTarget),
     linesToRemove: [
       'msgid "Confirm E-mail Address"',
       'msgstr "Por favor confirme su dirección de correo electrónico"',

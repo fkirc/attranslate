@@ -14,7 +14,7 @@ test("srcFile not existing", async () => {
   };
   const output = await runTranslateExpectFailure(buildE2EArgs(args));
   expect(output).toBe(
-    `error: ${getDebugPath("not-existing-source")} does not exist.\n`
+    `error: srcFile ${getDebugPath("not-existing-source")} does not exist.\n`
   );
 });
 
@@ -24,7 +24,7 @@ test("srcFile not a file", async () => {
     srcFile: ".",
   };
   const output = await runTranslateExpectFailure(buildE2EArgs(args));
-  expect(output).toBe(`error: ${getDebugPath(".")} is a directory.\n`);
+  expect(output).toBe(`error: srcFile ${getDebugPath(".")} is a directory.\n`);
 });
 
 test("targetFile in dir not existing", async () => {
@@ -35,7 +35,7 @@ test("targetFile in dir not existing", async () => {
   await switchToRandomTarget(args, false);
   const output = await runTranslateExpectFailure(buildE2EArgs(args));
   expect(output).toBe(
-    `error: ${getDebugPath("not-existing-dir")} does not exist.\n`
+    `error: Target path ${getDebugPath("not-existing-dir")} does not exist.\n`
   );
 });
 
@@ -55,7 +55,7 @@ test("cacheDir not existing", async () => {
   };
   const output = await runTranslateExpectFailure(buildE2EArgs(args));
   expect(output).toBe(
-    `error: ${getDebugPath("not-existing-cache")} does not exist.\n`
+    `error: cacheDir ${getDebugPath("not-existing-cache")} does not exist.\n`
   );
 });
 
@@ -66,7 +66,18 @@ test("cacheDir not a dir", async () => {
   };
   const output = await runTranslateExpectFailure(buildE2EArgs(args));
   expect(output).toBe(
-    `error: ${getDebugPath("README.md")} is not a directory.\n`
+    `error: cacheDir ${getDebugPath("README.md")} is not a directory.\n`
+  );
+});
+
+test("targetDir not a dir", async () => {
+  const args: E2EArgs = {
+    ...defaultE2EArgs,
+    targetFile: "LICENSE/random_target.txt",
+  };
+  const output = await runTranslateExpectFailure(buildE2EArgs(args));
+  expect(output).toBe(
+    `error: Target path ${getDebugPath("LICENSE")} is not a directory.\n`
   );
 });
 

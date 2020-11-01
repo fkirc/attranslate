@@ -2,7 +2,7 @@ import { translateCore } from "./translate-core";
 import { existsSync } from "fs";
 import { CliArgs, CoreArgs, TSet } from "./core-definitions";
 import { areEqual } from "./tset-ops";
-import { checkDir, getDebugPath, logFatal } from "../util/util";
+import { checkDir, checkNotDir, getDebugPath, logFatal } from "../util/util";
 import { missingTCacheTarget, resolveTCache, writeTCache } from "./cache-layer";
 import { readTFileCore, writeTFileCore } from "./core-util";
 import path from "path";
@@ -19,7 +19,7 @@ async function resolveOldTarget(
 ): Promise<TSet | null> {
   const targetPath = path.resolve(args.targetFile);
   const targetDir = path.dirname(targetPath);
-  checkDir(targetDir);
+  checkDir(targetDir, { errorHint: "Target path" });
   if (existsSync(targetPath)) {
     return await readTFileCore(targetFileFormat, {
       path: args.targetFile,
@@ -72,6 +72,8 @@ export async function translateCli(cliArgs: CliArgs) {
     );
   }
   const targetFileFormat = cliArgs.targetFormat as TFileType;
+
+  checkNotDir(cliArgs.srcFile, { errorHint: "srcFile" });
   const src = await readTFileCore(srcFileFormat, {
     path: cliArgs.srcFile,
     lng: cliArgs.srcLng,
