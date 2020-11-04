@@ -5072,9 +5072,9 @@ xml-name-validator@^3.0.0:
   resolved "https://registry.yarnpkg.com/xml-name-validator/-/xml-name-validator-3.0.0.tgz#6ae73e06de4d8c6e47f9fb181f78d648ad457c6a"
   integrity sha512-A5CUptxDsvxKJEU3yO6DuWBSJz/qizqzJKOMIfUJHETbBw/sFaDxgd6fxm1ewUaM0jZ444Fc5vC5ROYurg/4Pw==
 
-"xml2js@https://github.com/fkirc/node-xml2js/tarball/21de47581c46ce5b5659448ab198501786d2117d":
+"xml2js@https://github.com/fkirc/node-xml2js/tarball/680ee7ed2dad8b9ddacc37b5e4b4a671706e0bcf":
   version "0.4.23"
-  resolved "https://github.com/fkirc/node-xml2js/tarball/21de47581c46ce5b5659448ab198501786d2117d#a11dc50a8887979cdbeeb612a9dfaaf1281edd37"
+  resolved "https://github.com/fkirc/node-xml2js/tarball/680ee7ed2dad8b9ddacc37b5e4b4a671706e0bcf#aeea7882f698f1d66a04000ede5d46a1669adfbc"
   dependencies:
     sax ">=0.6.0"
     xmlbuilder "https://github.com/fkirc/xmlbuilder-js/tarball/e287de6254b719c1565ab47745d2140b137d9021"
