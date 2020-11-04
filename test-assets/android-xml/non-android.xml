@@ -1,6 +1,6 @@
 <RootLevel>
-    <InnerLevel target="الغرفة" category="ROOMS#GENERAL" polarity="positive" from="5" to="11"/>
-    <InnerLevel target="الموظفون" category="SERVICE#GENERAL" polarity="positive" from="25" to="33"/>
-    <InnerLevel target="بوفيه الإفطار" category="FOOD_DRINKS#QUALITY" polarity="positive" from="35" to="48"/>
-    <InnerLevel target="وجبة العشاء" category="FOOD_DRINKS#PRICES" polarity="negative" from="67" to="78"/>
+    <InnerLevel target="الغرفة" category="ROOMS#GENERAL" polarity="positive" from="5" to="11">الغرفة</InnerLevel>
+    <InnerLevel target="الموظفون" category="SERVICE#GENERAL" polarity="positive" from="25" to="33">الموظفون</InnerLevel>
+    <InnerLevel target="بوفيه الإفطار" category="FOOD_DRINKS#QUALITY" polarity="positive" from="35" to="48">بوفيه الإفطار</InnerLevel>
+    <InnerLevel target="وجبة العشاء" category="FOOD_DRINKS#PRICES" polarity="negative" from="67" to="78">وجبة العشاء</InnerLevel>
 </RootLevel>
