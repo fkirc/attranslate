@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="category_apple" reviewed="false">manzana</string>
-    <string name="category_sub_pear" formatted="false" reviewed="false">Pera</string>
     <!-- Some additional comment -->
+    <string name="category_sub_pear" formatted="false" reviewed="false">Pera</string>
     <string name="category_sub_sub_banana" formatted="true" reviewed="false">Plátano</string>
     <plurals name="some plurals" reviewed="false">
         <item quantity="one">Solo uno</item>
