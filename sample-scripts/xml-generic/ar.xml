@@ -1,0 +1,9 @@
+<Outer>
+    <Inner>شيئا ما</Inner>
+    <Inner someAttribute="attr">ثانيا</Inner>
+    <InnerElse>الثالث</InnerElse>
+    <some-array>
+        <item>واحد</item>
+        <item>اثنان</item>
+    </some-array>
+</Outer>

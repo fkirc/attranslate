@@ -1,0 +1,9 @@
+<Outer>
+    <Inner>Something</Inner>
+    <Inner someAttribute="attr">Second</Inner>
+    <InnerElse>Third</InnerElse>
+    <some-array>
+        <item>One</item>
+        <item>Two</item>
+    </some-array>
+</Outer>

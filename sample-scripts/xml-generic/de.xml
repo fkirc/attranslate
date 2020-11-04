@@ -1,0 +1,9 @@
+<Outer>
+    <Inner>etwas</Inner>
+    <Inner someAttribute="attr" reviewed="false">Zweite</Inner>
+    <InnerElse>Dritte</InnerElse>
+    <some-array>
+        <item>Einer</item>
+        <item>Zwei</item>
+    </some-array>
+</Outer>
