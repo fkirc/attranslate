@@ -86,14 +86,10 @@ function readFlatTag(
   cacheEntry: PartialCacheEntry,
   tag: XmlTag
 ) {
-  let content: string = tag.characterContent;
-  if (!content && !getDefaultKey(cacheEntry)) {
-    content = getFirstAttributeValue(cacheEntry) ?? "";
-  }
   insertXmlContent(
     xmlContext,
     { ...cacheEntry, type: "FLAT", childTag: null, childOffset: 0 },
-    content
+    tag.characterContent
   );
 }
 
@@ -135,7 +131,7 @@ function readNestedTag(
 let fallbackCounter = 0;
 function getFallbackKey(): string {
   fallbackCounter += 1;
-  return `inner_key_${fallbackCounter}`;
+  return `xml_key_${fallbackCounter}`;
 }
 
 function getDefaultKey(cacheEntry: PartialCacheEntry): string | null {
@@ -146,24 +142,8 @@ function getDefaultKey(cacheEntry: PartialCacheEntry): string | null {
   return attributes[defaultKeyAttribute] ?? null;
 }
 
-function getFirstAttributeValue(cacheEntry: PartialCacheEntry): string | null {
-  const attributes = cacheEntry.parentTag?.attributes;
-  if (typeof attributes !== "object") {
-    return null;
-  }
-  const attributeKeys = Object.keys(attributes);
-  if (!attributeKeys.length) {
-    return null;
-  }
-  return attributes[attributeKeys[0]];
-}
-
 function xmlToFlatJsonKey(cacheEntry: XmlCacheEntry): string {
-  return (
-    getDefaultKey(cacheEntry) ??
-    getFirstAttributeValue(cacheEntry) ??
-    getFallbackKey()
-  );
+  return getDefaultKey(cacheEntry) ?? getFallbackKey();
 }
 
 function xmlToNestedJsonKey(cacheEntry: XmlCacheEntry): string {
