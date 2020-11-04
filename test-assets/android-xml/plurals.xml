@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Some outer comment -->
     <plurals name="some_plural_headLine">
+        <!-- Some inner comment -->
         <item quantity="one">%d till today</item>
         <item quantity="other">Another %d days till today</item>
     </plurals>
     <plurals name="numberOfSongsAvailable">
+        <!-- Some more inner comment -->
         <item quantity="one">Znaleziono \njedną piosenkę.</item>
+        <!-- Some middle comment -->
+        <!-- Some more middle comment -->
         <item quantity="few">Znaleziono %d piosenki.</item>
         <item quantity="other">Znaleziono %d piosenek.</item>
     </plurals>

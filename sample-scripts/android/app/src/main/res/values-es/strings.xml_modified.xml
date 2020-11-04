@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Start resource comment -->
+    <string name="stale_apple" reviewed="false">manzana</string>
     <string name="category_apple" reviewed="false">manzana</string>
     <!-- Some additional comment -->
     <string name="category_sub_pear" formatted="false" reviewed="false">Pera</string>
@@ -15,5 +17,6 @@
         <item>Venus</item>
         <item>Tierra</item>
         <item>Marte</item>
+        <item>More stale stuff</item>
     </string-array>
 </resources>

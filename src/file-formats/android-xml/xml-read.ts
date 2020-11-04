@@ -55,19 +55,10 @@ export function readResourceTag(xmlContext: XmlReadContext, tag: NamedXmlTag) {
     parentTag: tag,
   };
   if (Array.isArray(tag.item) && tag.item.length) {
-    const firstChild = tag.item[0];
-    if (typeof firstChild === "string") {
-      return readStringArrayTag(xmlContext, cacheEntry, tag.item as string[]);
-    }
-    if (
-      typeof firstChild === "object" &&
-      typeof firstChild.attributes === "object" &&
-      typeof firstChild.characterContent === "string"
-    ) {
-      return readNestedTag(xmlContext, cacheEntry, tag.item as XmlTag[]);
-    }
+    readNestedTag(xmlContext, cacheEntry, tag.item);
+  } else {
+    readFlatTag(xmlContext, cacheEntry, tag);
   }
-  return readFlatTag(xmlContext, cacheEntry, tag);
 }
 
 function readFlatTag(
@@ -82,41 +73,38 @@ function readFlatTag(
   );
 }
 
-function readStringArrayTag(
-  xmlContext: XmlReadContext,
-  cacheEntry: PartialCacheEntry,
-  items: string[]
-) {
-  items.forEach((item, index) => {
-    insertXmlContent(
-      xmlContext,
-      {
-        ...cacheEntry,
-        type: "STRING_ARRAY",
-        childTag: null,
-        childOffset: index,
-      },
-      item
-    );
-  });
-}
-
 function readNestedTag(
   xmlContext: XmlReadContext,
   cacheEntry: PartialCacheEntry,
-  childs: XmlTag[]
+  childs: XmlTag[] | string[]
 ) {
-  childs.forEach((child, index) => {
-    insertXmlContent(
-      xmlContext,
-      {
-        ...cacheEntry,
-        type: "NESTED",
-        childTag: child,
-        childOffset: index,
-      },
-      child.characterContent
-    );
+  childs.forEach((child: XmlTag | string, index: number) => {
+    if (typeof child === "string") {
+      insertXmlContent(
+        xmlContext,
+        {
+          ...cacheEntry,
+          type: "STRING_ARRAY",
+          childTag: null,
+          childOffset: index,
+        },
+        child
+      );
+    } else if (
+      typeof child === "object" &&
+      typeof child.characterContent === "string"
+    ) {
+      insertXmlContent(
+        xmlContext,
+        {
+          ...cacheEntry,
+          type: "NESTED",
+          childTag: child,
+          childOffset: index,
+        },
+        child.characterContent
+      );
+    }
   });
 }
 
