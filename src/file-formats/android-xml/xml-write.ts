@@ -147,8 +147,15 @@ export function writeXmlResourceFile(
   const mergedOptions = { ...options, xmlBuilderOptions };
   const builder: Builder = new xml2js.Builder(mergedOptions);
   const rawXmlString: string = builder.buildObject(resourceFile);
-  const xmlHeader: string = auxData?.xmlHeader ?? DEFAULT_XML_HEADER;
-  const xmlString = `${xmlHeader}\n${removeBlankLines(rawXmlString)}\n`;
+  let xmlHeader: string = DEFAULT_XML_HEADER + "\n";
+  if (auxData) {
+    if (auxData.xmlHeader) {
+      xmlHeader = auxData.xmlHeader + "\n";
+    } else {
+      xmlHeader = "";
+    }
+  }
+  const xmlString = `${xmlHeader}${removeBlankLines(rawXmlString)}\n`;
   writeUtf8File(args.path, xmlString);
 }
 

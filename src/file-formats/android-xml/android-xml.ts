@@ -33,7 +33,7 @@ export interface XmlCacheEntry extends PartialCacheEntry {
   childOffset: number;
 }
 export interface XmlAuxData {
-  xmlHeader: string;
+  xmlHeader: string | null;
   detectedIntent: number;
   resourceFile: XmlResourceFile;
   rootTagName: string;
@@ -72,10 +72,11 @@ export class AndroidXml implements TFileFormat {
     const xmlString = readUtf8File(args.path);
     const resourceFile = await parseRawXML<XmlResourceFile>(xmlString, args);
     const { resources, rootTagName } = extractRootTags(args, resourceFile);
+    const firstLine = extractFirstLine(xmlString);
     const fileCache: XmlFileCache = {
       path: args.path,
       auxData: {
-        xmlHeader: extractFirstLine(xmlString),
+        xmlHeader: firstLine.includes("<?") ? firstLine : null,
         resourceFile: resourceFile as XmlResourceFile,
         detectedIntent: detectSpaceIndent(xmlString),
         rootTagName,
