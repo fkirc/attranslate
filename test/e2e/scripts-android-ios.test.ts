@@ -1,14 +1,17 @@
 import { runSampleScript, sampleDir } from "./scripts-e2e-util";
-import { joinLines } from "../test-util/test-util";
+import { joinLines, runCommand } from "../test-util/test-util";
 import { unlinkSync } from "fs";
 import { join } from "path";
 import { getDebugPath } from "../../src/util/util";
 
 const assetDirs = ["android", "ios"];
 
+const xmlRecreateTarget = "android/app/src/main/res/values-de/strings.xml";
+const xmlModifyTarget = "android/app/src/main/res/values-es/strings.xml";
+
 const targetPaths: string[] = [
-  "android/app/src/main/res/values-de/strings.xml",
-  "android/app/src/main/res/values-es/strings.xml",
+  xmlRecreateTarget,
+  xmlModifyTarget,
   "ios/Localizable/Base.lproj/Localizable.strings",
   "ios/Localizable/de.lproj/Localizable.strings",
   "ios/Localizable/es.lproj/Localizable.strings",
@@ -30,13 +33,28 @@ test("Android to iOS clean", async () => {
 });
 
 test("Android to iOS re-create targets", async () => {
-  targetPaths.forEach((path) => {
+  const recreatePaths = targetPaths.filter((path) => path !== xmlModifyTarget);
+  recreatePaths.forEach((path) => {
     unlinkSync(join(sampleDir, path));
   });
   const output = await runAndroidiOS();
-  targetPaths.forEach((path) => {
+  recreatePaths.forEach((path) => {
     expect(output).toContain(
       `Write target ${getDebugPath(join(sampleDir, path))}`
     );
   });
+});
+
+test("Delete stale XML entries", async () => {
+  await runCommand(
+    `cp ${join(sampleDir, xmlModifyTarget + "_modified.xml")} ${join(
+      sampleDir,
+      xmlModifyTarget
+    )}`
+  );
+  const output = await runAndroidiOS();
+  expect(output).toContain(
+    `Write target ${getDebugPath(join(sampleDir, xmlModifyTarget))}`
+  );
+  expect(output).toContain(`Delete 2 stale translations`);
 });
