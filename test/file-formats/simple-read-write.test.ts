@@ -47,6 +47,10 @@ const testArgs: {
     fileFormat: "yaml",
   },
   {
+    srcFile: join(testAssets, "android-xml", "non-android.xml"),
+    fileFormat: "xml",
+  },
+  {
     srcFile: join(testAssets, "android-xml", "advanced.xml"),
     fileFormat: "xml",
   },
