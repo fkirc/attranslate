@@ -8,12 +8,12 @@ import { readUtf8File } from "../../util/util";
 import {
   detectSpaceIndent,
   extractFirstLine,
+  extractRootTags,
   parseRawXML,
   readResourceTag,
   XmlReadContext,
 } from "./xml-read";
 import { FileCache, FormatCache } from "../common/format-cache";
-import { logParseError } from "../common/parse-utils";
 import { OptionsV2 } from "xml2js";
 import {
   writeResourceTag,
@@ -25,7 +25,7 @@ export type XmlTagType = "FLAT" | "STRING_ARRAY" | "NESTED";
 
 export interface PartialCacheEntry {
   arrayName: string;
-  parentTag: NamedXmlTag;
+  parentTag: XmlTag;
 }
 export interface XmlCacheEntry extends PartialCacheEntry {
   type: XmlTagType;
@@ -36,18 +36,18 @@ export interface XmlAuxData {
   xmlHeader: string;
   detectedIntent: number;
   resourceFile: XmlResourceFile;
+  rootTagName: string;
 }
 
 export type XmlFileCache = FileCache<XmlCacheEntry, XmlAuxData>;
 const globalCache = new FormatCache<XmlCacheEntry, XmlAuxData>();
 
+export const defaultKeyAttribute = "name";
+export const defaultRootTagName = "resources";
+
 export interface XmlTag {
   characterContent: string;
   attributes: Record<string, string>;
-}
-export interface NamedXmlTag {
-  characterContent: string;
-  attributes: { name: string };
   item?: string[] | XmlTag[];
 }
 export const sharedXmlOptions: OptionsV2 = {
@@ -56,8 +56,8 @@ export const sharedXmlOptions: OptionsV2 = {
 };
 
 export interface XmlResourceFile {
-  resources: {
-    [prop: string]: Partial<NamedXmlTag>[];
+  [prop: string]: {
+    [prop: string]: Partial<XmlTag>[];
   };
 }
 
@@ -71,22 +71,17 @@ export class AndroidXml implements TFileFormat {
   async readTFile(args: ReadTFileArgs): Promise<TSet> {
     const xmlString = readUtf8File(args.path);
     const resourceFile = await parseRawXML<XmlResourceFile>(xmlString, args);
+    const { resources, rootTagName } = extractRootTags(args, resourceFile);
     const fileCache: XmlFileCache = {
       path: args.path,
       auxData: {
         xmlHeader: extractFirstLine(xmlString),
         resourceFile: resourceFile as XmlResourceFile,
         detectedIntent: detectSpaceIndent(xmlString),
+        rootTagName,
       },
       entries: new Map(),
     };
-    const resources = resourceFile.resources;
-    if (!resources) {
-      logParseError("resources-tag not found", args);
-    }
-    if (typeof resources !== "object") {
-      logParseError("resources-tag is not an object", args);
-    }
     const readContext: XmlReadContext = {
       tSet: new Map(),
       fileCache,
@@ -95,17 +90,17 @@ export class AndroidXml implements TFileFormat {
       parentTag: null,
     };
     for (const arrayName of Object.keys(resources)) {
-      const tagArray: Partial<NamedXmlTag>[] = resources[arrayName];
+      const tagArray: Partial<XmlTag>[] = resources[arrayName];
       if (Array.isArray(tagArray)) {
         for (const xmlTag of tagArray) {
           if (
             typeof xmlTag === "object" &&
-            xmlTag.attributes?.name &&
+            typeof xmlTag.attributes === "object" &&
             xmlTag.characterContent !== undefined &&
             typeof xmlTag.characterContent === "string"
           ) {
             readContext.arrayName = arrayName;
-            readResourceTag(readContext, <NamedXmlTag>xmlTag);
+            readResourceTag(readContext, <XmlTag>xmlTag);
           }
         }
       }
@@ -116,12 +111,13 @@ export class AndroidXml implements TFileFormat {
 
   writeTFile(args: WriteTFileArgs): void {
     const auxData = globalCache.lookupAuxdata({ path: args.path });
+    const resources = {};
     const resourceFile: XmlResourceFile = {
-      resources: {},
+      [auxData?.rootTagName ?? defaultRootTagName]: resources,
     };
     const writeContext: XmlWriteContext = {
       args,
-      resourceFile,
+      resources,
       cacheEntry: null,
       jsonKey: "",
       value: null,

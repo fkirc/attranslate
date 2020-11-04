@@ -2,7 +2,7 @@ import { WriteTFileArgs } from "../file-format-definitions";
 import {
   DEFAULT_XML_HEADER,
   DEFAULT_XML_INDENT,
-  NamedXmlTag,
+  defaultKeyAttribute,
   sharedXmlOptions,
   XmlAuxData,
   XmlCacheEntry,
@@ -15,7 +15,7 @@ import { getNotReviewedValue, needsReview } from "../common/manual-review";
 
 export interface XmlWriteContext {
   args: WriteTFileArgs;
-  resourceFile: XmlResourceFile;
+  resources: Record<string, Partial<XmlTag>[]>;
   cacheEntry: XmlCacheEntry | null;
   jsonKey: string;
   value: string | null;
@@ -44,7 +44,7 @@ function writeFlatTag(
   insertCachedResourceTag(writeContext, cacheEntry);
 }
 
-const survivingTags: Set<NamedXmlTag> = new Set();
+const survivingTags: Set<XmlTag> = new Set();
 
 function writeNestedTag(
   writeContext: XmlWriteContext,
@@ -69,10 +69,10 @@ function writeNestedTag(
 }
 
 function writeUncachedTag(writeContext: XmlWriteContext) {
-  const newTag: NamedXmlTag = {
+  const newTag: XmlTag = {
     characterContent: writeContext.value ?? "",
     attributes: {
-      name: writeContext.jsonKey,
+      [defaultKeyAttribute]: writeContext.jsonKey,
     },
   };
   insertRawResourceTag(writeContext, "string", newTag);
@@ -92,13 +92,13 @@ function insertCachedResourceTag(
 function insertRawResourceTag(
   writeContext: XmlWriteContext,
   arrayName: string,
-  tag: NamedXmlTag
+  tag: XmlTag
 ) {
-  const resourceFile = writeContext.resourceFile;
-  let xmlArray = resourceFile.resources[arrayName];
+  const resources = writeContext.resources;
+  let xmlArray = resources[arrayName];
   if (!Array.isArray(xmlArray)) {
     xmlArray = [];
-    resourceFile.resources[arrayName] = xmlArray;
+    resources[arrayName] = xmlArray;
   }
   let tagFound = false;
   for (const existingTag of xmlArray) {

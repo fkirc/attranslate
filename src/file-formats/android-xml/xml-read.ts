@@ -1,11 +1,13 @@
 import {
   DEFAULT_XML_INDENT,
-  NamedXmlTag,
   sharedXmlOptions,
   XmlFileCache,
   XmlTag,
   XmlCacheEntry,
   PartialCacheEntry,
+  XmlResourceFile,
+  defaultKeyAttribute,
+  defaultRootTagName,
 } from "./android-xml";
 import { ReadTFileArgs } from "../file-format-definitions";
 import { TSet } from "../../core/core-definitions";
@@ -41,15 +43,33 @@ export async function parseRawXML<T>(
   }
 }
 
+export function extractRootTags(
+  args: ReadTFileArgs,
+  xmlFile: Partial<XmlResourceFile>
+): { resources: Record<string, Partial<XmlTag>[]>; rootTagName: string } {
+  const defaultRoot = xmlFile[defaultRootTagName];
+  if (typeof defaultRoot === "object") {
+    return { resources: defaultRoot, rootTagName: defaultRootTagName };
+  }
+  for (const key of Object.keys(xmlFile)) {
+    const value = xmlFile[key];
+    if (typeof value === "object") {
+      return { resources: value, rootTagName: key };
+    }
+  }
+  const msg = "Did not find an extractable tag-object";
+  logParseError(msg, args);
+}
+
 export interface XmlReadContext {
   tSet: TSet;
   fileCache: XmlFileCache;
   args: ReadTFileArgs;
   arrayName: string;
-  parentTag: NamedXmlTag | null;
+  parentTag: XmlTag | null;
 }
 
-export function readResourceTag(xmlContext: XmlReadContext, tag: NamedXmlTag) {
+export function readResourceTag(xmlContext: XmlReadContext, tag: XmlTag) {
   const cacheEntry: PartialCacheEntry = {
     arrayName: xmlContext.arrayName,
     parentTag: tag,
@@ -64,12 +84,16 @@ export function readResourceTag(xmlContext: XmlReadContext, tag: NamedXmlTag) {
 function readFlatTag(
   xmlContext: XmlReadContext,
   cacheEntry: PartialCacheEntry,
-  tag: NamedXmlTag
+  tag: XmlTag
 ) {
+  let content: string = tag.characterContent;
+  if (!content && !getDefaultKey(cacheEntry)) {
+    content = getFirstAttributeValue(cacheEntry) ?? "";
+  }
   insertXmlContent(
     xmlContext,
     { ...cacheEntry, type: "FLAT", childTag: null, childOffset: 0 },
-    tag.characterContent
+    content
   );
 }
 
@@ -108,8 +132,38 @@ function readNestedTag(
   });
 }
 
+let fallbackCounter = 0;
+function getFallbackKey(): string {
+  fallbackCounter += 1;
+  return `inner_key_${fallbackCounter}`;
+}
+
+function getDefaultKey(cacheEntry: PartialCacheEntry): string | null {
+  const attributes = cacheEntry.parentTag?.attributes;
+  if (typeof attributes !== "object") {
+    return null;
+  }
+  return attributes[defaultKeyAttribute] ?? null;
+}
+
+function getFirstAttributeValue(cacheEntry: PartialCacheEntry): string | null {
+  const attributes = cacheEntry.parentTag?.attributes;
+  if (typeof attributes !== "object") {
+    return null;
+  }
+  const attributeKeys = Object.keys(attributes);
+  if (!attributeKeys.length) {
+    return null;
+  }
+  return attributes[attributeKeys[0]];
+}
+
 function xmlToFlatJsonKey(cacheEntry: XmlCacheEntry): string {
-  return cacheEntry.parentTag?.attributes.name ?? "_";
+  return (
+    getDefaultKey(cacheEntry) ??
+    getFirstAttributeValue(cacheEntry) ??
+    getFallbackKey()
+  );
 }
 
 function xmlToNestedJsonKey(cacheEntry: XmlCacheEntry): string {
