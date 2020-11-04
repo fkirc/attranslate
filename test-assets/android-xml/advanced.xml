@@ -10,6 +10,7 @@
         <i>left</i>
     </string>
     <string-array name="planets_array">
+        <!-- A planet comment -->
         <item>Mercury</item>
         <item>Venus</item>
         <item>Earth</item>
@@ -23,6 +24,7 @@
         <item>May</item>
         <item>Jun</item>
         <item>July</item>
+        <!-- A middle month comment -->
         <item>August</item>
         <item>September</item>
         <item>October</item>
@@ -32,6 +34,8 @@
     <plurals name="numberOfSongsAvailable">
         <item quantity="one">Znaleziono jedną piosenkę.</item>
         <item quantity="few">Znaleziono %d piosenki.</item>
+        <!-- Last plurals comment -->
+        <!-- Last-last plurals comment -->
         <item quantity="other">Znaleziono %d piosenek.</item>
     </plurals>
 </resources>
