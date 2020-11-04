@@ -121,6 +121,7 @@ function insertRawResourceTag(
 function injectReviewAttribute(writeContext: XmlWriteContext, tag: XmlTag) {
   if (
     typeof tag === "object" &&
+    tag.attributes &&
     needsReview(writeContext.args, writeContext.jsonKey, writeContext.value)
   ) {
     tag.attributes["reviewed"] = getNotReviewedValue();

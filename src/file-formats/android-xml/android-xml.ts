@@ -49,7 +49,7 @@ export type XmlTag =
   | string // string in case of tags without any attributes
   | {
       characterContent: string;
-      attributes: Record<string, string>;
+      attributes?: Record<string, string>;
       item?: XmlTag[];
     };
 export const sharedXmlOptions: OptionsV2 = {
