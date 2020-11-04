@@ -28,7 +28,6 @@ export function writeResourceTag(writeContext: XmlWriteContext) {
   }
   switch (cacheEntry.type) {
     case "STRING_ARRAY":
-      return writeStringArrayTag(writeContext, cacheEntry);
     case "NESTED":
       return writeNestedTag(writeContext, cacheEntry);
     case "FLAT":
@@ -47,7 +46,7 @@ function writeFlatTag(
 
 const survivingTags: Set<NamedXmlTag> = new Set();
 
-function writeStringArrayTag(
+function writeNestedTag(
   writeContext: XmlWriteContext,
   cacheEntry: XmlCacheEntry
 ) {
@@ -57,18 +56,14 @@ function writeStringArrayTag(
     parentTag.item = [];
     survivingTags.add(parentTag);
   }
-  parentTag.item.push((writeContext.value ?? "") as string & XmlTag);
-  insertCachedResourceTag(writeContext, cacheEntry);
-}
-
-function writeNestedTag(
-  writeContext: XmlWriteContext,
-  cacheEntry: XmlCacheEntry
-) {
-  cacheEntry.parentTag.characterContent = "";
-  const childTag = cacheEntry.childTag;
-  if (childTag) {
-    childTag.characterContent = writeContext.value ?? "";
+  if (cacheEntry.type === "STRING_ARRAY") {
+    parentTag.item.push((writeContext.value ?? "") as string & XmlTag);
+  } else {
+    const childTag = cacheEntry.childTag;
+    if (childTag) {
+      childTag.characterContent = writeContext.value ?? "";
+      parentTag.item.push(childTag as string & XmlTag);
+    }
   }
   insertCachedResourceTag(writeContext, cacheEntry);
 }
