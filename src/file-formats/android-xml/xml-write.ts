@@ -40,7 +40,11 @@ function writeFlatTag(
   cacheEntry: XmlCacheEntry
 ) {
   const parentTag = cacheEntry.parentTag;
-  parentTag.characterContent = writeContext.value ?? "";
+  if (typeof parentTag === "object") {
+    parentTag.characterContent = writeContext.value ?? "";
+  } else {
+    cacheEntry.parentTag = writeContext.value ?? "";
+  }
   insertCachedResourceTag(writeContext, cacheEntry);
 }
 
@@ -51,19 +55,20 @@ function writeNestedTag(
   cacheEntry: XmlCacheEntry
 ) {
   const parentTag = cacheEntry.parentTag;
+  if (typeof parentTag !== "object") {
+    return;
+  }
   parentTag.characterContent = "";
   if (!parentTag.item || !survivingTags.has(parentTag)) {
     parentTag.item = [];
     survivingTags.add(parentTag);
   }
-  if (cacheEntry.type === "STRING_ARRAY") {
-    parentTag.item.push((writeContext.value ?? "") as string & XmlTag);
+  const childTag = cacheEntry.childTag;
+  if (childTag && typeof childTag === "object") {
+    childTag.characterContent = writeContext.value ?? "";
+    parentTag.item.push(childTag);
   } else {
-    const childTag = cacheEntry.childTag;
-    if (childTag) {
-      childTag.characterContent = writeContext.value ?? "";
-      parentTag.item.push(childTag as string & XmlTag);
-    }
+    parentTag.item.push(writeContext.value ?? "");
   }
   insertCachedResourceTag(writeContext, cacheEntry);
 }
@@ -115,6 +120,7 @@ function insertRawResourceTag(
 
 function injectReviewAttribute(writeContext: XmlWriteContext, tag: XmlTag) {
   if (
+    typeof tag === "object" &&
     needsReview(writeContext.args, writeContext.jsonKey, writeContext.value)
   ) {
     tag.attributes["reviewed"] = getNotReviewedValue();

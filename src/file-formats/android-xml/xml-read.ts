@@ -74,7 +74,7 @@ export function readResourceTag(xmlContext: XmlReadContext, tag: XmlTag) {
     arrayName: xmlContext.arrayName,
     parentTag: tag,
   };
-  if (Array.isArray(tag.item) && tag.item.length) {
+  if (typeof tag === "object" && Array.isArray(tag.item) && tag.item.length) {
     readNestedTag(xmlContext, cacheEntry, tag.item);
   } else {
     readFlatTag(xmlContext, cacheEntry, tag);
@@ -89,7 +89,7 @@ function readFlatTag(
   insertXmlContent(
     xmlContext,
     { ...cacheEntry, type: "FLAT", childTag: null, childOffset: 0 },
-    tag.characterContent
+    typeof tag === "object" ? tag.characterContent : tag
   );
 }
 
@@ -135,6 +135,9 @@ function getFallbackKey(): string {
 }
 
 function getDefaultKey(cacheEntry: PartialCacheEntry): string | null {
+  if (typeof cacheEntry.parentTag !== "object") {
+    return null;
+  }
   const attributes = cacheEntry.parentTag?.attributes;
   if (typeof attributes !== "object") {
     return null;

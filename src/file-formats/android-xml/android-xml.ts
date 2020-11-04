@@ -45,11 +45,13 @@ const globalCache = new FormatCache<XmlCacheEntry, XmlAuxData>();
 export const defaultKeyAttribute = "name";
 export const defaultRootTagName = "resources";
 
-export interface XmlTag {
-  characterContent: string;
-  attributes: Record<string, string>;
-  item?: string[] | XmlTag[];
-}
+export type XmlTag =
+  | string // string in case of tags without any attributes
+  | {
+      characterContent: string;
+      attributes: Record<string, string>;
+      item?: XmlTag[];
+    };
 export const sharedXmlOptions: OptionsV2 = {
   attrkey: "attributes",
   charkey: "characterContent",
@@ -94,15 +96,8 @@ export class AndroidXml implements TFileFormat {
       const tagArray: Partial<XmlTag>[] = resources[arrayName];
       if (Array.isArray(tagArray)) {
         for (const xmlTag of tagArray) {
-          if (
-            typeof xmlTag === "object" &&
-            typeof xmlTag.attributes === "object" &&
-            xmlTag.characterContent !== undefined &&
-            typeof xmlTag.characterContent === "string"
-          ) {
-            readContext.arrayName = arrayName;
-            readResourceTag(readContext, <XmlTag>xmlTag);
-          }
+          readContext.arrayName = arrayName;
+          readResourceTag(readContext, <XmlTag>xmlTag);
         }
       }
     }
