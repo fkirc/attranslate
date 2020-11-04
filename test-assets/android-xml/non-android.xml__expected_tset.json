@@ -1,5 +1,9 @@
 [
   [
+    "some-array.inner_str_array.item_0",
+    "One"
+  ],
+  [
     "xml_key_1",
     "Something"
   ],

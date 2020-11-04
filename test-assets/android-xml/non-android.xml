@@ -1,4 +1,7 @@
 <RootLevel>
+    <some-array name="inner_str_array">
+        <item>One</item>
+    </some-array>
     <Inner>Something</Inner>
     <Inner>Second</Inner>
     <Inner attribute="value">Third</Inner>
