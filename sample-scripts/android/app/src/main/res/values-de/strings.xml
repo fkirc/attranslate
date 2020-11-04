@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Start resource comment -->
     <string name="category_apple">Apfel</string>
     <string name="category_sub_pear" formatted="false">Birne</string>
     <string name="category_sub_sub_banana" formatted="true">Banane</string>
     <plurals name="some plurals">
         <item quantity="one">Nur einer</item>
         <item quantity="few">Ein paar</item>
+        <!-- Inner plurals comment -->
         <item quantity="other">Einige andere</item>
     </plurals>
     <string-array name="planets">
+        <!-- A planet comment -->
         <item>Venus</item>
         <item>Erde</item>
         <item>Mars</item>
