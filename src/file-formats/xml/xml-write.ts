@@ -29,17 +29,6 @@ export function updateXmlContent(args: {
   });
 }
 
-// function writeUncachedTag(writeContext: XmlWriteContext) {
-//   // TODO: Test and re-implement uncached XML-writing
-//   const newTag: XmlTag = {
-//     characterContent: writeContext.value ?? "",
-//     attributes: {
-//       [defaultKeyAttribute]: writeContext.jsonKey,
-//     },
-//   };
-//   //insertRawResourceTag(writeContext, "string", newTag);
-// }
-
 export function writeXmlResourceFile(
   xmlFile: XmlFile,
   args: WriteTFileArgs,
