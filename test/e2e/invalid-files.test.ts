@@ -125,6 +125,31 @@ test("invalid iOS strings", async () => {
 });
 
 describe.each([
+  {
+    srcFile: "test-assets/nested-json/count-en.json",
+    srcFormat: "flat-json",
+    errorMessage: "Property 'inner' is not a string or null",
+  },
+])(
+  "src parsing error",
+  (args: { srcFile: string; srcFormat: string; errorMessage: string }) => {
+    test("src parsing error", async () => {
+      const e2eArgs: E2EArgs = {
+        ...defaultE2EArgs,
+        srcFile: args.srcFile,
+        srcFormat: args.srcFormat,
+      };
+      const output = await runTranslateExpectFailure(buildE2EArgs(e2eArgs));
+      expect(output).toBe(
+        `error: Failed to parse ${getDebugPath(
+          args.srcFile
+        )} with expected format '${args.srcFormat}': ${args.errorMessage}\n`
+      );
+    });
+  }
+);
+
+describe.each([
   { srcFile: "test-assets/invalid/empty.json", srcFormat: "flat-json" },
   { srcFile: "test-assets/invalid/empty.json", srcFormat: "nested-json" },
   { srcFile: "test-assets/invalid/empty.xml", srcFormat: "xml" },
@@ -132,7 +157,7 @@ describe.each([
   { srcFile: "test-assets/invalid/whitespace", srcFormat: "xml" },
   { srcFile: "test-assets/invalid/empty", srcFormat: "yaml" },
   { srcFile: "test-assets/invalid/empty", srcFormat: "po" },
-])("empty src %s", (args: { srcFile: string; srcFormat: string }) => {
+])("empty src", (args: { srcFile: string; srcFormat: string }) => {
   test("empty src", async () => {
     const e2eArgs: E2EArgs = {
       ...defaultE2EArgs,
