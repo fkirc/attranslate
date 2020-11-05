@@ -102,7 +102,7 @@ function traverseRecursive(args: {
           traverseRecursive({
             context: newContext,
             tag: sourceChild,
-            oldTargetTag: extractOldTargetChild({
+            oldTargetTag: matchOldTargetChild({
               oldTargetChilds,
               sourceChild,
               index,
@@ -166,8 +166,8 @@ function extractOldTargetChilds(
   return null;
 }
 
-function extractOldTargetChild(args: {
-  oldTargetChilds: XmlTag[] | XmlTag | null;
+function matchOldTargetChild(args: {
+  oldTargetChilds: XmlTag[] | null;
   sourceChild: XmlTag;
   index: number;
 }): XmlTag | null {
