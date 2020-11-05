@@ -36,6 +36,7 @@ export type XmlTag =
   | string
   | (Record<string, XmlTag[] | undefined> & {
       characterContent: string;
+      comments?: string[];
       attributes?: Record<string, string>;
     });
 
@@ -80,10 +81,11 @@ export class XmlGeneric implements TFileFormat {
   }
 
   extractCachedXml(args: WriteTFileArgs, sourceXml: XmlTag): XmlTag {
-    // const oldTargetXml = xmlCache.lookupSameFileAuxdata({
-    //   path: args.path, // TODO: Preserve old target attributes
-    // });
-    updateXmlContent({ args, xmlFile: sourceXml });
+    const oldTargetXml =
+      xmlCache.lookupSameFileAuxdata({
+        path: args.path,
+      })?.xmlFile ?? null;
+    updateXmlContent({ args, sourceXml, oldTargetXml });
     return sourceXml;
   }
 

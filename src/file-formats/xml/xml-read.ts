@@ -40,7 +40,7 @@ export function extractXmlContent(args: {
   const tSet: TSet = new Map();
   traverseXml({
     xml: args.xmlFile,
-    oldXml: null,
+    oldTargetXml: null,
     operation: (context, xmlTag) => {
       const key = constructJsonKey(context);
       if (tSet.has(key)) {

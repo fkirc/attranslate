@@ -12,11 +12,12 @@ import { constructJsonKey, traverseXml } from "./xml-traverse";
 
 export function updateXmlContent(args: {
   args: WriteTFileArgs;
-  xmlFile: XmlTag;
+  sourceXml: XmlTag;
+  oldTargetXml: XmlTag | null;
 }) {
   traverseXml({
-    xml: args.xmlFile,
-    oldXml: null,
+    xml: args.sourceXml,
+    oldTargetXml: args.oldTargetXml,
     operation: (context, xmlTag) => {
       const key = constructJsonKey(context);
       const value = args.args.tSet.get(key);
