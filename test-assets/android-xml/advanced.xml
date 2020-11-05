@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
     <!-- starting comment -->
+    <comments>Something</comments>
     <string name="deutscher string">actually german: muss grösser gleich %d sein</string>
     <string name="escaped quotes">Logged in as \"%s\"</string>
     <string name="escaped single quotes">Logged in as \'%s\'</string>
