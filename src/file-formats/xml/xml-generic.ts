@@ -4,7 +4,6 @@ import {
   WriteTFileArgs,
 } from "../file-format-definitions";
 import { TSet } from "../../core/core-definitions";
-import { readUtf8File } from "../../util/util";
 import {
   detectSpaceIndent,
   extractFirstLine,
@@ -14,6 +13,7 @@ import {
 import { FileCache, FormatCache } from "../common/format-cache";
 import { OptionsV2 } from "xml2js";
 import { updateXmlContent, writeXmlResourceFile } from "./xml-write";
+import { readManagedUtf8 } from "../common/managed-utf8";
 
 export interface XmlAuxData {
   xmlHeader: string | null;
@@ -49,7 +49,7 @@ export const DEFAULT_XML_HEADER = '<?xml version="1.0" encoding="utf-8"?>';
 
 export class XmlGeneric implements TFileFormat {
   async readTFile(args: ReadTFileArgs): Promise<TSet> {
-    const xmlString = readUtf8File(args.path);
+    const xmlString = readManagedUtf8(args.path);
     const xmlFile = await parseRawXML<XmlFile>(xmlString, args);
     const firstLine = extractFirstLine(xmlString);
     const fileCache: XmlFileCache = {

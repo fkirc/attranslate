@@ -6,9 +6,9 @@ import {
   XmlAuxData,
   XmlFile,
 } from "./xml-generic";
-import { writeUtf8File } from "../../util/util";
 import { Builder, OptionsV2 } from "xml2js";
 import { constructJsonKey, traverseXml } from "./xml-traverse";
+import { writeManagedUtf8 } from "../common/managed-utf8";
 
 export function updateXmlContent(args: {
   args: WriteTFileArgs;
@@ -64,7 +64,7 @@ export function writeXmlResourceFile(
     }
   }
   const xmlString = `${xmlHeader}${removeBlankLines(rawXmlString)}\n`;
-  writeUtf8File(args.path, xmlString);
+  writeManagedUtf8({ path: args.path, utf8: xmlString });
 }
 
 function removeBlankLines(str: string) {
