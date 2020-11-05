@@ -1,4 +1,4 @@
-<Outer>
+<OuterChanged>
     <!-- Some comment -->
     <Inner>شيئا ما</Inner>
     <Inner someAttribute="attr">ثانيا</Inner>
@@ -15,4 +15,4 @@
         </i2>
     </some-array>
     <empty-content/>
-</Outer>
+</OuterChanged>
