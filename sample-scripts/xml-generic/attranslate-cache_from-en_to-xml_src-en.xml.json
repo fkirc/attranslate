@@ -70,6 +70,19 @@
           "state": "frozen"
         }
       ]
+    },
+    "empty-content_0": {
+      "value": "",
+      "targets": [
+        {
+          "id": "ar",
+          "state": "frozen"
+        },
+        {
+          "id": "de",
+          "state": "frozen"
+        }
+      ]
     }
   }
 }
