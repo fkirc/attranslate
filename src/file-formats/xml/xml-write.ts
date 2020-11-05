@@ -40,52 +40,6 @@ export function updateXmlContent(args: {
 //   //insertRawResourceTag(writeContext, "string", newTag);
 // }
 
-// function insertCachedResourceTag(
-//   writeContext: XmlWriteContext,
-//   cacheEntry: XmlCacheEntry
-// ) {
-//   insertRawResourceTag(
-//     writeContext,
-//     cacheEntry.arrayName,
-//     cacheEntry.parentTag
-//   );
-// }
-//
-// function insertRawResourceTag(
-//   writeContext: XmlWriteContext,
-//   arrayName: string,
-//   tag: XmlTag
-// ) {
-//   const resources = writeContext.resources;
-//   let xmlArray = resources[arrayName];
-//   if (!Array.isArray(xmlArray)) {
-//     xmlArray = [];
-//     resources[arrayName] = xmlArray;
-//   }
-//   let tagFound = false;
-//   for (const existingTag of xmlArray) {
-//     if (existingTag === tag) {
-//       tagFound = true;
-//       break;
-//     }
-//   }
-//   if (!tagFound) {
-//     injectReviewAttribute(writeContext, tag);
-//     xmlArray.push(tag);
-//   }
-// }
-
-// TODO: Re-implement review attribute?
-// function injectReviewAttribute(writeContext: XmlWriteContext, tag: XmlTag) {
-//   if (
-//     typeof tag === "object" &&
-//     tag.attributes &&
-//     needsReview(writeContext.args, writeContext.jsonKey, writeContext.value)
-//   ) {
-//     tag.attributes["reviewed"] = getNotReviewedValue();
-//   }
-// }
-
 export function writeXmlResourceFile(
   xmlFile: XmlTag,
   args: WriteTFileArgs,
