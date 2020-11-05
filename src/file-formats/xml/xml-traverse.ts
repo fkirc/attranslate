@@ -78,11 +78,11 @@ function traverseRecursive(args: {
       Array.isArray(xmlContent) &&
       xmlContent.length
     ) {
+      hasChildTags = true;
       const oldTargetChilds = extractOldTargetChilds(
         args.oldTargetTag,
         contentKey
       );
-      hasChildTags = true;
       xmlContent.forEach((sourceChild: XmlTag, index: number) => {
         const newKeyFragments = constructKeyFragments({
           tag: sourceChild,
