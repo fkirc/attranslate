@@ -129,6 +129,7 @@ describe.each([
   { srcFile: "test-assets/invalid/empty.json", srcFormat: "nested-json" },
   { srcFile: "test-assets/invalid/empty.xml", srcFormat: "xml" },
   { srcFile: "test-assets/invalid/empty", srcFormat: "xml" },
+  { srcFile: "test-assets/invalid/empty", srcFormat: "yaml" },
 ])("empty src %s", (args: { srcFile: string; srcFormat: string }) => {
   test("empty src", async () => {
     const e2eArgs: E2EArgs = {

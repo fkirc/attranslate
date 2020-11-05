@@ -77,6 +77,9 @@ export class YamlGeneric implements TFileFormat {
 
   readTFile(args: ReadTFileArgs): Promise<TSet> {
     const document = parseYaml(args);
+    if (!document) {
+      return Promise.resolve(new Map());
+    }
     documentCache.insertFileCache({
       path: args.path,
       entries: new Map(),

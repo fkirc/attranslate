@@ -4,8 +4,11 @@ import { logParseError } from "../common/parse-utils";
 import Parsed = Document.Parsed;
 import { readManagedUtf8 } from "../common/managed-utf8";
 
-export function parseYaml(args: ReadTFileArgs): Parsed {
+export function parseYaml(args: ReadTFileArgs): Parsed | null {
   const ymlString = readManagedUtf8(args.path);
+  if (!ymlString) {
+    return null;
+  }
   const options: Options = {
     keepCstNodes: true,
     keepNodeTypes: true,
