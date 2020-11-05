@@ -1,12 +1,12 @@
 <RootLevel>
-    <some-array name="inner_str_array">
+    <some-array name="InnerStrArray">
         <item>One</item>
     </some-array>
     <Inner>Something</Inner>
     <Inner>Second</Inner>
     <Inner attribute="value">Third</Inner>
-    <InnerLevel target="الغرفة" category="ROOMS#GENERAL" polarity="positive" from="5" to="11">الغرفة</InnerLevel>
-    <InnerLevel target="الموظفون" category="SERVICE#GENERAL" polarity="positive" from="25" to="33">الموظفون</InnerLevel>
-    <InnerLevel target="بوفيه الإفطار" category="FOOD_DRINKS#QUALITY" polarity="positive" from="35" to="48">بوفيه الإفطار</InnerLevel>
-    <InnerLevel target="وجبة العشاء" category="FOOD_DRINKS#PRICES" polarity="negative" from="67" to="78">وجبة العشاء</InnerLevel>
+    <InnerLevel target="t1" category="ROOMS#GENERAL" polarity="positive" from="5" to="11">الغرفة</InnerLevel>
+    <InnerLevel target="t2" category="SERVICE#GENERAL" polarity="positive" from="25" to="33">الموظفون</InnerLevel>
+    <InnerLevel target="t3" category="FOOD_DRINKS#QUALITY" polarity="positive" from="35" to="48">بوفيه الإفطار</InnerLevel>
+    <InnerLevel target="t4" category="FOOD_DRINKS#PRICES" polarity="negative" from="67" to="78">وجبة العشاء</InnerLevel>
 </RootLevel>

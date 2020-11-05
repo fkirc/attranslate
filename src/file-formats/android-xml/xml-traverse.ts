@@ -1,4 +1,8 @@
-import { XmlLayer, XmlTag } from "./android-xml";
+import {
+  defaultExcludedContentKey,
+  defaultKeyAttribute,
+  XmlTag,
+} from "./android-xml";
 import { NESTED_JSON_SEPARATOR } from "../../util/flatten";
 
 export interface TraverseXmlContext {
@@ -10,38 +14,35 @@ export function constructJsonKey(context: TraverseXmlContext) {
   return context.keyFragments.join(NESTED_JSON_SEPARATOR);
 }
 
-export function traverseXmlLayer(args: {
+export function traverseXml(args: {
   context: TraverseXmlContext;
-  layer: XmlLayer;
-  oldTargetLayer: XmlLayer | null;
+  tag: XmlTag;
+  oldTargetTag: XmlTag | null;
 }) {
-  for (const contentKey of Object.keys(args.layer)) {
-    const xmlContent = args.layer[contentKey];
-    if (xmlContent && Array.isArray(xmlContent) && xmlContent.length) {
-      xmlContent.forEach((tag: XmlTag, index: number) => {
-        traverseXmlTag({
-          context: {
-            keyFragments: [
-              ...args.context.keyFragments,
-              contentKey + "_" + index,
-            ],
-            operation: args.context.operation,
-          },
-          tag,
-          oldTargetTag: null,
-        });
-      });
-    } else if (typeof xmlContent === "object") {
-      traverseXmlLayer({
-        context: {
-          keyFragments: [...args.context.keyFragments, contentKey],
-          operation: args.context.operation,
-        },
-        layer: (xmlContent as unknown) as XmlLayer,
-        oldTargetLayer: null,
+  if (typeof args.tag !== "object") {
+    return;
+  }
+  for (const contentKey of Object.keys(args.tag)) {
+    const xmlContent = args.tag[contentKey];
+    if (typeof xmlContent === "object") {
+      traverseXmlTag({
+        context: args.context,
+        tag: (xmlContent as unknown) as XmlTag,
+        oldTargetTag: null,
       });
     }
   }
+}
+
+function extractAttributeKey(tag: XmlTag): string | null {
+  if (typeof tag !== "object") {
+    return null;
+  }
+  const attributes = tag.attributes;
+  if (!attributes || typeof attributes !== "object") {
+    return null;
+  }
+  return attributes[defaultKeyAttribute] ?? null;
 }
 
 function traverseXmlTag(args: {
@@ -49,16 +50,44 @@ function traverseXmlTag(args: {
   tag: XmlTag;
   oldTargetTag: XmlTag | null;
 }) {
-  const tag = args.tag;
-  if (typeof tag === "string") {
-    args.context.operation(args.context, tag);
-  } else if (Array.isArray(tag.item) && tag.item.length) {
-    traverseXmlLayer({
-      context: args.context,
-      layer: tag.item,
-      oldTargetLayer: null,
-    });
+  if (typeof args.tag === "string") {
+    args.context.operation(args.context, args.tag);
   } else {
-    args.context.operation(args.context, tag);
+    let hasChildTags = false;
+    for (const contentKey of Object.keys(args.tag)) {
+      const xmlContent = args.tag[contentKey];
+      if (
+        contentKey !== "comments" &&
+        xmlContent &&
+        Array.isArray(xmlContent) &&
+        xmlContent.length
+      ) {
+        hasChildTags = true;
+        xmlContent.forEach((childTag: XmlTag, index: number) => {
+          const newKeyFragments: string[] = [];
+          const attributeKey = extractAttributeKey(childTag);
+          if (attributeKey) {
+            if (contentKey !== defaultExcludedContentKey) {
+              newKeyFragments.push(contentKey);
+            }
+            newKeyFragments.push(attributeKey);
+          } else {
+            newKeyFragments.push(contentKey + "_" + index);
+          }
+          traverseXmlTag({
+            context: {
+              keyFragments: [...args.context.keyFragments, ...newKeyFragments],
+              operation: args.context.operation,
+            },
+            tag: childTag,
+            oldTargetTag: null,
+          });
+        });
+      }
+    }
+    if (!hasChildTags) {
+      // Detected a leaf-tag
+      args.context.operation(args.context, args.tag);
+    }
   }
 }

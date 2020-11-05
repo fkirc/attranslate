@@ -1,4 +1,4 @@
-import { DEFAULT_XML_INDENT, sharedXmlOptions, XmlLayer } from "./android-xml";
+import { DEFAULT_XML_INDENT, sharedXmlOptions, XmlTag } from "./android-xml";
 import { ReadTFileArgs } from "../file-format-definitions";
 import { TSet } from "../../core/core-definitions";
 import { logParseError } from "../common/parse-utils";
@@ -6,7 +6,7 @@ import { OptionsV2 } from "xml2js";
 import {
   constructJsonKey,
   TraverseXmlContext,
-  traverseXmlLayer,
+  traverseXml,
 } from "./xml-traverse";
 
 export async function parseRawXML<T>(
@@ -39,7 +39,7 @@ export async function parseRawXML<T>(
 
 export function extractXmlContent(args: {
   args: ReadTFileArgs;
-  xmlFile: XmlLayer;
+  xmlFile: XmlTag;
 }): TSet {
   const tSet: TSet = new Map();
   const context: TraverseXmlContext = {
@@ -59,10 +59,10 @@ export function extractXmlContent(args: {
       }
     },
   };
-  traverseXmlLayer({
+  traverseXml({
     context,
-    layer: args.xmlFile,
-    oldTargetLayer: null,
+    tag: args.xmlFile,
+    oldTargetTag: null,
   });
   return tSet;
 }

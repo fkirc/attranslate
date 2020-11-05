@@ -18,28 +18,26 @@ import { updateXmlContent, writeXmlResourceFile } from "./xml-write";
 export interface XmlAuxData {
   xmlHeader: string | null;
   detectedIntent: number;
-  xmlFile: XmlLayer;
+  xmlFile: XmlTag;
 }
 
 export type XmlFileCache = FileCache<unknown, XmlAuxData>;
 const xmlCache = new FormatCache<unknown, XmlAuxData>();
 
-export const defaultKeyAttribute = "name"; // TODO: Rework keys
-//export const defaultRootTagName = "resources";
+export const defaultKeyAttribute = "name";
+export const defaultExcludedContentKey = "string";
 
-export type XmlTag =
-  | string // string in case of tags without any attributes
-  | {
-      characterContent: string;
-      attributes?: Record<string, string>;
-      item?: XmlLayer; // TODO: More generic, could be anything else instead of "item"
-    };
 export const sharedXmlOptions: OptionsV2 = {
   attrkey: "attributes",
   charkey: "characterContent",
 };
 
-export type XmlLayer = Record<string, XmlTag[] | undefined>;
+export type XmlTag =
+  | string
+  | (Record<string, XmlTag[] | undefined> & {
+      characterContent: string;
+      attributes?: Record<string, string>;
+    });
 
 /**
  * Android Studio seems to auto-format XML-files with 4 spaces indentation.
@@ -50,7 +48,7 @@ export const DEFAULT_XML_HEADER = '<?xml version="1.0" encoding="utf-8"?>';
 export class AndroidXml implements TFileFormat {
   async readTFile(args: ReadTFileArgs): Promise<TSet> {
     const xmlString = readUtf8File(args.path);
-    const xmlFile = await parseRawXML<XmlLayer>(xmlString, args);
+    const xmlFile = await parseRawXML<XmlTag>(xmlString, args);
     const firstLine = extractFirstLine(xmlString);
     const fileCache: XmlFileCache = {
       path: args.path,
@@ -67,7 +65,7 @@ export class AndroidXml implements TFileFormat {
 
   writeTFile(args: WriteTFileArgs): void {
     const sourceXml = xmlCache.getOldestAuxdata()?.xmlFile;
-    let resultXml: XmlLayer;
+    let resultXml: XmlTag;
     if (sourceXml) {
       resultXml = this.extractCachedXml(args, sourceXml);
     } else {
@@ -81,7 +79,7 @@ export class AndroidXml implements TFileFormat {
     xmlCache.purge();
   }
 
-  extractCachedXml(args: WriteTFileArgs, sourceXml: XmlLayer): XmlLayer {
+  extractCachedXml(args: WriteTFileArgs, sourceXml: XmlTag): XmlTag {
     // const oldTargetXml = xmlCache.lookupSameFileAuxdata({
     //   path: args.path, // TODO: Preserve old target attributes
     // });
@@ -89,7 +87,7 @@ export class AndroidXml implements TFileFormat {
     return sourceXml;
   }
 
-  createUncachedXml(args: WriteTFileArgs): XmlLayer {
+  createUncachedXml(args: WriteTFileArgs): XmlTag {
     throw Error("createUncachedXml not implemented");
   }
 }

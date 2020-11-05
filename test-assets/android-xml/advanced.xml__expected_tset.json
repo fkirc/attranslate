@@ -24,8 +24,8 @@
     "Hello %s!\\nYou have got %s unread messages."
   ],
   [
-    "with html content",
-    "\n        \n    "
+    "with html content.i_0",
+    "left"
   ],
   [
     "string-array.planets_array.item_0",

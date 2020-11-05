@@ -4,19 +4,19 @@ import {
   DEFAULT_XML_INDENT,
   sharedXmlOptions,
   XmlAuxData,
-  XmlLayer,
+  XmlTag,
 } from "./android-xml";
 import { writeUtf8File } from "../../util/util";
 import { Builder, OptionsV2 } from "xml2js";
 import {
   constructJsonKey,
   TraverseXmlContext,
-  traverseXmlLayer,
+  traverseXml,
 } from "./xml-traverse";
 
 export function updateXmlContent(args: {
   args: WriteTFileArgs;
-  xmlFile: XmlLayer;
+  xmlFile: XmlTag;
 }) {
   const context: TraverseXmlContext = {
     keyFragments: [],
@@ -30,10 +30,10 @@ export function updateXmlContent(args: {
       }
     },
   };
-  traverseXmlLayer({
+  traverseXml({
     context,
-    layer: args.xmlFile,
-    oldTargetLayer: null,
+    tag: args.xmlFile,
+    oldTargetTag: null,
   });
 }
 
@@ -95,7 +95,7 @@ export function updateXmlContent(args: {
 // }
 
 export function writeXmlResourceFile(
-  xmlFile: XmlLayer,
+  xmlFile: XmlTag,
   args: WriteTFileArgs,
   auxData: XmlAuxData | null
 ) {

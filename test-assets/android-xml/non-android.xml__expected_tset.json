@@ -1,34 +1,34 @@
 [
   [
-    "some-array.inner_str_array.item_0",
+    "some-array.InnerStrArray.item_0",
     "One"
   ],
   [
-    "xml_key_1",
+    "Inner_0",
     "Something"
   ],
   [
-    "xml_key_2",
+    "Inner_1",
     "Second"
   ],
   [
-    "xml_key_3",
+    "Inner_2",
     "Third"
   ],
   [
-    "xml_key_4",
+    "InnerLevel_0",
     "الغرفة"
   ],
   [
-    "xml_key_5",
+    "InnerLevel_1",
     "الموظفون"
   ],
   [
-    "xml_key_6",
+    "InnerLevel_2",
     "بوفيه الإفطار"
   ],
   [
-    "xml_key_7",
+    "InnerLevel_3",
     "وجبة العشاء"
   ]
 ]
