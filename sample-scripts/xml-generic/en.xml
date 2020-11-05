@@ -1,4 +1,5 @@
 <Outer>
+    <!-- Some comment -->
     <Inner>Something</Inner>
     <Inner someAttribute="attr">Second</Inner>
     <InnerElse otherAtt="true">Third</InnerElse>
