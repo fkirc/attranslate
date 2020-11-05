@@ -5,6 +5,7 @@
     <Inner someAttribute="should not be overwritten" reviewed="false">Zweite</Inner>
     <InnerElse otherAtt="true">Dritte</InnerElse>
     <some-array>
+        <!-- Some inner comment -->
         <i1>Einer</i1>
         <i2>
             <inner name="name attributes act as additional keys">
