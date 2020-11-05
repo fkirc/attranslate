@@ -2,10 +2,10 @@ import { ReadTFileArgs } from "../file-format-definitions";
 import { Document, Options, parseDocument } from "yaml";
 import { logParseError } from "../common/parse-utils";
 import Parsed = Document.Parsed;
-import { readUtf8File } from "../../util/util";
+import { readManagedUtf8 } from "../common/managed-utf8";
 
 export function parseYaml(args: ReadTFileArgs): Parsed {
-  const ymlString = readUtf8File(args.path);
+  const ymlString = readManagedUtf8(args.path);
   const options: Options = {
     keepCstNodes: true,
     keepNodeTypes: true,
