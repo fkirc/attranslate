@@ -1,4 +1,4 @@
-import { DEFAULT_XML_INDENT, sharedXmlOptions, XmlTag } from "./xml-generic";
+import { DEFAULT_XML_INDENT, sharedXmlOptions, XmlFile } from "./xml-generic";
 import { ReadTFileArgs } from "../file-format-definitions";
 import { TSet } from "../../core/core-definitions";
 import { logParseError } from "../common/parse-utils";
@@ -35,7 +35,7 @@ export async function parseRawXML<T>(
 
 export function extractXmlContent(args: {
   args: ReadTFileArgs;
-  xmlFile: XmlTag;
+  xmlFile: XmlFile;
 }): TSet {
   const tSet: TSet = new Map();
   traverseXml({

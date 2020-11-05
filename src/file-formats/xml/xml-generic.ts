@@ -18,7 +18,7 @@ import { updateXmlContent, writeXmlResourceFile } from "./xml-write";
 export interface XmlAuxData {
   xmlHeader: string | null;
   detectedIntent: number;
-  xmlFile: XmlTag;
+  xmlFile: XmlFile;
 }
 
 export type XmlFileCache = FileCache<unknown, XmlAuxData>;
@@ -31,6 +31,8 @@ export const sharedXmlOptions: OptionsV2 = {
   attrkey: "attributes",
   charkey: "characterContent",
 };
+
+export type XmlFile = Record<string, XmlTag>;
 
 export type XmlTag =
   | string
@@ -49,7 +51,7 @@ export const DEFAULT_XML_HEADER = '<?xml version="1.0" encoding="utf-8"?>';
 export class XmlGeneric implements TFileFormat {
   async readTFile(args: ReadTFileArgs): Promise<TSet> {
     const xmlString = readUtf8File(args.path);
-    const xmlFile = await parseRawXML<XmlTag>(xmlString, args);
+    const xmlFile = await parseRawXML<XmlFile>(xmlString, args);
     const firstLine = extractFirstLine(xmlString);
     const fileCache: XmlFileCache = {
       path: args.path,
@@ -66,7 +68,7 @@ export class XmlGeneric implements TFileFormat {
 
   writeTFile(args: WriteTFileArgs): void {
     const sourceXml = xmlCache.getOldestAuxdata()?.xmlFile;
-    let resultXml: XmlTag;
+    let resultXml: XmlFile;
     if (sourceXml) {
       resultXml = this.extractCachedXml(args, sourceXml);
     } else {
@@ -80,7 +82,7 @@ export class XmlGeneric implements TFileFormat {
     xmlCache.purge();
   }
 
-  extractCachedXml(args: WriteTFileArgs, sourceXml: XmlTag): XmlTag {
+  extractCachedXml(args: WriteTFileArgs, sourceXml: XmlFile): XmlFile {
     const oldTargetXml =
       xmlCache.lookupSameFileAuxdata({
         path: args.path,
@@ -89,7 +91,7 @@ export class XmlGeneric implements TFileFormat {
     return sourceXml;
   }
 
-  createUncachedXml(args: WriteTFileArgs): XmlTag {
+  createUncachedXml(args: WriteTFileArgs): XmlFile {
     throw Error("createUncachedXml not implemented");
   }
 }

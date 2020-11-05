@@ -1,6 +1,7 @@
 import {
   defaultExcludedContentKey,
   defaultKeyAttribute,
+  XmlFile,
   XmlTag,
 } from "./xml-generic";
 import { NESTED_JSON_SEPARATOR } from "../../util/flatten";
@@ -20,27 +21,24 @@ export function constructJsonKey(context: TraverseXmlContext) {
 }
 
 export function traverseXml(args: {
-  xml: XmlTag;
-  oldTargetXml: XmlTag | null;
+  xml: XmlFile;
+  oldTargetXml: XmlFile | null;
   operation: XmlOperation;
 }) {
-  if (typeof args.xml !== "object") {
-    return;
-  }
   const context: TraverseXmlContext = {
     keyFragments: [],
     operation: args.operation,
   };
   for (const contentKey of Object.keys(args.xml)) {
     const xmlContent = args.xml[contentKey];
+    const oldTargetTag: XmlTag | null = args.oldTargetXml
+      ? args.oldTargetXml[contentKey] ?? null
+      : null;
     if (typeof xmlContent === "object") {
       traverseRecursive({
         context,
-        tag: (xmlContent as unknown) as XmlTag,
-        oldTargetTag: (extractOldTargetObject(
-          args.oldTargetXml,
-          contentKey
-        ) as unknown) as XmlTag | null,
+        tag: xmlContent,
+        oldTargetTag,
       });
     }
   }

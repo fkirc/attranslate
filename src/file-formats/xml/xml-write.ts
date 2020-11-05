@@ -4,7 +4,7 @@ import {
   DEFAULT_XML_INDENT,
   sharedXmlOptions,
   XmlAuxData,
-  XmlTag,
+  XmlFile,
 } from "./xml-generic";
 import { writeUtf8File } from "../../util/util";
 import { Builder, OptionsV2 } from "xml2js";
@@ -12,8 +12,8 @@ import { constructJsonKey, traverseXml } from "./xml-traverse";
 
 export function updateXmlContent(args: {
   args: WriteTFileArgs;
-  sourceXml: XmlTag;
-  oldTargetXml: XmlTag | null;
+  sourceXml: XmlFile;
+  oldTargetXml: XmlFile | null;
 }) {
   traverseXml({
     xml: args.sourceXml,
@@ -41,7 +41,7 @@ export function updateXmlContent(args: {
 // }
 
 export function writeXmlResourceFile(
-  xmlFile: XmlTag,
+  xmlFile: XmlFile,
   args: WriteTFileArgs,
   auxData: XmlAuxData | null
 ) {
