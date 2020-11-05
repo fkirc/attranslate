@@ -1,7 +1,7 @@
 <?xml version="custom header - should not be overwritten" encoding="UTF-8"?>
 <Outer>
     <Inner>etwas</Inner>
-    <Inner someAttribute="attr" reviewed="false">Zweite</Inner>
+    <Inner someAttribute="should not be overwritten" reviewed="false">Zweite</Inner>
     <InnerElse>Dritte</InnerElse>
     <some-array>
         <i1>Einer</i1>
