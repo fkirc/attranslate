@@ -55,10 +55,10 @@ function traverseRecursive(args: {
   if (typeof args.oldTargetTag !== typeof args.tag) {
     args.oldTargetTag = null;
   } else if (args.oldTargetTag && typeof args.oldTargetTag === "object") {
-    if (typeof args.oldTargetTag.attributes === "object") {
-      args.tag.attributes = {
-        ...args.tag.attributes,
-        ...args.oldTargetTag.attributes,
+    if (typeof args.oldTargetTag.attributesObj === "object") {
+      args.tag.attributesObj = {
+        ...args.tag.attributesObj,
+        ...args.oldTargetTag.attributesObj,
       };
     }
     if (
@@ -124,7 +124,7 @@ function extractAttributeKey(tag: XmlTag): string | null {
   if (typeof tag !== "object") {
     return null;
   }
-  const attributes = tag.attributes;
+  const attributes = tag.attributesObj;
   if (!attributes || typeof attributes !== "object") {
     return null;
   }

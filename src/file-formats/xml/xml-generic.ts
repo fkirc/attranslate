@@ -27,19 +27,18 @@ const xmlCache = new FormatCache<unknown, XmlAuxData>();
 export const defaultKeyAttribute = "name";
 export const defaultExcludedContentKey = "string";
 
-export const sharedXmlOptions: OptionsV2 = {
-  attrkey: "attributes",
-  charkey: "characterContent",
-};
-
 export type XmlFile = Record<string, XmlTag>;
 
+export const sharedXmlOptions: OptionsV2 = {
+  attrkey: "attributesObj",
+  charkey: "characterContent",
+};
 export type XmlTag =
   | string
   | (Record<string, XmlTag[] | undefined> & {
       characterContent: string;
+      attributesObj?: Record<string, string>;
       comments?: string[];
-      attributes?: Record<string, string>;
     });
 
 /**
@@ -98,7 +97,7 @@ export class XmlGeneric implements TFileFormat {
       // @ts-ignore
       tagArray.push({
         characterContent: value ?? "",
-        attributes: { name: key },
+        attributesObj: { name: key },
       });
     });
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
