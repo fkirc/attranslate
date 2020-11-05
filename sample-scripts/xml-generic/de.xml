@@ -7,7 +7,7 @@
         <i1>Einer</i1>
         <i2>
             <inner name="name attributes act as additional keys">
-                <inner>
+                <inner random="target attributes should be preserved">
                     <else someAtt="x">Inhalt</else>
                 </inner>
             </inner>
