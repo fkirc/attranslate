@@ -1,7 +1,7 @@
 <Outer>
     <Inner>Something</Inner>
     <Inner someAttribute="attr">Second</Inner>
-    <InnerElse>Third</InnerElse>
+    <InnerElse otherAtt="true">Third</InnerElse>
     <some-array>
         <i1>One</i1>
         <i2>

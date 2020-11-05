@@ -2,7 +2,7 @@
 <Outer>
     <Inner>etwas</Inner>
     <Inner someAttribute="should not be overwritten" reviewed="false">Zweite</Inner>
-    <InnerElse>Dritte</InnerElse>
+    <InnerElse otherAtt="true">Dritte</InnerElse>
     <some-array>
         <i1>Einer</i1>
         <i2>
