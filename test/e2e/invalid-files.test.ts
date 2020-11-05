@@ -129,6 +129,7 @@ describe.each([
   { srcFile: "test-assets/invalid/empty.json", srcFormat: "nested-json" },
   { srcFile: "test-assets/invalid/empty.xml", srcFormat: "xml" },
   { srcFile: "test-assets/invalid/empty", srcFormat: "xml" },
+  { srcFile: "test-assets/invalid/whitespace", srcFormat: "xml" },
   { srcFile: "test-assets/invalid/empty", srcFormat: "yaml" },
   { srcFile: "test-assets/invalid/empty", srcFormat: "po" },
 ])("empty src %s", (args: { srcFile: string; srcFormat: string }) => {
