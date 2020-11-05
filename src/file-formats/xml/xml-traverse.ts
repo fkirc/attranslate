@@ -61,23 +61,14 @@ function traverseRecursive(args: {
         ...args.oldTargetTag.attributesObj,
       };
     }
-    if (
-      args.oldTargetTag.comments &&
-      Array.isArray(args.oldTargetTag.comments) &&
-      args.oldTargetTag.comments.length
-    ) {
+    if (isNonEmptyArray(args.oldTargetTag.comments)) {
       args.tag.comments = args.oldTargetTag.comments;
     }
   }
   let hasChildTags = false;
   for (const contentKey of Object.keys(args.tag)) {
     const xmlContent = args.tag[contentKey];
-    if (
-      contentKey !== "comments" &&
-      xmlContent &&
-      Array.isArray(xmlContent) &&
-      xmlContent.length
-    ) {
+    if (contentKey !== "comments" && isNonEmptyArray(xmlContent)) {
       hasChildTags = true;
       const oldTargetChilds = extractOldTargetChilds(
         args.oldTargetTag,
@@ -171,13 +162,7 @@ function matchOldTargetChild(args: {
   sourceChild: XmlTag;
   index: number;
 }): XmlTag | null {
-  if (!args.oldTargetChilds) {
-    return null;
-  }
-  if (!Array.isArray(args.oldTargetChilds)) {
-    return null;
-  }
-  if (!args.oldTargetChilds.length) {
+  if (!isNonEmptyArray(args.oldTargetChilds)) {
     return null;
   }
   const sourceAttributeKey = extractAttributeKey(args.sourceChild);
@@ -195,4 +180,17 @@ function matchOldTargetChild(args: {
   } else {
     return null;
   }
+}
+
+function isNonEmptyArray<T>(obj: Array<T> | unknown): obj is Array<T> {
+  if (!obj) {
+    return false;
+  }
+  if (!Array.isArray(obj)) {
+    return false;
+  }
+  if (!obj.length) {
+    return false;
+  }
+  return true;
 }
