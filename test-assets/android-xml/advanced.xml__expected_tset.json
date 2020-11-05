@@ -1,5 +1,17 @@
 [
   [
+    "charkey_0",
+    "charkey"
+  ],
+  [
+    "attrkey_0",
+    "attrkey"
+  ],
+  [
+    "attributes_0",
+    "Attributes"
+  ],
+  [
     "deutscher string",
     "actually german: muss grösser gleich %d sein"
   ],
