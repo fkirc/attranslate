@@ -1,6 +1,6 @@
 import {
-  injectPrefixLines,
   removeLines,
+  replaceLines,
   runSampleScript,
   sampleDir,
 } from "./scripts-e2e-util";
@@ -39,9 +39,10 @@ test("xml re-create non-cached target", async () => {
 });
 
 test("xml delete stale translations", async () => {
-  injectPrefixLines({
+  replaceLines({
     path: join(sampleDir, mainTarget),
-    lines: ["<InvalidOuter></InvalidOuter>"],
+    search: "    </some-array>",
+    replace: "    </some-array>\n<newstuff><nested>content</nested></newstuff>",
   });
   const output = await runSampleScript(testScript, [assetDir]);
   expect(output).toContain(`Delete 1 stale translations`);
