@@ -1,6 +1,6 @@
 <?xml version="custom header - should not be overwritten" encoding="UTF-8"?>
 <Outer>
-    <!-- Some comment -->
+    <!-- Comments should not be overwritten -->
     <Inner>etwas</Inner>
     <Inner someAttribute="should not be overwritten" reviewed="false">Zweite</Inner>
     <InnerElse otherAtt="true">Dritte</InnerElse>

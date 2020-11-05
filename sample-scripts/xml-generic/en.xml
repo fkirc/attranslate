@@ -4,6 +4,7 @@
     <Inner someAttribute="attr">Second</Inner>
     <InnerElse otherAtt="true">Third</InnerElse>
     <some-array>
+        <!-- Some inner comment -->
         <i1>One</i1>
         <i2>
             <inner name="name attributes act as additional keys">
