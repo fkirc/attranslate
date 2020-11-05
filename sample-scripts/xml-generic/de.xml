@@ -1,3 +1,4 @@
+<?xml version="custom header - should not be overwritten" encoding="UTF-8"?>
 <Outer>
     <Inner>etwas</Inner>
     <Inner someAttribute="attr" reviewed="false">Zweite</Inner>
