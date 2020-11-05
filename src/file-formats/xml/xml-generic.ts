@@ -51,6 +51,9 @@ export class XmlGeneric implements TFileFormat {
   async readTFile(args: ReadTFileArgs): Promise<TSet> {
     const xmlString = readManagedUtf8(args.path);
     const xmlFile = await parseRawXML<XmlFile>(xmlString, args);
+    if (!xmlFile) {
+      return new Map();
+    }
     const firstLine = extractFirstLine(xmlString);
     const fileCache: XmlFileCache = {
       path: args.path,
