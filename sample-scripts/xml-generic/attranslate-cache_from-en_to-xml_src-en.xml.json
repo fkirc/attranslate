@@ -6,7 +6,7 @@
     "minor": 0
   },
   "entries": {
-    "xml_key_1": {
+    "Inner_0": {
       "value": "Something",
       "targets": [
         {
@@ -19,7 +19,7 @@
         }
       ]
     },
-    "xml_key_2": {
+    "Inner_1": {
       "value": "Second",
       "targets": [
         {
@@ -32,7 +32,7 @@
         }
       ]
     },
-    "xml_key_3": {
+    "InnerElse_0": {
       "value": "Third",
       "targets": [
         {
@@ -45,7 +45,7 @@
         }
       ]
     },
-    "some-array.xml_key_4.item_0": {
+    "some-array_0.i1_0": {
       "value": "One",
       "targets": [
         {
@@ -58,8 +58,8 @@
         }
       ]
     },
-    "some-array.xml_key_5.item_1": {
-      "value": "Two",
+    "some-array_0.i2_0.inner.name attributes act as additional keys.inner_0.else_0": {
+      "value": "Content",
       "targets": [
         {
           "id": "ar",

@@ -3,7 +3,13 @@
     <Inner someAttribute="attr" reviewed="false">Zweite</Inner>
     <InnerElse>Dritte</InnerElse>
     <some-array>
-        <item>Einer</item>
-        <item>Zwei</item>
+        <i1>Einer</i1>
+        <i2>
+            <inner name="name attributes act as additional keys">
+                <inner>
+                    <else someAtt="x">Inhalt</else>
+                </inner>
+            </inner>
+        </i2>
     </some-array>
 </Outer>

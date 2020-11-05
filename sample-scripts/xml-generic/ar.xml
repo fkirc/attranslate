@@ -3,7 +3,13 @@
     <Inner someAttribute="attr">ثانيا</Inner>
     <InnerElse>الثالث</InnerElse>
     <some-array>
-        <item>واحد</item>
-        <item>اثنان</item>
+        <i1>واحد</i1>
+        <i2>
+            <inner name="name attributes act as additional keys">
+                <inner>
+                    <else someAtt="x">المحتوى</else>
+                </inner>
+            </inner>
+        </i2>
     </some-array>
 </Outer>
