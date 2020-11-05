@@ -3,11 +3,7 @@ import { ReadTFileArgs } from "../file-format-definitions";
 import { TSet } from "../../core/core-definitions";
 import { logParseError } from "../common/parse-utils";
 import { OptionsV2 } from "xml2js";
-import {
-  constructJsonKey,
-  TraverseXmlContext,
-  traverseXml,
-} from "./xml-traverse";
+import { constructJsonKey, traverseXml } from "./xml-traverse";
 
 export async function parseRawXML<T>(
   xmlString: string,
@@ -42,8 +38,9 @@ export function extractXmlContent(args: {
   xmlFile: XmlTag;
 }): TSet {
   const tSet: TSet = new Map();
-  const context: TraverseXmlContext = {
-    keyFragments: [],
+  traverseXml({
+    xml: args.xmlFile,
+    oldXml: null,
     operation: (context, xmlTag) => {
       const key = constructJsonKey(context);
       if (tSet.has(key)) {
@@ -57,12 +54,8 @@ export function extractXmlContent(args: {
       } else {
         tSet.set(key, xmlTag.characterContent ?? "");
       }
+      return null;
     },
-  };
-  traverseXml({
-    context,
-    tag: args.xmlFile,
-    oldTargetTag: null,
   });
   return tSet;
 }

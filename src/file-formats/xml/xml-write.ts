@@ -8,32 +8,23 @@ import {
 } from "./xml-generic";
 import { writeUtf8File } from "../../util/util";
 import { Builder, OptionsV2 } from "xml2js";
-import {
-  constructJsonKey,
-  TraverseXmlContext,
-  traverseXml,
-} from "./xml-traverse";
+import { constructJsonKey, traverseXml } from "./xml-traverse";
 
 export function updateXmlContent(args: {
   args: WriteTFileArgs;
   xmlFile: XmlTag;
 }) {
-  const context: TraverseXmlContext = {
-    keyFragments: [],
+  traverseXml({
+    xml: args.xmlFile,
+    oldXml: null,
     operation: (context, xmlTag) => {
       const key = constructJsonKey(context);
       const value = args.args.tSet.get(key);
       if (value !== undefined) {
-        if (typeof xmlTag === "object") {
-          xmlTag.characterContent = value ?? ""; // TODO: Update string-tags as well
-        }
+        return value ?? "";
       }
+      return null;
     },
-  };
-  traverseXml({
-    context,
-    tag: args.xmlFile,
-    oldTargetTag: null,
   });
 }
 

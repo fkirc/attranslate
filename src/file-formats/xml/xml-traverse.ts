@@ -5,28 +5,37 @@ import {
 } from "./xml-generic";
 import { NESTED_JSON_SEPARATOR } from "../../util/flatten";
 
-export interface TraverseXmlContext {
+interface TraverseXmlContext {
   keyFragments: string[];
-  operation: (context: TraverseXmlContext, xmlTag: XmlTag) => void;
+  operation: XmlOperation;
 }
+
+export type XmlOperation = (
+  context: TraverseXmlContext,
+  xmlTag: XmlTag
+) => string | null;
 
 export function constructJsonKey(context: TraverseXmlContext) {
   return context.keyFragments.join(NESTED_JSON_SEPARATOR);
 }
 
 export function traverseXml(args: {
-  context: TraverseXmlContext;
-  tag: XmlTag;
-  oldTargetTag: XmlTag | null;
+  xml: XmlTag;
+  oldXml: XmlTag | null;
+  operation: XmlOperation;
 }) {
-  if (typeof args.tag !== "object") {
+  if (typeof args.xml !== "object") {
     return;
   }
-  for (const contentKey of Object.keys(args.tag)) {
-    const xmlContent = args.tag[contentKey];
+  const context: TraverseXmlContext = {
+    keyFragments: [],
+    operation: args.operation,
+  };
+  for (const contentKey of Object.keys(args.xml)) {
+    const xmlContent = args.xml[contentKey];
     if (typeof xmlContent === "object") {
-      traverseXmlTag({
-        context: args.context,
+      traverseRecursive({
+        context,
         tag: (xmlContent as unknown) as XmlTag,
         oldTargetTag: null,
       });
@@ -45,49 +54,71 @@ function extractAttributeKey(tag: XmlTag): string | null {
   return attributes[defaultKeyAttribute] ?? null;
 }
 
-function traverseXmlTag(args: {
+function constructKeyFragments(args: {
+  tag: XmlTag;
+  contentKey: string;
+  index: number;
+}): string[] {
+  const keyFragments: string[] = [];
+  const attributeKey = extractAttributeKey(args.tag);
+  if (attributeKey) {
+    if (args.contentKey !== defaultExcludedContentKey) {
+      keyFragments.push(args.contentKey);
+    }
+    keyFragments.push(attributeKey);
+  } else {
+    keyFragments.push(args.contentKey + "_" + args.index);
+  }
+  return keyFragments;
+}
+
+function traverseRecursive(args: {
   context: TraverseXmlContext;
   tag: XmlTag;
   oldTargetTag: XmlTag | null;
 }) {
-  if (typeof args.tag === "string") {
-    args.context.operation(args.context, args.tag);
-  } else {
-    let hasChildTags = false;
-    for (const contentKey of Object.keys(args.tag)) {
-      const xmlContent = args.tag[contentKey];
-      if (
-        contentKey !== "comments" &&
-        xmlContent &&
-        Array.isArray(xmlContent) &&
-        xmlContent.length
-      ) {
-        hasChildTags = true;
-        xmlContent.forEach((childTag: XmlTag, index: number) => {
-          const newKeyFragments: string[] = [];
-          const attributeKey = extractAttributeKey(childTag);
-          if (attributeKey) {
-            if (contentKey !== defaultExcludedContentKey) {
-              newKeyFragments.push(contentKey);
-            }
-            newKeyFragments.push(attributeKey);
-          } else {
-            newKeyFragments.push(contentKey + "_" + index);
+  if (typeof args.tag !== "object") {
+    return;
+  }
+  let hasChildTags = false;
+  for (const contentKey of Object.keys(args.tag)) {
+    const xmlContent = args.tag[contentKey];
+    if (
+      contentKey !== "comments" &&
+      xmlContent &&
+      Array.isArray(xmlContent) &&
+      xmlContent.length
+    ) {
+      hasChildTags = true;
+      xmlContent.forEach((childTag: XmlTag, index: number) => {
+        const newKeyFragments = constructKeyFragments({
+          tag: childTag,
+          contentKey,
+          index,
+        });
+        const newContext: TraverseXmlContext = {
+          keyFragments: [...args.context.keyFragments, ...newKeyFragments],
+          operation: args.context.operation,
+        };
+        if (typeof childTag === "string") {
+          const newContent = args.context.operation(newContext, childTag);
+          if (newContent !== null) {
+            xmlContent[index] = newContent;
           }
-          traverseXmlTag({
-            context: {
-              keyFragments: [...args.context.keyFragments, ...newKeyFragments],
-              operation: args.context.operation,
-            },
+        } else {
+          traverseRecursive({
+            context: newContext,
             tag: childTag,
             oldTargetTag: null,
           });
-        });
-      }
+        }
+      });
     }
-    if (!hasChildTags) {
-      // Detected a leaf-tag
-      args.context.operation(args.context, args.tag);
+  }
+  if (!hasChildTags) {
+    const newContent = args.context.operation(args.context, args.tag);
+    if (newContent !== null) {
+      args.tag.characterContent = newContent;
     }
   }
 }
