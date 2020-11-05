@@ -57,7 +57,7 @@ export async function instantiateTFileFormat(
     case "arb":
       return new (await import("./flutter-arb/flutter-arb")).FlutterArb();
     case "xml":
-      return new (await import("./android-xml/android-xml")).AndroidXml();
+      return new (await import("./xml/xml-generic")).XmlGeneric();
     case "ios-strings":
       return new (await import("./ios-strings/ios-strings")).IosStrings();
   }

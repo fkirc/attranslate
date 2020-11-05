@@ -5,7 +5,7 @@ import {
   sharedXmlOptions,
   XmlAuxData,
   XmlTag,
-} from "./android-xml";
+} from "./xml-generic";
 import { writeUtf8File } from "../../util/util";
 import { Builder, OptionsV2 } from "xml2js";
 import {

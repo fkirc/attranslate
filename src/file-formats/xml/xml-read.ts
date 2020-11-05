@@ -1,4 +1,4 @@
-import { DEFAULT_XML_INDENT, sharedXmlOptions, XmlTag } from "./android-xml";
+import { DEFAULT_XML_INDENT, sharedXmlOptions, XmlTag } from "./xml-generic";
 import { ReadTFileArgs } from "../file-format-definitions";
 import { TSet } from "../../core/core-definitions";
 import { logParseError } from "../common/parse-utils";

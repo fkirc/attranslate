@@ -2,7 +2,7 @@ import {
   defaultExcludedContentKey,
   defaultKeyAttribute,
   XmlTag,
-} from "./android-xml";
+} from "./xml-generic";
 import { NESTED_JSON_SEPARATOR } from "../../util/flatten";
 
 export interface TraverseXmlContext {

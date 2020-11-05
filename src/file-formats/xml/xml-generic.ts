@@ -45,7 +45,7 @@ export type XmlTag =
 export const DEFAULT_XML_INDENT = 4;
 export const DEFAULT_XML_HEADER = '<?xml version="1.0" encoding="utf-8"?>';
 
-export class AndroidXml implements TFileFormat {
+export class XmlGeneric implements TFileFormat {
   async readTFile(args: ReadTFileArgs): Promise<TSet> {
     const xmlString = readUtf8File(args.path);
     const xmlFile = await parseRawXML<XmlTag>(xmlString, args);
