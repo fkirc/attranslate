@@ -137,6 +137,20 @@ test("src empty JSON", async () => {
   );
 });
 
+test("src empty XML", async () => {
+  const args: E2EArgs = {
+    ...defaultE2EArgs,
+    srcFormat: "xml",
+    srcFile: "test-assets/invalid/empty.xml",
+  };
+  const output = await runTranslateExpectFailure(buildE2EArgs(args));
+  expect(output).toBe(
+    `error: ${getDebugPath(
+      args.srcFile
+    )} does not contain any translatable content\n`
+  );
+});
+
 test("target non-flat JSON", async () => {
   const args: E2EArgs = {
     ...defaultE2EArgs,
