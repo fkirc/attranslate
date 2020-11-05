@@ -8,60 +8,38 @@ import { readUtf8File } from "../../util/util";
 import {
   detectSpaceIndent,
   extractFirstLine,
-  extractRootTags,
+  extractXmlContent,
   parseRawXML,
-  readResourceTag,
-  XmlReadContext,
 } from "./xml-read";
 import { FileCache, FormatCache } from "../common/format-cache";
 import { OptionsV2 } from "xml2js";
-import {
-  writeResourceTag,
-  writeXmlResourceFile,
-  XmlWriteContext,
-} from "./xml-write";
+import { updateXmlContent, writeXmlResourceFile } from "./xml-write";
 
-export type XmlTagType = "FLAT" | "STRING_ARRAY" | "NESTED";
-
-export interface PartialCacheEntry {
-  arrayName: string;
-  parentTag: XmlTag;
-}
-export interface XmlCacheEntry extends PartialCacheEntry {
-  type: XmlTagType;
-  childTag: XmlTag | null;
-  childOffset: number;
-}
 export interface XmlAuxData {
   xmlHeader: string | null;
   detectedIntent: number;
-  resourceFile: XmlResourceFile;
-  rootTagName: string;
+  xmlFile: XmlLayer;
 }
 
-export type XmlFileCache = FileCache<XmlCacheEntry, XmlAuxData>;
-const globalCache = new FormatCache<XmlCacheEntry, XmlAuxData>();
+export type XmlFileCache = FileCache<unknown, XmlAuxData>;
+const xmlCache = new FormatCache<unknown, XmlAuxData>();
 
-export const defaultKeyAttribute = "name";
-export const defaultRootTagName = "resources";
+export const defaultKeyAttribute = "name"; // TODO: Rework keys
+//export const defaultRootTagName = "resources";
 
 export type XmlTag =
   | string // string in case of tags without any attributes
   | {
       characterContent: string;
       attributes?: Record<string, string>;
-      item?: XmlTag[];
+      item?: XmlLayer; // TODO: More generic, could be anything else instead of "item"
     };
 export const sharedXmlOptions: OptionsV2 = {
   attrkey: "attributes",
   charkey: "characterContent",
 };
 
-export interface XmlResourceFile {
-  [prop: string]: {
-    [prop: string]: Partial<XmlTag>[];
-  };
-}
+export type XmlLayer = Record<string, XmlTag[] | undefined>;
 
 /**
  * Android Studio seems to auto-format XML-files with 4 spaces indentation.
@@ -72,61 +50,46 @@ export const DEFAULT_XML_HEADER = '<?xml version="1.0" encoding="utf-8"?>';
 export class AndroidXml implements TFileFormat {
   async readTFile(args: ReadTFileArgs): Promise<TSet> {
     const xmlString = readUtf8File(args.path);
-    const resourceFile = await parseRawXML<XmlResourceFile>(xmlString, args);
-    const { resources, rootTagName } = extractRootTags(args, resourceFile);
+    const xmlFile = await parseRawXML<XmlLayer>(xmlString, args);
     const firstLine = extractFirstLine(xmlString);
     const fileCache: XmlFileCache = {
       path: args.path,
       auxData: {
         xmlHeader: firstLine.includes("<?") ? firstLine : null,
-        resourceFile: resourceFile as XmlResourceFile,
+        xmlFile,
         detectedIntent: detectSpaceIndent(xmlString),
-        rootTagName,
       },
       entries: new Map(),
     };
-    const readContext: XmlReadContext = {
-      tSet: new Map(),
-      fileCache,
-      args,
-      arrayName: "",
-      parentTag: null,
-    };
-    for (const arrayName of Object.keys(resources)) {
-      const tagArray: Partial<XmlTag>[] = resources[arrayName];
-      if (Array.isArray(tagArray)) {
-        for (const xmlTag of tagArray) {
-          readContext.arrayName = arrayName;
-          readResourceTag(readContext, <XmlTag>xmlTag);
-        }
-      }
-    }
-    globalCache.insertFileCache(readContext.fileCache);
-    return readContext.tSet;
+    xmlCache.insertFileCache(fileCache);
+    return extractXmlContent({ args, xmlFile });
   }
 
   writeTFile(args: WriteTFileArgs): void {
-    const auxData = globalCache.lookupAuxdata({ path: args.path });
-    const resources = {};
-    const resourceFile: XmlResourceFile = {
-      [auxData?.rootTagName ?? defaultRootTagName]: resources,
-    };
-    const writeContext: XmlWriteContext = {
+    const sourceXml = xmlCache.getOldestAuxdata()?.xmlFile;
+    let resultXml: XmlLayer;
+    if (sourceXml) {
+      resultXml = this.extractCachedXml(args, sourceXml);
+    } else {
+      resultXml = this.createUncachedXml(args);
+    }
+    writeXmlResourceFile(
+      resultXml,
       args,
-      resources,
-      cacheEntry: null,
-      jsonKey: "",
-      value: null,
-    };
-    args.tSet.forEach((value, jsonKey) => {
-      writeContext.cacheEntry = globalCache.lookup({
-        path: args.path,
-        key: jsonKey,
-      });
-      writeContext.jsonKey = jsonKey;
-      writeContext.value = value;
-      writeResourceTag(writeContext);
-    });
-    writeXmlResourceFile(resourceFile, args, auxData);
+      xmlCache.lookupAuxdata({ path: args.path })
+    );
+    xmlCache.purge();
+  }
+
+  extractCachedXml(args: WriteTFileArgs, sourceXml: XmlLayer): XmlLayer {
+    // const oldTargetXml = xmlCache.lookupSameFileAuxdata({
+    //   path: args.path, // TODO: Preserve old target attributes
+    // });
+    updateXmlContent({ args, xmlFile: sourceXml });
+    return sourceXml;
+  }
+
+  createUncachedXml(args: WriteTFileArgs): XmlLayer {
+    throw Error("createUncachedXml not implemented");
   }
 }
