@@ -16,7 +16,13 @@
         <!-- More planet comment -->
         <item>Mercury</item>
         <item>Venus</item>
-        <item>Earth</item>
+        <item>
+            <deep>
+                <nesting>
+                    <nesting_more>Earth</nesting_more>
+                </nesting>
+            </deep>
+        </item>
         <item>Mars</item>
     </string-array>
     <string-array name="months">
