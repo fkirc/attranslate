@@ -92,6 +92,22 @@ export class XmlGeneric implements TFileFormat {
   }
 
   createUncachedXml(args: WriteTFileArgs): XmlFile {
-    throw Error("createUncachedXml not implemented");
+    const tagArray: XmlTag[] = [];
+    args.tSet.forEach((value, key) => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      tagArray.push({
+        characterContent: value ?? "",
+        attributes: { name: key },
+      });
+    });
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const rootTag: XmlTag = {
+      string: tagArray,
+    };
+    return {
+      resources: rootTag,
+    };
   }
 }
