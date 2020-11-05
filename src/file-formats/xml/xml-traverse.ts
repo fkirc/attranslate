@@ -78,7 +78,7 @@ function traverseRecursive(args: {
       Array.isArray(xmlContent) &&
       xmlContent.length
     ) {
-      const oldTargetChilds = extractOldTargetObject(
+      const oldTargetChilds = extractOldTargetChilds(
         args.oldTargetTag,
         contentKey
       );
@@ -149,10 +149,10 @@ function constructKeyFragments(args: {
   return keyFragments;
 }
 
-function extractOldTargetObject(
+function extractOldTargetChilds(
   oldTargetXml: XmlTag | null,
   contentKey: string
-): XmlTag[] | XmlTag | null {
+): XmlTag[] | null {
   if (!oldTargetXml) {
     return null;
   }
