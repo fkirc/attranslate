@@ -124,31 +124,24 @@ test("invalid iOS strings", async () => {
   expect(output).toBe(expectedOutput);
 });
 
-test("src empty JSON", async () => {
-  const args: E2EArgs = {
-    ...defaultE2EArgs,
-    srcFile: "test-assets/invalid/empty.json",
-  };
-  const output = await runTranslateExpectFailure(buildE2EArgs(args));
-  expect(output).toBe(
-    `error: ${getDebugPath(
-      args.srcFile
-    )} does not contain any translatable content\n`
-  );
-});
-
-test("src empty XML", async () => {
-  const args: E2EArgs = {
-    ...defaultE2EArgs,
-    srcFormat: "xml",
-    srcFile: "test-assets/invalid/empty.xml",
-  };
-  const output = await runTranslateExpectFailure(buildE2EArgs(args));
-  expect(output).toBe(
-    `error: ${getDebugPath(
-      args.srcFile
-    )} does not contain any translatable content\n`
-  );
+describe.each([
+  { srcFile: "test-assets/invalid/empty.json", srcFormat: "flat-json" },
+  { srcFile: "test-assets/invalid/empty.json", srcFormat: "nested-json" },
+  { srcFile: "test-assets/invalid/empty.xml", srcFormat: "xml" },
+])("empty src %s", (args: { srcFile: string; srcFormat: string }) => {
+  test("empty src", async () => {
+    const e2eArgs: E2EArgs = {
+      ...defaultE2EArgs,
+      srcFile: args.srcFile,
+      srcFormat: args.srcFormat,
+    };
+    const output = await runTranslateExpectFailure(buildE2EArgs(e2eArgs));
+    expect(output).toBe(
+      `error: ${getDebugPath(
+        args.srcFile
+      )} does not contain any translatable content\n`
+    );
+  });
 });
 
 test("target non-flat JSON", async () => {
