@@ -94,19 +94,14 @@ test("duplicate keys iOS", async () => {
   expect(output).toBe(expectedOutput);
 });
 
-test("duplicate keys yml", async () => {
-  const args: E2EArgs = {
-    ...defaultE2EArgs,
+describe.each([
+  {
     srcFile: "test-assets/invalid/duplicate-keys.yml",
     srcFormat: "yaml",
-  };
-  const output = await runTranslateExpectFailure(buildE2EArgs(args));
-  expect(output).toContain(
-    'Map keys must be unique; "question" is repeated at line 1, column 1'
-  );
-});
-
-describe.each([
+    errorMessage:
+      'Map keys must be unique; "question" is repeated at line 1, column 1',
+    auxMessage: "question: 'What do I do when I have forgotten my login?",
+  },
   {
     srcFile: "test-assets/nested-json/count-en.json",
     srcFormat: "flat-json",
@@ -148,12 +143,12 @@ describe.each([
       const output = await runTranslateExpectFailure(buildE2EArgs(e2eArgs));
       const expectedOutput = `error: Failed to parse ${getDebugPath(
         args.srcFile
-      )} with expected format '${args.srcFormat}': ${args.errorMessage}\n`;
+      )} with expected format '${args.srcFormat}': ${args.errorMessage}`;
       if (args.auxMessage) {
-        expect(output).toContain(args.auxMessage);
         expect(output).toContain(expectedOutput);
+        expect(output).toContain(args.auxMessage);
       } else {
-        expect(output).toBe(expectedOutput);
+        expect(output).toBe(expectedOutput + "\n");
       }
     });
   }
