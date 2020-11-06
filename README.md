@@ -36,6 +36,7 @@ To make this possible, `attranslate` supports the following file formats:
 
 `attranslate` recognizes that automated translations are not perfect.
 Therefore, whenever you are unhappy with the produced results, `attranslate` allows you to simply overwrite texts in your target-files.
+`attranslate` won't ever overwrite a manual correction in subsequent runs.
 
 ## Support For Manual Reviews
 
