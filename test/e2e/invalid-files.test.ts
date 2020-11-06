@@ -111,25 +111,25 @@ describe.each([
     srcFile: "test-assets/nested-json/count-en.json",
     srcFormat: "flat-json",
     errorMessage: "Property 'inner' is not a string or null",
-    strict: true,
+    auxMessage: null,
   },
   {
     srcFile: "test-assets/invalid/whitespace",
     srcFormat: "yaml",
     errorMessage: "root node not found",
-    strict: true,
+    auxMessage: null,
   },
   {
     srcFile: "test-assets/invalid/whitespace",
     srcFormat: "ios-strings",
     errorMessage: "Did not find any Strings in the expected format",
-    strict: true,
+    auxMessage: null,
   },
   {
     srcFile: "test-assets/invalid/whitespace",
     srcFormat: "po",
     errorMessage: "GetText parsing error",
-    strict: false,
+    auxMessage: "TypeError: Cannot set property 'X-Generator' of undefined",
   },
 ])(
   "src parsing error",
@@ -137,7 +137,7 @@ describe.each([
     srcFile: string;
     srcFormat: string;
     errorMessage: string;
-    strict: boolean;
+    auxMessage: string | null;
   }) => {
     test("src parsing error", async () => {
       const e2eArgs: E2EArgs = {
@@ -149,7 +149,8 @@ describe.each([
       const expectedOutput = `error: Failed to parse ${getDebugPath(
         args.srcFile
       )} with expected format '${args.srcFormat}': ${args.errorMessage}\n`;
-      if (args.strict === false) {
+      if (args.auxMessage) {
+        expect(output).toContain(args.auxMessage);
         expect(output).toContain(expectedOutput);
       } else {
         expect(output).toBe(expectedOutput);
