@@ -76,25 +76,14 @@ test("duplicate keys XML", async () => {
   );
 });
 
-test("duplicate keys iOS", async () => {
-  const args: E2EArgs = {
-    ...defaultE2EArgs,
+describe.each([
+  {
     srcFile: "test-assets/invalid/duplicate-keys.strings",
     srcFormat: "ios-strings",
-  };
-  const output = await runTranslateExpectFailure(buildE2EArgs(args));
-  const expectedOutput = joinLines([
-    `Warning: Parsing '${args.srcFile}': Line 'other content' seems to be unexpected`,
-    `error: Failed to parse ${getDebugPath(
-      args.srcFile
-    )} with expected format '${
-      args.srcFormat
-    }': duplicate key 'dup_ios' -> Currently, the usage of duplicate translation-keys is discouraged.`,
-  ]);
-  expect(output).toBe(expectedOutput);
-});
-
-describe.each([
+    errorMessage:
+      "duplicate key 'dup_ios' -> Currently, the usage of duplicate translation-keys is discouraged",
+    auxMessage: `Warning: Parsing 'test-assets/invalid/duplicate-keys.strings': Line 'other content' seems to be unexpected`,
+  },
   {
     srcFile: "test-assets/invalid/duplicate-keys.yml",
     srcFormat: "yaml",
