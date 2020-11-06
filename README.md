@@ -36,6 +36,7 @@ To make this possible, `attranslate` supports the following file formats:
 
 `attranslate` recognizes that automated translations are not perfect.
 Therefore, whenever you are unhappy with the produced results, `attranslate` allows you to simply overwrite texts in your target-files.
+`attranslate` won't ever overwrite a manual correction in subsequent runs.
 
 ## Support For Manual Reviews
 
@@ -56,6 +57,11 @@ This helps to keep track of which texts have been already reviewed by a human.
 
 If some texts have already been translated, then `attranslate` won't translate them again.
 This does not only speedup your workflow, but also saves cost for paid translation-services.
+
+## Detect Common Mistakes
+
+Although (some) humans have excellent translation-skills, humans are notoriously bad at detecting "trivial" mistakes like outdated, missing, stale or duplicate translations.
+In contrast, `attranslate` detects such "trivial" mistakes with 100% reliability.
 
 # Usage Examples
 
@@ -148,6 +154,8 @@ Once you have an API-key, pass your API-key to `attranslate` via the `--serviceC
 
 ## Interpolations and Matchers
 
+> :warning: For many projects, `attranslate` works out of the box without configuring any matchers. Therefore, we recommend skipping this section unless you encounter unexpected problems that are hard to fix manually.
+
 Many websites/apps use _interpolations_  to insert dynamic values into translations.
 For example, an interpolation like `Your name is {{name}}` might be replaced with `Your name is Felix`.
 
@@ -172,4 +180,10 @@ The purpose is twofold:
 - The translation-cache saves time and cost because it prevents redundant re-translations.
 
 The translation-cache consists of `attranslate-cache-*`-files.
-To make it work, you should put your `attranslate-cache-*`-files under version control.
+It is allowed to delete a translation-cache at any time.
+However, to make it work smoothly, you should put your `attranslate-cache-*`-files under version control.
+
+## Continuous Integration
+
+To detect common mistakes like missing translations, it is advisable to run `attranslate` via continuous integration (CI).
+For example, the command `git diff --exit-code` can be used to trigger a CI failure whenever a file has been modified by `attranslate`.
