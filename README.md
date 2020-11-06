@@ -28,7 +28,7 @@ To make this possible, `attranslate` supports the following file formats:
 - Flat or nested JSON
 - Flat or nested YAML
 - PO/POT-files
-- Android-XML or any other XMLs with text-contents
+- Android-XML or any other XMLs with tag-contents
 - iOS-Strings
 - Flutter-ARB
 
