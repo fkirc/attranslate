@@ -85,7 +85,7 @@ export class YamlGeneric implements TFileFormat {
       entries: new Map(),
       auxData: document,
     });
-    const tSet: TSet = extractYmlNodes(document);
+    const tSet: TSet = extractYmlNodes(args, document);
     return Promise.resolve(tSet);
   }
 

@@ -130,6 +130,11 @@ describe.each([
     srcFormat: "flat-json",
     errorMessage: "Property 'inner' is not a string or null",
   },
+  {
+    srcFile: "test-assets/invalid/whitespace",
+    srcFormat: "yaml",
+    errorMessage: "root node not found",
+  },
 ])(
   "src parsing error",
   (args: { srcFile: string; srcFormat: string; errorMessage: string }) => {

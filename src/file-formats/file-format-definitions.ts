@@ -8,6 +8,7 @@ export interface WriteTFileArgs {
   changeSet: TChangeSet;
   manualReview: boolean;
   lng: string;
+  format: TFileType;
 }
 
 export interface ReadTFileArgs {

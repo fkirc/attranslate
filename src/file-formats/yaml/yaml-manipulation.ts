@@ -4,14 +4,14 @@ import { NESTED_JSON_SEPARATOR } from "../../util/flatten";
 import { Document } from "yaml";
 import Parsed = Document.Parsed;
 import { TSet } from "../../core/core-definitions";
-import { logFatal } from "../../util/util";
-import { WriteTFileArgs } from "../file-format-definitions";
+import { ReadTFileArgs, WriteTFileArgs } from "../file-format-definitions";
+import { logParseError } from "../common/parse-utils";
 
-export function extractYmlNodes(document: Parsed): TSet {
+export function extractYmlNodes(args: ReadTFileArgs, document: Parsed): TSet {
   const tSet: TSet = new Map();
   const rootContext: TraverseYmlContext = {
     partialKey: "",
-    node: getRootNode(document),
+    node: getRootNode(document, args),
     oldTargetNode: null,
   };
   traverseYml(rootContext, (innerContext, scalar) => {
@@ -30,8 +30,10 @@ export function updateYmlNodes(args: {
 }) {
   const rootContext: TraverseYmlContext = {
     partialKey: "",
-    node: getRootNode(args.sourceYml),
-    oldTargetNode: args.oldTargetYml ? getRootNode(args.oldTargetYml) : null,
+    node: getRootNode(args.sourceYml, args.args),
+    oldTargetNode: args.oldTargetYml
+      ? getRootNode(args.oldTargetYml, args.args)
+      : null,
   };
   traverseYml(rootContext, (innerContext, scalar) => {
     const value = args.args.tSet.get(innerContext.partialKey);
@@ -41,13 +43,16 @@ export function updateYmlNodes(args: {
   });
 }
 
-function getRootNode(document: Parsed): Node {
+function getRootNode(
+  document: Parsed,
+  args: ReadTFileArgs | WriteTFileArgs
+): Node {
   const root: Node | null = document.contents;
   if (!root) {
-    logFatal("root node not found");
+    logParseError("root node not found", args);
   }
   if (!isScalar(root) && !isCollection(root) && !isPair(root)) {
-    logFatal("root node invalid");
+    logParseError("root node invalid", args);
   }
   return root;
 }
