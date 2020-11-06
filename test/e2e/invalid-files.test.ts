@@ -28,24 +28,13 @@ test("src not an XML", async () => {
   );
 });
 
-test("src not a YAML", async () => {
-  const args: E2EArgs = {
-    ...defaultE2EArgs,
+describe.each([
+  {
     srcFile: "test-assets/android-xml/advanced.xml",
     srcFormat: "yaml",
-  };
-  const output = await runTranslateExpectFailure(buildE2EArgs(args));
-  expect(output).toContain(
-    `error: Failed to parse ${getDebugPath(
-      args.srcFile
-    )} with expected format '${args.srcFormat}'`
-  );
-  expect(output).toContain(
-    "Implicit map keys need to be followed by map values"
-  );
-});
-
-describe.each([
+    errorMessage: "Implicit map keys need to be on a single line",
+    auxMessage: "Implicit map keys need to be followed by map values",
+  },
   {
     srcFile: "test-assets/android-xml/advanced.xml",
     srcFormat: "po",
