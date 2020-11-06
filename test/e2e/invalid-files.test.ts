@@ -45,22 +45,13 @@ test("src not a YAML", async () => {
   );
 });
 
-test("src not a PO", async () => {
-  const args: E2EArgs = {
-    ...defaultE2EArgs,
+describe.each([
+  {
     srcFile: "test-assets/android-xml/advanced.xml",
     srcFormat: "po",
-  };
-  const output = await runTranslateExpectFailure(buildE2EArgs(args));
-  expect(output).toContain(
-    `error: Failed to parse ${getDebugPath(
-      args.srcFile
-    )} with expected format '${args.srcFormat}'`
-  );
-  expect(output).toContain("SyntaxError: Error parsing PO data");
-});
-
-describe.each([
+    errorMessage: "GetText parsing error",
+    auxMessage: "SyntaxError: Error parsing PO data",
+  },
   {
     srcFile: "test-assets/invalid/duplicate-keys.xml",
     srcFormat: "xml",
