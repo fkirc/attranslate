@@ -179,7 +179,7 @@ The purpose is twofold:
 - The translation-cache saves time and cost because it prevents redundant re-translations.
 
 The translation-cache consists of `attranslate-cache-*`-files.
-It is allowed to delete the translation-cache at any time.
+It is allowed to delete a translation-cache at any time.
 However, to make it work smoothly, you should put your `attranslate-cache-*`-files under version control.
 
 ## Continuous Integration
