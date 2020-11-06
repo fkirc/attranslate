@@ -106,24 +106,6 @@ test("duplicate keys yml", async () => {
   );
 });
 
-test("invalid iOS strings", async () => {
-  const args: E2EArgs = {
-    ...defaultE2EArgs,
-    srcFile: "test-assets/invalid/empty.json",
-    srcFormat: "ios-strings",
-  };
-  const output = await runTranslateExpectFailure(buildE2EArgs(args));
-  const expectedOutput = joinLines([
-    `Warning: Parsing '${args.srcFile}': Line '{}' seems to be unexpected`,
-    `error: Failed to parse ${getDebugPath(
-      "test-assets/invalid/empty.json"
-    )} with expected format '${
-      args.srcFormat
-    }': Did not find any Strings in the expected format`,
-  ]);
-  expect(output).toBe(expectedOutput);
-});
-
 describe.each([
   {
     srcFile: "test-assets/nested-json/count-en.json",
@@ -134,6 +116,11 @@ describe.each([
     srcFile: "test-assets/invalid/whitespace",
     srcFormat: "yaml",
     errorMessage: "root node not found",
+  },
+  {
+    srcFile: "test-assets/invalid/whitespace",
+    srcFormat: "ios-strings",
+    errorMessage: "Did not find any Strings in the expected format",
   },
 ])(
   "src parsing error",
@@ -176,22 +163,6 @@ describe.each([
       )} does not contain any translatable content\n`
     );
   });
-});
-
-test("target non-flat JSON", async () => {
-  const args: E2EArgs = {
-    ...defaultE2EArgs,
-    targetFile: "test-assets/nested-json/count-en.json",
-    targetFormat: "flat-json",
-  };
-  const output = await runTranslateExpectFailure(buildE2EArgs(args, true));
-  expect(output).toBe(
-    `error: Failed to parse ${getDebugPath(
-      args.targetFile
-    )} with expected format '${
-      args.targetFormat
-    }': Property 'inner' is not a string or null\n`
-  );
 });
 
 // test("unsupported cache version", async () => {
