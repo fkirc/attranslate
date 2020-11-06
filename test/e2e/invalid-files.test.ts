@@ -60,23 +60,14 @@ test("src not a PO", async () => {
   expect(output).toContain("SyntaxError: Error parsing PO data");
 });
 
-test("duplicate keys XML", async () => {
-  const args: E2EArgs = {
-    ...defaultE2EArgs,
+describe.each([
+  {
     srcFile: "test-assets/invalid/duplicate-keys.xml",
     srcFormat: "xml",
-  };
-  const output = await runTranslateExpectFailure(buildE2EArgs(args));
-  expect(output).toBe(
-    `error: Failed to parse ${getDebugPath(
-      args.srcFile
-    )} with expected format '${
-      args.srcFormat
-    }': duplicate key 'dup' -> Currently, the usage of duplicate translation-keys is discouraged.\n`
-  );
-});
-
-describe.each([
+    errorMessage:
+      "duplicate key 'dup' -> Currently, the usage of duplicate translation-keys is discouraged.",
+    auxMessage: null,
+  },
   {
     srcFile: "test-assets/invalid/duplicate-keys.strings",
     srcFormat: "ios-strings",
