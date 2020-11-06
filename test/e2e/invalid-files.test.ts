@@ -14,21 +14,13 @@ test("src not a JSON", async () => {
   );
 });
 
-test("src not an XML", async () => {
-  const args: E2EArgs = {
-    ...defaultE2EArgs,
-    srcFormat: "xml",
-  };
-  const output = await runTranslateExpectFailure(buildE2EArgs(args));
-  expect(output).toContain("Error: Non-whitespace before first tag");
-  expect(output).toContain(
-    `error: Failed to parse ${getDebugPath(
-      args.srcFile
-    )} with expected format '${args.srcFormat}': XML parsing error`
-  );
-});
-
 describe.each([
+  {
+    srcFile: "test-assets/nested-json/count-en.json",
+    srcFormat: "xml",
+    errorMessage: "XML parsing error",
+    auxMessage: "Error: Non-whitespace before first tag",
+  },
   {
     srcFile: "test-assets/android-xml/advanced.xml",
     srcFormat: "yaml",
