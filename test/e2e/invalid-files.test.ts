@@ -111,20 +111,34 @@ describe.each([
     srcFile: "test-assets/nested-json/count-en.json",
     srcFormat: "flat-json",
     errorMessage: "Property 'inner' is not a string or null",
+    strict: true,
   },
   {
     srcFile: "test-assets/invalid/whitespace",
     srcFormat: "yaml",
     errorMessage: "root node not found",
+    strict: true,
   },
   {
     srcFile: "test-assets/invalid/whitespace",
     srcFormat: "ios-strings",
     errorMessage: "Did not find any Strings in the expected format",
+    strict: true,
+  },
+  {
+    srcFile: "test-assets/invalid/whitespace",
+    srcFormat: "po",
+    errorMessage: "GetText parsing error",
+    strict: false,
   },
 ])(
   "src parsing error",
-  (args: { srcFile: string; srcFormat: string; errorMessage: string }) => {
+  (args: {
+    srcFile: string;
+    srcFormat: string;
+    errorMessage: string;
+    strict: boolean;
+  }) => {
     test("src parsing error", async () => {
       const e2eArgs: E2EArgs = {
         ...defaultE2EArgs,
@@ -132,11 +146,14 @@ describe.each([
         srcFormat: args.srcFormat,
       };
       const output = await runTranslateExpectFailure(buildE2EArgs(e2eArgs));
-      expect(output).toBe(
-        `error: Failed to parse ${getDebugPath(
-          args.srcFile
-        )} with expected format '${args.srcFormat}': ${args.errorMessage}\n`
-      );
+      const expectedOutput = `error: Failed to parse ${getDebugPath(
+        args.srcFile
+      )} with expected format '${args.srcFormat}': ${args.errorMessage}\n`;
+      if (args.strict === false) {
+        expect(output).toContain(expectedOutput);
+      } else {
+        expect(output).toBe(expectedOutput);
+      }
     });
   }
 );
