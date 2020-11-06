@@ -153,7 +153,7 @@ Once you have an API-key, pass your API-key to `attranslate` via the `--serviceC
 
 ## Interpolations and Matchers
 
-> :warning: For many projects, everything works out of the box without configuring any matchers. Therefore, we recommend skipping this section unless you encounter unexpected problems that are hard to fix manually.
+> :warning: For many projects, `attranslate` works out of the box without configuring any matchers. Therefore, we recommend skipping this section unless you encounter unexpected problems that are hard to fix manually.
 
 Many websites/apps use _interpolations_  to insert dynamic values into translations.
 For example, an interpolation like `Your name is {{name}}` might be replaced with `Your name is Felix`.
