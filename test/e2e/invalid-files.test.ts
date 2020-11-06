@@ -67,7 +67,19 @@ describe.each([
     auxMessage: null,
   },
   {
+    srcFile: "test-assets/invalid/not-a-json",
+    srcFormat: "ios-strings",
+    errorMessage: "Did not find any Strings in the expected format",
+    auxMessage: "Line '#' seems to be unexpected",
+  },
+  {
     srcFile: "test-assets/invalid/whitespace",
+    srcFormat: "ios-strings",
+    errorMessage: "Did not find any Strings in the expected format",
+    auxMessage: null,
+  },
+  {
+    srcFile: "test-assets/invalid/empty",
     srcFormat: "ios-strings",
     errorMessage: "Did not find any Strings in the expected format",
     auxMessage: null,
