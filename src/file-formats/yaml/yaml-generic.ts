@@ -4,7 +4,6 @@ import {
   WriteTFileArgs,
 } from "../file-format-definitions";
 import { TSet } from "../../core/core-definitions";
-import { writeUtf8File } from "../../util/util";
 import { Document, Options, stringify, scalarOptions } from "yaml";
 import { FormatCache } from "../common/format-cache";
 import Parsed = Document.Parsed;
@@ -13,6 +12,7 @@ import { Collection, Node, Pair, Scalar, YAMLSeq } from "yaml/types";
 import { extractYmlNodes, updateYmlNodes } from "./yaml-manipulation";
 import { Type } from "yaml/util";
 import { parseYaml } from "./yaml-parse";
+import { writeManagedUtf8 } from "../common/managed-utf8";
 
 export function isSequence(node: Collection): node is YAMLSeq {
   if (!node.type) {
@@ -77,12 +77,15 @@ export class YamlGeneric implements TFileFormat {
 
   readTFile(args: ReadTFileArgs): Promise<TSet> {
     const document = parseYaml(args);
+    if (!document) {
+      return Promise.resolve(new Map());
+    }
     documentCache.insertFileCache({
       path: args.path,
       entries: new Map(),
       auxData: document,
     });
-    const tSet: TSet = extractYmlNodes(document);
+    const tSet: TSet = extractYmlNodes(args, document);
     return Promise.resolve(tSet);
   }
 
@@ -94,7 +97,7 @@ export class YamlGeneric implements TFileFormat {
     } else {
       ymlString = this.createUncachedYml(args);
     }
-    writeUtf8File(args.path, ymlString);
+    writeManagedUtf8({ path: args.path, utf8: ymlString });
     documentCache.purge();
   }
 

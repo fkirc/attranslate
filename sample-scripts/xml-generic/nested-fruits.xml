@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="apple">Apple</string>
+    <string name="nesting.pear">Pear</string>
+    <string name="moreNesting.innerNesting.banana">Banana</string>
+</resources>

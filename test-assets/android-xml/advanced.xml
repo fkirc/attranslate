@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
     <!-- starting comment -->
+    <comments>Something</comments>
+    <charkey>charkey</charkey>
+    <attrkey>attrkey</attrkey>
+    <attributes>Attributes</attributes>
     <string name="deutscher string">actually german: muss grösser gleich %d sein</string>
     <string name="escaped quotes">Logged in as \"%s\"</string>
     <string name="escaped single quotes">Logged in as \'%s\'</string>
@@ -16,7 +20,13 @@
         <!-- More planet comment -->
         <item>Mercury</item>
         <item>Venus</item>
-        <item>Earth</item>
+        <item>
+            <deep>
+                <nesting>
+                    <nesting_more>Earth</nesting_more>
+                </nesting>
+            </deep>
+        </item>
         <item>Mars</item>
     </string-array>
     <string-array name="months">
@@ -42,3 +52,6 @@
         <item quantity="other">Znaleziono %d piosenek.</item>
     </plurals>
 </resources>
+
+
+

@@ -22,6 +22,23 @@ export function injectPrefixLines(args: { path: string; lines: string[] }) {
   writeUtf8File(args.path, modifiedStr);
 }
 
+export function replaceLines(args: {
+  path: string;
+  search: string;
+  replace: string;
+}) {
+  const str = readUtf8File(args.path);
+  const lines = str.split("\n");
+  const modifiedLines = lines.map((line) => {
+    if (line.includes(args.search)) {
+      return args.replace;
+    } else {
+      return line;
+    }
+  });
+  writeUtf8File(args.path, modifiedLines.join("\n"));
+}
+
 export function removeLines(args: { path: string; linesToRemove: string[] }) {
   const str = readUtf8File(args.path);
   const lines = str.split("\n");

@@ -1,0 +1,19 @@
+<OuterChanged>
+    <!-- Some comment -->
+    <Inner>شيئا ما</Inner>
+    <Inner someAttribute="attr">ثانيا</Inner>
+    <InnerElse otherAtt="true">الثالث</InnerElse>
+    <some-array>
+        <!-- Some inner comment -->
+        <i1>واحد</i1>
+        <i2>
+            <inner name="name attributes act as additional keys">
+                <inner>
+                    <else someAtt="x">المحتوى</else>
+                </inner>
+            </inner>
+        </i2>
+    </some-array>
+    <empty-content/>
+</OuterChanged>
+<Addition></Addition>

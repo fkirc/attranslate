@@ -16,7 +16,7 @@ ANDROID_ES="android/app/src/main/res/values-es/strings.xml"
 
 ANDROID_TO_ANDROID=( "--srcFile=$ANDROID_EN" "--srcLng=en" "--srcFormat=xml" "--targetFormat=xml" "--service=google-translate" "--serviceConfig=$SERVICE_ACCOUNT_KEY" "--cacheDir=android" )
 attranslate "${ANDROID_TO_ANDROID[@]}" --targetFile=$ANDROID_DE --targetLng="de"
-attranslate "${ANDROID_TO_ANDROID[@]}" --targetFile=$ANDROID_ES --targetLng="es" --manualReview=true
+attranslate "${ANDROID_TO_ANDROID[@]}" --targetFile=$ANDROID_ES --targetLng="es"
 
 # Paths to app-specific iOS-Strings:
 iOS_EN="ios/Localizable/Base.lproj/Localizable.strings"

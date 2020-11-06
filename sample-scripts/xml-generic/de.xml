@@ -1,0 +1,24 @@
+<?xml version="custom header - should not be overwritten" encoding="UTF-8"?>
+<Outer>
+    <!-- Comments should not be overwritten -->
+    <Inner>etwas</Inner>
+    <Inner someAttribute="should not be overwritten" reviewed="false">Zweite</Inner>
+    <InnerElse otherAtt="true">Dritte</InnerElse>
+    <some-array>
+        <!-- Some inner comment -->
+        <i1>Einer</i1>
+        <i2>
+            <inner name="name attributes act as additional keys">
+                <inner random="target attributes should be preserved">
+                    <else someAtt="x">Inhalt</else>
+                </inner>
+            </inner>
+        </i2>
+    </some-array>
+    <empty-content/>
+</Outer>
+
+
+
+
+

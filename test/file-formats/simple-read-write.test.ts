@@ -47,6 +47,10 @@ const testArgs: {
     fileFormat: "yaml",
   },
   {
+    srcFile: join(testAssets, "android-xml", "non-android.xml"),
+    fileFormat: "xml",
+  },
+  {
     srcFile: join(testAssets, "android-xml", "advanced.xml"),
     fileFormat: "xml",
   },
@@ -114,6 +118,7 @@ describe.each(testArgs)("Read/write %p", (args) => {
       path: targetFile,
       tSet,
       lng: "en",
+      format: args.fileFormat,
       manualReview: false,
       changeSet: {
         added: new Map(),

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Start resource comment -->
     <string name="category_apple" reviewed="false">manzana</string>
     <!-- Some additional comment -->
     <string name="category_sub_pear" formatted="false" reviewed="false">Pera</string>

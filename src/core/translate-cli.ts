@@ -113,11 +113,12 @@ export async function translateCli(cliArgs: CliArgs) {
     !oldTarget || !areEqual(oldTarget, result.newTarget);
   if (flushTarget) {
     console.info(`Write target ${getDebugPath(cliArgs.targetFile)}`);
-    await writeTFileCore(targetFileFormat, {
+    await writeTFileCore({
       path: cliArgs.targetFile,
       tSet: result.newTarget,
       lng: cliArgs.targetLng,
       changeSet: result.changeSet,
+      format: targetFileFormat,
       manualReview,
     });
   }

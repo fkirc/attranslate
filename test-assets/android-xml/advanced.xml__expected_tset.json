@@ -1,5 +1,17 @@
 [
   [
+    "charkey_0",
+    "charkey"
+  ],
+  [
+    "attrkey_0",
+    "attrkey"
+  ],
+  [
+    "attributes_0",
+    "Attributes"
+  ],
+  [
     "deutscher string",
     "actually german: muss grösser gleich %d sein"
   ],
@@ -24,8 +36,8 @@
     "Hello %s!\\nYou have got %s unread messages."
   ],
   [
-    "with html content",
-    "\n        \n    "
+    "with html content.i_0",
+    "left"
   ],
   [
     "string-array.planets_array.item_0",
@@ -36,7 +48,7 @@
     "Venus"
   ],
   [
-    "string-array.planets_array.item_2",
+    "string-array.planets_array.item_2.deep_0.nesting_0.nesting_more_0",
     "Earth"
   ],
   [
@@ -104,3 +116,4 @@
     "Znaleziono %d piosenek."
   ]
 ]
+

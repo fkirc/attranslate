@@ -1,3 +1,8 @@
+# 1.1.0
+
+- Support nested XMLs with an arbitrary depth
+- Expand XML-support beyond Android
+
 # 1.0.0
 
 - Stability milestone reached: From now on, breaking changes will only happen after careful consideration and public announcements.

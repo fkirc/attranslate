@@ -40,16 +40,13 @@ export function logCoreResults(args: CoreArgs, results: CoreResults) {
   }
 }
 
-export async function writeTFileCore(
-  fileFormat: TFileType,
-  args: WriteTFileArgs
-) {
+export async function writeTFileCore(args: WriteTFileArgs) {
   args.tSet.forEach((value, key) => {
     if (value === null) {
       args.tSet.set(key, "");
     }
   });
-  const module = await instantiateTFileFormat(fileFormat);
+  const module = await instantiateTFileFormat(args.format);
   module.writeTFile(args);
 }
 

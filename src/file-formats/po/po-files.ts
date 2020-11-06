@@ -25,6 +25,9 @@ export const potCache = new FormatCache<PotCacheEntry, PotAuxData>();
 export class PoFile implements TFileFormat {
   readTFile(args: ReadTFileArgs): Promise<TSet> {
     const rawFile = readManagedUtf8(args.path);
+    if (!rawFile) {
+      return Promise.resolve(new Map());
+    }
     const potFile = parsePotFile(args, rawFile);
     potCache.insertFileCache({
       path: args.path,
