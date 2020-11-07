@@ -83,9 +83,13 @@ function traverseYml(
   if (context.oldTargetNode?.spaceBefore) {
     node.spaceBefore = context.oldTargetNode.spaceBefore;
   }
-  // if (context.oldTargetNode?.cstNode) {
-  //   node.cstNode = context.oldTargetNode.cstNode;
-  // }
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  if (context.oldTargetNode?.spacesBefore) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    node.spacesBefore = context.oldTargetNode.spacesBefore;
+  }
   if (isScalar(node)) {
     operation(context, node);
   }
