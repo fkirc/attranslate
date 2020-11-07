@@ -39,6 +39,11 @@ titles_long:
 itunes:
   url: 'https://itunes.apple.com/gb/app/sdsdsdsdsds'
 googleplay:
+
+
+
+
+
   url: 'https://play.google.com/store/apps/details?id=sdsdsdsdsds'
 
 banner:
@@ -49,6 +54,7 @@ banner:
   countries:
     - 'Delaware'
     - 'A'
+
     - 'NL'
     - 'DK'
   coupon: 'HERBST15'
