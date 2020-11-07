@@ -12,8 +12,15 @@ en:
     features_array:
       - Reach billions with your apps!
       - Android, iOS & Co!
+
+
+
+
       - Clever Github integration!
     another_array: [ 'one', 'two', 'three' ]
+
     multi_line: |
       A multi
       line value
+
+
