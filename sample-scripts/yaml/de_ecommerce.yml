@@ -1,14 +1,15 @@
 subsections:
   - 'Zahlungs-und Lieferbedingungen'
-  - 'Erfolgsgeschichten'
+  - 'Erfolgsgeschichten' # Individual comments should be transmitted to targets, but *not* overwritten
   - 'Zertifikate'
+
 
 # Ein deutscher Kommentar, welcher die Transformation überleben soll
 titles_long:
   home: 'Home-Bereich'
   nested:
     ? empty
-  blog: 'Unser Blog'
+  blog: 'Unser Blog' # Some comment
   stories: 'über unsere Benutzer'
   faq: 'Kundenbetreuung und häufig gestellte Fragen'
   press: 'Drücken Sie'
