@@ -4,7 +4,6 @@
 
 macOS/Ubuntu/Windows: [![Actions Status](https://github.com/fkirc/attranslate/workflows/Tests/badge.svg/?branch=master)](https://github.com/fkirc/attranslate/actions?query=branch%3Amaster)
 
-Automated translation-services can speedup traditional workflows.
 `attranslate` makes it easy to setup _semi-automated_ translation-workflows.
 For example, let's say that a translation-service achieves 90% correct translations on the spot.
 Thanks to `attranslate`, a quick fix of the remaining 10% is faster than doing everything by hand.
