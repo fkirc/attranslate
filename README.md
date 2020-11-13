@@ -51,7 +51,7 @@ This helps to keep track of which texts have been already reviewed by a human.
 - [DeepL](https://deepl.com)
 - [Azure Translator](https://azure.microsoft.com/en-us/services/cognitive-services/translator-text-api/)
 - `manual`: Translate texts manually by entering them into `attranslate`.
-- `sync-without-translate`: Does not change the language; useful for converting between different file formats.
+- `sync-without-translate`: Does not change the language. This can be useful for converting between file formats, or for maintaining region-specific differences.
 
 ## High Performance
 
