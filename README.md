@@ -4,9 +4,10 @@
 
 macOS/Ubuntu/Windows: [![Actions Status](https://github.com/fkirc/attranslate/workflows/Tests/badge.svg/?branch=master)](https://github.com/fkirc/attranslate/actions?query=branch%3Amaster)
 
-`attranslate` makes it easy to setup _semi-automated_ translation-workflows.
-For example, let's say that a translation-service achieves 90% correct translations on the spot.
-Thanks to `attranslate`, a quick fix of the remaining 10% is faster than doing everything by hand.
+`attranslate` is a semi-automated tool for "synchronizing" translation-files.
+`attranslate` works with or without automated translation-services.
+For example, let's say that a translation-service achieves 80% correct translations.
+Thanks to `attranslate`, a quick fix of the remaining 20% is faster than doing everything by hand.
 Other than that, `attranslate` supports manual translations and even file-format-conversions without changing the language.
 
 ## Why attranslate?
