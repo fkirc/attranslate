@@ -4,9 +4,10 @@
 
 macOS/Ubuntu/Windows: [![Actions Status](https://github.com/fkirc/attranslate/workflows/Tests/badge.svg/?branch=master)](https://github.com/fkirc/attranslate/actions?query=branch%3Amaster)
 
-`attranslate` makes it easy to setup _semi-automated_ translation-workflows.
-For example, let's say that a translation-service achieves 90% correct translations on the spot.
-Thanks to `attranslate`, a quick fix of the remaining 10% is faster than doing everything by hand.
+`attranslate` is a semi-automated tool for "synchronizing" translation-files.
+`attranslate` works with or without automated translation-services.
+For example, let's say that a translation-service achieves 80% correct translations.
+Thanks to `attranslate`, a quick fix of the remaining 20% is faster than doing everything by hand.
 Other than that, `attranslate` supports manual translations and even file-format-conversions without changing the language.
 
 ## Why attranslate?
@@ -50,7 +51,7 @@ This helps to keep track of which texts have been already reviewed by a human.
 - [DeepL](https://deepl.com)
 - [Azure Translator](https://azure.microsoft.com/en-us/services/cognitive-services/translator-text-api/)
 - `manual`: Translate texts manually by entering them into `attranslate`.
-- `sync-without-translate`: Does not change the language; useful for converting between different file formats.
+- `sync-without-translate`: Does not change the language. This can be useful for converting between file formats, or for maintaining region-specific differences.
 
 ## High Performance
 
