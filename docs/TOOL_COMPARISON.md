@@ -32,6 +32,10 @@ In fact, `attranslate` has been specifically created to solve a few limitations 
 - Place a higher emphasis on file-stability and quality.
 - Make it simpler to add new services or new file-formats.
 
+## Evernote Serge
+
+Whereas [Serge](https://github.com/evernote/serge) is geared towards highly-optimized workflows, `attranslate` is geared towards a quick integration within minutes.
+
 ## loctool
 
 [loctool](https://github.com/iLib-js/loctool) supports a lot of similar features, but the workflows are different to `attranslate`.
