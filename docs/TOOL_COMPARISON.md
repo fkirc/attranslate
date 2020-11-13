@@ -3,8 +3,8 @@ Therefore, we compare `attranslate` against the following tools:
 
 ## Commercial translation-platforms
 
-`attranslate` is not a direct competitor against commercial platforms, but a complementary tool.
-Typically, platforms like https://lingohub.com/ provide a web-interface to manage translations with multiple contributors.
+Typically, `attranslate` is not a direct competitor against most commercial platforms, but a complementary tool.
+Many commercial platforms like https://lingohub.com/ provide a web-interface to manage translations with multiple contributors.
 In contrast, `attranslate` is a command-line-tool that is designed to modify your existing files as fast as possible.
 
 In fact, it is possible to combine `attranslate` with commercial platforms.
@@ -35,6 +35,10 @@ In fact, `attranslate` has been specifically created to solve a few limitations 
 ## Evernote Serge
 
 Whereas [Serge](https://github.com/evernote/serge) is geared towards highly-optimized workflows, `attranslate` is geared towards a quick integration within minutes.
+
+## simpleen.io
+
+If [simpleen.io](https://simpleen.io/) was open-source, `attranslate` would perhaps not exist.
 
 ## loctool
 
