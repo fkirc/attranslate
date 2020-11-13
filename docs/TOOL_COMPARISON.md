@@ -49,6 +49,12 @@ Convert CSV-files into native Android or iOS translations.
 `attranslate` solves this use case as well, but is not restricted to CSV/Android/iOS.
 Moreover, `attranslate` makes it easier to apply platform-specific manual corrections.
 
+## strsync
+
+[strsync](https://github.com/metasmile/strsync) is targeted for "iOS-native" and is distributed via `pip`.
+In contrast, `attranslate` is not restricted to iOS and is distributed via `npm`.
+
+
 ## simpleen.io
 
 If [simpleen.io](https://simpleen.io/) was fully open-source, `attranslate` would perhaps not exist.
