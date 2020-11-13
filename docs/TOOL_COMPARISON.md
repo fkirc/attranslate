@@ -36,9 +36,15 @@ In fact, `attranslate` has been specifically created to solve a few limitations 
 
 Whereas [Serge](https://github.com/evernote/serge) is geared towards highly-optimized workflows, `attranslate` is geared towards a quick integration within minutes.
 
+## Twine
+
+[Twine](https://github.com/scelis/twine) is distributed via Ruby/gem, whereas `attranslate` is distributed via npm.
+Moreover, the usage concept is different.
+Whereas `Twine` uses a so-called "Twine data file", `attranslate` is designed to synchronize arbitrary files from A to B.
+
 ## simpleen.io
 
-If [simpleen.io](https://simpleen.io/) was open-source, `attranslate` would perhaps not exist.
+If [simpleen.io](https://simpleen.io/) was fully open-source, `attranslate` would perhaps not exist.
 
 ## loctool
 
