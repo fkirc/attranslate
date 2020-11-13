@@ -42,6 +42,13 @@ Whereas [Serge](https://github.com/evernote/serge) is geared towards highly-opti
 Moreover, the usage concept is different.
 Whereas `Twine` uses a so-called "Twine data file", `attranslate` is designed to synchronize arbitrary files from A to B.
 
+## Babelish
+
+[Babelish](https://github.com/netbe/Babelish) is targeted for one specific use case:
+Convert CSV-files into native Android or iOS translations.
+`attranslate` solves this use case as well, but is not restricted to CSV/Android/iOS.
+Moreover, `attranslate` makes it easier to apply platform-specific manual corrections.
+
 ## simpleen.io
 
 If [simpleen.io](https://simpleen.io/) was fully open-source, `attranslate` would perhaps not exist.
