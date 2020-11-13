@@ -3,7 +3,7 @@ Therefore, we compare `attranslate` against the following tools:
 
 ## Commercial translation-platforms
 
-Typically, `attranslate` is not a direct competitor against most commercial platforms, but a complementary tool.
+Typically, `attranslate` is not a direct competitor against commercial platforms, but a complementary tool.
 Many commercial platforms like https://lingohub.com/ provide a web-interface to manage translations with multiple contributors.
 In contrast, `attranslate` is a command-line-tool that is designed to modify your existing files as fast as possible.
 
