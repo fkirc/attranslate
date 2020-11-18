@@ -39,6 +39,12 @@ To make this possible, `attranslate` supports the following file formats:
 Therefore, whenever you are unhappy with the produced results, `attranslate` allows you to simply overwrite texts in your target-files.
 `attranslate` will never ever overwrite a manual correction in subsequent runs.
 
+# Optionally overwrite outdated translations
+
+Normally, overwriting outdated translations helps to ensure the freshness of translations.
+However, in hectic project environments, it might be easier to leave outdated translations as-is.
+Therefore, `attranslate` provides the `--overwriteOutdated`-option to ease the rollout of `attranslate` in hectic project environments.
+
 ## Support For Manual Reviews
 
 Optionally, `attranslate` marks newly generated texts with a "review-notice".
