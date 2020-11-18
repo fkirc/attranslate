@@ -10,7 +10,7 @@ COMMON_ARGS=( "--srcLng=en" "--srcFormat=nested-json" "--targetFormat=nested-jso
 
 # Use "--overwriteOutdated=false" if you introduce attranslate into a hectic project-environment,
 # or if you expect that some project collaborators won't even use attranslate because they have no time for "learning" it.
-attranslate --srcFile=$BASE_DIR/en/fruits.json --targetFile=$BASE_DIR/es/fruits.json --targetLng=es "${COMMON_ARGS[@]}" --overwriteOutdated=true
+attranslate --srcFile=$BASE_DIR/en/fruits.json --targetFile=$BASE_DIR/es/fruits.json --targetLng=es "${COMMON_ARGS[@]}" --overwriteOutdated=false
 
 # Use "--overwriteOutdated=true" if you want to prevent outdated translations once and for all.
 attranslate --srcFile=$BASE_DIR/en/fruits.json --targetFile=$BASE_DIR/zh/fruits.json --targetLng=zh "${COMMON_ARGS[@]}" --overwriteOutdated=true
