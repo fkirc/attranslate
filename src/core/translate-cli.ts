@@ -139,7 +139,7 @@ export async function translateCli(cliArgs: CliArgs) {
   if (flushCache) {
     writeTCache(result, cliArgs);
   }
-  if (!flushTarget && (srcCache || !overwriteOutdated)) {
+  if (!flushTarget) {
     console.info(`Target is up-to-date: '${cliArgs.targetFile}'`);
   }
 }
