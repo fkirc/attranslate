@@ -183,12 +183,9 @@ You can select a matcher with the `--matcher` option.
 
 ## Translation Cache
 
-The translation-cache is an essential part of `attranslate`.
-The purpose is twofold:
+> :warning: If `--overwriteOutdated` is set to `false`, then `attranslate` does not generate any translation-cache.
 
-- The translation-cache enables selective corrections if you are not happy with automatically generated translations.
-- The translation-cache saves time and cost because it prevents redundant re-translations.
-
+The main purpose of the translation-cache is to detect _outdated translations_, such that outdated translations can be overwritten in subsequent runs.
 The translation-cache consists of `attranslate-cache-*`-files.
 It is allowed to delete a translation-cache at any time.
 However, to make it work smoothly, you should put your `attranslate-cache-*`-files under version control.
