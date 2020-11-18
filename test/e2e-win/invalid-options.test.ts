@@ -126,6 +126,7 @@ test("unknown target file format", async () => {
 });
 
 const booleanOptions: (keyof typeof defaultE2EArgs)[] = [
+  "overwriteOutdated",
   "deleteStale",
   "manualReview",
 ];

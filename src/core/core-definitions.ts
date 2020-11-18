@@ -12,6 +12,7 @@ export interface CoreArgs {
   service: TServiceType;
   serviceConfig: string | null;
   matcher: TMatcherType;
+  overwriteOutdated: boolean;
   deleteStale: boolean;
 }
 

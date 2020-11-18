@@ -25,6 +25,7 @@ export const defaultE2EArgs: E2EArgs = {
   serviceConfig: getGCloudKeyPath(),
   cacheDir: "test-assets/cache",
   matcher: "none",
+  overwriteOutdated: "true",
   deleteStale: "true",
   manualReview: "false",
   keySearch: "x",
