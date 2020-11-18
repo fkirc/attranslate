@@ -45,6 +45,7 @@ export interface CliArgs extends Record<string, string | undefined> {
   serviceConfig?: string;
   cacheDir: string;
   matcher: string;
+  overwriteOutdated: string;
   deleteStale: string;
   manualReview: string;
   keySearch: string;

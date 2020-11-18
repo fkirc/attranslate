@@ -1,15 +1,28 @@
-import { getDebugPath, logFatal, readUtf8File } from "../../util/util";
+import {
+  getDebugPath,
+  logFatal,
+  readUtf8File,
+  writeUtf8File,
+} from "../../util/util";
 import { insertUtf8Cache, writeManagedUtf8 } from "./managed-utf8";
+
+function stringifyJson(obj: unknown): string {
+  return JSON.stringify(obj, null, 2);
+}
 
 export function writeManagedJson(args: {
   path: string;
   object: unknown;
 }): string {
-  const jsonString = JSON.stringify(args.object, null, 2);
+  const jsonString = stringifyJson(args.object);
   return writeManagedUtf8({
     path: args.path,
     utf8: jsonString,
   });
+}
+
+export function writeRawJson(args: { path: string; object: unknown }) {
+  writeUtf8File(args.path, stringifyJson(args.object) + "\n");
 }
 
 export function readManagedJson<T>(path: string): Partial<T> {

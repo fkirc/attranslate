@@ -12,7 +12,7 @@ import {
 import { toStrictEqualMapOrder } from "../test-util/to-strict-equal-map-order";
 import {
   readRawJson,
-  writeManagedJson,
+  writeRawJson,
 } from "../../src/file-formats/common/managed-json";
 import { join } from "path";
 
@@ -105,7 +105,7 @@ describe.each(testArgs)("Read/write %p", (args) => {
 
     const expectTSetPath = `${args.srcFile}__expected_tset.json`;
     if (process.env.GENERATE_REFS) {
-      writeManagedJson({
+      writeRawJson({
         path: expectTSetPath,
         object: mapToObject(tSet),
       });

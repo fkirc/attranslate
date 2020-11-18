@@ -61,6 +61,11 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
       "none"
     )
     .option(
+      "--overwriteOutdated <true | false>",
+      "If true, overwrite outdated translations in subsequent runs",
+      "true"
+    )
+    .option(
       "--deleteStale <true | false>",
       "If true, delete translations that exist in the target file but not in the source file",
       "true"
@@ -99,6 +104,7 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
     serviceConfig: commander.opts().serviceConfig,
     cacheDir: commander.opts().cacheDir,
     matcher: commander.opts().matcher,
+    overwriteOutdated: commander.opts().overwriteOutdated,
     deleteStale: commander.opts().deleteStale,
     manualReview: commander.opts().manualReview,
     keySearch: commander.opts().keySearch,
