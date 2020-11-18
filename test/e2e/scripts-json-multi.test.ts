@@ -43,14 +43,14 @@ test("multi_json clean", async () => {
 
 test("multi_json create new cache", async () => {
   await runCommand(`rm ${cachePath}`);
-  const expectOutput = expectedCreateOutput({
+  const expectOutput = expectedCreateCacheOutput({
     cachePath,
   });
   const output = await runMultiJSON();
   expect(output).toBe(expectOutput);
 });
 
-function expectedCreateOutput(args: { cachePath: string }): string {
+function expectedCreateCacheOutput(args: { cachePath: string }): string {
   const firstPass: string[] = [
     `Cache not found -> Generate a new cache to enable selective translations.`,
     `To make selective translations, do one of the following:`,
