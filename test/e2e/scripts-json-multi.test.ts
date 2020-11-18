@@ -58,6 +58,7 @@ function expectedCreateCacheOutput(): string {
     "Option 2: Delete parts of your target-file and then re-run this tool.",
     "Skipped translations because we had to generate a new cache.",
     `Write cache ${getDebugPath(cachePath)}`,
+    `Target is up-to-date: '${assetDir}/zh/fruits.json'`,
   ];
   const thirdPass: string[] = [
     `Write cache ${getDebugPath(cachePath)}`,
