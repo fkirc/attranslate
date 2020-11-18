@@ -104,10 +104,13 @@ test("multi_json propagate empty string from source", async () => {
 
 function expectedUpdateOutput(args: { bypassEmpty: boolean }): string {
   const lines: string[] = [];
+  lines.push("Target is up-to-date: 'json-manual-review/es/fruits.json'");
   overwriteOutdatedTargets.forEach((targetPath, index) => {
     const recv = args.bypassEmpty
       ? "Bypass 1 strings because they are empty..."
-      : `Invoke 'google-translate' from 'en' to '${targetLngs[index]}' with 1 inputs...`;
+      : `Invoke 'google-translate' from 'en' to '${
+          targetLngs[index + 1]
+        }' with 1 inputs...`;
     lines.push(
       ...[
         recv,
