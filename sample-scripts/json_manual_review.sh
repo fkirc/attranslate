@@ -15,6 +15,5 @@ attranslate --srcFile=$BASE_DIR/en/fruits.json --targetFile=$BASE_DIR/es/fruits.
 # Use "--overwriteOutdated=true" if you want to prevent outdated translations once and for all.
 attranslate --srcFile=$BASE_DIR/en/fruits.json --targetFile=$BASE_DIR/zh/fruits.json --targetLng=zh "${COMMON_ARGS[@]}" --overwriteOutdated=true
 
-# Use "--overwriteOutdated=true" if you have no clue about the target-language,
-# because up-to-date machine-translations are better than outdated machine-translations, even if both of them are broken.
+# Use "--overwriteOutdated=true" if you have no clue about the target-language and no capacity for manual reviews.
 attranslate --srcFile=$BASE_DIR/en/fruits.json --targetFile=$BASE_DIR/de/fruits.json --targetLng=de "${COMMON_ARGS[@]}" --overwriteOutdated=true
