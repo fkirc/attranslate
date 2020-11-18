@@ -1,3 +1,7 @@
+# 1.2.0
+
+- Add the option `--overwriteOutdated` to ease rollouts of `attranslate` in hectic project environments (default `true` to remain backwards-compatible).
+
 # 1.1.0
 
 - Support nested XMLs with an arbitrary depth

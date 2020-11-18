@@ -18,7 +18,7 @@ function jsonTargetPaths(): string[] {
     return join(assetDir, targetLng, "fruits.json");
   });
 }
-
+const overwriteOutdatedTargets = jsonTargetPaths().slice(1);
 const sourcePath = join(sampleDir, assetDir, "en", "fruits.json");
 const cachePath = join(
   sampleDir,
@@ -43,23 +43,20 @@ test("multi_json clean", async () => {
 
 test("multi_json create new cache", async () => {
   await runCommand(`rm ${cachePath}`);
-  const expectOutput = expectedCreateOutput({
-    cachePath,
-  });
   const output = await runMultiJSON();
-  expect(output).toBe(expectOutput);
+  expect(output).toBe(expectedCreateCacheOutput());
 });
 
-function expectedCreateOutput(args: { cachePath: string }): string {
+function expectedCreateCacheOutput(): string {
   const firstPass: string[] = [
+    `Target is up-to-date: '${assetDir}/es/fruits.json'`,
+  ];
+  const secondPass: string[] = [
     `Cache not found -> Generate a new cache to enable selective translations.`,
     `To make selective translations, do one of the following:`,
     "Option 1: Change your source-file and then re-run this tool.",
     "Option 2: Delete parts of your target-file and then re-run this tool.",
     "Skipped translations because we had to generate a new cache.",
-    `Write cache ${getDebugPath(cachePath)}`,
-  ];
-  const secondPass: string[] = [
     `Write cache ${getDebugPath(cachePath)}`,
     `Target is up-to-date: '${assetDir}/zh/fruits.json'`,
   ];
@@ -71,8 +68,7 @@ function expectedCreateOutput(args: { cachePath: string }): string {
 }
 
 test("multi_json propagate updates to null-targets", async () => {
-  const targetPaths = jsonTargetPaths();
-  targetPaths.forEach((targetPath) => {
+  overwriteOutdatedTargets.forEach((targetPath) => {
     modifyJsonProperty({
       jsonPath: join(sampleDir, targetPath),
       index: 0,
@@ -81,8 +77,6 @@ test("multi_json propagate updates to null-targets", async () => {
   });
 
   const expectOutput = expectedUpdateOutput({
-    targetPaths,
-    cachePath,
     bypassEmpty: false,
   });
   const output = await runMultiJSON();
@@ -90,15 +84,12 @@ test("multi_json propagate updates to null-targets", async () => {
 });
 
 test("multi_json propagate empty string from source", async () => {
-  const targetPaths = jsonTargetPaths();
   modifyJsonProperty({
     jsonPath: sourcePath,
     index: 0,
     newValue: "",
   });
   const expectOutput = expectedUpdateOutput({
-    targetPaths,
-    cachePath,
     bypassEmpty: true,
   });
   const output = await runSampleScript(`./json_manual_review.sh`, [
@@ -112,22 +103,21 @@ test("multi_json propagate empty string from source", async () => {
   await runCommand(`git checkout ${join(sampleDir, assetDir)}`);
 });
 
-function expectedUpdateOutput(args: {
-  targetPaths: string[];
-  cachePath: string;
-  bypassEmpty: boolean;
-}): string {
+function expectedUpdateOutput(args: { bypassEmpty: boolean }): string {
   const lines: string[] = [];
-  args.targetPaths.forEach((targetPath, index) => {
+  lines.push("Target is up-to-date: 'json-manual-review/es/fruits.json'");
+  overwriteOutdatedTargets.forEach((targetPath, index) => {
     const recv = args.bypassEmpty
       ? "Bypass 1 strings because they are empty..."
-      : `Invoke 'google-translate' from 'en' to '${targetLngs[index]}' with 1 inputs...`;
+      : `Invoke 'google-translate' from 'en' to '${
+          targetLngs[index + 1]
+        }' with 1 inputs...`;
     lines.push(
       ...[
         recv,
         "Update 1 existing translations",
         `Write target ${getDebugPath(join(sampleDir, targetPath))}`,
-        `Write cache ${getDebugPath(args.cachePath)}`,
+        `Write cache ${getDebugPath(cachePath)}`,
       ]
     );
   });

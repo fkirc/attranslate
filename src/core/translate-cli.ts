@@ -89,7 +89,14 @@ export async function translateCli(cliArgs: CliArgs) {
     );
   }
 
-  const srcCache: TSet | null = resolveTCache(src, cliArgs);
+  const overwriteOutdated = parseBooleanOption(
+    cliArgs.overwriteOutdated,
+    "overwriteOutdated"
+  );
+  let srcCache: TSet | null = null;
+  if (overwriteOutdated) {
+    srcCache = resolveTCache(src, cliArgs);
+  }
   const oldTarget: TSet | null = await resolveOldTarget(
     cliArgs,
     targetFileFormat
@@ -105,6 +112,7 @@ export async function translateCli(cliArgs: CliArgs) {
     service: cliArgs.service as TServiceType,
     serviceConfig: cliArgs.serviceConfig ?? null,
     matcher: cliArgs.matcher as TMatcherType,
+    overwriteOutdated,
     deleteStale: parseBooleanOption(cliArgs.deleteStale, "deleteStale"),
   };
   const result = await translateCore(coreArgs);
@@ -123,14 +131,15 @@ export async function translateCli(cliArgs: CliArgs) {
     });
   }
   const flushCache =
-    flushTarget ||
-    missingTCacheTarget() ||
-    !srcCache ||
-    !areEqual(srcCache, result.newSrcCache);
+    overwriteOutdated &&
+    (flushTarget ||
+      missingTCacheTarget() ||
+      !srcCache ||
+      !areEqual(srcCache, result.newSrcCache));
   if (flushCache) {
     writeTCache(result, cliArgs);
   }
-  if (!flushTarget && srcCache) {
+  if (!flushTarget) {
     console.info(`Target is up-to-date: '${cliArgs.targetFile}'`);
   }
 }

@@ -10,10 +10,6 @@
       "value": "Apple",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "zh",
           "state": "frozen"
         },
@@ -27,10 +23,6 @@
       "value": "Pear",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "zh",
           "state": "frozen"
         },
@@ -43,10 +35,6 @@
     "nested.banana": {
       "value": "Banana",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "zh",
           "state": "frozen"

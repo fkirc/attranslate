@@ -5,7 +5,7 @@
 macOS/Ubuntu/Windows: [![Actions Status](https://github.com/fkirc/attranslate/workflows/Tests/badge.svg/?branch=master)](https://github.com/fkirc/attranslate/actions?query=branch%3Amaster)
 
 `attranslate` is a semi-automated tool for "synchronizing" translation-files.
-A goal of `attranslate` is to ease the burden of keeping multiple languages in sync.
+`attranslate` is optimized for fast and smooth rollouts in hectic project environments, even if you already have many translations.
 Optionally, `attranslate` works with automated translation-services.
 For example, let's say that a translation-service achieves 80% correct translations.
 Thanks to `attranslate`, a quick fix of the remaining 20% is faster than doing everything by hand.
@@ -38,6 +38,12 @@ To make this possible, `attranslate` supports the following file formats:
 `attranslate` recognizes that automated translations are not perfect.
 Therefore, whenever you are unhappy with the produced results, `attranslate` allows you to simply overwrite texts in your target-files.
 `attranslate` will never ever overwrite a manual correction in subsequent runs.
+
+## Optionally Overwrite Outdated Translations
+
+Normally, overwriting outdated translations helps to ensure the freshness of translations.
+However, in hectic project environments, it might be easier to leave outdated translations as-is.
+Therefore, `attranslate` provides the `--overwriteOutdated`-option to ease rollouts of `attranslate` in hectic project environments.
 
 ## Support For Manual Reviews
 
@@ -82,9 +88,16 @@ SERVICE_ACCOUNT_KEY="gcloud/gcloud_service_account.json"
 COMMON_ARGS=( "--srcLng=en" "--srcFormat=nested-json" "--targetFormat=nested-json" "--service=google-translate" "--serviceConfig=$SERVICE_ACCOUNT_KEY" "--manualReview=true" "--cacheDir=$BASE_DIR" "--matcher=i18next" )
 
 # Run "npm install --global attranslate" before you try this example.
-attranslate --srcFile=$BASE_DIR/en/fruits.json --targetFile=$BASE_DIR/es/fruits.json --targetLng=es "${COMMON_ARGS[@]}"
-attranslate --srcFile=$BASE_DIR/en/fruits.json --targetFile=$BASE_DIR/zh/fruits.json --targetLng=zh "${COMMON_ARGS[@]}"
-attranslate --srcFile=$BASE_DIR/en/fruits.json --targetFile=$BASE_DIR/de/fruits.json --targetLng=de "${COMMON_ARGS[@]}"
+
+# Use "--overwriteOutdated=false" if you introduce attranslate into a hectic project-environment,
+# or if you expect that some project collaborators won't even use attranslate because they have no time for "learning" it.
+attranslate --srcFile=$BASE_DIR/en/fruits.json --targetFile=$BASE_DIR/es/fruits.json --targetLng=es "${COMMON_ARGS[@]}" --overwriteOutdated=false
+
+# Use "--overwriteOutdated=true" if you want to prevent outdated translations once and for all.
+attranslate --srcFile=$BASE_DIR/en/fruits.json --targetFile=$BASE_DIR/zh/fruits.json --targetLng=zh "${COMMON_ARGS[@]}" --overwriteOutdated=true
+
+# Use "--overwriteOutdated=true" if you have no clue about the target-language and no capacity for manual reviews.
+attranslate --srcFile=$BASE_DIR/en/fruits.json --targetFile=$BASE_DIR/de/fruits.json --targetLng=de "${COMMON_ARGS[@]}" --overwriteOutdated=true
 ```
 
 Similarly, you can use `attranslate` to convert between file-formats.
@@ -98,36 +111,38 @@ Run `attranslate --help` to see a list of available options:
 Usage: attranslate [options]
 
 Options:
-  --srcFile <sourceFile>             The source file to be translated
-  --srcLng <sourceLanguage>          A language code for the source language
-  --srcFormat <sourceFileFormat>     One of "flat-json", "nested-json", "yaml",
-                                     "po", "xml", "ios-strings", "arb"
-  --targetFile <targetFile>          The target file for the translations
-  --targetLng <targetLanguage>       A language code for the target language
-  --targetFormat <targetFileFormat>  One of "flat-json", "nested-json", "yaml",
-                                     "po", "xml", "ios-strings", "arb"
-  --service <translationService>     One of "google-translate", "deepl",
-                                     "azure", "manual",
-                                     "sync-without-translate"
-  --serviceConfig <serviceKey>       supply configuration for a translation
-                                     service (either a path to a key-file or an
-                                     API-key)
-  --cacheDir <cacheDir>              The directory where a translation-cache is
-                                     expected to be found (default: ".")
-  --matcher <matcher>                One of "none", "icu", "i18next", "sprintf"
-                                     (default: "none")
-  --deleteStale <true | false>       If true, delete translations that exist in
-                                     the target file but not in the source file
-                                     (default: "true")
-  --manualReview <true | false>      If true, mark newly generated texts with a
-                                     review-notice (default: "false")
-  --keySearch <regExp>               A regular expression to replace
-                                     translation-keys (can be used for
-                                     file-format conversions) (default: "x")
-  --keyReplace <string>              The replacement for occurrences of
-                                     keySearch (default: "x")
-  -v, --version                      output the version number
-  -h, --help                         display help for command
+  --srcFile <sourceFile>              The source file to be translated
+  --srcLng <sourceLanguage>           A language code for the source language
+  --srcFormat <sourceFileFormat>      One of "flat-json", "nested-json",
+                                      "yaml", "po", "xml", "ios-strings", "arb"
+  --targetFile <targetFile>           The target file for the translations
+  --targetLng <targetLanguage>        A language code for the target language
+  --targetFormat <targetFileFormat>   One of "flat-json", "nested-json",
+                                      "yaml", "po", "xml", "ios-strings", "arb"
+  --service <translationService>      One of "google-translate", "deepl",
+                                      "azure", "manual",
+                                      "sync-without-translate"
+  --serviceConfig <serviceKey>        supply configuration for a translation
+                                      service (either a path to a key-file or
+                                      an API-key)
+  --cacheDir <cacheDir>               The directory where a translation-cache
+                                      is expected to be found (default: ".")
+  --matcher <matcher>                 One of "none", "icu", "i18next",
+                                      "sprintf" (default: "none")
+  --overwriteOutdated <true | false>  If true, overwrite outdated translations
+                                      in subsequent runs (default: "true")
+  --deleteStale <true | false>        If true, delete translations that exist
+                                      in the target file but not in the source
+                                      file (default: "true")
+  --manualReview <true | false>       If true, mark newly generated texts with
+                                      a review-notice (default: "false")
+  --keySearch <regExp>                A regular expression to replace
+                                      translation-keys (can be used for
+                                      file-format conversions) (default: "x")
+  --keyReplace <string>               The replacement for occurrences of
+                                      keySearch (default: "x")
+  -v, --version                       output the version number
+  -h, --help                          display help for command
 ```
 
 
@@ -174,12 +189,9 @@ You can select a matcher with the `--matcher` option.
 
 ## Translation Cache
 
-The translation-cache is an essential part of `attranslate`.
-The purpose is twofold:
+> :warning: If `--overwriteOutdated` is set to `false`, then `attranslate` does not generate any translation-cache.
 
-- The translation-cache enables selective corrections if you are not happy with automatically generated translations.
-- The translation-cache saves time and cost because it prevents redundant re-translations.
-
+The main purpose of the translation-cache is to detect _outdated translations_, such that outdated translations can be overwritten in subsequent runs.
 The translation-cache consists of `attranslate-cache-*`-files.
 It is allowed to delete a translation-cache at any time.
 However, to make it work smoothly, you should put your `attranslate-cache-*`-files under version control.

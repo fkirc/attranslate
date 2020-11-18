@@ -10,10 +10,6 @@
       "value": "Payment and Delivery",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -22,10 +18,6 @@
     "subsections[1]": {
       "value": "Success Stories",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "de",
           "state": "frozen"
@@ -36,10 +28,6 @@
       "value": "Certificates",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -48,10 +36,6 @@
     "titles_long.home": {
       "value": "Home section",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "de",
           "state": "frozen"
@@ -62,10 +46,6 @@
       "value": "Our Blog",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -74,10 +54,6 @@
     "titles_long.stories": {
       "value": "about our users",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "de",
           "state": "frozen"
@@ -88,10 +64,6 @@
       "value": "Customer Support and Frequently Asked Questions",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -100,10 +72,6 @@
     "titles_long.press": {
       "value": "Press",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "de",
           "state": "frozen"
@@ -114,10 +82,6 @@
       "value": "Impressum",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -126,10 +90,6 @@
     "titles_long.gdpr": {
       "value": "Data Protection Regulation",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "de",
           "state": "frozen"
@@ -140,10 +100,6 @@
       "value": "Certificates",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -152,10 +108,6 @@
     "titles_long.delivery-terms": {
       "value": "Payment and Delivery",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "de",
           "state": "frozen"
@@ -166,10 +118,6 @@
       "value": "Instructions for Use",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -178,10 +126,6 @@
     "titles_long.contact": {
       "value": "Contact / Support",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "de",
           "state": "frozen"
@@ -192,10 +136,6 @@
       "value": "Cancellation",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -204,10 +144,6 @@
     "titles_long.about": {
       "value": "About us - the team",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "de",
           "state": "frozen"
@@ -218,10 +154,6 @@
       "value": "Career",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -230,10 +162,6 @@
     "titles_long.errorpage": {
       "value": "four zero four",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "de",
           "state": "frozen"
@@ -244,10 +172,6 @@
       "value": "Download",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -256,10 +180,6 @@
     "titles_long.checkout": {
       "value": "Checkout",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "de",
           "state": "frozen"
@@ -270,10 +190,6 @@
       "value": "GT&C",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -282,10 +198,6 @@
     "itunes.url": {
       "value": "https://itunes.apple.com/gb/app/sdsdsdsdsds",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "de",
           "state": "frozen"
@@ -296,10 +208,6 @@
       "value": "https://play.google.com/store/apps/details?id=sdsdsdsdsds",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -308,10 +216,6 @@
     "banner.text_long": {
       "value": "For a short time ony!",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "de",
           "state": "frozen"
@@ -322,10 +226,6 @@
       "value": "Sale -15%",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -334,10 +234,6 @@
     "banner.countries[0]": {
       "value": "DE",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "de",
           "state": "frozen"
@@ -348,10 +244,6 @@
       "value": "AT",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -360,10 +252,6 @@
     "banner.countries[2]": {
       "value": "NL",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "de",
           "state": "frozen"
@@ -374,10 +262,6 @@
       "value": "DK",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -386,10 +270,6 @@
     "banner.coupon": {
       "value": "HERBST15",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "de",
           "state": "frozen"
@@ -400,10 +280,6 @@
       "value": "#sale",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -412,10 +288,6 @@
     "banner.quantity": {
       "value": "3",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "de",
           "state": "frozen"
@@ -426,10 +298,6 @@
       "value": "buy now",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -438,10 +306,6 @@
     "shop.button": {
       "value": "Buy now",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "de",
           "state": "frozen"
@@ -452,10 +316,6 @@
       "value": "talking",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -464,10 +324,6 @@
     "blog.subtitle": {
       "value": "Some blog",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "de",
           "state": "frozen"
@@ -478,10 +334,6 @@
       "value": "You May Also Enjoy",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -490,10 +342,6 @@
     "stories.title": {
       "value": "Success Stories",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "de",
           "state": "frozen"
@@ -504,10 +352,6 @@
       "value": "Read the stories of our users",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -516,10 +360,6 @@
     "footer.block1.title": {
       "value": "Legal",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "de",
           "state": "frozen"
@@ -530,10 +370,6 @@
       "value": "Data Protection",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -542,10 +378,6 @@
     "footer.block1.link2": {
       "value": "GT & C",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "de",
           "state": "frozen"
@@ -556,10 +388,6 @@
       "value": "Cancellation",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -568,10 +396,6 @@
     "footer.block1.link4": {
       "value": "Legal Notice",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "de",
           "state": "frozen"
@@ -582,10 +406,6 @@
       "value": "Legal",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -594,10 +414,6 @@
     "footer.block1.inner_footer.inner_block1.inner_link1": {
       "value": "Data Protection",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "de",
           "state": "frozen"
@@ -608,10 +424,6 @@
       "value": "Information",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -620,10 +432,6 @@
     "footer.block2.link1": {
       "value": "IFU",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "de",
           "state": "frozen"
@@ -634,10 +442,6 @@
       "value": "FAQ",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -646,10 +450,6 @@
     "footer.block2.link3": {
       "value": "Payment and Delivery",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "de",
           "state": "frozen"
@@ -660,10 +460,6 @@
       "value": "Recycling",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -672,10 +468,6 @@
     "footer.block3.title": {
       "value": "App",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "de",
           "state": "frozen"
@@ -686,10 +478,6 @@
       "value": "Apple AppStore",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -698,10 +486,6 @@
     "footer.block3.link2": {
       "value": "Google PlayStore",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "de",
           "state": "frozen"
@@ -712,10 +496,6 @@
       "value": "Payment",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -724,10 +504,6 @@
     "footer.block5.link1": {
       "value": "About us",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "de",
           "state": "frozen"
@@ -738,10 +514,6 @@
       "value": "Contact",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -750,10 +522,6 @@
     "footer.block5.link3": {
       "value": "Press",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "de",
           "state": "frozen"
@@ -764,10 +532,6 @@
       "value": "Certificates",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -776,10 +540,6 @@
     "footer.block5.link6": {
       "value": "Career",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "de",
           "state": "frozen"
@@ -790,10 +550,6 @@
       "value": "© company",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -802,10 +558,6 @@
     "cookie.msg": {
       "value": "This website uses cookies to ensure you get the best experience on our website.",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "de",
           "state": "frozen"
@@ -816,10 +568,6 @@
       "value": "Learn more",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -828,10 +576,6 @@
     "cookie.close": {
       "value": "Okay",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "de",
           "state": "frozen"
@@ -842,10 +586,6 @@
       "value": "Order now",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -854,10 +594,6 @@
     "checkout.button_order_create": {
       "value": "Continue to Purchase",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "de",
           "state": "frozen"
@@ -868,10 +604,6 @@
       "value": "Pay and Purchase",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -880,10 +612,6 @@
     "checkout.shippingbilling.title": {
       "value": "Shipping &amp; Billing Information",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "de",
           "state": "frozen"
@@ -894,10 +622,6 @@
       "value": "First Name",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -906,10 +630,6 @@
     "checkout.shippingbilling.first_name_ex": {
       "value": "Emma",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "de",
           "state": "frozen"
@@ -920,10 +640,6 @@
       "value": "Last Name",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -932,10 +648,6 @@
     "checkout.shippingbilling.last_name_ex": {
       "value": "Miller",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "de",
           "state": "frozen"
@@ -946,10 +658,6 @@
       "value": "E-Mail",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -958,10 +666,6 @@
     "checkout.shippingbilling.email_ex": {
       "value": "emma@themillers.com",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "de",
           "state": "frozen"
@@ -972,10 +676,6 @@
       "value": "Address",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -984,10 +684,6 @@
     "checkout.shippingbilling.address_ex": {
       "value": "10 Piccadilly",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "de",
           "state": "frozen"
@@ -998,10 +694,6 @@
       "value": "City",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -1010,10 +702,6 @@
     "checkout.shippingbilling.city_ex": {
       "value": "London",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "de",
           "state": "frozen"
@@ -1024,10 +712,6 @@
       "value": "State",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -1036,10 +720,6 @@
     "checkout.shippingbilling.state_ex": {
       "value": "London",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "de",
           "state": "frozen"
@@ -1050,10 +730,6 @@
       "value": "ZIP",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -1062,10 +738,6 @@
     "checkout.shippingbilling.zip_ex": {
       "value": "W1J00DD",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "de",
           "state": "frozen"
@@ -1076,10 +748,6 @@
       "value": "Country",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -1088,10 +756,6 @@
     "checkout.shippingbilling.country_ex": {
       "value": "GB",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "de",
           "state": "frozen"
@@ -1102,10 +766,6 @@
       "value": "Discount Code",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -1114,10 +774,6 @@
     "checkout.paymentinfo.title": {
       "value": "Payment Information",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "de",
           "state": "frozen"
@@ -1128,10 +784,6 @@
       "value": "Credit Card",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -1140,10 +792,6 @@
     "checkout.paymentinfo.redirect": {
       "value": "You will be redirected to your bank to complete payment.",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "de",
           "state": "frozen"
@@ -1154,10 +802,6 @@
       "value": "Payment information will be provided after you place your order.",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -1166,10 +810,6 @@
     "checkout.summary.title": {
       "value": "Order Summary",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "de",
           "state": "frozen"
@@ -1180,10 +820,6 @@
       "value": "Subtotal",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -1192,10 +828,6 @@
     "checkout.summary.shipping": {
       "value": "Shipping",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "de",
           "state": "frozen"
@@ -1206,10 +838,6 @@
       "value": "Free",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -1218,10 +846,6 @@
     "checkout.summary.coupon": {
       "value": "Discount Code",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "de",
           "state": "frozen"
@@ -1232,10 +856,6 @@
       "value": "Total",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -1244,10 +864,6 @@
     "checkout.confirmation.processing.title": {
       "value": "Completing your order…",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "de",
           "state": "frozen"
@@ -1258,10 +874,6 @@
       "value": "We are just waiting for confirmation from your bank… This might take a moment.",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -1270,10 +882,6 @@
     "checkout.confirmation.processing.text2": {
       "value": "We will send your receipt via email shortly.",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "de",
           "state": "frozen"
@@ -1284,10 +892,6 @@
       "value": "Thank you for your order!",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -1296,10 +900,6 @@
     "checkout.confirmation.success.text1": {
       "value": "Thank you for your patience. Your payment is now complete and your order is being processed.",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "de",
           "state": "frozen"
@@ -1310,10 +910,6 @@
       "value": "We have sent your receipt to your email address, and your items will be on their way shortly.",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -1322,10 +918,6 @@
     "checkout.confirmation.receiver.title": {
       "value": "Thank you. Just one last step!",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "de",
           "state": "frozen"
@@ -1336,10 +928,6 @@
       "value": "Please make a payment using the details below to complete your order.",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -1348,10 +936,6 @@
     "checkout.confirmation.error.title": {
       "value": "Oops, payment failed.",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "de",
           "state": "frozen"
@@ -1362,10 +946,6 @@
       "value": "It looks like your order could not be paid at this time. Please try again or select a different payment option.",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -1374,10 +954,6 @@
     "about.title": {
       "value": "About us",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "de",
           "state": "frozen"
@@ -1388,10 +964,6 @@
       "value": "we explain\nin multiple lines\nwho we are",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -1400,10 +972,6 @@
     "about.team.title": {
       "value": "Our team",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "de",
           "state": "frozen"
@@ -1414,10 +982,6 @@
       "value": "Our highly skilled team draws on decades of experience and is committed to making a\nvaluable contribution to society. We are driven by the desire to positively shape the everyday life with a series of\ninnovative products.",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -1426,10 +990,6 @@
     "about.team.img1.link": {
       "value": "ceo.png",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "de",
           "state": "frozen"
@@ -1440,10 +1000,6 @@
       "value": " fk",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -1452,10 +1008,6 @@
     "about.team.img1.author": {
       "value": "fk",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "de",
           "state": "frozen"
@@ -1466,10 +1018,6 @@
       "value": "CEO & Founder",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -1478,10 +1026,6 @@
     "about.partner.title": {
       "value": "Our partners...",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "de",
           "state": "frozen"
@@ -1492,10 +1036,6 @@
       "value": "404 – page not found",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -1504,10 +1044,6 @@
     "errorpage.details": {
       "value": "We’re sorry, but the party you’re looking for seems to be happening elsewhere! Maybe you`ll find what you`re looking for on the Homepage.",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "de",
           "state": "frozen"
@@ -1518,10 +1054,6 @@
       "value": "Invoice Date:",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -1530,10 +1062,6 @@
     "invoice.shipping_date": {
       "value": "Shipping Date:",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "de",
           "state": "frozen"
@@ -1544,10 +1072,6 @@
       "value": "Order Number:",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -1556,10 +1080,6 @@
     "invoice.invoice_number": {
       "value": "Invoice Number:",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "de",
           "state": "frozen"
@@ -1570,10 +1090,6 @@
       "value": "Invoice",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -1582,10 +1098,6 @@
     "invoice.content.text": {
       "value": "Thank you for using.",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "de",
           "state": "frozen"
@@ -1596,10 +1108,6 @@
       "value": "Pcs",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -1608,10 +1116,6 @@
     "invoice.content.name": {
       "value": "Product Name",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "de",
           "state": "frozen"
@@ -1622,10 +1126,6 @@
       "value": "Price/Unit",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -1634,10 +1134,6 @@
     "invoice.content.payment": {
       "value": "Payment",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "de",
           "state": "frozen"
@@ -1648,10 +1144,6 @@
       "value": "Subtotal",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -1660,10 +1152,6 @@
     "invoice.content.tax": {
       "value": "Tax Rate",
       "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
         {
           "id": "de",
           "state": "frozen"
@@ -1674,10 +1162,6 @@
       "value": "Shipping",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -1687,10 +1171,6 @@
       "value": "Total",
       "targets": [
         {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
           "id": "de",
           "state": "frozen"
         }
@@ -1698,9 +1178,3 @@
     }
   }
 }
-
-
-
-
-
-
