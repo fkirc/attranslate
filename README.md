@@ -33,7 +33,7 @@ To make this possible, `attranslate` supports the following file formats:
 - iOS-Strings
 - Flutter-ARB
 
-## Seamless Manual Corrections
+## Preserve Manual Translations
 
 `attranslate` recognizes that automated translations are not perfect.
 Therefore, whenever you are unhappy with the produced results, `attranslate` allows you to simply overwrite texts in your target-files.
