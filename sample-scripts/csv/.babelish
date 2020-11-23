@@ -1,3 +1,5 @@
+# "attranslate" aims to be backwards-compatible with "babelish"
+
 ###################################### Base2CSV ######################################
 
 ## required, location of strings files (FILENAMES)
