@@ -35,4 +35,4 @@ langs:                               # Languages to convert. i.e. English:en
 
 ###################################### General ######################################
 
-# csv_separator: ','				 # CSV column separator character, uses ',' by default
+# csv_separator: ';'				 # CSV column separator character, uses ',' by default
