@@ -45,6 +45,9 @@ function parseCsvStruct(args: {
     );
   }
   const contentLines = lines.slice(1);
+  contentLines.forEach((line, index) => {
+    contentLines[index] = line.replace("\r", "");
+  });
   return {
     rawHeader,
     languageIndex,
