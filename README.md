@@ -32,6 +32,7 @@ To make this possible, `attranslate` supports the following file formats:
 - Android-XML or any other XMLs with text-contents
 - iOS-Strings
 - Flutter-ARB
+- CSV (e.g. for Google Docs or Microsoft Excel)
 
 ## Preserve Manual Translations
 
@@ -114,11 +115,13 @@ Options:
   --srcFile <sourceFile>              The source file to be translated
   --srcLng <sourceLanguage>           A language code for the source language
   --srcFormat <sourceFileFormat>      One of "flat-json", "nested-json",
-                                      "yaml", "po", "xml", "ios-strings", "arb"
+                                      "yaml", "po", "xml", "ios-strings",
+                                      "arb", "csv"
   --targetFile <targetFile>           The target file for the translations
   --targetLng <targetLanguage>        A language code for the target language
   --targetFormat <targetFileFormat>   One of "flat-json", "nested-json",
-                                      "yaml", "po", "xml", "ios-strings", "arb"
+                                      "yaml", "po", "xml", "ios-strings",
+                                      "arb", "csv"
   --service <translationService>      One of "google-translate", "deepl",
                                       "azure", "manual",
                                       "sync-without-translate"
