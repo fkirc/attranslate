@@ -37,7 +37,7 @@ function parseCsvStruct(args: {
   }
   const languageCodes = header.slice(1);
   const languageIndex =
-    1 + languageCodes.findIndex((value) => value === args.args.lng);
+    1 + languageCodes.findIndex((value) => value.trim() === args.args.lng);
   if (languageIndex <= 0) {
     logParseError(
       `Did not find language '${args.args.lng}' in CSV header '${rawHeader}'`,
