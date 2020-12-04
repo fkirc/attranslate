@@ -14,5 +14,5 @@ attranslate --overwriteOutdated=false --srcFormat=csv --srcFile=csv/translations
 attranslate --overwriteOutdated=false --srcFormat=csv --srcFile=csv/translations.csv --srcLng=de --targetFormat=po --targetFile=csv/de.po --targetLng=de --service=sync-without-translate
 attranslate --overwriteOutdated=false --srcFormat=csv --srcFile=csv/translations.csv --srcLng=es --targetFormat=arb --targetFile=csv/es.arb --targetLng=es --service=sync-without-translate
 
-attranslate --overwriteOutdated=false --srcFormat=csv --srcFile=csv/translations.csv --srcLng=en --targetFormat=csv --targetFile=csv/single-lang.csv --targetLng=en --service=sync-without-translate
-#attranslate --overwriteOutdated=false --srcFormat=ios-strings --srcFile=csv/en.strings --srcLng=en --targetFormat=csv --targetFile=csv/single-lang.csv --targetLng=en --service=sync-without-translate
+attranslate --overwriteOutdated=false --srcFormat=csv --srcFile=csv/translations.csv --srcLng=es --targetFormat=csv --targetFile=csv/single-lang-es.csv --targetLng=es --service=sync-without-translate
+attranslate --overwriteOutdated=false --srcFormat=ios-strings --srcFile=csv/en.strings --srcLng=en --targetFormat=csv --targetFile=csv/single-lang-en.csv --targetLng=en --service=sync-without-translate
