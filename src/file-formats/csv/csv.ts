@@ -31,7 +31,7 @@ function parseCsvStruct(args: {
   const header: string[] = rawHeader.split(CSV_SEPARATOR);
   if (!header || header.length < 2) {
     logParseError(
-      "Expected at least 2 columns in CSV header (key + language codes)",
+      `Expected at least 2 columns in CSV header with separator '${CSV_SEPARATOR}'`,
       args.args
     );
   }
