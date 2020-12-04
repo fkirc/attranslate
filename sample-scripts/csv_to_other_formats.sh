@@ -3,7 +3,7 @@ set -e
 
 # Run "npm install --global attranslate" before you try this example.
 
-# This example extracts contents from a CSV file and converts it into various formats.
+# This example extracts contents from CSV files and converts it into various formats.
 
 attranslate --cacheDir=csv --srcFormat=csv --srcFile=csv/google-docs.csv --srcLng=en --targetFormat=xml --targetFile=csv/en.xml --targetLng=en --service=sync-without-translate
 attranslate --overwriteOutdated=false --srcFormat=csv --srcFile=csv/google-docs.csv --srcLng=de --targetFormat=yaml --targetFile=csv/de.yaml --targetLng=de --service=sync-without-translate
