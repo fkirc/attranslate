@@ -23,6 +23,13 @@ describe.each([
     auxMessage: null,
   },
   {
+    srcFile: "test-assets/android-xml/advanced.xml",
+    srcFormat: "csv",
+    errorMessage:
+      "Expected at least 2 columns in CSV header with separator ','",
+    auxMessage: null,
+  },
+  {
     srcFile: "test-assets/invalid/bogus-lang.csv",
     srcFormat: "csv",
     errorMessage: "Did not find language 'en' in CSV header 'keys,bogus-lang'",
