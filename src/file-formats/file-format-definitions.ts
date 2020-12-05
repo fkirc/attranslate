@@ -38,6 +38,7 @@ const fileFormatMap = {
   xml: null,
   "ios-strings": null,
   arb: null,
+  csv: null,
 };
 
 export async function instantiateTFileFormat(
@@ -61,5 +62,7 @@ export async function instantiateTFileFormat(
       return new (await import("./xml/xml-generic")).XmlGeneric();
     case "ios-strings":
       return new (await import("./ios-strings/ios-strings")).IosStrings();
+    case "csv":
+      return new (await import("./csv/csv")).SimpleCsv();
   }
 }

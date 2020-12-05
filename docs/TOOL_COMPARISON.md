@@ -42,6 +42,11 @@ Whereas [Serge](https://github.com/evernote/serge) is geared towards highly-opti
 Moreover, the usage concept is different.
 Whereas `Twine` uses a so-called "Twine data file", `attranslate` is designed to synchronize arbitrary files from A to B.
 
+## BabelEdit
+
+[BabelEdit](https://www.codeandweb.com/babeledit) is a proprietary GUI-tool.
+`attranslate` is a free CLI-tool.
+
 ## Babelish
 
 [Babelish](https://github.com/netbe/Babelish) is targeted for one specific use case:
@@ -53,7 +58,6 @@ Moreover, `attranslate` makes it easier to apply platform-specific manual correc
 
 [strsync](https://github.com/metasmile/strsync) is targeted for "iOS-native" and is distributed via `pip`.
 In contrast, `attranslate` is not restricted to iOS and is distributed via `npm`.
-
 
 ## simpleen.io
 

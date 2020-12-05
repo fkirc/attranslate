@@ -32,6 +32,7 @@ To make this possible, `attranslate` supports the following file formats:
 - Android-XML or any other XMLs with text-contents
 - iOS-Strings
 - Flutter-ARB
+- CSV (e.g. for Google Docs or Microsoft Excel)
 
 ## Preserve Manual Translations
 
@@ -91,13 +92,13 @@ COMMON_ARGS=( "--srcLng=en" "--srcFormat=nested-json" "--targetFormat=nested-jso
 
 # Use "--overwriteOutdated=false" if you introduce attranslate into a hectic project-environment,
 # or if you expect that some project collaborators won't even use attranslate because they have no time for "learning" it.
-attranslate --srcFile=$BASE_DIR/en/fruits.json --targetFile=$BASE_DIR/es/fruits.json --targetLng=es "${COMMON_ARGS[@]}" --overwriteOutdated=false
+attranslate --overwriteOutdated=false --srcFile=$BASE_DIR/en/fruits.json --targetFile=$BASE_DIR/es/fruits.json --targetLng=es "${COMMON_ARGS[@]}"
 
 # Use "--overwriteOutdated=true" if you want to prevent outdated translations once and for all.
-attranslate --srcFile=$BASE_DIR/en/fruits.json --targetFile=$BASE_DIR/zh/fruits.json --targetLng=zh "${COMMON_ARGS[@]}" --overwriteOutdated=true
+attranslate --overwriteOutdated=true --srcFile=$BASE_DIR/en/fruits.json --targetFile=$BASE_DIR/zh/fruits.json --targetLng=zh "${COMMON_ARGS[@]}"
 
 # Use "--overwriteOutdated=true" if you have no clue about the target-language and no capacity for manual reviews.
-attranslate --srcFile=$BASE_DIR/en/fruits.json --targetFile=$BASE_DIR/de/fruits.json --targetLng=de "${COMMON_ARGS[@]}" --overwriteOutdated=true
+attranslate --overwriteOutdated=true --srcFile=$BASE_DIR/en/fruits.json --targetFile=$BASE_DIR/de/fruits.json --targetLng=de "${COMMON_ARGS[@]}"
 ```
 
 Similarly, you can use `attranslate` to convert between file-formats.
@@ -114,11 +115,13 @@ Options:
   --srcFile <sourceFile>              The source file to be translated
   --srcLng <sourceLanguage>           A language code for the source language
   --srcFormat <sourceFileFormat>      One of "flat-json", "nested-json",
-                                      "yaml", "po", "xml", "ios-strings", "arb"
+                                      "yaml", "po", "xml", "ios-strings",
+                                      "arb", "csv"
   --targetFile <targetFile>           The target file for the translations
   --targetLng <targetLanguage>        A language code for the target language
   --targetFormat <targetFileFormat>   One of "flat-json", "nested-json",
-                                      "yaml", "po", "xml", "ios-strings", "arb"
+                                      "yaml", "po", "xml", "ios-strings",
+                                      "arb", "csv"
   --service <translationService>      One of "google-translate", "deepl",
                                       "azure", "manual",
                                       "sync-without-translate"

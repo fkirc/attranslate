@@ -16,6 +16,26 @@ test("src not a JSON", async () => {
 
 describe.each([
   {
+    srcFile: "test-assets/invalid/wrong-separator.csv",
+    srcFormat: "csv",
+    errorMessage:
+      "Expected at least 2 columns in CSV header with separator ','",
+    auxMessage: null,
+  },
+  {
+    srcFile: "test-assets/android-xml/advanced.xml",
+    srcFormat: "csv",
+    errorMessage:
+      "Expected at least 2 columns in CSV header with separator ','",
+    auxMessage: null,
+  },
+  {
+    srcFile: "test-assets/invalid/bogus-lang.csv",
+    srcFormat: "csv",
+    errorMessage: "Did not find language 'en' in CSV header 'keys,bogus-lang'",
+    auxMessage: null,
+  },
+  {
     srcFile: "test-assets/nested-json/count-en.json",
     srcFormat: "xml",
     errorMessage: "XML parsing error",
@@ -38,6 +58,13 @@ describe.each([
     srcFormat: "xml",
     errorMessage:
       "duplicate key 'dup' -> Currently, the usage of duplicate translation-keys is discouraged.",
+    auxMessage: null,
+  },
+  {
+    srcFile: "test-assets/invalid/duplicate-keys.csv",
+    srcFormat: "csv",
+    errorMessage:
+      "duplicate key 'dup_csv' -> Currently, the usage of duplicate translation-keys is discouraged.",
     auxMessage: null,
   },
   {
@@ -82,6 +109,12 @@ describe.each([
     srcFile: "test-assets/invalid/empty",
     srcFormat: "ios-strings",
     errorMessage: "Did not find any Strings in the expected format",
+    auxMessage: null,
+  },
+  {
+    srcFile: "test-assets/invalid/empty",
+    srcFormat: "csv",
+    errorMessage: "Expected at least 2 CSV lines (header + content)",
     auxMessage: null,
   },
   {

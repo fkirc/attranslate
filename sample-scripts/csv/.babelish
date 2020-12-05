@@ -1,0 +1,38 @@
+# "attranslate" aims to be backwards-compatible with "babelish"
+
+###################################### Base2CSV ######################################
+
+## required, location of strings files (FILENAMES)
+filenames: ["../android/app/src/main/res/values/strings.xml", "../android/app/src/main/res/values-de/strings.xml", "../android/app/src/main/res/values-es/strings.xml"]
+
+## optional
+headers: ["keys", "en", "de", "es"] # override headers of columns, default is name of input files and 'Variables' for reference
+# csv_filename: "testconfig.csv"              # location of output file
+# dryrun: true                                # prints out content of hash without writing file
+
+###################################### CSV2Base ######################################
+
+## required
+filename: test/data/test_data.csv    # CSV file (CSV_FILENAME) to convert from or name of file in Google Drive
+langs:                               # Languages to convert. i.e. English:en
+  English: "en"
+
+## optional
+# fetch: true                        # set to true to get file(filename) from google drive
+# excluded_states: ["Images", "Xib"] # Exclude rows with given state
+# comments_column: 4                 # Position of column for comments if any
+# state_column: 3                    # Position of column for state if any
+# keys_column: 0                     # Position of column for keys
+# default_lang: "English"            # Header name of column containing fallback value if value is empty
+# output_dir: "resources/"           # Path of output files
+# output_basenames:                  # Basename of output files
+#  - Localizable
+#  - info
+# ignore_lang_path: true             # does not care about lang component path. i.e: en.lproj/
+# sheet: 0                           # Index of worksheet to download. First index is 0.
+# macros_filename: Babelish.h        # File to output the defines of localized strings
+# stripping: false				     # Strips values inside the spreadsheet
+
+###################################### General ######################################
+
+# csv_separator: ';'				 # CSV column separator character, uses ',' by default

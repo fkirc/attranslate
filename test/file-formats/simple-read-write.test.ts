@@ -23,6 +23,14 @@ const testArgs: {
   fileFormat: TFileType;
 }[] = [
   {
+    srcFile: join(testAssets, "csv", "minimal.csv"),
+    fileFormat: "csv",
+  },
+  {
+    srcFile: join(testAssets, "csv", "single-language.csv"),
+    fileFormat: "csv",
+  },
+  {
     srcFile: join(testAssets, "po", "django_sample.po"),
     fileFormat: "po",
   },

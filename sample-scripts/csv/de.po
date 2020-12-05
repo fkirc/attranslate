@@ -1,0 +1,11 @@
+msgid ""
+msgstr "Content-Type: text/plain\n"
+
+msgid "category_apple"
+msgstr "Apfel"
+
+msgid "category_sub_pear"
+msgstr "Birne"
+
+msgid "category_sub_sub_banana"
+msgstr "Banane"

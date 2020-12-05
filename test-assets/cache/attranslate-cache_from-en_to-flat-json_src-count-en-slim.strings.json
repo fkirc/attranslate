@@ -7,7 +7,7 @@
   },
   "entries": {
     "inner.innerInner.one": {
-      "value": "One",
+      "value": "Four",
       "targets": [
         {
           "id": "de",
