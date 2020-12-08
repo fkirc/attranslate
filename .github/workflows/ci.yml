@@ -71,7 +71,7 @@ jobs:
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-  production_install:
+  production_install_timeout:
     strategy:
       matrix:
         os: [ 'ubuntu-latest' ]
@@ -85,7 +85,7 @@ jobs:
       - run: timeout 0.1s time attranslate --help
       - run: timeout 0.1s time attranslate --version
 
-  production_install_windows:
+  production_install_matrix:
     strategy:
       matrix:
         node: [ '10', '12', '14' ]
