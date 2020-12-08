@@ -74,7 +74,7 @@ jobs:
   production_install:
     strategy:
       matrix:
-        os: [ 'ubuntu-latest', 'macos-latest', 'windows-latest' ]
+        os: [ 'ubuntu-latest', 'macos-latest' ]
     runs-on: ${{ matrix.os }}
     timeout-minutes: 15
     steps:
@@ -82,5 +82,19 @@ jobs:
         with:
           node-version: 14.x
       - run: npm install --global attranslate
-      - run: time attranslate --help
-      - run: time attranslate --version
+      - run: timeout 0.1s time attranslate --help
+      - run: timeout 0.1s time attranslate --version
+
+  production_install_windows:
+    strategy:
+      matrix:
+        node: [ '10', '12', '14', '16' ]
+    runs-on: 'windows-latest'
+    timeout-minutes: 15
+    steps:
+      - uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+      - run: npm install --global attranslate
+      - run: attranslate --help
+      - run: attranslate --version
