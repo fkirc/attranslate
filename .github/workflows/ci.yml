@@ -53,6 +53,10 @@ jobs:
         run: yarn lint
       - run: yarn build
       - run: yarn link
+      - if: ${{ matrix.os != 'macos-latest' && matrix.os != 'windows-latest' }}
+        run: |
+          timeout 0.1s time ./bin/attranslate --version
+          timeout 0.1s time ./bin/attranslate --help
       - run: yarn preTest
         env:
           GCLOUD_PRIVATE_KEY: ${{ secrets.GCLOUD_PRIVATE_KEY }}
@@ -74,13 +78,15 @@ jobs:
   production_install:
     strategy:
       matrix:
+        node: [ '10', '12', '14' ]
         os: [ 'ubuntu-latest', 'macos-latest', 'windows-latest' ]
     runs-on: ${{ matrix.os }}
     timeout-minutes: 15
     steps:
       - uses: actions/setup-node@v1
         with:
-          node-version: 14.x
+          node-version: ${{ matrix.node }}
+      - run: node --version
       - run: npm install --global attranslate
       - run: attranslate --help
       - run: attranslate --version
