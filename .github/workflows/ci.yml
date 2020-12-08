@@ -82,5 +82,5 @@ jobs:
         with:
           node-version: 14.x
       - run: npm install --global attranslate
-      - run: attranslate --help
-      - run: attranslate --version
+      - run: time attranslate --help
+      - run: time attranslate --version
