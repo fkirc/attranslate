@@ -90,7 +90,7 @@ jobs:
       matrix:
         node: [ '10', '12', '14' ]
         os: [ 'ubuntu-latest', 'macos-latest' ]
-  runs-on: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
     timeout-minutes: 15
     steps:
       - uses: actions/setup-node@v1
