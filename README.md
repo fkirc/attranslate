@@ -45,6 +45,7 @@ Therefore, whenever you are unhappy with the produced results, `attranslate` all
 Normally, overwriting outdated translations helps to ensure the freshness of translations.
 However, in hectic project environments, it might be easier to leave outdated translations as-is.
 Therefore, `attranslate` provides the `--overwriteOutdated`-option to ease rollouts of `attranslate` in hectic project environments.
+For a gradual rollout, the recommendation is to set `--overwriteOutdated=false` and change it later on if the need arises.
 
 ## Support For Manual Reviews
 
