@@ -52,11 +52,7 @@ function expectedCreateCacheOutput(): string {
     `Target is up-to-date: '${assetDir}/es/fruits.json'`,
   ];
   const secondPass: string[] = [
-    `Cache not found -> Generate a new cache to enable selective translations.`,
-    `To make selective translations, do one of the following:`,
-    "Option 1: Change your source-file and then re-run this tool.",
-    "Option 2: Delete parts of your target-file and then re-run this tool.",
-    "Skipped translations because we had to generate a new cache.",
+    `Cache not found -> Generate a new cache to detect outdated translations`,
     `Write cache ${getDebugPath(cachePath)}`,
     `Target is up-to-date: '${assetDir}/zh/fruits.json'`,
   ];

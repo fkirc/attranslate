@@ -71,7 +71,7 @@ describe.each(testArray)("translate modified %p", (commonArgs) => {
     const args: E2EArgs = { ...commonArgs.args, cacheDir: cacheMissingDir };
     const output = await runMissingTarget(args);
     expect(output).toContain(
-      `Cache not found -> Generate a new cache to enable selective translations.`
+      `Cache not found -> Generate a new cache to detect outdated translations`
     );
     await runCommand(`rm ${cacheMissingFile}`);
   });
@@ -110,10 +110,7 @@ describe.each(testArray)("translate modified %p", (commonArgs) => {
   test("modified target - missing cache", async () => {
     await runCommand(`rm -f ${cacheMissingFile}`);
     const args: E2EArgs = { ...commonArgs.args, cacheDir: cacheMissingDir };
-    const output = await runModifiedTarget(args, true);
-    expect(output).toContain(
-      `Skipped translations because we had to generate a new cache.`
-    );
+    await runModifiedTarget(args, true);
     await runCommand(`rm ${cacheMissingFile}`);
   });
 });

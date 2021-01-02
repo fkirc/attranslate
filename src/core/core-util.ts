@@ -11,10 +11,7 @@ export function logCoreResults(args: CoreArgs, results: CoreResults) {
   const generateCache: boolean = !args.srcCache && args.overwriteOutdated;
   if (generateCache) {
     console.info(
-      `Cache not found -> Generate a new cache to enable selective translations.\n` +
-        `To make selective translations, do one of the following:\n` +
-        `Option 1: Change your source-file and then re-run this tool.\n` +
-        `Option 2: Delete parts of your target-file and then re-run this tool.`
+      `Cache not found -> Generate a new cache to detect outdated translations`
     );
   }
   const changeSet = results.changeSet;
@@ -33,11 +30,6 @@ export function logCoreResults(args: CoreArgs, results: CoreResults) {
   const countSkipped: number = changeSet.skipped.size;
   if (countSkipped) {
     console.info(`Warning: Skipped ${countSkipped} translations`);
-  }
-  if (!results.serviceInvocation && generateCache) {
-    console.info(
-      `Skipped translations because we had to generate a new cache.`
-    );
   }
 }
 
