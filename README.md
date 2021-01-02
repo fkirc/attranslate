@@ -195,7 +195,7 @@ You can select a matcher with the `--matcher` option.
 
 > :warning: If `--overwriteOutdated` is set to `false`, then `attranslate` does not generate any translation-cache.
 
-The main purpose of the translation-cache is to detect _outdated translations_, such that outdated translations can be overwritten in subsequent runs.
+The purpose of the translation-cache is to detect _outdated translations_, such that outdated translations can be overwritten in subsequent runs.
 The translation-cache consists of `attranslate-cache-*`-files.
 It is allowed to delete a translation-cache at any time.
 However, to make it work smoothly, you should put your `attranslate-cache-*`-files under version control.
