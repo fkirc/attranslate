@@ -42,10 +42,10 @@ Therefore, whenever you are unhappy with the produced results, `attranslate` all
 
 ## Optionally Overwrite Outdated Translations
 
+`attranslate` is capable of detecting outdated translations.
 Normally, overwriting outdated translations helps to ensure the freshness of translations.
 However, in hectic project environments, it might be easier to leave outdated translations as-is.
-Therefore, `attranslate` provides the `--overwriteOutdated`-option to ease rollouts of `attranslate` in hectic project environments.
-For a gradual rollout, the recommendation is to set `--overwriteOutdated=false` and change it later on if the need arises.
+Therefore, `attranslate` leaves outdated translations as-is unless you explicitly configure it to overwrite them.
 
 ## Support For Manual Reviews
 
@@ -95,7 +95,7 @@ COMMON_ARGS=( "--srcLng=en" "--srcFormat=nested-json" "--targetFormat=nested-jso
 # or if you expect that some project collaborators won't even use attranslate because they have no time for "learning" it.
 attranslate --overwriteOutdated=false --srcFile=$BASE_DIR/en/fruits.json --targetFile=$BASE_DIR/es/fruits.json --targetLng=es "${COMMON_ARGS[@]}"
 
-# Use "--overwriteOutdated=true" if you want to prevent outdated translations once and for all.
+# Use "--overwriteOutdated=true" if you want to prevent outdated translations.
 attranslate --overwriteOutdated=true --srcFile=$BASE_DIR/en/fruits.json --targetFile=$BASE_DIR/zh/fruits.json --targetLng=zh "${COMMON_ARGS[@]}"
 
 # Use "--overwriteOutdated=true" if you have no clue about the target-language and no capacity for manual reviews.
@@ -134,7 +134,7 @@ Options:
   --matcher <matcher>                 One of "none", "icu", "i18next",
                                       "sprintf" (default: "none")
   --overwriteOutdated <true | false>  If true, overwrite outdated translations
-                                      in subsequent runs (default: "true")
+                                      in subsequent runs (default: "false")
   --deleteStale <true | false>        If true, delete translations that exist
                                       in the target file but not in the source
                                       file (default: "true")

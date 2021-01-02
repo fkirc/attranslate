@@ -1,3 +1,7 @@
+# 1.4.0
+
+- Change default of `--overwriteOutdated` from `true` to `false`
+
 # 1.3.0
 
 - Add CSV file format

@@ -63,7 +63,7 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
     .option(
       "--overwriteOutdated <true | false>",
       "If true, overwrite outdated translations in subsequent runs",
-      "true"
+      "false"
     )
     .option(
       "--deleteStale <true | false>",
