@@ -17,19 +17,19 @@ export function flatten(obj: unknown): Record<string, string> {
     obj as never,
     function (result: Record<string, unknown>, value: unknown, key: string) {
       if (_.isObject(value)) {
-        const flatMap = _.mapKeys(flatten(value), function (
-          mvalue: unknown,
-          mkey: string
-        ) {
-          if (_.isArray(value)) {
-            const index = mkey.indexOf(NESTED_JSON_SEPARATOR);
-            if (-1 !== index) {
-              return `${key}[${mkey.slice(0, index)}]${mkey.slice(index)}`;
+        const flatMap = _.mapKeys(
+          flatten(value),
+          function (mvalue: unknown, mkey: string) {
+            if (_.isArray(value)) {
+              const index = mkey.indexOf(NESTED_JSON_SEPARATOR);
+              if (-1 !== index) {
+                return `${key}[${mkey.slice(0, index)}]${mkey.slice(index)}`;
+              }
+              return `${key}[${mkey}]`;
             }
-            return `${key}[${mkey}]`;
+            return `${key}.${mkey}`;
           }
-          return `${key}.${mkey}`;
-        });
+        );
 
         _.assign(result, flatMap);
       } else {
