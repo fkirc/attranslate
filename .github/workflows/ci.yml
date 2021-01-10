@@ -2,8 +2,7 @@ name: Tests
 
 on:
   push:
-    branches:
-      - '**'
+  pull_request:
   workflow_dispatch:
     inputs:
       release:
@@ -24,6 +23,7 @@ jobs:
       - id: skip_check
         uses: fkirc/skip-duplicate-actions@master
         with:
+          cancel_others: 'false'
           paths_ignore: '["**/*.md"]'
 
   ci:

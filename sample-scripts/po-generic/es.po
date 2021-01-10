@@ -1,4 +1,3 @@
-# SOME DESCRIPTIVE MODIFIED TITLE.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"

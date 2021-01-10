@@ -1,19 +1,4 @@
 # SOME DESCRIPTIVE TITLE.
-msgid ""
-msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-16 23:23+0000\n"
-"PO-Revision-Date: 2019-12-04 12:12+0000\n"
-"Last-Translator: Orla\n"
-"Language-Team: English <http://197.167.0.100/projects/\n"
-"Language: en\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: attranslate\n"
-
 # lh-check { min: 10, max: 15 }
 msgid "Made with ❤"
 msgstr ""

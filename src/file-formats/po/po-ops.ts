@@ -77,6 +77,9 @@ export function parsePotFile(
 ): GetTextTranslations {
   try {
     const potFile = po.parse(rawFile);
+    if (!potFile.headers) {
+      potFile.headers = {};
+    }
     potFile.headers["X-Generator"] = "attranslate";
     return potFile;
   } catch (e) {
