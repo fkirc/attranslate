@@ -117,12 +117,6 @@ describe.each([
     errorMessage: "Expected at least 2 CSV lines (header + content)",
     auxMessage: null,
   },
-  {
-    srcFile: "test-assets/invalid/whitespace",
-    srcFormat: "po",
-    errorMessage: "GetText parsing error",
-    auxMessage: "TypeError: Cannot set property 'X-Generator' of undefined",
-  },
 ])(
   "src parsing error",
   (args: {
@@ -159,6 +153,7 @@ describe.each([
   { srcFile: "test-assets/invalid/whitespace", srcFormat: "xml" },
   { srcFile: "test-assets/invalid/empty", srcFormat: "yaml" },
   { srcFile: "test-assets/invalid/empty", srcFormat: "po" },
+  { srcFile: "test-assets/invalid/whitespace", srcFormat: "po" },
 ])("empty src", (args: { srcFile: string; srcFormat: string }) => {
   test("empty src", async () => {
     const e2eArgs: E2EArgs = {
