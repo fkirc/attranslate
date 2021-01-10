@@ -22,6 +22,7 @@ jobs:
     steps:
       - id: skip_check
         uses: fkirc/skip-duplicate-actions@master
+        cancel_others: 'false'
         with:
           paths_ignore: '["**/*.md"]'
 
