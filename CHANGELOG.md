@@ -1,3 +1,7 @@
+# 1.4.1
+
+- Fix crash for PO/POT-files without a header
+
 # 1.4.0
 
 - Change default of `--overwriteOutdated` from `true` to `false`
