@@ -1,5 +1,8 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain\n"
+"X-Generator: attranslate\n"
 
-# Check whether parsing works even without a header
 msgid "A section of text like this is known as a text segment."
 msgstr "First"
 
