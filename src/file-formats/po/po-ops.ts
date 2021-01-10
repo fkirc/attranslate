@@ -78,7 +78,7 @@ export function parsePotFile(
   try {
     const potFile = po.parse(rawFile);
     if (!potFile.headers) {
-      potFile.headers = new Object;
+      potFile.headers = {};
     }
     potFile.headers["X-Generator"] = "attranslate";
     return potFile;
