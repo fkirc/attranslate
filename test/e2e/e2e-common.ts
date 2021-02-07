@@ -7,7 +7,7 @@ import {
 } from "../../src/file-formats/common/managed-json";
 
 export const offlineMaxTime = 500;
-export const onlineMaxTime = 3000;
+export const onlineMaxTime = 6000;
 
 export type E2EArgs = CliArgs & { refTargetFile: string };
 
