@@ -27,7 +27,7 @@ const cachePath = join(
 );
 
 async function runMultiJSON(): Promise<string> {
-  return await runSampleScript(`./json_manual_review.sh`, [assetDir]);
+  return await runSampleScript(`./json_advanced.sh`, [assetDir]);
 }
 
 test("multi_json clean", async () => {
@@ -88,9 +88,7 @@ test("multi_json propagate empty string from source", async () => {
   const expectOutput = expectedUpdateOutput({
     bypassEmpty: true,
   });
-  const output = await runSampleScript(`./json_manual_review.sh`, [
-    "json-simple",
-  ]); // Circumvent diff-check
+  const output = await runSampleScript(`./json_advanced.sh`, ["json-simple"]); // Circumvent diff-check
   expect(output).toBe(expectOutput);
   await recursiveDiff({
     pathActual: join(sampleDir, assetDir),
