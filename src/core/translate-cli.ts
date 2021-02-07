@@ -102,7 +102,6 @@ export async function translateCli(cliArgs: CliArgs) {
     targetFileFormat
   );
 
-  const manualReview = parseBooleanOption(cliArgs.manualReview, "manualReview");
   const coreArgs: CoreArgs = {
     src,
     srcCache,
@@ -127,7 +126,6 @@ export async function translateCli(cliArgs: CliArgs) {
       lng: cliArgs.targetLng,
       changeSet: result.changeSet,
       format: targetFileFormat,
-      manualReview,
     });
   }
   const flushCache =

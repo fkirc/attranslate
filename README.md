@@ -9,7 +9,7 @@ macOS/Ubuntu/Windows: [![Actions Status](https://github.com/fkirc/attranslate/wo
 Optionally, `attranslate` works with automated translation-services.
 For example, let's say that a translation-service achieves 80% correct translations.
 Thanks to `attranslate`, a quick fix of the remaining 20% may be faster than doing everything by hand.
-Other than that, `attranslate` supports manual translations and even file-format-conversions without changing the language.
+Other than that, `attranslate` supports purely manual translations and even file-format-conversions without changing the language.
 
 ## Why attranslate?
 
@@ -47,11 +47,6 @@ Normally, overwriting outdated translations helps to ensure the freshness of tra
 However, in hectic project environments, it might be easier to leave outdated translations as-is.
 Therefore, `attranslate` leaves outdated translations as-is unless you explicitly configure it to overwrite them.
 
-## Support For Manual Reviews
-
-Optionally, `attranslate` marks newly generated texts with a "review-notice".
-This helps to keep track of which texts have been already reviewed by a human.
-
 ## Available Services
 
 `attranslate` supports the following translation-services:
@@ -87,7 +82,7 @@ You can write something like the following script to avoid unnecessary duplicati
 # This example translates an english JSON-file into spanish, chinese and german. It uses Google Cloud Translate.
 BASE_DIR="json-manual-review"
 SERVICE_ACCOUNT_KEY="gcloud/gcloud_service_account.json"
-COMMON_ARGS=( "--srcLng=en" "--srcFormat=nested-json" "--targetFormat=nested-json" "--service=google-translate" "--serviceConfig=$SERVICE_ACCOUNT_KEY" "--manualReview=true" "--cacheDir=$BASE_DIR" "--matcher=i18next" )
+COMMON_ARGS=( "--srcLng=en" "--srcFormat=nested-json" "--targetFormat=nested-json" "--service=google-translate" "--serviceConfig=$SERVICE_ACCOUNT_KEY" "--cacheDir=$BASE_DIR" "--matcher=i18next" )
 
 # Run "npm install --global attranslate" before you try this example.
 
@@ -123,9 +118,9 @@ Options:
   --targetFormat <targetFileFormat>   One of "flat-json", "nested-json",
                                       "yaml", "po", "xml", "ios-strings",
                                       "arb", "csv"
-  --service <translationService>      One of "google-translate", "deepl",
-                                      "azure", "manual",
-                                      "sync-without-translate"
+  --service <translationService>      One of "manual",
+                                      "sync-without-translate",
+                                      "google-translate", "deepl", "azure"
   --serviceConfig <serviceKey>        supply configuration for a translation
                                       service (either a path to a key-file or
                                       an API-key)
@@ -138,8 +133,6 @@ Options:
   --deleteStale <true | false>        If true, delete translations that exist
                                       in the target file but not in the source
                                       file (default: "true")
-  --manualReview <true | false>       If true, mark newly generated texts with
-                                      a review-notice (default: "false")
   --keySearch <regExp>                A regular expression to replace
                                       translation-keys (can be used for
                                       file-format conversions) (default: "x")

@@ -27,7 +27,6 @@ export const defaultE2EArgs: E2EArgs = {
   matcher: "none",
   overwriteOutdated: "true",
   deleteStale: "true",
-  manualReview: "false",
   keySearch: "x",
   keyReplace: "x",
 };

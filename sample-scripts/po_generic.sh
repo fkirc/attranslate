@@ -8,7 +8,7 @@ COMMON_ARGS=( "--srcFile=$BASE_DIR/en.po" "--srcLng=en" "--srcFormat=po" "--targ
 
 # Run "npm install --global attranslate" before you try this example.
 attranslate "${COMMON_ARGS[@]}" --targetFile=$BASE_DIR/es.po --targetLng=es --cacheDir=$BASE_DIR
-attranslate "${COMMON_ARGS[@]}" --targetFile=$BASE_DIR/de.po --targetLng=de --overwriteOutdated=false --manualReview=true
+attranslate "${COMMON_ARGS[@]}" --targetFile=$BASE_DIR/de.po --targetLng=de --overwriteOutdated=false
 
 # Convert a YAML to PO (just for the sake of test-coverage)
 attranslate --srcFile="$BASE_DIR/nested-fruits.yml" --srcFormat=yaml --srcLng=x --targetFile=$BASE_DIR/nested-fruits.po --targetFormat=po --targetLng=x --service=sync-without-translate --cacheDir=$BASE_DIR

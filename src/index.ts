@@ -71,11 +71,6 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
       "true"
     )
     .option(
-      "--manualReview <true | false>",
-      "If true, mark newly generated texts with a review-notice",
-      "false"
-    )
-    .option(
       "--keySearch <regExp>",
       "A regular expression to replace translation-keys (can be used for file-format conversions)",
       "x"
@@ -106,7 +101,6 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
     matcher: commander.opts().matcher,
     overwriteOutdated: commander.opts().overwriteOutdated,
     deleteStale: commander.opts().deleteStale,
-    manualReview: commander.opts().manualReview,
     keySearch: commander.opts().keySearch,
     keyReplace: commander.opts().keyReplace,
   };

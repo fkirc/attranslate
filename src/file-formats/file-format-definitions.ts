@@ -6,7 +6,6 @@ export interface WriteTFileArgs {
   path: string;
   tSet: TSet;
   changeSet: TChangeSet;
-  manualReview: boolean;
   lng: string;
   format: TFileType;
 }

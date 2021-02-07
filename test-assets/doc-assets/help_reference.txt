@@ -11,9 +11,9 @@ Options:
   --targetFormat <targetFileFormat>   One of "flat-json", "nested-json",
                                       "yaml", "po", "xml", "ios-strings",
                                       "arb", "csv"
-  --service <translationService>      One of "google-translate", "deepl",
-                                      "azure", "manual",
-                                      "sync-without-translate"
+  --service <translationService>      One of "manual",
+                                      "sync-without-translate",
+                                      "google-translate", "deepl", "azure"
   --serviceConfig <serviceKey>        supply configuration for a translation
                                       service (either a path to a key-file or
                                       an API-key)
@@ -26,8 +26,6 @@ Options:
   --deleteStale <true | false>        If true, delete translations that exist
                                       in the target file but not in the source
                                       file (default: "true")
-  --manualReview <true | false>       If true, mark newly generated texts with
-                                      a review-notice (default: "false")
   --keySearch <regExp>                A regular expression to replace
                                       translation-keys (can be used for
                                       file-format conversions) (default: "x")
