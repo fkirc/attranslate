@@ -1,3 +1,7 @@
+# 1.5.0
+
+- Remove "manual review feature". Purely manual translations are still supported.
+
 # 1.4.1
 
 - Fix crash for PO/POT-files without a header

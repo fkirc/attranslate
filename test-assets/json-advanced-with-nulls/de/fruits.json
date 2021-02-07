@@ -1,0 +1,7 @@
+{
+  "apple": "",
+  "pear": "Birne",
+  "nested": {
+    "banana": "Banane"
+  }
+}

@@ -26,11 +26,11 @@ export function getTServiceList(): TServiceType[] {
 }
 
 const serviceMap = {
+  manual: null,
+  "sync-without-translate": null,
   "google-translate": null,
   deepl: null,
   azure: null,
-  manual: null,
-  "sync-without-translate": null,
 };
 
 export function injectFakeService(serviceName: string, service: TService) {

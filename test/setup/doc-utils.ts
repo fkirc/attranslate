@@ -19,7 +19,7 @@ export const readmeSnippets: ReadmeSnippet[] = [
   },
   {
     refPath: join(docAssets, "multi_json.snippet"),
-    srcPath: join(sampleDir, "json_manual_review.sh"),
+    srcPath: join(sampleDir, "json_advanced.sh"),
     firstLine: "# This example ",
   },
 ];

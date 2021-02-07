@@ -127,7 +127,6 @@ describe.each(testArgs)("Read/write %p", (args) => {
       tSet,
       lng: "en",
       format: args.fileFormat,
-      manualReview: false,
       changeSet: {
         added: new Map(),
         updated: new Map(),

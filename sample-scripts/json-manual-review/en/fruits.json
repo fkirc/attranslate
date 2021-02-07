@@ -1,8 +1,0 @@
-{
-  "apple": "Apple",
-  "apple__reviewed": "you may change or delete any review-lines; attranslate won't modify it",
-  "pear": "Pear",
-  "nested": {
-    "banana": "Banana"
-  }
-}

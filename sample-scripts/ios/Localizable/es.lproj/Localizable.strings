@@ -1,36 +1,27 @@
 
 
-// reviewed: false
 "category.apple" = "manzana";
 
 
-// reviewed: false
 "category.sub.pear" = "Pera";
 
 
-// reviewed: false
 "category.sub.sub.banana" = "Plátano";
 
 
-// reviewed: false
 "plurals.some plurals.item.0" = "Solo uno";
 
 
-// reviewed: false
 "plurals.some plurals.item.1" = "Unos pocos";
 
 
-// reviewed: false
 "plurals.some plurals.item.2" = "Algunos otros";
 
 
-// reviewed: false
 "string-array.planets.item.0" = "Venus";
 
 
-// reviewed: false
 "string-array.planets.item.1" = "Tierra";
 
 
-// reviewed: false
 "string-array.planets.item.2" = "Marte";

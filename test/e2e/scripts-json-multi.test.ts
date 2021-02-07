@@ -11,7 +11,7 @@ test("json simple", async () => {
 
 const targetLngs = ["es", "zh", "de"];
 
-const assetDir = "json-manual-review";
+const assetDir = "json-advanced";
 
 function jsonTargetPaths(): string[] {
   return targetLngs.map((targetLng) => {
@@ -27,7 +27,7 @@ const cachePath = join(
 );
 
 async function runMultiJSON(): Promise<string> {
-  return await runSampleScript(`./json_manual_review.sh`, [assetDir]);
+  return await runSampleScript(`./json_advanced.sh`, [assetDir]);
 }
 
 test("multi_json clean", async () => {
@@ -88,20 +88,18 @@ test("multi_json propagate empty string from source", async () => {
   const expectOutput = expectedUpdateOutput({
     bypassEmpty: true,
   });
-  const output = await runSampleScript(`./json_manual_review.sh`, [
-    "json-simple",
-  ]); // Circumvent diff-check
+  const output = await runSampleScript(`./json_advanced.sh`, ["json-simple"]); // Circumvent diff-check
   expect(output).toBe(expectOutput);
   await recursiveDiff({
     pathActual: join(sampleDir, assetDir),
-    pathExpected: join("test-assets", "json-manual-review-with-nulls"),
+    pathExpected: join("test-assets", "json-advanced-with-nulls"),
   });
   await runCommand(`git checkout ${join(sampleDir, assetDir)}`);
 });
 
 function expectedUpdateOutput(args: { bypassEmpty: boolean }): string {
   const lines: string[] = [];
-  lines.push("Target is up-to-date: 'json-manual-review/es/fruits.json'");
+  lines.push("Target is up-to-date: 'json-advanced/es/fruits.json'");
   overwriteOutdatedTargets.forEach((targetPath, index) => {
     const recv = args.bypassEmpty
       ? "Bypass 1 strings because they are empty..."
