@@ -8,7 +8,7 @@ macOS/Ubuntu/Windows: [![Actions Status](https://github.com/fkirc/attranslate/wo
 `attranslate` is optimized for fast and smooth rollouts in hectic project environments, even if you already have many translations.
 Optionally, `attranslate` works with automated translation-services.
 For example, let's say that a translation-service achieves 80% correct translations.
-Thanks to `attranslate`, a quick fix of the remaining 20% is faster than doing everything by hand.
+Thanks to `attranslate`, a quick fix of the remaining 20% may be faster than doing everything by hand.
 Other than that, `attranslate` supports manual translations and even file-format-conversions without changing the language.
 
 ## Why attranslate?
