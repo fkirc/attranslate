@@ -1,9 +1,7 @@
 {
   "pear": "Pera",
-  "pear__reviewed": "you may change or delete any review-lines; attranslate won't modify it",
   "nested": {
-    "banana": "Plátano",
-    "banana__reviewed": "false"
+    "banana": "Plátano"
   },
   "apple": "manzana",
   "apple__reviewed": "false"
