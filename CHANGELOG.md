@@ -1,6 +1,7 @@
 # 1.5.0
 
 - Remove "manual review feature". Purely manual translations are still supported.
+- Remove Azure and DeepL services because they have been untested and potentially expensive.
 
 # 1.4.1
 

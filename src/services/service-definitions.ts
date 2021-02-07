@@ -29,8 +29,8 @@ const serviceMap = {
   manual: null,
   "sync-without-translate": null,
   "google-translate": null,
-  deepl: null,
-  azure: null,
+  // deepl: null,
+  // azure: null,
 };
 
 export function injectFakeService(serviceName: string, service: TService) {
@@ -51,10 +51,10 @@ export async function instantiateTService(
    * This is especially important for google-translate, which uses a huge bunch of packages.
    */
   switch (service) {
-    case "azure":
-      return new (await import("./azure-translator")).AzureTranslator();
-    case "deepl":
-      return new (await import("./deepl")).DeepL();
+    // case "azure":
+    //   return new (await import("./azure-translator")).AzureTranslator();
+    // case "deepl":
+    //   return new (await import("./deepl")).DeepL();
     case "google-translate":
       return new (await import("./google-translate")).GoogleTranslate();
     case "manual":

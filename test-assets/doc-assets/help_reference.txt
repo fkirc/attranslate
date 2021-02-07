@@ -13,7 +13,7 @@ Options:
                                       "arb", "csv"
   --service <translationService>      One of "manual",
                                       "sync-without-translate",
-                                      "google-translate", "deepl", "azure"
+                                      "google-translate"
   --serviceConfig <serviceKey>        supply configuration for a translation
                                       service (either a path to a key-file or
                                       an API-key)
