@@ -90,7 +90,6 @@ export const commonArgs: Omit<CoreArgs, "oldTarget" | "src" | "srcCache"> = {
   srcLng: "en",
   targetLng: "de",
   overwriteOutdated: true,
-  deleteStale: true,
 };
 
 export async function translateCoreAssert(

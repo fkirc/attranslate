@@ -112,7 +112,6 @@ export async function translateCli(cliArgs: CliArgs) {
     serviceConfig: cliArgs.serviceConfig ?? null,
     matcher: cliArgs.matcher as TMatcherType,
     overwriteOutdated,
-    deleteStale: parseBooleanOption(cliArgs.deleteStale, "deleteStale"),
   };
   const result = await translateCore(coreArgs);
 

@@ -1,7 +1,8 @@
 # 1.5.0
 
-- Remove "manual review feature". Purely manual translations are still supported.
 - Remove Azure and DeepL services because they have been untested and potentially expensive.
+- Remove --manualReview=true option because it did not work for all file formats.
+- Remove --deleteStale=false option because it did not work for all file formats.
 
 # 1.4.1
 

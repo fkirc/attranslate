@@ -70,7 +70,6 @@ test("up-to-date cache, do not delete stale", async () => {
     src: enSrc,
     srcCache: enSrc,
     oldTarget: staleTarget,
-    deleteStale: false,
   };
   const expectRes: CoreResults = {
     newTarget: staleTarget,

@@ -125,10 +125,7 @@ test("unknown target file format", async () => {
   );
 });
 
-const booleanOptions: (keyof typeof defaultE2EArgs)[] = [
-  "overwriteOutdated",
-  "deleteStale",
-];
+const booleanOptions: (keyof typeof defaultE2EArgs)[] = ["overwriteOutdated"];
 describe.each(booleanOptions)("Bad boolean options %s", (option) => {
   test(`Bad option ${option}`, async () => {
     const args: E2EArgs = {
