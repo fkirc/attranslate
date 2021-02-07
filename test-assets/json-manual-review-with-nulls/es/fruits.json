@@ -3,8 +3,7 @@
   "nested": {
     "banana": "Plátano"
   },
-  "apple": "manzana",
-  "apple__reviewed": "false"
+  "apple": "manzana"
 }
 
 
