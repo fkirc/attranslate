@@ -1,6 +1,6 @@
 # 1.5.0
 
-- Remove "manual review feature". Pure manual translations are still supported.
+- Remove "manual review feature". Purely manual translations are still supported.
 
 # 1.4.1
 
