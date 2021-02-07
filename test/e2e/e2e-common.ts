@@ -26,7 +26,6 @@ export const defaultE2EArgs: E2EArgs = {
   cacheDir: "test-assets/cache",
   matcher: "none",
   overwriteOutdated: "true",
-  deleteStale: "true",
   keySearch: "x",
   keyReplace: "x",
 };

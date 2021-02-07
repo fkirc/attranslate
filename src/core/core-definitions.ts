@@ -13,7 +13,6 @@ export interface CoreArgs {
   serviceConfig: string | null;
   matcher: TMatcherType;
   overwriteOutdated: boolean;
-  deleteStale: boolean;
 }
 
 export interface TChangeSet {
@@ -47,7 +46,6 @@ export interface CliArgs extends Record<string, string | undefined> {
   cacheDir: string;
   matcher: string;
   overwriteOutdated: string;
-  deleteStale: string;
   keySearch: string;
   keyReplace: string;
 }

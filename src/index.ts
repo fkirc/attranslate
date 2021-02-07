@@ -66,11 +66,6 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
       "false"
     )
     .option(
-      "--deleteStale <true | false>",
-      "If true, delete translations that exist in the target file but not in the source file",
-      "true"
-    )
-    .option(
       "--keySearch <regExp>",
       "A regular expression to replace translation-keys (can be used for file-format conversions)",
       "x"
@@ -100,7 +95,6 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
     cacheDir: commander.opts().cacheDir,
     matcher: commander.opts().matcher,
     overwriteOutdated: commander.opts().overwriteOutdated,
-    deleteStale: commander.opts().deleteStale,
     keySearch: commander.opts().keySearch,
     keyReplace: commander.opts().keyReplace,
   };

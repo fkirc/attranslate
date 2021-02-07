@@ -45,7 +45,7 @@ function extractStringsToTranslate(args: CoreArgs): TSet {
 }
 
 function extractStaleTranslations(args: CoreArgs): TSet | null {
-  if (args.oldTarget && args.deleteStale) {
+  if (args.oldTarget) {
     return leftMinusRight(args.oldTarget, args.src);
   } else {
     return null;
