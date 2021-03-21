@@ -8,4 +8,4 @@ COMMON_ARGS=( "--srcFile=$BASE_DIR/intl_messages.arb" "--srcLng=en" "--srcFormat
 
 # Run "npm install --global attranslate" before you try this example.
 attranslate "${COMMON_ARGS[@]}" --targetFile=$BASE_DIR/intl_es.arb --targetLng=es
-attranslate "${COMMON_ARGS[@]}" --targetFile=$BASE_DIR/intl_de.arb --targetLng=de
+attranslate "${COMMON_ARGS[@]}" --targetFile=$BASE_DIR/intl_de.arb --targetLng=de --matcher=icu
