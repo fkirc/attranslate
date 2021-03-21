@@ -9,13 +9,10 @@
 "category.sub.sub.banana" = "Banana";
 
 
-"plurals.some plurals.item.0" = "Only one";
+"plurals.some plurals.item.0" = "One";
 
 
-"plurals.some plurals.item.1" = "A few";
-
-
-"plurals.some plurals.item.2" = "Some others";
+"plurals.some plurals.item.1" = "Two";
 
 
 "string-array.planets.item.0" = "Venus";

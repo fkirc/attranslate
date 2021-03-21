@@ -5,7 +5,8 @@
   "banana": "Banane",
   "@banana": {
     "type": "text"
-  }
+  },
+  "pageXofX": "{currentPage} von {numberOfPages}"
 }
 
 

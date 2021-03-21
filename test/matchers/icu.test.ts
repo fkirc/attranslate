@@ -1,5 +1,8 @@
 import { matchIcu } from "../../src/matchers/icu";
-import { replaceInterpolations } from "../../src/matchers/matcher-definitions";
+import {
+  reInsertInterpolations,
+  replaceInterpolations,
+} from "../../src/matchers/matcher-definitions";
 
 describe("ICU replacer", () => {
   it("should not error when no placeholders are present", () => {
@@ -37,5 +40,17 @@ describe("ICU replacer", () => {
       { from: "{test}", to: "<span>0</span>" },
       { from: "{placeholders}", to: "<span>1</span>" },
     ]);
+  });
+
+  it("replace and reinsert ICU", () => {
+    const original = "{currentPage} of {numberOfPages}";
+    const { clean, replacements } = replaceInterpolations(original, matchIcu);
+    expect(clean).toEqual("<span>0</span> of <span>1</span>");
+    expect(replacements).toEqual([
+      { from: "{currentPage}", to: "<span>0</span>" },
+      { from: "{numberOfPages}", to: "<span>1</span>" },
+    ]);
+    const reInserted = reInsertInterpolations(clean, replacements);
+    expect(reInserted).toBe(original);
   });
 });

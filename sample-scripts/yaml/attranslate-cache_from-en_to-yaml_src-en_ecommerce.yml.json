@@ -150,15 +150,6 @@
         }
       ]
     },
-    "titles_long.jobs": {
-      "value": "Career",
-      "targets": [
-        {
-          "id": "de",
-          "state": "frozen"
-        }
-      ]
-    },
     "titles_long.errorpage": {
       "value": "four zero four",
       "targets": [

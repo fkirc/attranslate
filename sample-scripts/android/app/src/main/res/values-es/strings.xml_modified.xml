@@ -7,10 +7,9 @@
     <string name="category_sub_pear" formatted="false" reviewed="false">Pera</string>
     <string name="category_sub_sub_banana" formatted="true" reviewed="false">Plátano</string>
     <plurals name="some plurals" reviewed="false">
-        <item quantity="one">Solo uno</item>
-        <item quantity="few">Unos pocos</item>
+        <item quantity="one">Uno</item>
         <!-- Overridden comments should not be changed! -->
-        <item quantity="other">Algunos otros</item>
+        <item quantity="other">Dos</item>
     </plurals>
     <string-array name="planets" reviewed="false">
         <!-- A planet comment -->

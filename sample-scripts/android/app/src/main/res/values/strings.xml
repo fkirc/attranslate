@@ -5,10 +5,9 @@
     <string name="category_sub_pear" formatted="false">Pear</string>
     <string name="category_sub_sub_banana" formatted="true">Banana</string>
     <plurals name="some plurals">
-        <item quantity="one">Only one</item>
-        <item quantity="few">A few</item>
+        <item quantity="one">One</item>
         <!-- Inner plurals comment -->
-        <item quantity="other">Some others</item>
+        <item quantity="other">Two</item>
     </plurals>
     <string-array name="planets">
         <!-- A planet comment -->
