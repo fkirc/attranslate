@@ -1,3 +1,7 @@
+# 1.5.1
+
+- Fix issue with ICU-matcher.
+
 # 1.5.0
 
 - Remove Azure and DeepL services because they have been untested and potentially expensive.
