@@ -8,13 +8,13 @@ interface LngT {
 }
 
 describe.each([
-  { lng: "de", t: "Hallo {{translator}}" },
-  { lng: "es", t: "Hola {{translator}}" },
-  { lng: "fr", t: "Bonjour {{translator}}" },
-  { lng: "zh", t: "您好{{translator}}" },
+  { lng: "de", t: "Hallo" },
+  { lng: "es", t: "Hola" },
+  { lng: "fr", t: "Bonjour" },
+  { lng: "zh", t: "你好" },
 ])("Hello %s", (lngT: LngT) => {
   test("Hello international", async () => {
-    const srcHello: TSet = new Map([["hello", "Hello {{translator}}"]]);
+    const srcHello: TSet = new Map([["hello", "Hello"]]);
     const args: CoreArgs = {
       ...commonArgs,
       service: "google-translate",
