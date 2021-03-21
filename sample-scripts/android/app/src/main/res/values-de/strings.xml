@@ -5,10 +5,9 @@
     <string name="category_sub_pear" formatted="false">Birne</string>
     <string name="category_sub_sub_banana" formatted="true">Banane</string>
     <plurals name="some plurals">
-        <item quantity="one">Einziger</item>
-        <item quantity="few">Ein paar</item>
+        <item quantity="one">Eins</item>
         <!-- Inner plurals comment -->
-        <item quantity="other">Einige andere</item>
+        <item quantity="few">Zwei</item>
     </plurals>
     <string-array name="planets">
         <!-- A planet comment -->
