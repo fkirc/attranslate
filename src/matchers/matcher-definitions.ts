@@ -46,13 +46,17 @@ export const replaceInterpolations = (
   return { clean, replacements };
 };
 
+function replaceAll(string: string, search: string, replace: string): string {
+  return string.split(search).join(replace);
+}
+
 export const reInsertInterpolations = (
   clean: string,
   replacements: { from: string; to: string }[]
 ) => {
-  const c1 = clean.replace(`${xmlLeftTag} `, xmlLeftTag);
-  const c2 = c1.replace(spaceXmlRightTag, xmlRightTag);
-  const c3 = c2.replace(` ${xmlRightTag}`, xmlRightTag);
+  const c1 = replaceAll(clean, xmlLeftTag + " ", xmlLeftTag);
+  const c2 = replaceAll(c1, spaceXmlRightTag, xmlRightTag);
+  const c3 = replaceAll(c2, " " + xmlRightTag, xmlRightTag);
   return replacements.reduce((acc, cur) => acc.replace(cur.to, cur.from), c3);
 };
 
