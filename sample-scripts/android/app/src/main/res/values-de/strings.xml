@@ -5,13 +5,12 @@
     <string name="category_sub_pear" formatted="false">Birne</string>
     <string name="category_sub_sub_banana" formatted="true">Banane</string>
     <plurals name="some plurals">
-        <item quantity="one">Einer</item>
-        <!-- Inner plurals comment -->
+        <!-- Plurals comment -->
         <item quantity="other">Zwei</item>
     </plurals>
     <string-array name="planets">
-        <!-- A planet comment -->
         <item>Venus</item>
+        <!-- A planet comment -->
         <item>Erde</item>
         <item>Mars</item>
     </string-array>

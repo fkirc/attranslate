@@ -31,19 +31,6 @@
           "state": "frozen"
         }
       ]
-    },
-    "banana": {
-      "value": "Banana",
-      "targets": [
-        {
-          "id": "es",
-          "state": "frozen"
-        },
-        {
-          "id": "de",
-          "state": "frozen"
-        }
-      ]
     }
   }
 }

@@ -2,8 +2,7 @@
   "@@context": "Global attribute",
   "apple": "Apfel",
   "pear": "Birne",
-  "banana": "Banane",
-  "@banana": {
+  "@pear": {
     "type": "text"
   },
   "pageXofX": "{currentPage} von {numberOfPages}"

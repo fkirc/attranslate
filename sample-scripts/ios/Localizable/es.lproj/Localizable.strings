@@ -9,10 +9,7 @@
 "category.sub.sub.banana" = "Plátano";
 
 
-"plurals.some plurals.item.0" = "Uno";
-
-
-"plurals.some plurals.item.1" = "Dos";
+"plurals.some plurals.item.0" = "Dos";
 
 
 "string-array.planets.item.0" = "Venus";
