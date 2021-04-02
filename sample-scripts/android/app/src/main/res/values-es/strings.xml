@@ -6,13 +6,12 @@
     <string name="category_sub_pear" formatted="false" reviewed="false">Pera</string>
     <string name="category_sub_sub_banana" formatted="true" reviewed="false">Plátano</string>
     <plurals name="some plurals" reviewed="false">
-        <item quantity="one">Uno</item>
         <!-- Overridden comments should not be changed! -->
         <item quantity="other">Dos</item>
     </plurals>
     <string-array name="planets" reviewed="false">
-        <!-- A planet comment -->
         <item>Venus</item>
+        <!-- A planet comment -->
         <item>Tierra</item>
         <item>Marte</item>
     </string-array>
