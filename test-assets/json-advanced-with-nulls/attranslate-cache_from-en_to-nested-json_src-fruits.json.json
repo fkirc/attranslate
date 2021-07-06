@@ -6,7 +6,7 @@
     "minor": 0
   },
   "entries": {
-    "apple": {
+    "apple\\\\|1": {
       "value": "",
       "targets": [
         {
@@ -19,7 +19,7 @@
         }
       ]
     },
-    "pear": {
+    "pear\\\\(x\\\\)": {
       "value": "Pear",
       "targets": [
         {
