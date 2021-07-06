@@ -1,6 +1,6 @@
-# 1.5.2 (not released)
+# 1.5.2
 
-- Reintroduce Azure service (beta)
+- Reintroduce Azure service
 
 # 1.5.1
 

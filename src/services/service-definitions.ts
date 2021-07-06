@@ -52,7 +52,7 @@ export async function instantiateTService(
    */
   switch (service) {
     case "azure":
-       return new (await import("./azure-translator")).AzureTranslator();
+      return new (await import("./azure-translator")).AzureTranslator();
     // case "deepl":
     //   return new (await import("./deepl")).DeepL();
     case "google-translate":
