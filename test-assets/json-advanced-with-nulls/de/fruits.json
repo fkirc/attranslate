@@ -1,6 +1,6 @@
 {
-  "apple": "",
-  "pear": "Birne",
+  "apple.1": "",
+  "pear[x]": "Birne",
   "nested": {
     "banana": "Banane"
   }

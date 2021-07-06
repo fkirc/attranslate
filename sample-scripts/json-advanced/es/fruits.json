@@ -1,9 +1,9 @@
 {
-  "pear": "Pera",
+  "pear[x]": "Pera",
   "nested": {
     "banana": "Plátano"
   },
-  "apple": "manzana"
+  "apple.1": "manzana"
 }
 
 

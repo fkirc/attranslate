@@ -23,6 +23,10 @@ const testArgs: {
   fileFormat: TFileType;
 }[] = [
   {
+    srcFile: join(testAssets, "nested-json", "special-chars.nested.json"),
+    fileFormat: "nested-json",
+  },
+  {
     srcFile: join(testAssets, "csv", "minimal.csv"),
     fileFormat: "csv",
   },

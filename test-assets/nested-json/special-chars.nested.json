@@ -1,0 +1,12 @@
+{
+  "apple": "Apple",
+  "pear.7": "Pear",
+  "pear[x]": "Pear",
+  "nested": {
+    ")ba[]nana(": "Banana",
+    "[[....": "jiooij",
+    ")": {
+      "(.": "jio"
+    }
+  }
+}

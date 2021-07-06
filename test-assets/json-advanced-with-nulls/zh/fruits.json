@@ -1,6 +1,6 @@
 {
-  "apple": "",
-  "pear": "梨",
+  "apple.1": "",
+  "pear[x]": "梨",
   "nested": {
     "banana": "香蕉"
   }
