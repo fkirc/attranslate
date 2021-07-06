@@ -53,6 +53,7 @@ Therefore, `attranslate` leaves outdated translations as-is unless you explicitl
 
 - `manual`: Translate texts manually by entering them into `attranslate`.
 - [Google Cloud Translate](https://cloud.google.com/translate)
+- [Azure Translator](https://azure.microsoft.com/en-us/services/cognitive-services/translator-text-api/)
 - `sync-without-translate`: Does not change the language. This can be useful for converting between file formats, or for maintaining region-specific differences.
 
 ## High Performance
@@ -118,7 +119,7 @@ Options:
                                       "arb", "csv"
   --service <translationService>      One of "manual",
                                       "sync-without-translate",
-                                      "google-translate"
+                                      "google-translate", "azure"
   --serviceConfig <serviceKey>        supply configuration for a translation
                                       service (either a path to a key-file or
                                       an API-key)
