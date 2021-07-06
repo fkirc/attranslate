@@ -20,6 +20,14 @@ Follow these steps to get an API-key for Google Translate:
 
 Once you have a service account, pass a path to your `service_account_key.json` via the `--serviceConfig`-flag to `attranslate`.
 
+### Azure Translator
+
+ Follow these steps to get an API-key for Azure Translator:
+
+ - [Sign Up](https://azure.microsoft.com/en-us/free/) for an
+ Azure account if you don't have one already.
+ - Create a new translator instance via https://azure.microsoft.com/services/cognitive-services/translator/
+
 # Service Tuning
 
 Enterprise users can tune translation-services according to their needs.
