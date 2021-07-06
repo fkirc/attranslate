@@ -1,6 +1,7 @@
-# 1.5.2
+# 1.6.0
 
 - Reintroduce Azure service
+- Fix broken dot-handling for nested JSON format
 
 # 1.5.1
 
