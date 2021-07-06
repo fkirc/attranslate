@@ -37,7 +37,6 @@ jobs:
       - if: ${{ matrix.os != 'windows-latest' }}
         run: yarn lint
       - run: yarn build
-      - run: yarn link
       - if: ${{ matrix.os != 'macos-latest' && matrix.os != 'windows-latest' }}
         run: |
           timeout 0.2s time ./bin/attranslate --version
