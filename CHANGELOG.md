@@ -1,3 +1,7 @@
+# 1.5.2 (not released)
+
+- Reintroduce Azure service (beta)
+
 # 1.5.1
 
 - Fix issue with ICU-matcher.
