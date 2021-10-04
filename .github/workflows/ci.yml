@@ -27,6 +27,8 @@ jobs:
           node-version: 14.x
       - run: git config --global core.autocrlf false
       - uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.CI_PAT }}
       - run: git config --global user.email "mail@felixkirchengast.at"
       - run: git config --global user.name "Felix Kirchengast (GitHub Action)"
       - uses: actions/cache@v2
