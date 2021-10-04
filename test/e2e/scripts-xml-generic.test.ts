@@ -53,7 +53,7 @@ test("xml insert new translations", async () => {
     path: join(sampleDir, mainTarget),
     linesToRemove: [
       '                    <else someAtt="x">Inhalt</else>',
-      '    <InnerElse otherAtt="true">Dritte</InnerElse>',
+      '    <InnerElse otherAtt="true">Apfel</InnerElse>',
     ],
   });
   const output = await runSampleScript(testScript, [assetDir]);
