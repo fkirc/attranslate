@@ -72,7 +72,9 @@ test("incorrect order child", () => {
       }
     );
   } catch (e: unknown) {
-    expect((e as Error).message).toContain("The order of a child-map is incorrect");
+    expect((e as Error).message).toContain(
+      "The order of a child-map is incorrect"
+    );
     return;
   }
   fail("Did not detect map order");
