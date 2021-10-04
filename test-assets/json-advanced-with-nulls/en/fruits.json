@@ -1,7 +1,0 @@
-{
-  "apple.1": "",
-  "pear[x]": "Pear",
-  "nested": {
-    "banana": "Banana"
-  }
-}

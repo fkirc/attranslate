@@ -29,7 +29,7 @@ function extractStringsToTranslate(args: CoreArgs): TSet {
   } else {
     if (!oldSrcCache) {
       // Translate values whose keys are not in the target.
-      return selectLeftDistinct(src, oldTarget, "COMPARE_KEYS");
+      return selectLeftDistinct(src, oldTarget, "COMPARE_KEYS_AND_NULL_VALUES");
     } else {
       // Translate values that are either different to the cache or missing in the target.
       const cacheDiffs = selectLeftDistinct(src, oldSrcCache, "COMPARE_VALUES");
