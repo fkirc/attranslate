@@ -1,3 +1,8 @@
+# 1.6.1
+
+- Dependency updates
+- Migrate from yarn to npm
+
 # 1.6.0
 
 - Reintroduce Azure service
