@@ -3,7 +3,7 @@
     <!-- Comments should not be overwritten -->
     <Inner>etwas</Inner>
     <Inner someAttribute="should not be overwritten" reviewed="false">Zweite</Inner>
-    <InnerElse otherAtt="true">Dritte</InnerElse>
+    <InnerElse otherAtt="true">Apfel</InnerElse>
     <some-array>
         <!-- Some inner comment -->
         <i1>Einer</i1>
