@@ -85,15 +85,9 @@ COMMON_ARGS=( "--srcLng=en" "--srcFormat=nested-json" "--targetFormat=nested-jso
 
 # Run "npm install --global attranslate" before you try this example.
 
-# Use "--overwriteOutdated=false" if you introduce attranslate into a hectic project-environment,
-# or if you expect that some project collaborators won't even use attranslate because they have no time for "learning" it.
-attranslate --overwriteOutdated=false --srcFile=$BASE_DIR/en/fruits.json --targetFile=$BASE_DIR/es/fruits.json --targetLng=es "${COMMON_ARGS[@]}"
-
-# Use "--overwriteOutdated=true" if you want to prevent outdated translations.
-attranslate --overwriteOutdated=true --srcFile=$BASE_DIR/en/fruits.json --targetFile=$BASE_DIR/zh/fruits.json --targetLng=zh "${COMMON_ARGS[@]}"
-
-# Use "--overwriteOutdated=true" if you have no clue about the target-language and no capacity for manual reviews.
-attranslate --overwriteOutdated=true --srcFile=$BASE_DIR/en/fruits.json --targetFile=$BASE_DIR/de/fruits.json --targetLng=de "${COMMON_ARGS[@]}"
+attranslate --srcFile=$BASE_DIR/en/fruits.json --targetFile=$BASE_DIR/es/fruits.json --targetLng=es "${COMMON_ARGS[@]}"
+attranslate --srcFile=$BASE_DIR/en/fruits.json --targetFile=$BASE_DIR/zh/fruits.json --targetLng=zh "${COMMON_ARGS[@]}"
+attranslate --srcFile=$BASE_DIR/en/fruits.json --targetFile=$BASE_DIR/de/fruits.json --targetLng=de "${COMMON_ARGS[@]}"
 ```
 
 Similarly, you can use `attranslate` to convert between file-formats.
@@ -128,7 +122,9 @@ Options:
   --matcher <matcher>                 One of "none", "icu", "i18next",
                                       "sprintf" (default: "none")
   --overwriteOutdated <true | false>  If true, overwrite outdated translations
-                                      in subsequent runs (default: "false")
+                                      in subsequent runs. Leave this at false
+                                      unless you know what you are doing.
+                                      (default: "false")
   --keySearch <regExp>                A regular expression to replace
                                       translation-keys (can be used for
                                       file-format conversions) (default: "x")

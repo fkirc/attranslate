@@ -1,4 +1,4 @@
-import { joinLines, recursiveDiff, runCommand } from "../test-util/test-util";
+import { joinLines } from "../test-util/test-util";
 import { modifyJsonProperty } from "./e2e-common";
 import { getDebugPath } from "../../src/util/util";
 import { runSampleScript, sampleDir } from "./scripts-e2e-util";
@@ -19,12 +19,6 @@ function jsonTargetPaths(): string[] {
   });
 }
 const overwriteOutdatedTargets = jsonTargetPaths().slice(1);
-const sourcePath = join(sampleDir, assetDir, "en", "fruits.json");
-const cachePath = join(
-  sampleDir,
-  assetDir,
-  "attranslate-cache_from-en_to-nested-json_src-fruits.json.json"
-);
 
 async function runMultiJSON(): Promise<string> {
   return await runSampleScript(`./json_advanced.sh`, [assetDir]);
@@ -40,28 +34,6 @@ test("multi_json clean", async () => {
     )
   );
 });
-
-test("multi_json create new cache", async () => {
-  await runCommand(`rm ${cachePath}`);
-  const output = await runMultiJSON();
-  expect(output).toBe(expectedCreateCacheOutput());
-});
-
-function expectedCreateCacheOutput(): string {
-  const firstPass: string[] = [
-    `Target is up-to-date: '${assetDir}/es/fruits.json'`,
-  ];
-  const secondPass: string[] = [
-    `Cache not found -> Generate a new cache to detect outdated translations`,
-    `Write cache ${getDebugPath(cachePath)}`,
-    `Target is up-to-date: '${assetDir}/zh/fruits.json'`,
-  ];
-  const thirdPass: string[] = [
-    `Write cache ${getDebugPath(cachePath)}`,
-    `Target is up-to-date: '${assetDir}/de/fruits.json'`,
-  ];
-  return joinLines(firstPass.concat(secondPass).concat(thirdPass));
-}
 
 test("multi_json propagate updates to null-targets", async () => {
   overwriteOutdatedTargets.forEach((targetPath) => {
@@ -79,24 +51,6 @@ test("multi_json propagate updates to null-targets", async () => {
   expect(output).toBe(expectOutput);
 });
 
-test("multi_json propagate empty string from source", async () => {
-  modifyJsonProperty({
-    jsonPath: sourcePath,
-    index: 0,
-    newValue: "",
-  });
-  const expectOutput = expectedUpdateOutput({
-    bypassEmpty: true,
-  });
-  const output = await runSampleScript(`./json_advanced.sh`, ["json-simple"]); // Circumvent diff-check
-  expect(output).toBe(expectOutput);
-  await recursiveDiff({
-    pathActual: join(sampleDir, assetDir),
-    pathExpected: join("test-assets", "json-advanced-with-nulls"),
-  });
-  await runCommand(`git checkout ${join(sampleDir, assetDir)}`);
-});
-
 function expectedUpdateOutput(args: { bypassEmpty: boolean }): string {
   const lines: string[] = [];
   lines.push("Target is up-to-date: 'json-advanced/es/fruits.json'");
@@ -111,7 +65,6 @@ function expectedUpdateOutput(args: { bypassEmpty: boolean }): string {
         recv,
         "Update 1 existing translations",
         `Write target ${getDebugPath(join(sampleDir, targetPath))}`,
-        `Write cache ${getDebugPath(cachePath)}`,
       ]
     );
   });

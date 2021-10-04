@@ -143,15 +143,3 @@ export function generateId(): string {
   }
   return id.join("");
 }
-
-export async function recursiveDiff(args: {
-  pathActual: string;
-  pathExpected: string;
-}) {
-  if (process.env.GENERATE_REFS) {
-    await runCommand(
-      `cp -r ${args.pathActual + "/*"} ${join(args.pathExpected)}`
-    );
-  }
-  await runCommand(`diff -r ${args.pathActual} ${args.pathExpected}`);
-}
