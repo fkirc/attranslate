@@ -8,8 +8,9 @@ interface CParseContext {
 }
 
 export function parseTCache(context: CParseContext): TCache {
-  const rawCache: Partial<TCache> = readRawJson<TCache>(context.cachePath)
-    .object;
+  const rawCache: Partial<TCache> = readRawJson<TCache>(
+    context.cachePath
+  ).object;
   const { version, entries } = rawCache;
   if (!version) {
     logCacheError(`version is falsy`, context);

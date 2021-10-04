@@ -31,9 +31,10 @@ export function readManagedJson<T>(path: string): Partial<T> {
   return object;
 }
 
-export function readRawJson<T>(
-  path: string
-): { object: Partial<T>; jsonString: string } {
+export function readRawJson<T>(path: string): {
+  object: Partial<T>;
+  jsonString: string;
+} {
   try {
     const jsonString = readUtf8File(path);
     return { object: JSON.parse(jsonString) as Partial<T>, jsonString };
