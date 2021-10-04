@@ -22,7 +22,9 @@ Options:
   --matcher <matcher>                 One of "none", "icu", "i18next",
                                       "sprintf" (default: "none")
   --overwriteOutdated <true | false>  If true, overwrite outdated translations
-                                      in subsequent runs (default: "false")
+                                      in subsequent runs. Leave this at false
+                                      unless you know what you are doing.
+                                      (default: "false")
   --keySearch <regExp>                A regular expression to replace
                                       translation-keys (can be used for
                                       file-format conversions) (default: "x")
