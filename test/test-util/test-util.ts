@@ -15,7 +15,7 @@ export function mapToObject(map: Map<string, unknown>): unknown {
 }
 
 export function objectToMap<K, V>(obj: Record<string, unknown>): Map<K, V> {
-  return new Map((obj as unknown) as never);
+  return new Map(obj as unknown as never);
 }
 
 export async function runTranslate(

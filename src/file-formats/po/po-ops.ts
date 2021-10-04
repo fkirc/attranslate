@@ -16,8 +16,8 @@ function mergePotComments(args: {
   if (!args.source) {
     return args.oldTarget;
   }
-  const source = (args.source as unknown) as Record<string, string>;
-  const oldTarget = (args.oldTarget as unknown) as Record<string, string>;
+  const source = args.source as unknown as Record<string, string>;
+  const oldTarget = args.oldTarget as unknown as Record<string, string>;
   for (const key of Object.keys(source)) {
     const sourceValue = source[key];
     if (!oldTarget[key]) {
@@ -60,8 +60,10 @@ export function updatePotTranslations(
     if (value !== undefined) {
       getText.msgstr = [value ?? ""];
     }
-    const oldTargetComments = potCache.lookup({ path: args.path, key })
-      ?.comments;
+    const oldTargetComments = potCache.lookup({
+      path: args.path,
+      key,
+    })?.comments;
     if (typeof key === "string" && oldTargetComments) {
       getText.comments = mergePotComments({
         source: getText.comments ?? null,

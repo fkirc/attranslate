@@ -84,7 +84,7 @@ test("targetDir not a dir", async () => {
 test("unknown service", async () => {
   const args: E2EArgs = {
     ...defaultE2EArgs,
-    service: ("some-invalid-service" as unknown) as never,
+    service: "some-invalid-service" as unknown as never,
   };
   const output = await runTranslateExpectFailure(buildE2EArgs(args));
   expect(output).toContain(
@@ -95,7 +95,7 @@ test("unknown service", async () => {
 test("unknown matcher", async () => {
   const args: E2EArgs = {
     ...defaultE2EArgs,
-    matcher: ("some-invalid-matcher" as unknown) as never,
+    matcher: "some-invalid-matcher" as unknown as never,
   };
   const output = await runTranslateExpectFailure(buildE2EArgs(args));
   expect(output).toContain(
@@ -106,7 +106,7 @@ test("unknown matcher", async () => {
 test("unknown source file format", async () => {
   const args: E2EArgs = {
     ...defaultE2EArgs,
-    srcFormat: ("some-invalid-source" as unknown) as never,
+    srcFormat: "some-invalid-source" as unknown as never,
   };
   const output = await runTranslateExpectFailure(buildE2EArgs(args));
   expect(output).toContain(
@@ -117,7 +117,7 @@ test("unknown source file format", async () => {
 test("unknown target file format", async () => {
   const args: E2EArgs = {
     ...defaultE2EArgs,
-    targetFormat: ("some-invalid-target" as unknown) as never,
+    targetFormat: "some-invalid-target" as unknown as never,
   };
   const output = await runTranslateExpectFailure(buildE2EArgs(args));
   expect(output).toContain(

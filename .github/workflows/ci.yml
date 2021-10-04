@@ -27,27 +27,29 @@ jobs:
           node-version: 14.x
       - run: git config --global core.autocrlf false
       - uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.CI_PAT }}
       - run: git config --global user.email "mail@felixkirchengast.at"
       - run: git config --global user.name "Felix Kirchengast (GitHub Action)"
       - uses: actions/cache@v2
         with:
           path: '**/node_modules'
-          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
-      - run: yarn install --frozen-lockfile
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/package-lock.json') }}
+      - run: npm ci
       - if: ${{ matrix.os != 'windows-latest' }}
-        run: yarn lint
-      - run: yarn build
+        run: npm run lint
+      - run: npm run build
       - if: ${{ matrix.os != 'macos-latest' && matrix.os != 'windows-latest' }}
         run: |
           timeout 0.2s time ./bin/attranslate --version
           timeout 0.2s time ./bin/attranslate --help
-      - run: yarn preTest
+      - run: npm run preTest
         env:
           GCLOUD_PRIVATE_KEY: ${{ secrets.GCLOUD_PRIVATE_KEY }}
       - if: ${{ matrix.os != 'windows-latest' }}
-        run: yarn test
+        run: npm run test
       - if: ${{ matrix.os == 'windows-latest' }}
-        run: yarn test:windows
+        run: npm run test:windows
       - run: git diff --exit-code
       - name: Release
         if: ${{ github.event.inputs.release == 'true' && matrix.os == 'ubuntu-latest' }}

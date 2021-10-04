@@ -29,15 +29,15 @@
     "dist/"
   ],
   "scripts": {
-    "build": "yarn clean && tsc && yarn link",
+    "build": "npm run clean && tsc && npm link",
     "clean": "rimraf ./dist",
-    "lint": "yarn eslint",
-    "reformat": "yarn eslint -- --fix",
+    "lint": "npm run eslint",
+    "reformat": "npm run eslint -- --fix",
     "eslint": "./node_modules/.bin/eslint '**/*.{js,ts,tsx}' --ignore-path=.gitignore",
     "preTest": "jest --runTestsByPath test/setup/prepare-gcloud-keys.test.ts",
     "test": "jest --testTimeout=10000",
-    "test:windows": "yarn test --config=test/windows.jest.config.js",
-    "test:generate_refs": "GENERATE_REFS=True yarn test",
+    "test:windows": "npm run test -- --config=test/windows.jest.config.js",
+    "test:generate_refs": "GENERATE_REFS=True npm run test",
     "generate_docs": "GENERATE_REFS=True jest --runTestsByPath test/setup/generate-docs.test.ts",
     "prepublishOnly": "git diff --exit-code"
   },
@@ -49,7 +49,7 @@
     "inquirer": "^7.3.3",
     "messageformat-parser": "^4.1.0",
     "xml2js": "https://github.com/fkirc/node-xml2js/tarball/680ee7ed2dad8b9ddacc37b5e4b4a671706e0bcf",
-    "yaml": "^2.0.0-1"
+    "yaml": "2.0.0-1"
   },
   "devDependencies": {
     "@types/gettext-parser": "^4.0.0",

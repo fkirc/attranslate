@@ -14,7 +14,7 @@ export function extractVersion(args: { cliBinDir: string }): string {
     });
     const packageJson: PackageJson = JSON.parse(jsonStr);
     return packageJson.version;
-  } catch (e) {
-    return e.toString() + "\nFailed to retrieve the version";
+  } catch (e: unknown) {
+    return (e as Error).toString() + "\nFailed to retrieve the version";
   }
 }
