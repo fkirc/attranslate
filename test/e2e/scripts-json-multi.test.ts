@@ -20,8 +20,13 @@ function jsonTargetPaths(): string[] {
 }
 const overwriteOutdatedTargets = jsonTargetPaths().slice(1);
 
+function removeFirstLine(lines: string): string {
+  return lines.substring(lines.indexOf("\n") + 1);
+}
+
 async function runMultiJSON(): Promise<string> {
-  return await runSampleScript(`./json_advanced.sh`, [assetDir]);
+  const rawOutput = await runSampleScript(`./json_advanced.sh`, [assetDir]);
+  return removeFirstLine(rawOutput);
 }
 
 test("multi_json clean", async () => {
