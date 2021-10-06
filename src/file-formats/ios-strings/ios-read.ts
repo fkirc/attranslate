@@ -72,8 +72,9 @@ function parseiOSLine(
 }
 
 function isComment(line: string): boolean {
-  if (line.startsWith("//")) {
+  const trimLine = line.trim();
+  if (trimLine.startsWith("//")) {
     return true;
   }
-  return line.includes("/*") && line.includes("*/");
+  return trimLine.startsWith("/*") || trimLine.endsWith("*/");
 }
