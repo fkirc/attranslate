@@ -51,7 +51,7 @@ export class AzureTranslator implements TService {
     const data = (await response.json()) as TranslationResponse[];
     return data.map((res, i) => ({
       key: batch[i].key,
-      translated: res.translations[i].text,
+      translated: res.translations[0].text,
     }));
   }
 
