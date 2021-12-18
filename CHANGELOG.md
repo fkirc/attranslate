@@ -1,3 +1,7 @@
+# 1.6.2
+
+- Fix an error when processing responses from Azure
+
 # 1.6.1
 
 - Dependency updates
