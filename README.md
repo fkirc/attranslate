@@ -81,7 +81,7 @@ You can write something like the following script to avoid unnecessary duplicati
 # This example translates an english JSON-file into spanish, chinese and german. It uses Google Cloud Translate.
 BASE_DIR="json-advanced"
 SERVICE_ACCOUNT_KEY="gcloud/gcloud_service_account.json"
-COMMON_ARGS=( "--srcLng=en" "--srcFormat=nested-json" "--targetFormat=nested-json" "--service=google-translate" "--serviceConfig=$SERVICE_ACCOUNT_KEY" "--cacheDir=$BASE_DIR" "--matcher=i18next" )
+COMMON_ARGS=( "--srcLng=en" "--srcFormat=nested-json" "--targetFormat=nested-json" "--service=google-translate" "--serviceConfig=$SERVICE_ACCOUNT_KEY" )
 
 # install attranslate if it is not installed yet
 attranslate --version || npm install --global attranslate
