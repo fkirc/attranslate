@@ -4,8 +4,7 @@
   "pear": "Pera",
   "@pear": {
     "type": "text"
-  },
-  "pageXofX": "{currentPage} de {numberOfPages}"
+  }
 }
 
 
