@@ -36,6 +36,7 @@ export class NestedJson implements TFileFormat {
       json = constructNestedJsonFromFlatMap(args);
     }
     writeManagedJson({ path: args.path, object: json });
+    jsonCache.purge();
   }
 }
 
