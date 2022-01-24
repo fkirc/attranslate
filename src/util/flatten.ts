@@ -12,18 +12,6 @@ const escapeRules: Record<string, string> = {
   "]": "\\\\)",
 };
 
-function escapeKey(str: string): string {
-  if (typeof str !== "string") {
-    return str;
-  }
-  let targetStr: string = str;
-  for (const search of Object.keys(escapeRules)) {
-    const replace = escapeRules[search];
-    targetStr = replaceAll(targetStr, search, replace);
-  }
-  return targetStr;
-}
-
 function unescapeKey(str: string): string {
   let targetStr: string = str;
   for (const replace of Object.keys(escapeRules)) {
@@ -54,35 +42,4 @@ export function unflatten(params: Record<string, unknown>) {
     {}
   );
   return unescapeObject(rawUnflattened);
-}
-
-export function flatten(obj: unknown): Record<string, string> {
-  return _.transform(
-    obj as never,
-    function (result: Record<string, unknown>, value: unknown, rawKey: string) {
-      const key = escapeKey(rawKey);
-      if (_.isObject(value)) {
-        const flatMap = _.mapKeys(
-          flatten(value),
-          function (mvalue: unknown, mkey: string) {
-            if (_.isArray(value)) {
-              const index = mkey.indexOf(NESTED_JSON_SEPARATOR);
-              if (-1 !== index) {
-                return `${key}[${mkey.slice(0, index)}]${mkey.slice(index)}`;
-              }
-              return `${key}[${mkey}]`;
-            }
-            return `${key}.${mkey}`;
-          }
-        );
-
-        _.assign(result, flatMap);
-      } else {
-        result[key] = value;
-      }
-
-      return result;
-    },
-    {}
-  );
 }

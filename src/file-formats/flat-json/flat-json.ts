@@ -5,7 +5,6 @@ import {
 } from "../file-format-definitions";
 import { TSet } from "../../core/core-definitions";
 import { logParseError } from "../common/parse-utils";
-import { writeJsonProp, readJsonProp } from "../common/json-common";
 import { readManagedJson, writeManagedJson } from "../common/managed-json";
 
 export class FlatJson implements TFileFormat {
@@ -19,7 +18,7 @@ export class FlatJson implements TFileFormat {
       if (typeof value !== "string" && value !== null) {
         logParseError(`Property '${key}' is not a string or null`, args);
       }
-      readJsonProp(key, value, tMap, args);
+      tMap.set(key, value);
     }
     return Promise.resolve(tMap);
   }
@@ -27,7 +26,7 @@ export class FlatJson implements TFileFormat {
   writeTFile(args: WriteTFileArgs): void {
     const flatJson: Record<string, string | null> = {};
     args.tSet.forEach((value, key) => {
-      writeJsonProp(flatJson, key, value, args);
+      flatJson[key] = value;
     });
     writeManagedJson({ path: args.path, object: flatJson });
   }
