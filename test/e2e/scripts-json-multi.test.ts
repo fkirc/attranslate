@@ -49,26 +49,22 @@ test("multi_json propagate updates to null-targets", async () => {
     });
   });
 
-  const expectOutput = expectedUpdateOutput({
-    bypassEmpty: false,
-  });
+  const expectOutput = expectedUpdateOutput();
   const output = await runMultiJSON();
   expect(output).toBe(expectOutput);
 });
 
-function expectedUpdateOutput(args: { bypassEmpty: boolean }): string {
+function expectedUpdateOutput(): string {
   const lines: string[] = [];
   lines.push("Target is up-to-date: 'json-advanced/es/fruits.json'");
   overwriteOutdatedTargets.forEach((targetPath, index) => {
-    const recv = args.bypassEmpty
-      ? "Bypass 1 strings because they are empty..."
-      : `Invoke 'google-translate' from 'en' to '${
-          targetLngs[index + 1]
-        }' with 1 inputs...`;
+    const recv = `Invoke 'google-translate' from 'en' to '${
+      targetLngs[index + 1]
+    }' with 1 inputs...`;
     lines.push(
       ...[
         recv,
-        "Update 1 existing translations",
+        "Add 1 new translations",
         `Write target ${getDebugPath(join(sampleDir, targetPath))}`,
       ]
     );

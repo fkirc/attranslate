@@ -5,10 +5,9 @@ export interface FileCache<T, A> {
 }
 
 /**
- * We use format-caches to hold format-specific content that needs to be kept within files,
- * but is not part of the core-translation-process.
+ * We use format-caches to hold format-specific structures.
  * A general pattern is:
- * Prefer "same-file-caches" over all other caches, and prefer newer caches over older caches.
+ * Prefer "same-file-caches" over other caches, and prefer newer caches over older caches.
  */
 export class FormatCache<E, A> {
   constructor() {

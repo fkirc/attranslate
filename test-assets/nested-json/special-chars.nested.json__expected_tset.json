@@ -4,23 +4,35 @@
     "Apple"
   ],
   [
-    "pear\\\\|7",
+    "pear.7",
     "Pear"
   ],
   [
-    "pear\\\\(x\\\\)",
+    "pear[x]",
     "Pear"
   ],
   [
-    "nested.)ba\\\\(\\\\)nana(",
+    "nested.)ba[]nana(",
     "Banana"
   ],
   [
-    "nested.\\\\(\\\\(\\\\|\\\\|\\\\|\\\\|",
+    "nested.[[....",
     "jiooij"
   ],
   [
-    "nested.).(\\\\|",
+    "nested.).(.",
     "jio"
+  ],
+  [
+    "lines.0",
+    "Line 1"
+  ],
+  [
+    "lines.1",
+    "Line 2"
+  ],
+  [
+    "lines.2",
+    "Line 3"
   ]
 ]
