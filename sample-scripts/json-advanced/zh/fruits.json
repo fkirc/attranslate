@@ -1,7 +1,9 @@
 {
   "apple.1": "苹果",
-  "pear[x]": "梨",
-  "nested": {
-    "banana": "香蕉"
-  }
+  "array": [
+    "梨",
+    {
+      "banana": "香蕉"
+    }
+  ]
 }

@@ -1,7 +1,7 @@
 {
   "apple.1": "Apple",
-  "pear[x]": "Pear",
-  "nested": {
-    "banana": "Banana"
-  }
+  "array": [
+    "Pear",
+    {"banana": "Banana"}
+  ]
 }
