@@ -99,7 +99,7 @@ describe.each(testArray)("translate modified %p", (commonArgs) => {
 
   test("modified target - outdated cache", async () => {
     const tempCacheDir = "temp-cache-dir";
-    await runCommand(`mkdir ${tempCacheDir}`);
+    await runCommand(`mkdir ${tempCacheDir} || true`);
     await runCommand(`cp -r ${cacheDirOutdated + "/*"} ${tempCacheDir}`);
     const args: E2EArgs = { ...commonArgs.args, cacheDir: tempCacheDir };
     const output = await runModifiedTarget(args, false);

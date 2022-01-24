@@ -48,7 +48,7 @@ function traverseJson(
   for (const key of Object.keys(node)) {
     const value: unknown = node[key];
     const newPath = path ? path + "." + key : key;
-    if (value && typeof value === "string") {
+    if (typeof value === "string") {
       const newValue = operation([newPath, value]);
       if (newValue) {
         node[key] = newValue;
