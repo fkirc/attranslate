@@ -1,3 +1,7 @@
+# 1.7.0
+
+- Rewrite nested JSON-processing to better preserve source-structures
+
 # 1.6.2
 
 - Fix an error when processing responses from Azure
