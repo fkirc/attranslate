@@ -67,7 +67,7 @@
     "husky": "^4.3.0",
     "jest": "^26.5.2",
     "lint-staged": "^10.4.0",
-    "node-fetch": "^2.3.0",
+    "node-fetch": "^3.2.1",
     "prettier": "^2.2.1",
     "rimraf": "^3.0.2",
     "ts-jest": "^26.4.1",
