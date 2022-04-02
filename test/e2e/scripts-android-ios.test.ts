@@ -1,6 +1,5 @@
 import { runSampleScript, sampleDir } from "./scripts-e2e-util";
 import { joinLines, runCommand } from "../test-util/test-util";
-import { unlinkSync } from "fs";
 import { join } from "path";
 import { getDebugPath } from "../../src/util/util";
 

@@ -1,8 +1,5 @@
-import { runSampleScript, sampleDir } from "./scripts-e2e-util";
+import { runSampleScript } from "./scripts-e2e-util";
 import { joinLines } from "../test-util/test-util";
-import { unlinkSync } from "fs";
-import { join } from "path";
-import { getDebugPath } from "../../src/util/util";
 
 const flutterAssetDir = "flutter";
 
