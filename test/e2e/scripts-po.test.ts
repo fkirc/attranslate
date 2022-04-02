@@ -1,6 +1,5 @@
 import {
   injectPrefixLines,
-  removeLines,
   runSampleScript,
   sampleDir,
 } from "./scripts-e2e-util";
@@ -46,16 +45,4 @@ test("po delete stale translations", async () => {
   });
   const output = await runSampleScript(testScript, [assetDir]);
   expect(output).toContain(`Delete 1 stale translations`);
-});
-
-test("po insert new translations", async () => {
-  removeLines({
-    path: join(sampleDir, mainTarget),
-    linesToRemove: [
-      'msgid "Confirm E-mail Address"',
-      'msgstr "Por favor confirme su dirección de correo electrónico"',
-    ],
-  });
-  const output = await runSampleScript(testScript, [assetDir]);
-  expect(output).toContain(`Add 1 new translations`);
 });

@@ -1,8 +1,5 @@
-import { runSampleScript, sampleDir } from "./scripts-e2e-util";
+import { runSampleScript } from "./scripts-e2e-util";
 import { joinLines } from "../test-util/test-util";
-import { unlinkSync } from "fs";
-import { join } from "path";
-import { getDebugPath } from "../../src/util/util";
 
 const flutterAssetDir = "flutter";
 
@@ -20,16 +17,4 @@ test("Flutter clean", async () => {
       })
     )
   );
-});
-
-test("Flutter re-create targets", async () => {
-  flutterTargetPaths.forEach((path) => {
-    unlinkSync(join(sampleDir, path));
-  });
-  const output = await runSampleScript(`./flutter.sh`, [flutterAssetDir]);
-  flutterTargetPaths.forEach((path) => {
-    expect(output).toContain(
-      `Write target ${getDebugPath(join(sampleDir, path))}`
-    );
-  });
 });

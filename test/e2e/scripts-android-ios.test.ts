@@ -1,6 +1,5 @@
 import { runSampleScript, sampleDir } from "./scripts-e2e-util";
 import { joinLines, runCommand } from "../test-util/test-util";
-import { unlinkSync } from "fs";
 import { join } from "path";
 import { getDebugPath } from "../../src/util/util";
 
@@ -30,19 +29,6 @@ test("Android to iOS clean", async () => {
       })
     )
   );
-});
-
-test("Android to iOS re-create targets", async () => {
-  const recreatePaths = targetPaths.filter((path) => path !== xmlModifyTarget);
-  recreatePaths.forEach((path) => {
-    unlinkSync(join(sampleDir, path));
-  });
-  const output = await runAndroidiOS();
-  recreatePaths.forEach((path) => {
-    expect(output).toContain(
-      `Write target ${getDebugPath(join(sampleDir, path))}`
-    );
-  });
 });
 
 test("Delete stale XML entries", async () => {

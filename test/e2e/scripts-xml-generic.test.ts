@@ -1,9 +1,4 @@
-import {
-  removeLines,
-  replaceLines,
-  runSampleScript,
-  sampleDir,
-} from "./scripts-e2e-util";
+import { replaceLines, runSampleScript, sampleDir } from "./scripts-e2e-util";
 import { joinLines } from "../test-util/test-util";
 import { unlinkSync } from "fs";
 import { join } from "path";
@@ -45,18 +40,5 @@ test("xml delete stale translations", async () => {
     replace: "    </some-array>\n<newstuff><nested>content</nested></newstuff>",
   });
   const output = await runSampleScript(testScript, [assetDir]);
-  expect(output).toContain(`Delete 1 stale translations`);
-});
-
-test("xml insert new translations", async () => {
-  removeLines({
-    path: join(sampleDir, mainTarget),
-    linesToRemove: [
-      '                    <else someAtt="x">Inhalt</else>',
-      '    <InnerElse otherAtt="true">Apfel</InnerElse>',
-    ],
-  });
-  const output = await runSampleScript(testScript, [assetDir]);
-  expect(output).toContain(`Add 2 new translations`);
   expect(output).toContain(`Delete 1 stale translations`);
 });
