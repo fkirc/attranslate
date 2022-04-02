@@ -30,11 +30,10 @@
   ],
   "scripts": {
     "build": "npm run clean && tsc && npm link",
-    "clean": "rimraf ./dist",
+    "clean": "rm -rf ./dist",
     "lint": "npm run eslint",
     "reformat": "npm run eslint -- --fix",
     "eslint": "./node_modules/.bin/eslint '**/*.{js,ts,tsx}' --ignore-path=.gitignore",
-    "preTest": "jest --runTestsByPath test/setup/prepare-gcloud-keys.test.ts",
     "test": "jest --testTimeout=10000",
     "test:windows": "npm run test -- --config=test/windows.jest.config.js",
     "test:generate_refs": "GENERATE_REFS=True npm run test",
@@ -69,7 +68,6 @@
     "lint-staged": "^10.4.0",
     "node-fetch": "^2.3.0",
     "prettier": "^2.2.1",
-    "rimraf": "^3.0.2",
     "ts-jest": "^26.4.1",
     "typescript": "^4.0.3"
   },

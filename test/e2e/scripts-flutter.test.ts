@@ -21,15 +21,3 @@ test("Flutter clean", async () => {
     )
   );
 });
-
-test("Flutter re-create targets", async () => {
-  flutterTargetPaths.forEach((path) => {
-    unlinkSync(join(sampleDir, path));
-  });
-  const output = await runSampleScript(`./flutter.sh`, [flutterAssetDir]);
-  flutterTargetPaths.forEach((path) => {
-    expect(output).toContain(
-      `Write target ${getDebugPath(join(sampleDir, path))}`
-    );
-  });
-});

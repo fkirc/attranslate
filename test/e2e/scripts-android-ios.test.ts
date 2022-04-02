@@ -32,19 +32,6 @@ test("Android to iOS clean", async () => {
   );
 });
 
-test("Android to iOS re-create targets", async () => {
-  const recreatePaths = targetPaths.filter((path) => path !== xmlModifyTarget);
-  recreatePaths.forEach((path) => {
-    unlinkSync(join(sampleDir, path));
-  });
-  const output = await runAndroidiOS();
-  recreatePaths.forEach((path) => {
-    expect(output).toContain(
-      `Write target ${getDebugPath(join(sampleDir, path))}`
-    );
-  });
-});
-
 test("Delete stale XML entries", async () => {
   await runCommand(
     `cp ${join(sampleDir, xmlModifyTarget + "_modified.xml")} ${join(

@@ -9,7 +9,6 @@ import {
 } from "../../src/services/service-definitions";
 import { logFatal } from "../../src/util/util";
 import { enumerateSubsets } from "../test-util/test-util";
-import { getGCloudKeyPath } from "../setup/key-exports";
 
 export const enSrc: TSet = new Map([
   ["1", "One"],
@@ -85,7 +84,7 @@ class BogusService implements TService {
 
 export const commonArgs: Omit<CoreArgs, "oldTarget" | "src" | "srcCache"> = {
   service: bogusTranslateName as TServiceType,
-  serviceConfig: getGCloudKeyPath(),
+  serviceConfig: "invalid-core-key",
   matcher: "icu",
   srcLng: "en",
   targetLng: "de",

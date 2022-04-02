@@ -1,5 +1,4 @@
 import { CliArgs } from "../../src/core/core-definitions";
-import { getGCloudKeyPath } from "../setup/key-exports";
 import { generateId, runCommand, runTranslate } from "../test-util/test-util";
 import {
   readManagedJson,
@@ -22,7 +21,7 @@ export const defaultE2EArgs: E2EArgs = {
   targetLng: "de",
   targetFormat: "flat-json",
   service: "google-translate",
-  serviceConfig: getGCloudKeyPath(),
+  serviceConfig: "invalid-key",
   cacheDir: "test-assets/cache",
   matcher: "none",
   overwriteOutdated: "true",

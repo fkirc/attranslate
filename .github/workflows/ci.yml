@@ -43,9 +43,6 @@ jobs:
         run: |
           timeout 0.2s time ./bin/attranslate --version
           timeout 0.2s time ./bin/attranslate --help
-      - run: npm run preTest
-        env:
-          GCLOUD_PRIVATE_KEY: ${{ secrets.GCLOUD_PRIVATE_KEY }}
       - if: ${{ matrix.os != 'windows-latest' }}
         run: npm run test
       - if: ${{ matrix.os == 'windows-latest' }}
