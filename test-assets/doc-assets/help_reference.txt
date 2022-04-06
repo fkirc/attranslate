@@ -13,7 +13,8 @@ Options:
                                       "arb", "csv"
   --service <translationService>      One of "zero-config", "manual",
                                       "sync-without-translate",
-                                      "google-translate", "azure"
+                                      "google-translate", "azure" (default:
+                                      "zero-config")
   --serviceConfig <serviceKey>        supply configuration for a translation
                                       service (either a path to a key-file or
                                       an API-key)

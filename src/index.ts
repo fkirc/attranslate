@@ -42,9 +42,10 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
       "--targetFormat <targetFileFormat>",
       formatOneOfOptions(getTFileFormatList())
     )
-    .requiredOption(
+    .option(
       "--service <translationService>",
-      formatOneOfOptions(getTServiceList())
+      formatOneOfOptions(getTServiceList()),
+      "zero-config"
     )
     .option(
       "--serviceConfig <serviceKey>",
