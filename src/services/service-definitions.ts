@@ -26,6 +26,7 @@ export function getTServiceList(): TServiceType[] {
 }
 
 const serviceMap = {
+  "zero-config": null,
   manual: null,
   "sync-without-translate": null,
   "google-translate": null,
@@ -51,6 +52,10 @@ export async function instantiateTService(
    * This is especially important for google-translate, which uses a huge bunch of packages.
    */
   switch (service) {
+    case "zero-config":
+      return new (
+        await import("./zero-config-translate")
+      ).ZeroConfigTranslate();
     case "azure":
       return new (await import("./azure-translator")).AzureTranslator();
     // case "deepl":

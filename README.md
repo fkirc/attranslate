@@ -71,11 +71,11 @@ In contrast, `attranslate` detects such "trivial" mistakes with 100% reliability
 Translating a single file is as simple as the following line:
 
 ```
-attranslate --srcFile=json-simple/en.json --srcLng=en --srcFormat=nested-json --targetFile=json-simple/de.json --targetLng=de --targetFormat=nested-json --service=manual
+attranslate --srcFile=json-simple/en.json --srcLng=en --srcFormat=nested-json --targetFile=json-simple/de.json --targetLng=de --targetFormat=nested-json
 ```
 
 If you have multiple target-languages, then you will need multiple calls to `attranslate`.
-You can write something like the following script to avoid unnecessary duplication:
+You can write something like the following script:
 
 ```bash
 # This example translates an english JSON-file into spanish, chinese and german. It uses Google Cloud Translate.
@@ -112,7 +112,7 @@ Options:
   --targetFormat <targetFileFormat>   One of "flat-json", "nested-json",
                                       "yaml", "po", "xml", "ios-strings",
                                       "arb", "csv"
-  --service <translationService>      One of "manual",
+  --service <translationService>      One of "zero-config", "manual",
                                       "sync-without-translate",
                                       "google-translate", "azure"
   --serviceConfig <serviceKey>        supply configuration for a translation
