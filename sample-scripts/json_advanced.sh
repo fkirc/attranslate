@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e # abort on errors
 
-# This example translates an english JSON-file into spanish, chinese and german. It uses Google Cloud Translate.
+# This example translates an english JSON-file into spanish, chinese and german.
 BASE_DIR="json-advanced"
 COMMON_ARGS=( "--srcLng=en" "--srcFormat=nested-json" "--targetFormat=nested-json" )
 

@@ -79,7 +79,7 @@ If you have multiple target-languages, then you will need multiple calls to `att
 You can write something like the following script:
 
 ```bash
-# This example translates an english JSON-file into spanish, chinese and german. It uses Google Cloud Translate.
+# This example translates an english JSON-file into spanish, chinese and german.
 BASE_DIR="json-advanced"
 COMMON_ARGS=( "--srcLng=en" "--srcFormat=nested-json" "--targetFormat=nested-json" )
 
