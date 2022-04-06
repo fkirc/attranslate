@@ -4,7 +4,7 @@ import {
   E2EArgs,
   switchToRandomTarget,
 } from "../e2e/e2e-common";
-import { joinLines, runTranslateExpectFailure } from "../test-util/test-util";
+import { runTranslateExpectFailure } from "../test-util/test-util";
 import { getDebugPath } from "../../src/util/util";
 
 test("srcFile not existing", async () => {
@@ -148,8 +148,6 @@ const requiredOptions: (keyof typeof defaultE2EArgs)[] = [
   "targetFile",
   "targetLng",
   "targetFormat",
-  "service",
-  "serviceConfig",
 ];
 
 describe.each(requiredOptions)("Bad options %s", (option) => {
@@ -162,17 +160,8 @@ describe.each(requiredOptions)("Bad options %s", (option) => {
     // @ts-ignore
     args[option] = undefined;
     const output = await runTranslateExpectFailure(buildE2EArgs(args));
-    if (option === "serviceConfig") {
-      expect(output).toBe(
-        joinLines([
-          "Invoke 'google-translate' from 'en' to 'de' with 3 inputs...",
-          "error: Set '--serviceConfig' to a path that points to a GCloud service account JSON file",
-        ])
-      );
-    } else {
-      expect(output).toContain(`error: required option '--${option}`);
-      expect(output).toContain(`not specified`);
-    }
+    expect(output).toContain(`error: required option '--${option}`);
+    expect(output).toContain(`not specified`);
   });
 
   test(`Empty string option ${option}`, async () => {

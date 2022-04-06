@@ -51,6 +51,7 @@ Therefore, `attranslate` leaves outdated translations as-is unless you explicitl
 
 `attranslate` supports the following translation-services:
 
+- `zero-config`: Uses Google Cloud Translate in the background, without any configuration.
 - `manual`: Translate texts manually by entering them into `attranslate`.
 - [Google Cloud Translate](https://cloud.google.com/translate)
 - [Azure Translator](https://azure.microsoft.com/en-us/services/cognitive-services/translator-text-api/)
@@ -71,17 +72,16 @@ In contrast, `attranslate` detects such "trivial" mistakes with 100% reliability
 Translating a single file is as simple as the following line:
 
 ```
-attranslate --srcFile=json-simple/en.json --srcLng=en --srcFormat=nested-json --targetFile=json-simple/de.json --targetLng=de --targetFormat=nested-json --service=manual
+attranslate --srcFile=json-simple/en.json --srcLng=en --srcFormat=nested-json --targetFile=json-simple/de.json --targetLng=de --targetFormat=nested-json
 ```
 
 If you have multiple target-languages, then you will need multiple calls to `attranslate`.
-You can write something like the following script to avoid unnecessary duplication:
+You can write something like the following script:
 
 ```bash
-# This example translates an english JSON-file into spanish, chinese and german. It uses Google Cloud Translate.
+# This example translates an english JSON-file into spanish, chinese and german.
 BASE_DIR="json-advanced"
-SERVICE_ACCOUNT_KEY="gcloud/gcloud_service_account.json"
-COMMON_ARGS=( "--srcLng=en" "--srcFormat=nested-json" "--targetFormat=nested-json" "--service=google-translate" "--serviceConfig=$SERVICE_ACCOUNT_KEY" )
+COMMON_ARGS=( "--srcLng=en" "--srcFormat=nested-json" "--targetFormat=nested-json" )
 
 # install attranslate if it is not installed yet
 attranslate --version || npm install --global attranslate
@@ -112,9 +112,10 @@ Options:
   --targetFormat <targetFileFormat>   One of "flat-json", "nested-json",
                                       "yaml", "po", "xml", "ios-strings",
                                       "arb", "csv"
-  --service <translationService>      One of "manual",
+  --service <translationService>      One of "zero-config", "manual",
                                       "sync-without-translate",
-                                      "google-translate", "azure"
+                                      "google-translate", "azure" (default:
+                                      "zero-config")
   --serviceConfig <serviceKey>        supply configuration for a translation
                                       service (either a path to a key-file or
                                       an API-key)
@@ -149,14 +150,6 @@ Alternatively, if you are a JavaScript-developer, then you should install `attra
 
 Next, you should write a project-specific script that invokes `attranslate` for your specific files.
 See [sample scripts](/sample-scripts) for guidance on how to translate your project-specific files.
-
-## Service Configuration
-
-If you use `attranslate` with an automated translation-service, then you need to configure an API-key.
-API-keys can be obtained for free, but you might need to register an account.
-See [service config](docs/SERVICE_CONFIG.md) for guidance on how to obtain API-keys for specific services.
-
-Once you have an API-key, pass your API-key to `attranslate` via the `--serviceConfig` flag.
 
 ## Interpolations and Matchers
 
