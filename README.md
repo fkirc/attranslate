@@ -4,8 +4,8 @@
 
 macOS/Ubuntu/Windows: [![Actions Status](https://github.com/fkirc/attranslate/workflows/Tests/badge.svg/?branch=master)](https://github.com/fkirc/attranslate/actions?query=branch%3Amaster)
 
-`attranslate` is a semi-automated tool for "synchronizing" translation-files.
-`attranslate` is optimized for fast and smooth rollouts in hectic project environments, even if you already have many translations.
+`attranslate` is a tool for synchronizing translation-files, including JSON/YAML/XML and other formats.
+`attranslate` is optimized for smooth rollouts in hectic project environments, even if you already have many translations.
 Optionally, `attranslate` works with automated translation-services.
 For example, let's say that a translation-service achieves 80% correct translations.
 With `attranslate`, a quick fix of the remaining 20% may be faster than doing everything by hand.
