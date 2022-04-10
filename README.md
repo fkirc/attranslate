@@ -42,7 +42,7 @@ Therefore, whenever you are unhappy with the produced results, `attranslate` all
 ## Optionally Overwrite Outdated Translations
 
 `attranslate` is capable of detecting outdated translations.
-Normally, overwriting outdated translations helps to ensure the freshness of translations.
+Overwriting outdated translations helps to ensure the freshness of translations.
 However, in hectic project environments, it might be easier to leave outdated translations as-is.
 Therefore, `attranslate` leaves outdated translations as-is unless you explicitly configure it to overwrite them.
 
@@ -55,16 +55,6 @@ Therefore, `attranslate` leaves outdated translations as-is unless you explicitl
 - [Google Cloud Translate](https://cloud.google.com/translate)
 - [Azure Translator](https://azure.microsoft.com/en-us/services/cognitive-services/translator-text-api/)
 - `sync-without-translate`: Does not change the language. This can be useful for converting between file formats, or for maintaining region-specific differences.
-
-## High Performance
-
-If some texts have already been translated, then `attranslate` won't translate them again.
-This does not only speedup your workflow, but also saves cost for paid translation-services.
-
-## Detect Common Mistakes
-
-Although (some) humans have excellent translation-skills, humans are notoriously bad at detecting "trivial" mistakes like outdated, missing, stale or duplicate translations.
-In contrast, `attranslate` detects such "trivial" mistakes with 100% reliability.
 
 # Usage Examples
 
