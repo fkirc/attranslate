@@ -1,9 +1,10 @@
 #!/bin/bash
 set -e # abort on errors
 
-# This example translates an english JSON-file into spanish, chinese and german.
+# This example translates an english JSON-file into spanish, chinese and german. It uses Google Cloud Translate.
 BASE_DIR="json-advanced"
-COMMON_ARGS=( "--srcLng=en" "--srcFormat=nested-json" "--targetFormat=nested-json" )
+SERVICE_ACCOUNT_KEY="gcloud/gcloud_service_account.json"
+COMMON_ARGS=( "--srcLng=en" "--srcFormat=nested-json" "--targetFormat=nested-json" "--service=google-translate" "--serviceConfig=$SERVICE_ACCOUNT_KEY" )
 
 # install attranslate if it is not installed yet
 attranslate --version || npm install --global attranslate
