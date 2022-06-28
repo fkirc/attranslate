@@ -1,6 +1,6 @@
-# Optional Service Configuration
+# Service Configuration
 
-Optionally, `attranslate` accepts custom API-keys for automated translation-services.
+Currently, you need to obtain an API-key if you use `attranslate` with automated translation-services.
 This document provides guidance on how to obtain API-keys for specific services.
 Once you have an API-key, pass your API-key to `attranslate` via the `--serviceConfig`-flag.
 

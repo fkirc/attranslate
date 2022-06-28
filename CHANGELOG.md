@@ -1,7 +1,3 @@
-# 1.8.0
-
-- Add zero-config-feature to use `attranslate` without configuring any API-keys!
-
 # 1.7.0
 
 - Rewrite nested JSON-processing to better preserve source-structures
