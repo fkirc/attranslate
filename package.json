@@ -42,7 +42,7 @@
   },
   "dependencies": {
     "@google-cloud/translate": "^6.0.3",
-    "commander": "^6.1.0",
+    "commander": "^9.4.0",
     "detect-indent": "^6.0.0",
     "gettext-parser": "^4.0.4",
     "inquirer": "^7.3.3",
