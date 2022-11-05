@@ -29,8 +29,8 @@ jobs:
       - uses: actions/checkout@v2
         with:
           token: ${{ secrets.CI_PAT || github.token }}
-      - run: git config --global user.email "mail@felixkirchengast.at"
-      - run: git config --global user.name "Felix Kirchengast (GitHub Action)"
+      - run: git config --global user.email "mail@felix.at"
+      - run: git config --global user.name "Felix (GitHub Action)"
       - uses: actions/cache@v2
         with:
           path: '**/node_modules'
