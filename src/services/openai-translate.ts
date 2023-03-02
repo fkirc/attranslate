@@ -25,10 +25,15 @@ async function translateSingleString(
   const openai = new OpenAIApi(configuration);
 
   const prompt = generatePrompt(str, args);
+  /**
+   * https://platform.openai.com/docs/api-reference/completions/create
+   * What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.
+   * We generally recommend altering this or top_p but not both.
+   */
   const completion = await openai.createCompletion({
     model: "text-davinci-003",
     prompt,
-    //temperature: 0.6,
+    temperature: 0.2,
   });
   const text = completion.data.choices[0].text;
   if (text == undefined) {
