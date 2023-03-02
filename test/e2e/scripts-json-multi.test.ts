@@ -2,7 +2,7 @@ import { joinLines } from "../test-util/test-util";
 import { runSampleScript } from "./scripts-e2e-util";
 import { join } from "path";
 
-test("json simple", async () => {
+test("json simple up-to-date", async () => {
   const output = await runSampleScript(`./json_simple.sh`, ["json-simple"]);
   expect(output).toBe("Target is up-to-date: 'json-simple/de.json'\n");
 });

@@ -1,3 +1,7 @@
+# 1.9.0
+
+- Add support for OpenAI translations (ChatGPT)
+
 # 1.7.0
 
 - Rewrite nested JSON-processing to better preserve source-structures
