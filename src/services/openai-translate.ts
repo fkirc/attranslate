@@ -30,16 +30,29 @@ async function translateSingleString(
    * What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.
    * We generally recommend altering this or top_p but not both.
    */
-  const completion = await openai.createCompletion({
-    model: "text-davinci-003",
-    prompt,
-    temperature: 0.2,
-  });
-  const text = completion.data.choices[0].text;
-  if (text == undefined) {
-    logFatal("OpenAI returned undefined for prompt " + prompt);
+  try {
+    const completion = await openai.createCompletion({
+      model: "text-davinci-003",
+      prompt,
+      temperature: 0.2,
+    });
+    const text = completion.data.choices[0].text;
+    if (text == undefined) {
+      logFatal("OpenAI returned undefined for prompt " + prompt);
+    }
+    return text;
+  } catch (e: any) {
+    if (typeof e.message === "string") {
+      logFatal(
+        "OpenAI: " +
+          e.message +
+          ", Status text: " +
+          JSON.stringify(e?.response?.statusText)
+      );
+    } else {
+      throw e;
+    }
   }
-  return text;
 }
 
 function generatePrompt(str: string, args: TServiceArgs) {
