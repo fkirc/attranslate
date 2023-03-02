@@ -21,7 +21,7 @@ This is possible because `attranslate` operates on your file in a surgical way, 
 
 ## Cross-platform Support
 
-`attranslate` is designed to translate any website or app with any toolchain.
+`attranslate` is designed to translate any website or app.
 `attranslate` works for i18n/JavaScript-frameworks/Android/iOS/Flutter/Ruby/Jekyll/Symfony/Django/WordPress and many other platforms.
 To make this possible, `attranslate` supports the following file formats:
 
@@ -39,17 +39,11 @@ To make this possible, `attranslate` supports the following file formats:
 Therefore, whenever you are unhappy with the produced results, `attranslate` allows you to simply overwrite texts in your target-files.
 `attranslate` will never ever overwrite a manual correction in subsequent runs.
 
-## Optionally Overwrite Outdated Translations
-
-`attranslate` is capable of detecting outdated translations.
-Overwriting outdated translations helps to ensure the freshness of translations.
-However, in hectic project environments, it might be easier to leave outdated translations as-is.
-Therefore, `attranslate` leaves outdated translations as-is unless you explicitly configure it to overwrite them.
-
 ## Available Services
 
 `attranslate` supports the following translation-services:
 
+- `openai`: Uses a model like ChatGPT for translating text.
 - `manual`: Translate texts manually by entering them into `attranslate`.
 - [Google Cloud Translate](https://cloud.google.com/translate)
 - [Azure Translator](https://azure.microsoft.com/en-us/services/cognitive-services/translator-text-api/)
@@ -60,23 +54,21 @@ Therefore, `attranslate` leaves outdated translations as-is unless you explicitl
 Translating a single file is as simple as the following line:
 
 ```
-attranslate --srcFile=json-simple/en.json --srcLng=en --srcFormat=nested-json --targetFile=json-simple/de.json --targetLng=de --targetFormat=nested-json --service=manual
+attranslate --srcFile=json-simple/en.json --srcLng=English --srcFormat=nested-json --targetFile=json-simple/es.json --targetLng=Spanish --targetFormat=nested-json --service=openai
 ```
 
 If you have multiple target-languages, then you will need multiple calls to `attranslate`.
-You can write something like the following script to avoid unnecessary duplication:
+You can write something like the following script:
 
 ```bash
-# This example translates an english JSON-file into spanish, chinese and german. It uses Google Cloud Translate.
+# This example translates an english JSON-file into spanish and german.
 BASE_DIR="json-advanced"
-SERVICE_ACCOUNT_KEY="gcloud/gcloud_service_account.json"
-COMMON_ARGS=( "--srcLng=en" "--srcFormat=nested-json" "--targetFormat=nested-json" "--service=google-translate" "--serviceConfig=$SERVICE_ACCOUNT_KEY" )
+COMMON_ARGS=( "--srcLng=en" "--srcFormat=nested-json" "--targetFormat=nested-json" "--service=google-translate" "--serviceConfig=gcloud/gcloud_service_account.json" )
 
 # install attranslate if it is not installed yet
 attranslate --version || npm install --global attranslate
 
 attranslate --srcFile=$BASE_DIR/en/fruits.json --targetFile=$BASE_DIR/es/fruits.json --targetLng=es "${COMMON_ARGS[@]}"
-attranslate --srcFile=$BASE_DIR/en/fruits.json --targetFile=$BASE_DIR/zh/fruits.json --targetLng=zh "${COMMON_ARGS[@]}"
 attranslate --srcFile=$BASE_DIR/en/fruits.json --targetFile=$BASE_DIR/de/fruits.json --targetLng=de "${COMMON_ARGS[@]}"
 ```
 
@@ -101,7 +93,7 @@ Options:
   --targetFormat <targetFileFormat>   One of "flat-json", "nested-json",
                                       "yaml", "po", "xml", "ios-strings",
                                       "arb", "csv"
-  --service <translationService>      One of "manual",
+  --service <translationService>      One of "openai", "manual",
                                       "sync-without-translate",
                                       "google-translate", "azure"
   --serviceConfig <serviceKey>        supply configuration for a translation
@@ -139,14 +131,6 @@ Alternatively, if you are a JavaScript-developer, then you should install `attra
 Next, you should write a project-specific script that invokes `attranslate` for your specific files.
 See [sample scripts](/sample-scripts) for guidance on how to translate your project-specific files.
 
-## Service Configuration
-
-If you use `attranslate` with an automated translation-service, then you need to configure an API-key.
-API-keys can be obtained for free, but you might need to register an account.
-See [service config](docs/SERVICE_CONFIG.md) for guidance on how to obtain API-keys for specific services.
-
-Once you have an API-key, pass your API-key to `attranslate` via the `--serviceConfig` flag.
-
 ## Interpolations and Matchers
 
 > :warning: For many projects, `attranslate` works out of the box without configuring any matchers. Therefore, we recommend skipping this section unless you encounter unexpected problems that are hard to fix manually.
@@ -170,10 +154,10 @@ You can select a matcher with the `--matcher` option.
 
 > :warning: If `--overwriteOutdated` is set to `false`, then `attranslate` does not generate any translation-cache.
 
-The purpose of the translation-cache is to detect _outdated translations_, such that outdated translations can be overwritten in subsequent runs.
+By default, `attranslate` never overwrites any outdated translations.
+Nevertheless, `attranslate` provides an option to detect outdated translations.
+It is the purpose of the translation-cache is to detect such outdated translations.
 The translation-cache consists of `attranslate-cache-*`-files.
-It is allowed to delete a translation-cache at any time.
-However, to make it work smoothly, you should put your `attranslate-cache-*`-files under version control.
 
 ## Continuous Integration
 

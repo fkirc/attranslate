@@ -98,7 +98,7 @@ Correr `attranslate --help` para ver una lista de opciones disponibles:
       --targetFormat <targetFileFormat>   One of "flat-json", "nested-json",
                                           "yaml", "po", "xml", "ios-strings",
                                           "arb", "csv"
-      --service <translationService>      One of "manual",
+      --service <translationService>      One of "openai", "manual",
                                           "sync-without-translate",
                                           "google-translate", "azure"
       --serviceConfig <serviceKey>        supply configuration for a translation

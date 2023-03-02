@@ -4,6 +4,12 @@ Currently, you need to obtain an API-key if you use `attranslate` with automated
 This document provides guidance on how to obtain API-keys for specific services.
 Once you have an API-key, pass your API-key to `attranslate` via the `--serviceConfig`-flag.
 
+### OpenAI (ChatGPT)
+
+- Create an account on https://platform.openai.com/
+- Create and copy an API key from https://platform.openai.com/account/api-keys
+- Pass your API key via the `--serviceConfig`-flag to `attranslate`.
+
 ### Google Translate
 
 Follow these steps to get an API-key for Google Translate:
@@ -27,10 +33,3 @@ Once you have a service account, pass a path to your `service_account_key.json` 
  - [Sign Up](https://azure.microsoft.com/en-us/free/) for an
  Azure account if you don't have one already.
  - Create a new translator instance via https://azure.microsoft.com/services/cognitive-services/translator/
-
-# Service Tuning
-
-Enterprise users can tune translation-services according to their needs.
-For example, enterprise users can deploy custom glossaries with domain-specific vocabulary, or they can even train their own machine-learning models.
-However, for entry-level users, it is often faster to omit service-tuning and do a few more manual corrections instead.
-This is why `attranslate` provides first-class support for manual corrections.

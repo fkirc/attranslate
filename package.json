@@ -8,14 +8,13 @@
   },
   "keywords": [
     "semi-automated translation",
+    "openai-translate",
     "google-translate",
     "website translation",
     "mobile app translation",
-    "cross-platform translation",
     "i18n"
   ],
   "license": "MIT",
-  "author": "Felix Kirchengast",
   "bugs": {
     "url": "https://github.com/fkirc/attranslate/issues"
   },
@@ -37,7 +36,6 @@
     "test": "jest --testTimeout=10000",
     "test:windows": "npm run test -- --config=test/windows.jest.config.js",
     "test:generate_refs": "GENERATE_REFS=True npm run test",
-    "generate_docs": "GENERATE_REFS=True jest --runTestsByPath test/setup/generate-docs.test.ts",
     "prepublishOnly": "git diff --exit-code"
   },
   "dependencies": {
@@ -47,6 +45,7 @@
     "gettext-parser": "^4.0.4",
     "inquirer": "^7.3.3",
     "messageformat-parser": "^4.1.0",
+    "openai": "^3.2.0",
     "xml2js": "https://github.com/fkirc/node-xml2js/tarball/680ee7ed2dad8b9ddacc37b5e4b4a671706e0bcf",
     "yaml": "2.0.0-1"
   },

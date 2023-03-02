@@ -29,10 +29,3 @@ Siga estos pasos para obtener una clave de API para Azure Translator:
 *   [Únete](https://azure.microsoft.com/en-us/free/) para un
     Cuenta de Azure si aún no tiene una.
 *   Crear una nueva instancia de traductor a través de https://azure.microsoft.com/services/cognitive-services/translator/
-
-# Ajuste del servicio
-
-Los usuarios empresariales pueden ajustar los servicios de traducción de acuerdo con sus necesidades.
-Por ejemplo, los usuarios empresariales pueden implementar glosarios personalizados con vocabulario específico del dominio, o incluso pueden entrenar sus propios modelos de aprendizaje automático.
-Sin embargo, para los usuarios de nivel de entrada, a menudo es más rápido omitir el ajuste del servicio y hacer algunas correcciones manuales más en su lugar.
-Es por eso que `attranslate` proporciona soporte de primera clase para correcciones manuales.
