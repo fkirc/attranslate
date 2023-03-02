@@ -1,10 +1,28 @@
-import { joinLines } from "../test-util/test-util";
+import { joinLines, runCommandExpectFailure } from "../test-util/test-util";
 import { runSampleScript } from "./scripts-e2e-util";
 import { join } from "path";
 
 test("json simple up-to-date", async () => {
   const output = await runSampleScript(`./json_simple.sh`, ["json-simple"]);
   expect(output).toBe("Target is up-to-date: 'json-simple/de.json'\n");
+});
+
+test("missing OpenAI key", async () => {
+  const output =
+    await runCommandExpectFailure(`cd sample-scripts && attranslate --srcFile=json-simple/en.json --srcLng=English --srcFormat=nested-json --targetFile=json-simple/es.json --targetLng=German --targetFormat=nested-json --service=openai
+  `);
+  expect(output).toContain(
+    "error: Missing OpenAI API Key: Please get an API key from"
+  );
+});
+
+test("invalid OpenAI key", async () => {
+  const output =
+    await runCommandExpectFailure(`cd sample-scripts && attranslate --srcFile=json-simple/en.json --srcLng=English --srcFormat=nested-json --targetFile=json-simple/es.json --targetLng=German --targetFormat=nested-json --service=openai --serviceConfig=garbageapikey
+  `);
+  expect(output).toContain(
+    "error: OpenAI: Request failed with status code 401, Status text:"
+  );
 });
 
 const targetLngs = ["es", "zh", "de"];
