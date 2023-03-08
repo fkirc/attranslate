@@ -22,32 +22,32 @@ This is possible because `attranslate` operates on your file in a surgical way, 
 ## Cross-platform Support
 
 `attranslate` is designed to translate any website or app.
-`attranslate` works for i18n/JavaScript-frameworks/Android/iOS/Flutter/Ruby/Jekyll/Symfony/Django/WordPress and many other platforms.
+`attranslate` works for i18n/JavaScript/Android/iOS/Flutter/Ruby/Jekyll/Django/WordPress and many other platforms.
 To make this possible, `attranslate` supports the following file formats:
 
 - Flat or nested JSON
-- Flat or nested YAML
+- YAML
 - PO/POT-files
-- Android-XML or any other XMLs with text-contents
+- Android-XML or other XMLs
 - iOS-Strings
 - Flutter-ARB
-- CSV (e.g. for Google Docs or Microsoft Excel)
+- CSV (e.g. for Google Docs or Excel)
 
 ## Preserve Manual Translations
 
-`attranslate` recognizes that automated translations are not perfect.
+`attranslate` recognizes that machine translations are not perfect.
 Therefore, whenever you are unhappy with the produced results, `attranslate` allows you to simply overwrite texts in your target-files.
-`attranslate` will never ever overwrite a manual correction in subsequent runs.
+`attranslate` will keep manual corrections in subsequent runs.
 
 ## Available Services
 
-`attranslate` supports the following translation-services:
+`attranslate` supports the following services; many of them are free of charge:
 
-- `openai`: Uses a model like ChatGPT for translating text.
-- `manual`: Translate texts manually by entering them into `attranslate`.
-- [Google Cloud Translate](https://cloud.google.com/translate)
-- [Azure Translator](https://azure.microsoft.com/en-us/services/cognitive-services/translator-text-api/)
+- `openai`: Uses a model like ChatGPT; free of charge
+- [google-translate](https://cloud.google.com/translate): Needs a GCloud account; free up to a limit
+- [azure](https://azure.microsoft.com/en-us/services/cognitive-services/translator-text-api/): Needs a Microsoft account; costs money
 - `sync-without-translate`: Does not change the language. This can be useful for converting between file formats, or for maintaining region-specific differences.
+- `manual`: Translates text with manual typing
 
 # Usage Examples
 
@@ -131,28 +131,22 @@ Alternatively, if you are a JavaScript-developer, then you should install `attra
 Next, you should write a project-specific script that invokes `attranslate` for your specific files.
 See [sample scripts](/sample-scripts) for guidance on how to translate your project-specific files.
 
-## Interpolations and Matchers
+## Matchers
 
-> :warning: For many projects, `attranslate` works out of the box without configuring any matchers. Therefore, we recommend skipping this section unless you encounter unexpected problems that are hard to fix manually.
+> :warning: For many projects, `attranslate` works out of the box without configuring any matchers. Therefore, we recommend skipping this section.
 
-Many websites/apps use _interpolations_  to insert dynamic values into translations.
-For example, an interpolation like `Your name is {{name}}` might be replaced with `Your name is Felix`.
+Many websites/apps insert dynamic values into translations.
+For example, a translation like `Your name is {{name}}` might be replaced with `Your name is Felix`.
 
-To help with interpolations, `attranslate` provides so-called _matchers_.
-A matcher replaces interpolations with placeholders before they are
-sent to a translation service.
-`attranslate` offers the following matchers for different styles of interpolations:
+To help with with this, `attranslate` offers the following matchers for different styles of replacements:
 
-- **ICU**: Matches ICU interpolations like `{name}`.
-- **i18n**: Matches [i18next](https://www.i18next.com/translation-function/interpolation) interpolations like `{{name}}`.
-- **sprintf**: Matches sprintf-style interpolations like `%s`.
-- **None**: Doesn't match any interpolations.
-
-You can select a matcher with the `--matcher` option.
+- **ICU**: Matches something like `{name}`.
+- **i18n**: Matches [i18next](https://www.i18next.com/translation-function/interpolation) format like `{{name}}`.
+- **sprintf**: Matches sprintf-style like `%s`.
 
 ## Translation Cache
 
-> :warning: If `--overwriteOutdated` is set to `false`, then `attranslate` does not generate any translation-cache.
+> :warning: By default, `attranslate` does not generate any translation-cache, therefore you may skip this section as well.
 
 By default, `attranslate` never overwrites any outdated translations.
 Nevertheless, `attranslate` provides an option to detect outdated translations.
