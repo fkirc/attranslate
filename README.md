@@ -36,8 +36,8 @@ To make this possible, `attranslate` supports the following file formats:
 ## Preserve Manual Translations
 
 `attranslate` recognizes that machine translations are not perfect.
-Therefore, whenever you are unhappy with the produced results, `attranslate` allows you to simply overwrite texts in your target-files.
-`attranslate` will keep manual corrections in subsequent runs.
+Therefore, whenever you are unhappy with the produced text, `attranslate` allows you to simply overwrite text in your target-files.
+`attranslate` will preserve manual corrections in subsequent runs.
 
 ## Available Services
 
@@ -82,7 +82,7 @@ Once you have `nodejs`, you can install `attranslate` via:
 
 `npm install --global attranslate`
 
-Alternatively, if you are a JavaScript-developer, then you should install `attranslate` via:
+Alternatively, if you are a JavaScript-developer, then you can install `attranslate` via:
 
 `npm install --save-dev attranslate`
 
