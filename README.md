@@ -75,6 +75,20 @@ attranslate --srcFile=$BASE_DIR/en/fruits.json --targetFile=$BASE_DIR/de/fruits.
 Similarly, you can use `attranslate` to convert between file-formats.
 See [sample scripts](/sample-scripts) for more examples.
 
+# Integration Guide
+
+Firstly, ensure that [nodejs](https://nodejs.org/) is installed on your machine.
+Once you have `nodejs`, you can install `attranslate` via:
+
+`npm install --global attranslate`
+
+Alternatively, if you are a JavaScript-developer, then you should install `attranslate` via:
+
+`npm install --save-dev attranslate`
+
+Next, you should write a project-specific script that invokes `attranslate` for your specific files.
+See [sample scripts](/sample-scripts) for guidance on how to translate your project-specific files.
+
 # Usage Options
 
 Run `attranslate --help` to see a list of available options:
@@ -99,37 +113,15 @@ Options:
   --serviceConfig <serviceKey>        supply configuration for a translation
                                       service (either a path to a key-file or
                                       an API-key)
-  --cacheDir <cacheDir>               The directory where a translation-cache
-                                      is expected to be found (default: ".")
   --matcher <matcher>                 One of "none", "icu", "i18next",
                                       "sprintf" (default: "none")
   --overwriteOutdated <true | false>  If true, overwrite outdated translations
                                       in subsequent runs. Leave this at false
                                       unless you know what you are doing.
                                       (default: "false")
-  --keySearch <regExp>                A regular expression to replace
-                                      translation-keys (can be used for
-                                      file-format conversions) (default: "x")
-  --keyReplace <string>               The replacement for occurrences of
-                                      keySearch (default: "x")
   -v, --version                       output the version number
   -h, --help                          display help for command
 ```
-
-
-# Integration Guide
-
-Firstly, ensure that [nodejs](https://nodejs.org/) is installed on your machine.
-Once you have `nodejs`, you can install `attranslate` via:
-
-`npm install --global attranslate`
-
-Alternatively, if you are a JavaScript-developer, then you should install `attranslate` via:
-
-`npm install --save-dev attranslate`
-
-Next, you should write a project-specific script that invokes `attranslate` for your specific files.
-See [sample scripts](/sample-scripts) for guidance on how to translate your project-specific files.
 
 ## Matchers
 
