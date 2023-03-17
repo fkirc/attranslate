@@ -74,7 +74,7 @@ attranslate --srcFile=$BASE_DIR/en/fruits.json --targetFile=$BASE_DIR/de/fruits.
 ```
 
 Del mismo modo, puede utilizar `attranslate` para convertir entre formatos de archivo.
-Ver [scripts de ejemplo](/sample-scripts) para más ejemplos.
+Ver [scripts de ejemplo](https://github.com/fkirc/attranslate/tree/master/sample-scripts) para más ejemplos.
 
 # Guía de integración
 
@@ -88,7 +88,7 @@ Alternativamente, si usted es un desarrollador de JavaScript, entonces debe inst
 `npm install --save-dev attranslate`
 
 A continuación, debe escribir un script específico del proyecto que invoque `attranslate` para sus archivos específicos.
-Ver [scripts de ejemplo](/sample-scripts) para obtener orientación sobre cómo traducir los archivos específicos del proyecto.
+Ver [scripts de ejemplo](https://github.com/fkirc/attranslate/tree/master/sample-scripts) para obtener orientación sobre cómo traducir los archivos específicos del proyecto.
 
 # Opciones de uso
 
