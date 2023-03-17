@@ -120,7 +120,6 @@ Options:
                                       unless you know what you are doing.
                                       (default: "false")
   -v, --version                       output the version number
-  -h, --help                          display help for command
 ```
 
 ## Matchers

@@ -1,3 +1,5 @@
+# attranslate: Traductor de texto semiautomático para sitios web y aplicaciones
+
 <p align="center">
   <img alt="attranslate - Semi-automated Text Translator for Websites and Apps" src="docs/logo/attranslate_logo.png">
 </p>
@@ -21,17 +23,17 @@ Esto es posible porque `attranslate` opera en su expediente de forma quirúrgica
 
 ## Soporte multiplataforma
 
-`attranslate` está diseñado para traducir cualquier sitio web o aplicación con cualquier cadena de herramientas.
-`attranslate` funciona para i18n / JavaScript-frameworks / Android / iOS / Flutter / Ruby / Jekyll / Symfony / Django / WordPress y muchas otras plataformas.
+`attranslate` está diseñado para traducir cualquier sitio web o aplicación.
+`attranslate` funciona para i18n / JavaScript / Android / iOS / Flutter / Ruby / Jekyll / Django / WordPress y muchas otras plataformas.
 Para que esto sea posible, `attranslate` admite los siguientes formatos de archivo:
 
 *   JSON plano o anidado
-*   YAML plano o anidado
+*   YAML
 *   PO/POT-archivos
-*   Android-XML o cualquier otro XML con contenido de texto
+*   Android-XML o cualquier otro XML
 *   Cadenas de iOS
-*   Aleteo-ARB
-*   CSV (por ejemplo, para Google Docs o Microsoft Excel)
+*   Flutter-ARB
+*   CSV (por ejemplo, para Google Docs o Excel)
 
 ## Conservar traducciones manuales
 
@@ -39,52 +41,60 @@ Para que esto sea posible, `attranslate` admite los siguientes formatos de archi
 Por lo tanto, siempre que no esté satisfecho con los resultados producidos, `attranslate` le permite simplemente sobrescribir textos en sus archivos de destino.
 `attranslate` nunca sobrescribirá una corrección manual en ejecuciones posteriores.
 
-## Opcionalmente, sobrescriba traducciones obsoletas
-
-`attranslate` es capaz de detectar traducciones obsoletas.
-La sobrescritura de traducciones obsoletas ayuda a garantizar la frescura de las traducciones.
-Sin embargo, en entornos de proyectos agitados, podría ser más fácil dejar las traducciones obsoletas tal cual.
-Por lo tanto `attranslate` deja las traducciones obsoletas tal cual a menos que las configure explícitamente para sobrescribirlas.
-
 ## Servicios disponibles
 
-`attranslate` admite los siguientes servicios de traducción:
+`attranslate` admite los siguientes servicios de traducción; Muchos de ellos son gratis:
 
-*   `manual`: Traducir textos manualmente introduciéndolos en `attranslate`.
-*   [Traductor de Google Cloud](https://cloud.google.com/translate)
-*   [Traductor de Azure](https://azure.microsoft.com/en-us/services/cognitive-services/translator-text-api/)
+*   `openai`: Utiliza un modelo como ChatGPT; gratis
+*   [google-translate](https://cloud.google.com/translate): Necesita una cuenta de GCloud; gratis hasta un límite
+*   [azure](https://azure.microsoft.com/en-us/services/cognitive-services/translator-text-api/): Necesita una cuenta de Microsoft; cuesta dinero
 *   `sync-without-translate`: No cambia el idioma. Esto puede ser útil para convertir entre formatos de archivo o para mantener diferencias específicas de la región.
+*   `manual`: Traducir textos manualmente
 
 # Ejemplos de uso
 
 Traducir un solo archivo es tan simple como la siguiente línea:
 
-    attranslate --srcFile=json-simple/en.json --srcLng=en --srcFormat=nested-json --targetFile=json-simple/de.json --targetLng=de --targetFormat=nested-json --service=manual
+    attranslate --srcFile=json-simple/en.json --srcLng=English --srcFormat=nested-json --targetFile=json-simple/de.json --targetLng=German --targetFormat=nested-json --service=openai
 
 Si tiene varios idiomas de destino, necesitará varias llamadas a `attranslate`.
-Puede escribir algo como el siguiente script para evitar duplicaciones innecesarias:
+Puede escribir algo como el siguiente script:
 
 ```bash
-# This example translates an english JSON-file into spanish, chinese and german. It uses Google Cloud Translate.
+# Este ejemplo traduce un archivo JSON en inglés a español y alemán.
 BASE_DIR="json-advanced"
 SERVICE_ACCOUNT_KEY="gcloud/gcloud_service_account.json"
 COMMON_ARGS=( "--srcLng=en" "--srcFormat=nested-json" "--targetFormat=nested-json" "--service=google-translate" "--serviceConfig=$SERVICE_ACCOUNT_KEY" )
 
-# install attranslate if it is not installed yet
+# instalar attranslate si aún no está instalado
 attranslate --version || npm install --global attranslate
 
 attranslate --srcFile=$BASE_DIR/en/fruits.json --targetFile=$BASE_DIR/es/fruits.json --targetLng=es "${COMMON_ARGS[@]}"
-attranslate --srcFile=$BASE_DIR/en/fruits.json --targetFile=$BASE_DIR/zh/fruits.json --targetLng=zh "${COMMON_ARGS[@]}"
 attranslate --srcFile=$BASE_DIR/en/fruits.json --targetFile=$BASE_DIR/de/fruits.json --targetLng=de "${COMMON_ARGS[@]}"
 ```
 
 Del mismo modo, puede utilizar `attranslate` para convertir entre formatos de archivo.
 Ver [scripts de ejemplo](/sample-scripts) para más ejemplos.
 
+# Guía de integración
+
+En primer lugar, asegúrese de que [nodejs](https://nodejs.org/) está instalado en el equipo.
+Una vez que tengas `nodejs`, puede instalar `attranslate` Vía:
+
+`npm install --global attranslate`
+
+Alternativamente, si usted es un desarrollador de JavaScript, entonces debe instalar `attranslate` Vía:
+
+`npm install --save-dev attranslate`
+
+A continuación, debe escribir un script específico del proyecto que invoque `attranslate` para sus archivos específicos.
+Ver [scripts de ejemplo](/sample-scripts) para obtener orientación sobre cómo traducir los archivos específicos del proyecto.
+
 # Opciones de uso
 
 Correr `attranslate --help` para ver una lista de opciones disponibles:
 
+```
     Usage: attranslate [options]
 
     Options:
@@ -104,71 +114,37 @@ Correr `attranslate --help` para ver una lista de opciones disponibles:
       --serviceConfig <serviceKey>        supply configuration for a translation
                                           service (either a path to a key-file or
                                           an API-key)
-      --cacheDir <cacheDir>               The directory where a translation-cache
-                                          is expected to be found (default: ".")
       --matcher <matcher>                 One of "none", "icu", "i18next",
                                           "sprintf" (default: "none")
       --overwriteOutdated <true | false>  If true, overwrite outdated translations
                                           in subsequent runs. Leave this at false
                                           unless you know what you are doing.
                                           (default: "false")
-      --keySearch <regExp>                A regular expression to replace
-                                          translation-keys (can be used for
-                                          file-format conversions) (default: "x")
-      --keyReplace <string>               The replacement for occurrences of
-                                          keySearch (default: "x")
       -v, --version                       output the version number
-      -h, --help                          display help for command
+```
 
-# Guía de integración
+## Matchers
 
-En primer lugar, asegúrese de que [nodejs](https://nodejs.org/) está instalado en el equipo.
-Una vez que tengas `nodejs`, puede instalar `attranslate` Vía:
+> :warning: Para muchos proyectos, `attranslate` funciona de inmediato sin configurar ningún Matchers. Por lo tanto, le recomendamos que omita esta sección.
 
-`npm install --global attranslate`
+Muchos sitios web/aplicaciones insertan valores dinámicos en las traducciones.
+Por ejemplo, una traducción como `Su nombre es {{name}}` podría sustituirse por `Su nombre es Felix`.
 
-Alternativamente, si usted es un desarrollador de JavaScript, entonces debe instalar `attranslate` Vía:
 
-`npm install --save-dev attranslate`
+Para ayudar con esto, `attranslate` ofrece los siguientes Matchers para diferentes estilos de reemplazos:
 
-A continuación, debe escribir un script específico del proyecto que invoque `attranslate` para sus archivos específicos.
-Ver [scripts de ejemplo](/sample-scripts) para obtener orientación sobre cómo traducir los archivos específicos del proyecto.
-
-## Configuración del servicio
-
-Si utiliza `attranslate` con un servicio de traducción automática, debe configurar una clave API.
-Las claves API se pueden obtener de forma gratuita, pero es posible que deba registrar una cuenta.
-Ver [configuración del servicio](docs/SERVICE_CONFIG.md) para obtener orientación sobre cómo obtener claves de API para servicios específicos.
-
-Una vez que tenga una clave de API, pase su clave de API a `attranslate` a través del `--serviceConfig` bandera.
-
-## Interpolaciones y matchers
-
-> :warning: Para muchos proyectos, `attranslate` funciona de inmediato sin configurar ningún emparejador. Por lo tanto, le recomendamos que omita esta sección a menos que encuentre problemas inesperados que sean difíciles de solucionar manualmente.
-
-Muchos sitios web / aplicaciones usan *Interpolaciones*  para insertar valores dinámicos en las traducciones.
-Por ejemplo, una interpolación como `Your name is {{name}}` podría sustituirse por `Your name is Felix`.
-
-Para ayudar con las interpolaciones, `attranslate` proporciona los llamados *emparejadores*.
-Un emparejador reemplaza las interpolaciones con marcadores de posición antes de que sean
-enviado a un servicio de traducción.
-`attranslate` ofrece los siguientes emparejadores para diferentes estilos de interpolaciones:
-
-*   **UCI**: Coincide con interpolaciones de UCI como `{name}`.
-*   **i18n**: Partidos [i18siguiente](https://www.i18next.com/translation-function/interpolation) interpolaciones como `{{name}}`.
-*   **sprintf**: Coincide con interpolaciones de estilo sprintf como `%s`.
-*   **Ninguno**: No coincide con ninguna interpolación.
-
-Puede seleccionar un emparejador con el botón `--matcher` opción.
+*   **UCI**: Coincide con algo como `{name}`.
+*   **i18n**: Coincide [i18siguiente](https://www.i18next.com/translation-function/interpolation) como `{{name}}`.
+*   **sprintf**: Coincide estilo de sprintf como `%s`.
 
 ## Caché de traducción
 
-> :warning: Si `--overwriteOutdated` se establece en `false`entonces `attranslate` no genera ninguna caché de traducción.
+> :warning: Por defecto, `attranslate` no genera ningún caché de traducción, por lo tanto, también puede omitir esta sección
 
-El propósito de la caché de traducción es detectar *traducciones obsoletas*, de modo que las traducciones obsoletas se pueden sobrescribir en ejecuciones posteriores.
-La caché de traducción consta de `attranslate-cache-*`-archivos.
-Se permite eliminar una caché de traducción en cualquier momento.
-Sin embargo, para que funcione sin problemas, debe poner su `attranslate-cache-*`-bajo control de versiones.
+Por defecto, `attranslate` nunca sobrescribe ninguna traducción obsoleta.
+Sin embargo, `attranslate` proporciona una opción para detectar traducciones desactualizadas.
+El propósito de la memoria caché de traducción es detectar tales traducciones obsoletas.
+El caché de traducción consta de archivos `attranslate-cache-*`.
 
 ## Integración continua
 
