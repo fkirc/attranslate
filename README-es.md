@@ -13,7 +13,7 @@ Por ejemplo, supongamos que un servicio de traducción logra un 80% de traduccio
 Con `attranslate`, una solución rápida del 20% restante puede ser más rápida que hacer todo a mano.
 Aparte de eso, `attranslate` admite traducciones puramente manuales o incluso conversiones de formato de archivo sin cambiar el idioma.
 
-## ¿Por qué traducir?
+## ¿Por qué attranslate?
 
 A diferencia de los servicios de pago, un solo desarrollador puede integrar `attranslate` en cuestión de minutos.
 `attranslate` puede operar en los mismos archivos de traducciones que ya está utilizando.
