@@ -4,6 +4,9 @@
 
 macOS/Ubuntu/Windows: [![Actions Status](https://github.com/fkirc/attranslate/workflows/Tests/badge.svg/?branch=master)](https://github.com/fkirc/attranslate/actions?query=branch%3Amaster)
 
+[-> Documentación en español](https://fkirc.github.io/attranslate/README-es)
+
+
 `attranslate` is a tool for synchronizing translation-files, including JSON/YAML/XML and other formats.
 `attranslate` is optimized for smooth rollouts in hectic project environments, even if you already have many translations.
 Optionally, `attranslate` works with automated translation-services.
@@ -73,7 +76,7 @@ attranslate --srcFile=$BASE_DIR/en/fruits.json --targetFile=$BASE_DIR/de/fruits.
 ```
 
 Similarly, you can use `attranslate` to convert between file-formats.
-See [sample scripts](/sample-scripts) for more examples.
+See [sample scripts](https://github.com/fkirc/attranslate/tree/master/sample-scripts) for more examples.
 
 # Integration Guide
 
@@ -87,7 +90,7 @@ Alternatively, if you are a JavaScript-developer, then you can install `attransl
 `npm install --save-dev attranslate`
 
 Next, you should write a project-specific script that invokes `attranslate` for your specific files.
-See [sample scripts](/sample-scripts) for guidance on how to translate your project-specific files.
+See [sample scripts](https://github.com/fkirc/attranslate/tree/master/sample-scripts) for guidance on how to translate your project-specific files.
 
 # Usage Options
 
@@ -120,7 +123,6 @@ Options:
                                       unless you know what you are doing.
                                       (default: "false")
   -v, --version                       output the version number
-  -h, --help                          display help for command
 ```
 
 ## Matchers
