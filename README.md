@@ -46,7 +46,7 @@ Therefore, whenever you are unhappy with the produced text, `attranslate` allows
 
 `attranslate` supports the following services; many of them are free of charge:
 
-- `openai`: Uses a model like ChatGPT; free of charge
+- `openai`: Uses a model like ChatGPT; free up to a limit
 - [google-translate](https://cloud.google.com/translate): Needs a GCloud account; free up to a limit
 - [azure](https://azure.microsoft.com/en-us/services/cognitive-services/translator-text-api/): Needs a Microsoft account; costs money
 - `sync-without-translate`: Does not change the language. This can be useful for converting between file formats, or for maintaining region-specific differences.
