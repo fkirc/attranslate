@@ -1,3 +1,11 @@
+# 1.9.2
+
+- Fix problem with too short OpenAI responses
+
+# 1.9.1
+
+- Attempt to improve error messages for OpenAI
+
 # 1.9.0
 
 - Add support for OpenAI translations (ChatGPT)
