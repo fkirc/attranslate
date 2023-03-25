@@ -35,6 +35,7 @@ async function translateSingleString(
       model: "text-davinci-003",
       prompt,
       temperature: 0.2,
+      max_tokens: 2048,
     });
     const text = completion.data.choices[0].text;
     if (text == undefined) {
