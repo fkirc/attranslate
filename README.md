@@ -4,7 +4,7 @@
 
 macOS/Ubuntu/Windows: [![Actions Status](https://github.com/fkirc/attranslate/workflows/Tests/badge.svg/?branch=master)](https://github.com/fkirc/attranslate/actions?query=branch%3Amaster)
 
-[-> Documentación en español](https://fkirc.github.io/attranslate/README-es)
+[-> Documentación en español](https://attranslate.xyz/README-es)
 
 
 `attranslate` is a tool for synchronizing translation-files, including JSON/YAML/XML and other formats.
