@@ -1,15 +1,12 @@
-Aunque existen muchas herramientas de traducción, `attranslate` tiene por objeto evitar duplicaciones innecesarias.
-Por lo tanto, comparamos `attranslate` contra las siguientes herramientas:
+Comparamos `attranslate` con las siguientes herramientas:
 
 ## Plataformas de traducción comercial
 
-Típicamente `attranslate` no es un competidor directo frente a las plataformas comerciales, sino una herramienta complementaria.
-Muchas plataformas comerciales como https://lingohub.com/ proporcionan una interfaz web para administrar traducciones con múltiples colaboradores.
+Típicamente plataformas comerciales como https://lingohub.com/ proporcionan una interfaz web para administrar traducciones.
 En contraste, `attranslate` es una herramienta de línea de comandos diseñada para modificar los archivos existentes lo más rápido posible.
 
 De hecho, es posible combinar `attranslate` con plataformas comerciales.
 En este escenario, los desarrolladores usarían `attranslate` para hacer su trabajo lo más rápido posible, y luego se usaría una plataforma como https://lingohub.com/ para revisar las traducciones generadas automáticamente más adelante.
-Aunque `attranslate` proporciona soporte para revisiones manuales, plataformas como https://lingohub.com/ proporcionan una gestión de usuarios mucho más sofisticada, así como una interfaz más conveniente para usuarios no técnicos.
 
 ## Bibliotecas de tiempo de ejecución: i18next, Flutter-intl, Android-resources,...
 
@@ -28,13 +25,8 @@ En realidad `attranslate` ha sido creado específicamente para resolver algunas 
 
 *   No aplique ninguna estructura de carpetas específica.
 *   Admite formatos de archivo adicionales distintos de JSON.
-*   Genere cachés solo para archivos de origen, pero no para archivos de destino.
 *   Ponga un mayor énfasis en la estabilidad y calidad de los archivos.
 *   Simplifique la adición de nuevos servicios o nuevos formatos de archivo.
-
-## Evernote Serge
-
-Mientras que [Serge](https://github.com/evernote/serge) está orientado a flujos de trabajo altamente optimizados, `attranslate` está orientado a una integración rápida en cuestión de minutos.
 
 ## Bramante
 
@@ -59,11 +51,3 @@ Además `attranslate` facilita la aplicación de correcciones manuales específi
 [strsync](https://github.com/metasmile/strsync) está dirigido a "iOS-native" y se distribuye a través de `pip`.
 En contraste, `attranslate` no está restringido a iOS y se distribuye a través de `npm`.
 
-## simpleen.io
-
-Si [simpleen.io](https://simpleen.io/) era totalmente de código abierto, `attranslate` tal vez no existiría.
-
-## loctool
-
-[loctool](https://github.com/iLib-js/loctool) admite muchas características similares, pero los flujos de trabajo son diferentes a `attranslate`.
-Mientras que `loctool` está orientado a `xliff`-archivos y agencias de traducción externas, `attranslate` está orientado a una configuración rápida y flujos de trabajo de autoservicio.
