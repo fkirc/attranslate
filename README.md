@@ -147,7 +147,3 @@ Nevertheless, `attranslate` provides an option to detect outdated translations.
 It is the purpose of the translation-cache is to detect such outdated translations.
 The translation-cache consists of `attranslate-cache-*`-files.
 
-## Continuous Integration
-
-To detect common mistakes like missing translations, it is advisable to run `attranslate` via continuous integration (CI).
-For example, the command `git diff --exit-code` can be used to trigger a CI failure whenever a file has been modified by `attranslate`.
