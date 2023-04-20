@@ -146,7 +146,3 @@ Sin embargo, `attranslate` proporciona una opción para detectar traducciones de
 El propósito de la memoria caché de traducción es detectar tales traducciones obsoletas.
 El caché de traducción consta de archivos `attranslate-cache-*`.
 
-## Integración continua
-
-Para detectar errores comunes como traducciones faltantes, es recomendable ejecutar `attranslate` a través de la integración continua (IC).
-Por ejemplo, el comando `git diff --exit-code` Se puede utilizar para desencadenar un error de CI siempre que un archivo haya sido modificado por `attranslate`.
