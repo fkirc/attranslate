@@ -2,7 +2,7 @@
 
 - Remove translation cache feature
 - Remove keySearch/keyReplace feature
-- Expand YAML sample script
+- Expand YAML sample with preprocessing/postprocessing
 
 # 1.9.2
 
