@@ -3,7 +3,6 @@ import { existsSync } from "fs";
 import { CliArgs, CoreArgs, TSet } from "./core-definitions";
 import { areEqual } from "./tset-ops";
 import { checkDir, checkNotDir, getDebugPath, logFatal } from "../util/util";
-import { missingTCacheTarget, resolveTCache, writeTCache } from "./cache-layer";
 import { readTFileCore, writeTFileCore } from "./core-util";
 import path from "path";
 import {
@@ -25,8 +24,8 @@ async function resolveOldTarget(
       path: args.targetFile,
       lng: args.targetLng,
       format: targetFileFormat,
-      keySearch: "x",
-      keyReplace: "x", // Key-replacement is only done after reading a source-file
+      keySearch: args.keySearch,
+      keyReplace: args.keyReplace,
     });
   } else {
     return null;
@@ -89,14 +88,6 @@ export async function translateCli(cliArgs: CliArgs) {
     );
   }
 
-  const overwriteOutdated = parseBooleanOption(
-    cliArgs.overwriteOutdated,
-    "overwriteOutdated"
-  );
-  let srcCache: TSet | null = null;
-  if (overwriteOutdated) {
-    srcCache = resolveTCache(src, cliArgs);
-  }
   const oldTarget: TSet | null = await resolveOldTarget(
     cliArgs,
     targetFileFormat
@@ -104,14 +95,12 @@ export async function translateCli(cliArgs: CliArgs) {
 
   const coreArgs: CoreArgs = {
     src,
-    srcCache,
     srcLng: cliArgs.srcLng,
     oldTarget,
     targetLng: cliArgs.targetLng,
     service: cliArgs.service as TServiceType,
     serviceConfig: cliArgs.serviceConfig ?? null,
     matcher: cliArgs.matcher as TMatcherType,
-    overwriteOutdated,
   };
   const result = await translateCore(coreArgs);
 
@@ -127,32 +116,23 @@ export async function translateCli(cliArgs: CliArgs) {
       format: targetFileFormat,
     });
   }
-  const flushCache =
-    overwriteOutdated &&
-    (flushTarget ||
-      missingTCacheTarget() ||
-      !srcCache ||
-      !areEqual(srcCache, result.newSrcCache));
-  if (flushCache) {
-    writeTCache(result, cliArgs);
-  }
   if (!flushTarget) {
     console.info(`Target is up-to-date: '${cliArgs.targetFile}'`);
   }
 }
 
-function parseBooleanOption(rawOption: string, optionKey: string): boolean {
-  const option = rawOption.trim().toLowerCase();
-  if (option === "true") {
-    return true;
-  } else if (option === "false") {
-    return false;
-  } else {
-    logFatal(
-      `Invalid option '--${optionKey}=${rawOption}'. Should be either true or false.`
-    );
-  }
-}
+// function parseBooleanOption(rawOption: string, optionKey: string): boolean {
+//   const option = rawOption.trim().toLowerCase();
+//   if (option === "true") {
+//     return true;
+//   } else if (option === "false") {
+//     return false;
+//   } else {
+//     logFatal(
+//       `Invalid option '--${optionKey}=${rawOption}'. Should be either true or false.`
+//     );
+//   }
+// }
 
 function checkForEmptyStringOptions(args: CliArgs) {
   Object.keys(args).forEach((key) => {

@@ -170,17 +170,6 @@ describe.each([
   });
 });
 
-// test("unsupported cache version", async () => {
-//   const args: E2EArgs = {
-//     ...defaultE2EArgs,
-//     cacheDir: "test-assets/invalid",
-//   };
-//   const output = await runTranslateExpectFailure(buildE2EArgs(args));
-//   expect(output).toContain(
-//     "error: A cache error occurred: Version '0' is not supported. You may try to delete "
-//   );
-// });
-
 /*test("src duplicate JSON", async () => {
   const args: E2EArgs = {
     ...defaultE2EArgs,

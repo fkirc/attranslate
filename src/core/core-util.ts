@@ -8,12 +8,6 @@ import {
 } from "../file-formats/file-format-definitions";
 
 export function logCoreResults(args: CoreArgs, results: CoreResults) {
-  const generateCache: boolean = !args.srcCache && args.overwriteOutdated;
-  if (generateCache) {
-    console.info(
-      `Cache not found -> Generate a new cache to detect outdated translations`
-    );
-  }
   const changeSet = results.changeSet;
   const countAdded: number = changeSet.added.size;
   if (countAdded) {

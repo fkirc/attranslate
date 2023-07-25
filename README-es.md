@@ -27,13 +27,13 @@ Esto es posible porque `attranslate` opera en su expediente de forma quirúrgica
 `attranslate` funciona para i18n / JavaScript / Android / iOS / Flutter / Ruby / Jekyll / Django / WordPress y muchas otras plataformas.
 Para que esto sea posible, `attranslate` admite los siguientes formatos de archivo:
 
-*   JSON plano o anidado
-*   YAML
-*   PO/POT-archivos
-*   Android-XML o cualquier otro XML
-*   Cadenas de iOS
-*   Flutter-ARB
-*   CSV (por ejemplo, para Google Docs o Excel)
+- JSON plano o anidado
+- YAML
+- PO/POT-archivos
+- Android-XML o cualquier otro XML
+- Cadenas de iOS
+- Flutter-ARB
+- CSV (por ejemplo, para Google Docs o Excel)
 
 ## Conservar traducciones manuales
 
@@ -45,11 +45,11 @@ Por lo tanto, siempre que no esté satisfecho con los resultados producidos, `at
 
 `attranslate` admite los siguientes servicios de traducción; Muchos de ellos son gratis:
 
-*   `openai`: Utiliza un modelo como ChatGPT; gratis hasta un límite
-*   [google-translate](https://cloud.google.com/translate): Necesita una cuenta de GCloud; gratis hasta un límite
-*   [azure](https://azure.microsoft.com/en-us/services/cognitive-services/translator-text-api/): Necesita una cuenta de Microsoft; cuesta dinero
-*   `sync-without-translate`: No cambia el idioma. Esto puede ser útil para convertir entre formatos de archivo o para mantener diferencias específicas de la región.
-*   `manual`: Traducir textos manualmente
+- `openai`: Utiliza un modelo como ChatGPT; gratis hasta un límite
+- [google-translate](https://cloud.google.com/translate): Necesita una cuenta de GCloud; gratis hasta un límite
+- [azure](https://azure.microsoft.com/en-us/services/cognitive-services/translator-text-api/): Necesita una cuenta de Microsoft; cuesta dinero
+- `sync-without-translate`: No cambia el idioma. Esto puede ser útil para convertir entre formatos de archivo o para mantener diferencias específicas de la región.
+- `manual`: Traducir textos manualmente
 
 # Ejemplos de uso
 
@@ -116,10 +116,6 @@ Correr `attranslate --help` para ver una lista de opciones disponibles:
                                           an API-key)
       --matcher <matcher>                 One of "none", "icu", "i18next",
                                           "sprintf" (default: "none")
-      --overwriteOutdated <true | false>  If true, overwrite outdated translations
-                                          in subsequent runs. Leave this at false
-                                          unless you know what you are doing.
-                                          (default: "false")
       -v, --version                       output the version number
 ```
 
@@ -130,19 +126,8 @@ Correr `attranslate --help` para ver una lista de opciones disponibles:
 Muchos sitios web/aplicaciones insertan valores dinámicos en las traducciones.
 Por ejemplo, una traducción como `Su nombre es {{name}}` podría sustituirse por `Su nombre es Felix`.
 
-
 Para ayudar con esto, `attranslate` ofrece los siguientes Matchers para diferentes estilos de reemplazos:
 
-*   **UCI**: Coincide con algo como `{name}`.
-*   **i18n**: Coincide [i18siguiente](https://www.i18next.com/translation-function/interpolation) como `{{name}}`.
-*   **sprintf**: Coincide estilo de sprintf como `%s`.
-
-## Caché de traducción
-
-> :warning: Por defecto, `attranslate` no genera ningún caché de traducción, por lo tanto, también puede omitir esta sección
-
-Por defecto, `attranslate` nunca sobrescribe ninguna traducción obsoleta.
-Sin embargo, `attranslate` proporciona una opción para detectar traducciones desactualizadas.
-El propósito de la memoria caché de traducción es detectar tales traducciones obsoletas.
-El caché de traducción consta de archivos `attranslate-cache-*`.
-
+- **UCI**: Coincide con algo como `{name}`.
+- **i18n**: Coincide [i18siguiente](https://www.i18next.com/translation-function/interpolation) como `{{name}}`.
+- **sprintf**: Coincide estilo de sprintf como `%s`.

@@ -16,7 +16,6 @@ const testArray: {
     args: {
       ...defaultE2EArgs,
       srcFile: "test-assets/misc-json/empty-props.json",
-      cacheDir: "test-assets/misc-json/",
       srcFormat: "flat-json",
       targetFile: "test-assets/nested-json/count-de.clean.json",
       refTargetFile: "test-assets/misc-json/empty-props+count-de.json",
@@ -29,7 +28,6 @@ const testArray: {
     args: {
       ...defaultE2EArgs,
       srcFile: "test-assets/android-xml/count-en.indent2.flat.xml",
-      cacheDir: "test-assets/android-xml/",
       srcFormat: "xml",
       targetFile: "test-assets/android-xml/count-de.missing-entry.xml",
       refTargetFile: "test-assets/android-xml/count-de.xml",
