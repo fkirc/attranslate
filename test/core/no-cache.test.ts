@@ -13,16 +13,14 @@ const partialGermanTarget: TSet = new Map([
   ["6", "Sechs"],
 ]);
 
-test("no cache, no target", async () => {
+test("no target", async () => {
   const args: CoreArgs = {
     ...commonArgs,
     src: enSrc,
-    srcCache: null,
     oldTarget: null,
   };
   const expectRes: CoreResults = {
     newTarget: deTarget,
-    newSrcCache: args.src,
     changeSet: {
       added: deTarget,
       updated: new Map(),
@@ -38,16 +36,14 @@ test("no cache, no target", async () => {
   toStrictEqualMapOrder(res, expectRes);
 });
 
-test("no cache, clean target", async () => {
+test("clean target", async () => {
   const args: CoreArgs = {
     ...commonArgs,
     src: enSrc,
-    srcCache: null,
     oldTarget: deTarget,
   };
   const expectRes: CoreResults = {
     newTarget: deTarget,
-    newSrcCache: args.src,
     changeSet: {
       added: new Map(),
       updated: new Map(),
@@ -60,11 +56,10 @@ test("no cache, clean target", async () => {
   toStrictEqualMapOrder(res, expectRes);
 });
 
-test("no cache, partial target", async () => {
+test("partial target", async () => {
   const args: CoreArgs = {
     ...commonArgs,
     src: enSrc,
-    srcCache: null,
     oldTarget: partialGermanTarget,
   };
   const added = new Map<string, string>([
@@ -74,7 +69,6 @@ test("no cache, partial target", async () => {
   ]);
   const expectRes: CoreResults = {
     newTarget: deTarget,
-    newSrcCache: args.src,
     changeSet: {
       added,
       updated: new Map(),
@@ -93,10 +87,3 @@ test("no cache, partial target", async () => {
   const res = await translateCoreAssert(args);
   toStrictEqualMapOrder(res, expectRes);
 });
-
-/*test("no cache, target with stale translation", async () => {
-  const oldTarget: TSet = {
-    ...germanTarget,
-    translations: new Map([["stale stuff", "leftovers"]]),
-  };
-});*/

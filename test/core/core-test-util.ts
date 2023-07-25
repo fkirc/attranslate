@@ -82,7 +82,7 @@ class BogusService implements TService {
   }
 }
 
-export const commonArgs: Omit<CoreArgs, "oldTarget" | "src" | "srcCache"> = {
+export const commonArgs: Omit<CoreArgs, "oldTarget" | "src"> = {
   service: bogusTranslateName as TServiceType,
   serviceConfig: "invalid-core-key",
   matcher: "icu",
@@ -126,8 +126,4 @@ export function generateSubTSets(fullTSet: TSet): TSet[] {
   }
   expect(subTSets.length).toBe(Math.pow(2, fullSet.length));
   return subTSets;
-}
-
-export function getRandomBoolean(): boolean {
-  return Math.random() >= 0.5;
 }

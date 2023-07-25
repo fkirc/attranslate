@@ -6,7 +6,6 @@ import {
   enSrc,
   filterTSet,
   generateSubTSets,
-  getRandomBoolean,
   translateCoreAssert,
 } from "./core-test-util";
 import { toStrictEqualMapOrder } from "../test-util/to-strict-equal-map-order";
@@ -21,16 +20,13 @@ describe.each(subsets)("insert %p", (insertSet: TSet) => {
 
 async function insertOnlyTest(insertEn: Map<string, string | null>) {
   const insertDe = bogusTranslateTSet(insertEn);
-  const cacheOutdated = getRandomBoolean();
   const args: CoreArgs = {
     ...commonArgs,
     src: enSrc,
-    srcCache: cacheOutdated ? filterTSet(enSrc, insertEn) : enSrc,
     oldTarget: filterTSet(deTarget, insertEn),
   };
   const expectRes: CoreResults = {
     newTarget: deTarget,
-    newSrcCache: args.src,
     changeSet: {
       added: insertDe,
       updated: new Map(),

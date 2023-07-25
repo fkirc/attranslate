@@ -16,14 +16,13 @@ class EmptyResultsService implements TService {
   }
 }
 
-test("up-to-date cache, no target, empty service", async () => {
+test("no target, empty service", async () => {
   const service = "empty-results";
   injectFakeService(service, new EmptyResultsService());
   const args: CoreArgs = {
     ...commonArgs,
     service: service as TServiceType,
     src: enSrc,
-    srcCache: enSrc,
     oldTarget: null,
   };
   const expectRes: CoreResults = {
@@ -34,14 +33,6 @@ test("up-to-date cache, no target, empty service", async () => {
       deleted: null,
     },
     newTarget: new Map(),
-    newSrcCache: new Map([
-      ["1", null],
-      ["2", null],
-      ["3", null],
-      ["4", null],
-      ["5", null],
-      ["6", null],
-    ]),
     serviceInvocation: {
       inputs: enSrc,
       results: new Map(),
@@ -81,7 +72,6 @@ test("bogus cache, modified target, partial service", async () => {
     ...commonArgs,
     service: service as TServiceType,
     src: enSrc,
-    srcCache: modifiedTarget,
     oldTarget: modifiedTarget,
   };
   const expectRes: CoreResults = {
@@ -89,14 +79,6 @@ test("bogus cache, modified target, partial service", async () => {
       ["1", "Eins"],
       ["2", "Zwei"],
       ["3", "Drei modified"],
-      ["4", "Four"],
-      ["5", "Five"],
-      ["6", "Six"],
-    ]),
-    newSrcCache: new Map([
-      ["1", null],
-      ["2", null],
-      ["3", null],
       ["4", "Four"],
       ["5", "Five"],
       ["6", "Six"],
