@@ -1,202 +1,195 @@
 subsections:
-  - 'Pago y Entrega'
-  - 'Historias de éxito' # A comment that should *not* be overridden
-  - 'Certificados'
+  - "Pago y Entrega"
+  - "Historias de éxito" # A comment that should *not* be overridden
+  - "Certificados"
 
 # Some comment
 # Another comment that should not be overridden
-titles_long:
-
-  home: 'Sección de inicio'
+es:
+  home: "Sección de inicio"
   nested:
-    ? empty
-  blog: 'Nuestro blog' # Some comment
-  stories: 'sobre nuestros usuarios'
+    empty:
+  blog: "Nuestro blog" # Some comment
+  stories: "sobre nuestros usuarios"
 
-  faq: 'Atención al cliente y preguntas frecuentes'
-  press: 'prensa'
-  impressum: 'Impressum'
-  gdpr: 'Reglamento de protección de datos'
-  certificates: 'Certificados'
-  delivery-terms: 'Pago y Entrega'
-  ifu: 'Instrucciones de uso'
-  contact: 'Soporte de contacto'
-  cancellation: 'Cancelación'
-  about: 'Sobre nosotros - el equipo'
+  faq: "Atención al cliente y preguntas frecuentes"
+  press: "prensa"
+  impressum: "Impressum"
+  gdpr: "Reglamento de protección de datos"
+  certificates: "Certificados"
+  delivery-terms: "Pago y Entrega"
+  ifu: "Instrucciones de uso"
+  contact: "Soporte de contacto"
+  cancellation: "Cancelación"
+  about: "Sobre nosotros - el equipo"
   #betabugs: 'Beta Feedback'
-  errorpage: 'cuatro cero cuatro'
-  download: 'Descargar'
-  checkout: 'Revisa'
-  conditions: 'GT&C'
+  errorpage: "cuatro cero cuatro"
+  download: "Descargar"
+  checkout: "Revisa"
+  conditions: "GT&C"
 
 itunes:
-  url: 'https://itunes.apple.com/gb/app/sdsdsdsdsds'
+  url: "https://itunes.apple.com/gb/app/sdsdsdsdsds"
 googleplay:
-  url: 'https://play.google.com/store/apps/details?id=sdsdsdsdsds'
+  url: "https://play.google.com/store/apps/details?id=sdsdsdsdsds"
 
 banner:
-  text_long: '¡Por poco tiempo solo!'
+  text_long: "¡Por poco tiempo solo!"
   # text_short:
   # to disable topbanner set text_short to ' '
-  text_short: 'Oferta -15%'
+  text_short: "Oferta -15%"
   countries:
-    - 'Delaware'
-    - 'A'
-    - 'NL'
-    - 'DK'
-  coupon: 'HERBST15'
-  bestvalue: '#rebaja'
-  quantity: '3'
-  button: 'compra ahora'
+    - "Delaware"
+    - "A"
+    - "NL"
+    - "DK"
+  coupon: "HERBST15"
+  bestvalue: "#rebaja"
+  quantity: "3"
+  button: "compra ahora"
 shop:
-  button: 'Compra ahora'
+  button: "Compra ahora"
 
 blog:
-  title: 'hablando'
-  subtitle: 'Algún blog'
-  related-posts: 'También puede disfrutar'
+  title: "hablando"
+  subtitle: "Algún blog"
+  related-posts: "También puede disfrutar"
 
 stories:
-  title: 'Historias de éxito'
-  subtitle: 'Lea las historias de nuestros usuarios'
+  title: "Historias de éxito"
+  subtitle: "Lea las historias de nuestros usuarios"
 
 footer:
   block1:
-    title: 'Legal'
-    link1: 'Protección de Datos'
-    link2: 'GT & C'
-    link3: 'Cancelación'
-    link4: 'Aviso Legal'
+    title: "Legal"
+    link1: "Protección de Datos"
+    link2: "GT & C"
+    link3: "Cancelación"
+    link4: "Aviso Legal"
     inner_footer:
       inner_block1:
-        inner_title: 'Legal'
-        inner_link1: 'Protección de Datos'
+        inner_title: "Legal"
+        inner_link1: "Protección de Datos"
 
   block2:
-    title: 'Información'
-    link1: 'SI TU'
-    link2: 'Preguntas más frecuentes'
-    link3: 'Pago y Entrega'
-    link4: 'Reciclaje'
+    title: "Información"
+    link1: "SI TU"
+    link2: "Preguntas más frecuentes"
+    link3: "Pago y Entrega"
+    link4: "Reciclaje"
 
   block3:
-    title: 'Aplicación'
-    link1: 'AppStore de Apple'
-    link2: 'Google PlayStore'
+    title: "Aplicación"
+    link1: "AppStore de Apple"
+    link2: "Google PlayStore"
 
   block4:
-    title: 'Pago'
+    title: "Pago"
 
   block5:
-    link1: 'Sobre nosotros'
-    link2: 'Contacto'
-    link3: 'prensa'
-    link4: 'Certificados'
-    link6: 'Carrera'
+    link1: "Sobre nosotros"
+    link2: "Contacto"
+    link3: "prensa"
+    link4: "Certificados"
+    link6: "Carrera"
 
-  copyright: '© empresa'
+  copyright: "© empresa"
 
 cookie:
-  msg: 'Este sitio web utiliza cookies para garantizar que obtenga la mejor experiencia en nuestro sitio web.'
-  learnmore: 'Aprende más'
-  close: 'Bueno'
+  msg: "Este sitio web utiliza cookies para garantizar que obtenga la mejor experiencia en nuestro sitio web."
+  learnmore: "Aprende más"
+  close: "Bueno"
 
 checkout:
-  heading: 'Ordenar ahora'
-  button_order_create: 'Continuar comprando'
-  button_order_pay: 'Pagar y comprar'
+  heading: "Ordenar ahora"
+  button_order_create: "Continuar comprando"
+  button_order_pay: "Pagar y comprar"
 
   shippingbilling:
-    title: 'Envío & amp; Datos de facturación'
-    first_name: 'Nombre de pila'
-    first_name_ex: 'Emma'
-    last_name: 'Apellido'
-    last_name_ex: 'Molinero'
-    email: 'Correo electrónico'
-    email_ex: 'emma@themillers.com'
-    address: 'Habla a'
-    address_ex: '10 Piccadilly'
-    city: 'Ciudad'
-    city_ex: 'Londres'
-    state: 'Estado'
-    state_ex: 'Londres'
-    zip: 'CÓDIGO POSTAL'
-    zip_ex: 'W1J00DD'
-    country: 'País'
-    country_ex: 'GB' # Has to be ISO code
-    coupon: 'Código de descuento'
+    title: "Envío & amp; Datos de facturación"
+    first_name: "Nombre de pila"
+    first_name_ex: "Emma"
+    last_name: "Apellido"
+    last_name_ex: "Molinero"
+    email: "Correo electrónico"
+    email_ex: "emma@themillers.com"
+    address: "Habla a"
+    address_ex: "10 Piccadilly"
+    city: "Ciudad"
+    city_ex: "Londres"
+    state: "Estado"
+    state_ex: "Londres"
+    zip: "CÓDIGO POSTAL"
+    zip_ex: "W1J00DD"
+    country: "País"
+    country_ex: "GB" # Has to be ISO code
+    coupon: "Código de descuento"
   paymentinfo:
-    title: 'Información del pago'
-    card: 'Tarjeta de crédito'
-    redirect: 'Será redirigido a su banco para completar el pago.'
-    receiver: 'La información de pago se proporcionará después de realizar su pedido.'
+    title: "Información del pago"
+    card: "Tarjeta de crédito"
+    redirect: "Será redirigido a su banco para completar el pago."
+    receiver: "La información de pago se proporcionará después de realizar su pedido."
   summary:
-    title: 'Resumen del pedido'
-    subtotal: 'Total parcial'
-    shipping: 'Envío'
-    shipping_free: 'Gratis'
-    coupon: 'Código de descuento'
-    total: 'Total'
+    title: "Resumen del pedido"
+    subtotal: "Total parcial"
+    shipping: "Envío"
+    shipping_free: "Gratis"
+    coupon: "Código de descuento"
+    total: "Total"
   confirmation:
     processing:
-      title: 'Completando su pedido…'
-      text1: 'Estamos esperando la confirmación de su banco… Esto puede llevar un momento.'
-      text2: 'En breve le enviaremos su recibo por correo electrónico.'
+      title: "Completando su pedido…"
+      text1: "Estamos esperando la confirmación de su banco… Esto puede llevar un momento."
+      text2: "En breve le enviaremos su recibo por correo electrónico."
     success:
-      title: '¡Gracias por su orden!'
-      text1: 'Gracias por su paciencia. Su pago ahora está completo y su pedido se está procesando.'
-      text2: 'Hemos enviado su recibo a su dirección de correo electrónico y sus artículos estarán en camino en breve.'
+      title: "¡Gracias por su orden!"
+      text1: "Gracias por su paciencia. Su pago ahora está completo y su pedido se está procesando."
+      text2: "Hemos enviado su recibo a su dirección de correo electrónico y sus artículos estarán en camino en breve."
     receiver:
-      title: 'Gracias. ¡Solo un último paso!'
-      text: 'Realice un pago utilizando los detalles a continuación para completar su pedido.'
+      title: "Gracias. ¡Solo un último paso!"
+      text: "Realice un pago utilizando los detalles a continuación para completar su pedido."
     error:
-      title: 'Vaya, el pago falló.'
-      text: 'Parece que su pedido no se pudo pagar en este momento. Vuelva a intentarlo o seleccione una opción de pago diferente.'
+      title: "Vaya, el pago falló."
+      text: "Parece que su pedido no se pudo pagar en este momento. Vuelva a intentarlo o seleccione una opción de pago diferente."
 
 about:
-  title: 'Sobre nosotros'
+  title: "Sobre nosotros"
   text1: |-
     nosotros explicamos
     en varias líneas
     quienes somos
   team:
-    title: 'Nuestro equipo'
+    title: "Nuestro equipo"
     text: |-
       Nuestro equipo altamente calificado se basa en décadas de experiencia y está comprometido a hacer un
       valiosa contribución a la sociedad. Nos impulsa el deseo de moldear positivamente la vida cotidiana con una serie de
       productos innovadores.
     img1:
-      link: 'ceo.png'
-      text: ' fk'
-      author: 'fk'
-      title: 'CEO y Fundador'
+      link: "ceo.png"
+      text: " fk"
+      author: "fk"
+      title: "CEO y Fundador"
   partner:
-    title: 'Nuestros compañeros...'
+    title: "Nuestros compañeros..."
 
 errorpage:
-  notfound: '404 Pagina no encontrada'
-  details: 'Lo sentimos, pero la fiesta que estás buscando parece estar sucediendo en otro lugar. Tal vez encuentre lo que está buscando en la página de inicio.'
+  notfound: "404 Pagina no encontrada"
+  details: "Lo sentimos, pero la fiesta que estás buscando parece estar sucediendo en otro lugar. Tal vez encuentre lo que está buscando en la página de inicio."
 
 invoice:
-  invoice_date: 'Fecha de la factura:'
-  shipping_date: 'Fecha de envío:'
-  order_number: 'Número de orden:'
-  invoice_number: 'Número de factura:'
+  invoice_date: "Fecha de la factura:"
+  shipping_date: "Fecha de envío:"
+  order_number: "Número de orden:"
+  invoice_number: "Número de factura:"
 
   content:
-    heading: 'Factura'
-    text: 'Gracias por usar.'
-    piece: 'Pcs'
-    name: 'nombre del producto'
-    price: 'Precio unitario'
-    payment: 'Pago'
-    subtotal: 'Total parcial'
-    tax: 'Tasa de impuesto'
-    shipping: 'Envío'
-    total: 'Total'
-
-
-
-
-
-
+    heading: "Factura"
+    text: "Gracias por usar."
+    piece: "Pcs"
+    name: "nombre del producto"
+    price: "Precio unitario"
+    payment: "Pago"
+    subtotal: "Total parcial"
+    tax: "Tasa de impuesto"
+    shipping: "Envío"
+    total: "Total"
