@@ -1,8 +1,8 @@
 # 2.0.0
 
-- Remove overwriteOutdated feature
 - Remove translation cache feature
-- Improve behaviour of keySearch/keyReplace
+- Remove keySearch/keyReplace feature
+- Expand YAML sample script
 
 # 1.9.2
 

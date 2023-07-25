@@ -24,8 +24,6 @@ async function resolveOldTarget(
       path: args.targetFile,
       lng: args.targetLng,
       format: targetFileFormat,
-      keySearch: args.keySearch,
-      keyReplace: args.keyReplace,
     });
   } else {
     return null;
@@ -77,8 +75,6 @@ export async function translateCli(cliArgs: CliArgs) {
     path: cliArgs.srcFile,
     lng: cliArgs.srcLng,
     format: srcFileFormat,
-    keySearch: cliArgs.keySearch,
-    keyReplace: cliArgs.keyReplace,
   });
   if (!src.size) {
     logFatal(

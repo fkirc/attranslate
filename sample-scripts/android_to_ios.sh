@@ -23,7 +23,7 @@ iOS_EN="ios/Localizable/Base.lproj/Localizable.strings"
 iOS_DE="ios/Localizable/de.lproj/Localizable.strings"
 iOS_ES="ios/Localizable/es.lproj/Localizable.strings"
 
-ANDROID_TO_iOS=( "--srcFormat=xml" "--targetFormat=ios-strings" "--service=sync-without-translate" "--keySearch=_" "--keyReplace=." )
+ANDROID_TO_iOS=( "--srcFormat=xml" "--targetFormat=ios-strings" "--service=sync-without-translate" )
 
 attranslate "${ANDROID_TO_iOS[@]}" --srcFile=$ANDROID_EN --targetFile=$iOS_EN --srcLng="en" --targetLng="en"
 attranslate "${ANDROID_TO_iOS[@]}" --srcFile=$ANDROID_DE --targetFile=$iOS_DE --srcLng="de" --targetLng="de"

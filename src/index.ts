@@ -55,16 +55,6 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
       formatOneOfOptions(getTMatcherList()),
       "none"
     )
-    .option(
-      "--keySearch <regExp>",
-      "A regular expression to replace translation-keys",
-      "x"
-    )
-    .option(
-      "--keyReplace <string>",
-      "The replacement for occurrences of keySearch",
-      "x"
-    )
     .version(extractVersion({ cliBinDir }), "-v, --version")
     .parse(process.argv);
 
@@ -83,8 +73,6 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
     service: commander.opts().service,
     serviceConfig: commander.opts().serviceConfig,
     matcher: commander.opts().matcher,
-    keySearch: commander.opts().keySearch,
-    keyReplace: commander.opts().keyReplace,
   };
   translateCli(args)
     .then(() => {

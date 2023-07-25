@@ -45,9 +45,8 @@ export async function readTFileCore(
   const rawTSet = await module.readTFile(args);
 
   const tSet: TSet = new Map();
-  const keyRegExp = new RegExp(args.keySearch, "g");
   rawTSet.forEach((value, key) => {
-    const replacedKey = key.replace(keyRegExp, args.keyReplace);
+    const replacedKey = key;
     tSet.set(replacedKey, value);
   });
   return tSet;

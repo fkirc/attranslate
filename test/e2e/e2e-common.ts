@@ -23,8 +23,6 @@ export const defaultE2EArgs: E2EArgs = {
   service: "google-translate",
   serviceConfig: "invalid-key",
   matcher: "none",
-  keySearch: "x",
-  keyReplace: "x",
 };
 
 function getRandomTargetName(path: string) {
