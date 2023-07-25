@@ -1,14 +1,7 @@
-subsections:
-  - "Pago y Entrega"
-  - "Historias de éxito" # A comment that should *not* be overridden
-  - "Certificados"
-
 # Some comment
 # Another comment that should not be overridden
 es:
   home: "Sección de inicio"
-  nested:
-    empty:
   blog: "Nuestro blog" # Some comment
   stories: "sobre nuestros usuarios"
 
