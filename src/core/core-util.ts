@@ -8,12 +8,6 @@ import {
 } from "../file-formats/file-format-definitions";
 
 export function logCoreResults(args: CoreArgs, results: CoreResults) {
-  const generateCache: boolean = !args.srcCache && args.overwriteOutdated;
-  if (generateCache) {
-    console.info(
-      `Cache not found -> Generate a new cache to detect outdated translations`
-    );
-  }
   const changeSet = results.changeSet;
   const countAdded: number = changeSet.added.size;
   if (countAdded) {
@@ -51,9 +45,8 @@ export async function readTFileCore(
   const rawTSet = await module.readTFile(args);
 
   const tSet: TSet = new Map();
-  const keyRegExp = new RegExp(args.keySearch, "g");
   rawTSet.forEach((value, key) => {
-    const replacedKey = key.replace(keyRegExp, args.keyReplace);
+    const replacedKey = key;
     tSet.set(replacedKey, value);
   });
   return tSet;

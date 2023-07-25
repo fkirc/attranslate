@@ -51,29 +51,9 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
       "supply configuration for a translation service (either a path to a key-file or an API-key)"
     )
     .option(
-      "--cacheDir <cacheDir>",
-      "The directory where a translation-cache is expected to be found",
-      "."
-    )
-    .option(
       "--matcher <matcher>",
       formatOneOfOptions(getTMatcherList()),
       "none"
-    )
-    .option(
-      "--overwriteOutdated <true | false>",
-      "If true, overwrite outdated translations in subsequent runs. Leave this at false unless you know what you are doing.",
-      "false"
-    )
-    .option(
-      "--keySearch <regExp>",
-      "A regular expression to replace translation-keys (can be used for file-format conversions)",
-      "x"
-    )
-    .option(
-      "--keyReplace <string>",
-      "The replacement for occurrences of keySearch",
-      "x"
     )
     .version(extractVersion({ cliBinDir }), "-v, --version")
     .parse(process.argv);
@@ -92,11 +72,7 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
     targetFormat: commander.opts().targetFormat,
     service: commander.opts().service,
     serviceConfig: commander.opts().serviceConfig,
-    cacheDir: commander.opts().cacheDir,
     matcher: commander.opts().matcher,
-    overwriteOutdated: commander.opts().overwriteOutdated,
-    keySearch: commander.opts().keySearch,
-    keyReplace: commander.opts().keyReplace,
   };
   translateCli(args)
     .then(() => {

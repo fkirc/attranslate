@@ -1,21 +1,21 @@
 
 
-"category.apple" = "Apple";
+"category_apple" = "Apple";
 
 
-"category.sub.pear" = "Pear";
+"category_sub_pear" = "Pear";
 
 
-"category.sub.sub.banana" = "Banana";
+"category_sub_sub_banana" = "Banana";
 
 
-"plurals.some plurals.item.0" = "Two";
+"plurals.some plurals.item_0" = "Two";
 
 
-"string-array.planets.item.0" = "Venus";
+"string-array.planets.item_0" = "Venus";
 
 
-"string-array.planets.item.1" = "Earth";
+"string-array.planets.item_1" = "Earth";
 
 
-"string-array.planets.item.2" = "Mars";
+"string-array.planets.item_2" = "Mars";

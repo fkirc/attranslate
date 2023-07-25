@@ -14,7 +14,7 @@ ANDROID_EN="android/app/src/main/res/values/strings.xml"
 ANDROID_DE="android/app/src/main/res/values-de/strings.xml"
 ANDROID_ES="android/app/src/main/res/values-es/strings.xml"
 
-ANDROID_TO_ANDROID=( "--srcFile=$ANDROID_EN" "--srcLng=en" "--srcFormat=xml" "--targetFormat=xml" "--service=google-translate" "--serviceConfig=$SERVICE_ACCOUNT_KEY" "--cacheDir=android" )
+ANDROID_TO_ANDROID=( "--srcFile=$ANDROID_EN" "--srcLng=en" "--srcFormat=xml" "--targetFormat=xml" "--service=google-translate" "--serviceConfig=$SERVICE_ACCOUNT_KEY" )
 attranslate "${ANDROID_TO_ANDROID[@]}" --targetFile=$ANDROID_DE --targetLng="de"
 attranslate "${ANDROID_TO_ANDROID[@]}" --targetFile=$ANDROID_ES --targetLng="es"
 
@@ -23,7 +23,7 @@ iOS_EN="ios/Localizable/Base.lproj/Localizable.strings"
 iOS_DE="ios/Localizable/de.lproj/Localizable.strings"
 iOS_ES="ios/Localizable/es.lproj/Localizable.strings"
 
-ANDROID_TO_iOS=( "--srcFormat=xml" "--targetFormat=ios-strings" "--service=sync-without-translate" "--cacheDir=android" "--keySearch=_" "--keyReplace=." )
+ANDROID_TO_iOS=( "--srcFormat=xml" "--targetFormat=ios-strings" "--service=sync-without-translate" )
 
 attranslate "${ANDROID_TO_iOS[@]}" --srcFile=$ANDROID_EN --targetFile=$iOS_EN --srcLng="en" --targetLng="en"
 attranslate "${ANDROID_TO_iOS[@]}" --srcFile=$ANDROID_DE --targetFile=$iOS_DE --srcLng="de" --targetLng="de"

@@ -42,14 +42,6 @@ function compareLeftRight(args: {
   }
 }
 
-export function leftMerge(left: TSet, right: TSet) {
-  right.forEach((value, key) => {
-    if (!left.has(key)) {
-      left.set(key, value);
-    }
-  });
-}
-
 export function joinResultsPreserveOrder(args: {
   translateResults: TSet;
   changeSet: TChangeSet;
@@ -112,18 +104,6 @@ function injectNewKeysIntoTargetOrder(args: {
       injectPosition++;
     }
   });
-}
-
-export function leftMinusRightFillNull(left: TSet, right: TSet): TSet {
-  const leftRemaining = new Map<string, string | null>();
-  left.forEach((value, key) => {
-    if (!right.has(key)) {
-      leftRemaining.set(key, value);
-    } else {
-      leftRemaining.set(key, null);
-    }
-  });
-  return leftRemaining;
 }
 
 export function leftMinusRight(left: TSet, right: TSet): TSet {

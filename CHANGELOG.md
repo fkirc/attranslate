@@ -1,3 +1,9 @@
+# 2.0.0
+
+- Remove translation cache feature
+- Remove keySearch/keyReplace feature
+- Expand YAML sample with preprocessing/postprocessing
+
 # 1.9.2
 
 - Fix problem with too short OpenAI responses
@@ -74,9 +80,9 @@
 
 # 0.9.5
 
-- Add YAML file-format 
-- Add PO/POT file-format 
-- Add Windows support 
+- Add YAML file-format
+- Add PO/POT file-format
+- Add Windows support
 - Expand support for manual reviews
 
 # 0.9.4

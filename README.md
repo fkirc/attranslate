@@ -6,7 +6,6 @@ macOS/Ubuntu/Windows: [![Actions Status](https://github.com/fkirc/attranslate/wo
 
 [-> Documentación en español](https://attranslate.xyz/README-es)
 
-
 `attranslate` is a tool for synchronizing translation-files, including JSON/YAML/XML and other formats.
 `attranslate` is optimized for smooth rollouts in hectic project environments, even if you already have many translations.
 Optionally, `attranslate` works with automated translation-services.
@@ -118,10 +117,6 @@ Options:
                                       an API-key)
   --matcher <matcher>                 One of "none", "icu", "i18next",
                                       "sprintf" (default: "none")
-  --overwriteOutdated <true | false>  If true, overwrite outdated translations
-                                      in subsequent runs. Leave this at false
-                                      unless you know what you are doing.
-                                      (default: "false")
   -v, --version                       output the version number
 ```
 
@@ -137,13 +132,3 @@ To help with with this, `attranslate` offers the following matchers for differen
 - **ICU**: Matches something like `{name}`.
 - **i18n**: Matches [i18next](https://www.i18next.com/translation-function/interpolation) format like `{{name}}`.
 - **sprintf**: Matches sprintf-style like `%s`.
-
-## Translation Cache
-
-> :warning: By default, `attranslate` does not generate any translation-cache, therefore you may skip this section as well.
-
-By default, `attranslate` never overwrites any outdated translations.
-Nevertheless, `attranslate` provides an option to detect outdated translations.
-It is the purpose of the translation-cache is to detect such outdated translations.
-The translation-cache consists of `attranslate-cache-*`-files.
-

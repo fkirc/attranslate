@@ -22,11 +22,7 @@ export const defaultE2EArgs: E2EArgs = {
   targetFormat: "flat-json",
   service: "google-translate",
   serviceConfig: "invalid-key",
-  cacheDir: "test-assets/cache",
   matcher: "none",
-  overwriteOutdated: "true",
-  keySearch: "x",
-  keyReplace: "x",
 };
 
 function getRandomTargetName(path: string) {

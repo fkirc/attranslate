@@ -1,193 +1,186 @@
-subsections:
-  - 'Zahlungs-und Lieferbedingungen'
-  - 'Erfolgsgeschichten' # Individual comments should be transmitted to targets, but *not* overwritten
-  - 'Zertifikate'
-
 # Ein deutscher Kommentar, welcher die Transformation überleben soll
-titles_long:
-  home: 'Home-Bereich'
-  nested:
-    ? empty
-  blog: 'Unser Blog' # Some comment
-  stories: 'über unsere Benutzer'
-  faq: 'Kundenbetreuung und häufig gestellte Fragen'
-  press: 'Drücken Sie'
-  impressum: 'Impressum'
-  gdpr: 'Datenschutzverordnung'
-  certificates: 'Zertifikate'
-  delivery-terms: 'Zahlungs-und Lieferbedingungen'
-  ifu: 'Gebrauchsanweisung'
-  contact: 'Kontaktieren Sie Support'
-  cancellation: 'Stornierung'
-  about: 'Über uns - das Team'
+de:
+  home: "Home-Bereich"
+  blog: "Unser Blog" # Some comment
+  stories: "über unsere Benutzer"
+  faq: "Kundenbetreuung und häufig gestellte Fragen"
+  press: "Drücken Sie"
+  impressum: "Impressum"
+  gdpr: "Datenschutzverordnung"
+  certificates: "Zertifikate"
+  delivery-terms: "Zahlungs-und Lieferbedingungen"
+  ifu: "Gebrauchsanweisung"
+  contact: "Kontaktieren Sie Support"
+  cancellation: "Stornierung"
+  about: "Über uns - das Team"
   #betabugs: 'Beta Feedback'
-  errorpage: 'vier null vier'
-  download: 'Herunterladen'
-  checkout: 'Auschecken'
-  conditions: 'GT & C.'
+  errorpage: "vier null vier"
+  download: "Herunterladen"
+  checkout: "Auschecken"
+  conditions: "GT & C."
 
 itunes:
-  url: 'https://itunes.apple.com/gb/app/sdsdsdsdsdsds'
+  url: "https://itunes.apple.com/gb/app/sdsdsdsdsdsds"
 googleplay:
-  url: 'https://play.google.com/store/apps/details?id=sdsdsdsdsdsds'
+  url: "https://play.google.com/store/apps/details?id=sdsdsdsdsdsds"
 
 banner:
-  text_long: 'Nur für kurze Zeit!'
+  text_long: "Nur für kurze Zeit!"
   # text_short:
   # to disable topbanner set text_short to ' '
-  text_short: 'Verkauf -15%'
+  text_short: "Verkauf -15%"
   countries:
-    - 'DE'
-    - 'BEIM'
-    - 'NL'
-    - 'DK'
-  coupon: 'HERBST15'
-  bestvalue: '#Verkauf'
-  quantity: '3'
-  button: 'kaufe jetzt'
+    - "DE"
+    - "BEIM"
+    - "NL"
+    - "DK"
+  coupon: "HERBST15"
+  bestvalue: "#Verkauf"
+  quantity: "3"
+  button: "kaufe jetzt"
 shop:
-  button: 'Kaufe jetzt'
+  button: "Kaufe jetzt"
 
 blog:
-  title: 'reden'
-  subtitle: 'Ein Blog'
-  related-posts: 'Sie können auch genießen'
+  title: "reden"
+  subtitle: "Ein Blog"
+  related-posts: "Sie können auch genießen"
 
 stories:
-  title: 'Erfolgsgeschichten'
-  subtitle: 'Lesen Sie die Geschichten unserer Benutzer'
+  title: "Erfolgsgeschichten"
+  subtitle: "Lesen Sie die Geschichten unserer Benutzer"
 
 footer:
   block1:
-    title: 'Legal'
-    link1: 'Datenschutz'
-    link2: 'GT & C.'
-    link3: 'Stornierung'
-    link4: 'Impressum'
+    title: "Legal"
+    link1: "Datenschutz"
+    link2: "GT & C."
+    link3: "Stornierung"
+    link4: "Impressum"
     inner_footer:
       inner_block1:
-        inner_title: 'Legal'
-        inner_link1: 'Datenschutz'
+        inner_title: "Legal"
+        inner_link1: "Datenschutz"
 
   block2:
-    title: 'Information'
-    link1: 'WENN DU'
-    link2: 'FAQ'
-    link3: 'Zahlungs-und Lieferbedingungen'
-    link4: 'Recycling'
+    title: "Information"
+    link1: "WENN DU"
+    link2: "FAQ"
+    link3: "Zahlungs-und Lieferbedingungen"
+    link4: "Recycling"
 
   block3:
-    title: 'App'
-    link1: 'Apple AppStore'
-    link2: 'Google Play Store'
+    title: "App"
+    link1: "Apple AppStore"
+    link2: "Google Play Store"
 
   block4:
-    title: 'Zahlung'
+    title: "Zahlung"
 
   block5:
-    link1: 'Über uns'
-    link2: 'Kontakt'
-    link3: 'Drücken Sie'
-    link4: 'Zertifikate'
-    link6: 'Werdegang'
+    link1: "Über uns"
+    link2: "Kontakt"
+    link3: "Drücken Sie"
+    link4: "Zertifikate"
+    link6: "Werdegang"
 
-  copyright: '© Firma'
+  copyright: "© Firma"
 
 cookie:
-  msg: 'Diese Website verwendet Cookies, um sicherzustellen, dass Sie die beste Erfahrung auf unserer Website erhalten.'
-  learnmore: 'Mehr erfahren'
-  close: 'okay'
+  msg: "Diese Website verwendet Cookies, um sicherzustellen, dass Sie die beste Erfahrung auf unserer Website erhalten."
+  learnmore: "Mehr erfahren"
+  close: "okay"
 
 checkout:
-  heading: 'Jetzt bestellen'
-  button_order_create: 'Weiter zum Kauf'
-  button_order_pay: 'Bezahlen und kaufen'
+  heading: "Jetzt bestellen"
+  button_order_create: "Weiter zum Kauf"
+  button_order_pay: "Bezahlen und kaufen"
 
   shippingbilling:
-    title: 'Versand & amp; Abrechnungsdaten'
-    first_name: 'Vorname'
-    first_name_ex: 'Emma'
-    last_name: 'Nachname'
-    last_name_ex: 'Müller'
-    email: 'Email'
-    email_ex: 'emma@themillers.com'
-    address: 'Adresse'
-    address_ex: '10 Piccadilly'
-    city: 'Stadt'
-    city_ex: 'London'
-    state: 'Zustand'
-    state_ex: 'London'
-    zip: 'POSTLEITZAHL'
-    zip_ex: 'W1J00DD'
-    country: 'Land'
-    country_ex: 'GB' # Has to be ISO code
-    coupon: 'Rabattcode'
+    title: "Versand & amp; Abrechnungsdaten"
+    first_name: "Vorname"
+    first_name_ex: "Emma"
+    last_name: "Nachname"
+    last_name_ex: "Müller"
+    email: "Email"
+    email_ex: "emma@themillers.com"
+    address: "Adresse"
+    address_ex: "10 Piccadilly"
+    city: "Stadt"
+    city_ex: "London"
+    state: "Zustand"
+    state_ex: "London"
+    zip: "POSTLEITZAHL"
+    zip_ex: "W1J00DD"
+    country: "Land"
+    country_ex: "GB" # Has to be ISO code
+    coupon: "Rabattcode"
   paymentinfo:
-    title: 'Zahlungsinformationen'
-    card: 'Kreditkarte'
-    redirect: 'Sie werden zu Ihrer Bank weitergeleitet, um die Zahlung abzuschließen.'
-    receiver: 'Zahlungsinformationen erhalten Sie, nachdem Sie Ihre Bestellung aufgegeben haben.'
+    title: "Zahlungsinformationen"
+    card: "Kreditkarte"
+    redirect: "Sie werden zu Ihrer Bank weitergeleitet, um die Zahlung abzuschließen."
+    receiver: "Zahlungsinformationen erhalten Sie, nachdem Sie Ihre Bestellung aufgegeben haben."
   summary:
-    title: 'Bestellübersicht'
-    subtotal: 'Zwischensumme'
-    shipping: 'Versand'
-    shipping_free: 'Frei'
-    coupon: 'Rabattcode'
-    total: 'Gesamt'
+    title: "Bestellübersicht"
+    subtotal: "Zwischensumme"
+    shipping: "Versand"
+    shipping_free: "Frei"
+    coupon: "Rabattcode"
+    total: "Gesamt"
   confirmation:
     processing:
-      title: 'Abschluss Ihrer Bestellung…'
-      text1: 'Wir warten nur auf die Bestätigung Ihrer Bank. Dies kann einen Moment dauern.'
-      text2: 'Wir werden Ihre Quittung in Kürze per E-Mail senden.'
+      title: "Abschluss Ihrer Bestellung…"
+      text1: "Wir warten nur auf die Bestätigung Ihrer Bank. Dies kann einen Moment dauern."
+      text2: "Wir werden Ihre Quittung in Kürze per E-Mail senden."
     success:
-      title: 'Vielen Dank für Ihre Bestellung!'
-      text1: 'Vielen Dank für Ihre Geduld. Ihre Zahlung ist nun abgeschlossen und Ihre Bestellung wird bearbeitet.'
-      text2: 'Wir haben Ihre Quittung an Ihre E-Mail-Adresse gesendet, und Ihre Artikel werden in Kürze auf dem Weg sein.'
+      title: "Vielen Dank für Ihre Bestellung!"
+      text1: "Vielen Dank für Ihre Geduld. Ihre Zahlung ist nun abgeschlossen und Ihre Bestellung wird bearbeitet."
+      text2: "Wir haben Ihre Quittung an Ihre E-Mail-Adresse gesendet, und Ihre Artikel werden in Kürze auf dem Weg sein."
     receiver:
-      title: 'Dankeschön. Nur ein letzter Schritt!'
-      text: 'Bitte leisten Sie eine Zahlung mit den unten angegebenen Details, um Ihre Bestellung abzuschließen.'
+      title: "Dankeschön. Nur ein letzter Schritt!"
+      text: "Bitte leisten Sie eine Zahlung mit den unten angegebenen Details, um Ihre Bestellung abzuschließen."
     error:
-      title: 'Ups, die Zahlung ist fehlgeschlagen.'
-      text: 'Es sieht so aus, als ob Ihre Bestellung zu diesem Zeitpunkt nicht bezahlt werden konnte. Bitte versuchen Sie es erneut oder wählen Sie eine andere Zahlungsoption.'
+      title: "Ups, die Zahlung ist fehlgeschlagen."
+      text: "Es sieht so aus, als ob Ihre Bestellung zu diesem Zeitpunkt nicht bezahlt werden konnte. Bitte versuchen Sie es erneut oder wählen Sie eine andere Zahlungsoption."
 
 about:
-  title: 'Über uns'
+  title: "Über uns"
   text1: |-
     wir erklären
     in mehreren Zeilen
     Wer wir sind
   team:
-    title: 'Unser Team'
+    title: "Unser Team"
     text: |-
       Unser hochqualifiziertes Team verfügt über jahrzehntelange Erfahrung und ist bestrebt, eine
       wertvoller Beitrag zur Gesellschaft. Wir sind getrieben von dem Wunsch, den Alltag mit einer Reihe von positiv zu gestalten
       innovative Produkte.
     img1:
-      link: 'ceo.png'
-      text: ' fk'
-      author: 'fk'
-      title: 'Geschäftsführer und Gründer'
+      link: "ceo.png"
+      text: " fk"
+      author: "fk"
+      title: "Geschäftsführer und Gründer"
   partner:
-    title: 'Unsere Partner...'
+    title: "Unsere Partner..."
 
 errorpage:
-  notfound: '404 Seite nicht gefunden'
-  details: 'Es tut uns leid, aber die Party, die Sie suchen, scheint woanders zu stattfinden! Vielleicht finden Sie auf der Homepage, wonach Sie suchen.'
+  notfound: "404 Seite nicht gefunden"
+  details: "Es tut uns leid, aber die Party, die Sie suchen, scheint woanders zu stattfinden! Vielleicht finden Sie auf der Homepage, wonach Sie suchen."
 
 invoice:
-  invoice_date: 'Rechnungsdatum:'
-  shipping_date: 'Versanddatum:'
-  order_number: 'Bestellnummer:'
-  invoice_number: 'Rechnungsnummer:'
+  invoice_date: "Rechnungsdatum:"
+  shipping_date: "Versanddatum:"
+  order_number: "Bestellnummer:"
+  invoice_number: "Rechnungsnummer:"
 
   content:
-    heading: 'Rechnung'
-    text: 'Danke für das benutzen.'
-    piece: 'Stck'
-    name: 'Produktname'
-    price: 'Preiseinheit'
-    payment: 'Zahlung'
-    subtotal: 'Zwischensumme'
-    tax: 'Steuersatz'
-    shipping: 'Versand'
-    total: 'Gesamt'
+    heading: "Rechnung"
+    text: "Danke für das benutzen."
+    piece: "Stck"
+    name: "Produktname"
+    price: "Preiseinheit"
+    payment: "Zahlung"
+    subtotal: "Zwischensumme"
+    tax: "Steuersatz"
+    shipping: "Versand"
+    total: "Gesamt"

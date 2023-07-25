@@ -6,10 +6,8 @@ import {
   TSet,
 } from "./core-definitions";
 import {
-  leftMerge,
   joinResultsPreserveOrder,
   leftMinusRight,
-  leftMinusRightFillNull,
   selectLeftDistinct,
 } from "./tset-ops";
 import { logCoreResults } from "./core-util";
@@ -21,26 +19,13 @@ function extractStringsToTranslate(args: CoreArgs): TSet {
   if (!src.size) {
     logFatal("Did not find any source translations");
   }
-  const oldSrcCache: TSet | null = args.srcCache;
   const oldTarget: TSet | null = args.oldTarget;
   if (!oldTarget) {
     // Translate everything if an old target does not yet exist.
     return src;
   } else {
-    if (!oldSrcCache) {
-      // Translate values whose keys are not in the target.
-      return selectLeftDistinct(src, oldTarget, "COMPARE_KEYS_AND_NULL_VALUES");
-    } else {
-      // Translate values that are either different to the cache or missing in the target.
-      const cacheDiffs = selectLeftDistinct(src, oldSrcCache, "COMPARE_VALUES");
-      const targetMisses = selectLeftDistinct(
-        src,
-        oldTarget,
-        "COMPARE_KEYS_AND_NULL_VALUES"
-      );
-      leftMerge(cacheDiffs, targetMisses);
-      return cacheDiffs;
-    }
+    // Translate values whose keys are not in the target.
+    return selectLeftDistinct(src, oldTarget, "COMPARE_KEYS_AND_NULL_VALUES");
   }
 }
 
@@ -120,14 +105,6 @@ function computeNewTarget(
   });
 }
 
-function computeNewSrcCache(args: CoreArgs, changeSet: TChangeSet) {
-  if (changeSet.skipped.size) {
-    return leftMinusRightFillNull(args.src, changeSet.skipped);
-  } else {
-    return args.src;
-  }
-}
-
 function computeCoreResults(
   args: CoreArgs,
   serviceInvocation: TServiceInvocation | null,
@@ -137,7 +114,6 @@ function computeCoreResults(
     changeSet,
     serviceInvocation,
     newTarget: computeNewTarget(args, changeSet, serviceInvocation),
-    newSrcCache: computeNewSrcCache(args, changeSet),
   };
 }
 

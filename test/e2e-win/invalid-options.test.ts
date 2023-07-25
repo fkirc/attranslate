@@ -48,28 +48,6 @@ test("targetFile not a file", async () => {
   expect(output).toBe(`error: ${getDebugPath("src")} is a directory.\n`);
 });
 
-test("cacheDir not existing", async () => {
-  const args: E2EArgs = {
-    ...defaultE2EArgs,
-    cacheDir: "not-existing-cache",
-  };
-  const output = await runTranslateExpectFailure(buildE2EArgs(args));
-  expect(output).toBe(
-    `error: cacheDir ${getDebugPath("not-existing-cache")} does not exist.\n`
-  );
-});
-
-test("cacheDir not a dir", async () => {
-  const args: E2EArgs = {
-    ...defaultE2EArgs,
-    cacheDir: "README.md",
-  };
-  const output = await runTranslateExpectFailure(buildE2EArgs(args));
-  expect(output).toBe(
-    `error: cacheDir ${getDebugPath("README.md")} is not a directory.\n`
-  );
-});
-
 test("targetDir not a dir", async () => {
   const args: E2EArgs = {
     ...defaultE2EArgs,
@@ -123,22 +101,6 @@ test("unknown target file format", async () => {
   expect(output).toContain(
     `error: Unknown target format "some-invalid-target". Available formats: "`
   );
-});
-
-const booleanOptions: (keyof typeof defaultE2EArgs)[] = ["overwriteOutdated"];
-describe.each(booleanOptions)("Bad boolean options %s", (option) => {
-  test(`Bad option ${option}`, async () => {
-    const args: E2EArgs = {
-      ...defaultE2EArgs,
-    };
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    args[option] = "not-true-false";
-    const output = await runTranslateExpectFailure(buildE2EArgs(args));
-    expect(output).toBe(
-      `error: Invalid option '--${option}=not-true-false'. Should be either true or false.\n`
-    );
-  });
 });
 
 const requiredOptions: (keyof typeof defaultE2EArgs)[] = [

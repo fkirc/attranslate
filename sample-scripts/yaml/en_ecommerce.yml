@@ -1,193 +1,186 @@
-subsections:
-  - 'Payment and Delivery'
-  - 'Success Stories' # Individual comments should be transmitted to targets, but *not* overwritten
-  - 'Certificates'
-
 # An english comment that should *not* overwrite comments in target-files
-titles_long:
-  home: 'Home section'
-  nested:
-    empty:
-  blog: 'Our Blog' # Some comment
-  stories: 'about our users'
-  faq: 'Customer Support and Frequently Asked Questions'
-  press: 'Press'
-  impressum: 'Impressum'
-  gdpr: 'Data Protection Regulation'
-  certificates: 'Certificates'
-  delivery-terms: 'Payment and Delivery'
-  ifu: 'Instructions for Use'
-  contact: 'Contact / Support'
-  cancellation: 'Cancellation'
-  about: 'About us - the team'
+en:
+  home: "Home section"
+  blog: "Our Blog" # Some comment
+  stories: "about our users"
+  faq: "Customer Support and Frequently Asked Questions"
+  press: "Press"
+  impressum: "Impressum"
+  gdpr: "Data Protection Regulation"
+  certificates: "Certificates"
+  delivery-terms: "Payment and Delivery"
+  ifu: "Instructions for Use"
+  contact: "Contact / Support"
+  cancellation: "Cancellation"
+  about: "About us - the team"
   #betabugs: 'Beta Feedback'
-  errorpage: 'four zero four'
-  download: 'Download'
-  checkout: 'Checkout'
-  conditions: 'GT&C'
+  errorpage: "four zero four"
+  download: "Download"
+  checkout: "Checkout"
+  conditions: "GT&C"
 
 itunes:
-  url: 'https://itunes.apple.com/gb/app/sdsdsdsdsds'
+  url: "https://itunes.apple.com/gb/app/sdsdsdsdsds"
 googleplay:
-  url: 'https://play.google.com/store/apps/details?id=sdsdsdsdsds'
+  url: "https://play.google.com/store/apps/details?id=sdsdsdsdsds"
 
 banner:
-  text_long: 'For a short time ony!'
+  text_long: "For a short time ony!"
   # text_short:
   # to disable topbanner set text_short to ' '
-  text_short: 'Sale -15%'
+  text_short: "Sale -15%"
   countries:
-    - 'DE'
-    - 'AT'
-    - 'NL'
-    - 'DK'
-  coupon: 'HERBST15'
-  bestvalue: '#sale'
-  quantity: '3'
-  button: 'buy now'
+    - "DE"
+    - "AT"
+    - "NL"
+    - "DK"
+  coupon: "HERBST15"
+  bestvalue: "#sale"
+  quantity: "3"
+  button: "buy now"
 shop:
-  button: 'Buy now'
+  button: "Buy now"
 
 blog:
-  title: 'talking'
-  subtitle: 'Some blog'
-  related-posts: 'You May Also Enjoy'
+  title: "talking"
+  subtitle: "Some blog"
+  related-posts: "You May Also Enjoy"
 
 stories:
-  title: 'Success Stories'
-  subtitle: 'Read the stories of our users'
+  title: "Success Stories"
+  subtitle: "Read the stories of our users"
 
 footer:
   block1:
-    title: 'Legal'
-    link1: 'Data Protection'
-    link2: 'GT & C'
-    link3: 'Cancellation'
-    link4: 'Legal Notice'
+    title: "Legal"
+    link1: "Data Protection"
+    link2: "GT & C"
+    link3: "Cancellation"
+    link4: "Legal Notice"
     inner_footer:
       inner_block1:
-        inner_title: 'Legal'
-        inner_link1: 'Data Protection'
+        inner_title: "Legal"
+        inner_link1: "Data Protection"
 
   block2:
-    title: 'Information'
-    link1: 'IFU'
-    link2: 'FAQ'
-    link3: 'Payment and Delivery'
-    link4: 'Recycling'
+    title: "Information"
+    link1: "IFU"
+    link2: "FAQ"
+    link3: "Payment and Delivery"
+    link4: "Recycling"
 
   block3:
-    title: 'App'
-    link1: 'Apple AppStore'
-    link2: 'Google PlayStore'
+    title: "App"
+    link1: "Apple AppStore"
+    link2: "Google PlayStore"
 
   block4:
-    title: 'Payment'
+    title: "Payment"
 
   block5:
-    link1: 'About us'
-    link2: 'Contact'
-    link3: 'Press'
-    link4: 'Certificates'
-    link6: 'Career'
+    link1: "About us"
+    link2: "Contact"
+    link3: "Press"
+    link4: "Certificates"
+    link6: "Career"
 
-  copyright: '© company'
+  copyright: "© company"
 
 cookie:
-  msg: 'This website uses cookies to ensure you get the best experience on our website.'
-  learnmore: 'Learn more'
-  close: 'Okay'
+  msg: "This website uses cookies to ensure you get the best experience on our website."
+  learnmore: "Learn more"
+  close: "Okay"
 
 checkout:
-  heading: 'Order now'
-  button_order_create: 'Continue to Purchase'
-  button_order_pay: 'Pay and Purchase'
+  heading: "Order now"
+  button_order_create: "Continue to Purchase"
+  button_order_pay: "Pay and Purchase"
 
   shippingbilling:
-    title: 'Shipping &amp; Billing Information'
-    first_name: 'First Name'
-    first_name_ex: 'Emma'
-    last_name: 'Last Name'
-    last_name_ex: 'Miller'
-    email: 'E-Mail'
-    email_ex: 'emma@themillers.com'
-    address: 'Address'
-    address_ex: '10 Piccadilly'
-    city: 'City'
-    city_ex: 'London'
-    state: 'State'
-    state_ex: 'London'
-    zip: 'ZIP'
-    zip_ex: 'W1J00DD'
-    country: 'Country'
-    country_ex: 'GB' # Has to be ISO code
-    coupon: 'Discount Code'
+    title: "Shipping &amp; Billing Information"
+    first_name: "First Name"
+    first_name_ex: "Emma"
+    last_name: "Last Name"
+    last_name_ex: "Miller"
+    email: "E-Mail"
+    email_ex: "emma@themillers.com"
+    address: "Address"
+    address_ex: "10 Piccadilly"
+    city: "City"
+    city_ex: "London"
+    state: "State"
+    state_ex: "London"
+    zip: "ZIP"
+    zip_ex: "W1J00DD"
+    country: "Country"
+    country_ex: "GB" # Has to be ISO code
+    coupon: "Discount Code"
   paymentinfo:
-    title: 'Payment Information'
-    card: 'Credit Card'
-    redirect: 'You will be redirected to your bank to complete payment.'
-    receiver: 'Payment information will be provided after you place your order.'
+    title: "Payment Information"
+    card: "Credit Card"
+    redirect: "You will be redirected to your bank to complete payment."
+    receiver: "Payment information will be provided after you place your order."
   summary:
-    title: 'Order Summary'
-    subtotal: 'Subtotal'
-    shipping: 'Shipping'
-    shipping_free: 'Free'
-    coupon: 'Discount Code'
-    total: 'Total'
+    title: "Order Summary"
+    subtotal: "Subtotal"
+    shipping: "Shipping"
+    shipping_free: "Free"
+    coupon: "Discount Code"
+    total: "Total"
   confirmation:
     processing:
-      title: 'Completing your order…'
-      text1: 'We are just waiting for confirmation from your bank… This might take a moment.'
-      text2: 'We will send your receipt via email shortly.'
+      title: "Completing your order…"
+      text1: "We are just waiting for confirmation from your bank… This might take a moment."
+      text2: "We will send your receipt via email shortly."
     success:
-      title: 'Thank you for your order!'
-      text1: 'Thank you for your patience. Your payment is now complete and your order is being processed.'
-      text2: 'We have sent your receipt to your email address, and your items will be on their way shortly.'
+      title: "Thank you for your order!"
+      text1: "Thank you for your patience. Your payment is now complete and your order is being processed."
+      text2: "We have sent your receipt to your email address, and your items will be on their way shortly."
     receiver:
-      title: 'Thank you. Just one last step!'
-      text: 'Please make a payment using the details below to complete your order.'
+      title: "Thank you. Just one last step!"
+      text: "Please make a payment using the details below to complete your order."
     error:
-      title: 'Oops, payment failed.'
-      text: 'It looks like your order could not be paid at this time. Please try again or select a different payment option.'
+      title: "Oops, payment failed."
+      text: "It looks like your order could not be paid at this time. Please try again or select a different payment option."
 
 about:
-  title: 'About us'
+  title: "About us"
   text1: |-
     we explain
     in multiple lines
     who we are
   team:
-    title: 'Our team'
+    title: "Our team"
     text: |-
       Our highly skilled team draws on decades of experience and is committed to making a
       valuable contribution to society. We are driven by the desire to positively shape the everyday life with a series of
       innovative products.
     img1:
-      link: 'ceo.png'
-      text: ' fk'
-      author: 'fk'
-      title: 'CEO & Founder'
+      link: "ceo.png"
+      text: " fk"
+      author: "fk"
+      title: "CEO & Founder"
   partner:
-    title: 'Our partners...'
+    title: "Our partners..."
 
 errorpage:
-  notfound: '404 – page not found'
-  details: 'We’re sorry, but the party you’re looking for seems to be happening elsewhere! Maybe you`ll find what you`re looking for on the Homepage.'
+  notfound: "404 – page not found"
+  details: "We’re sorry, but the party you’re looking for seems to be happening elsewhere! Maybe you`ll find what you`re looking for on the Homepage."
 
 invoice:
-  invoice_date: 'Invoice Date:'
-  shipping_date: 'Shipping Date:'
-  order_number: 'Order Number:'
-  invoice_number: 'Invoice Number:'
+  invoice_date: "Invoice Date:"
+  shipping_date: "Shipping Date:"
+  order_number: "Order Number:"
+  invoice_number: "Invoice Number:"
 
   content:
-    heading: 'Invoice'
-    text: 'Thank you for using.'
-    piece: 'Pcs'
-    name: 'Product Name'
-    price: 'Price/Unit'
-    payment: 'Payment'
-    subtotal: 'Subtotal'
-    tax: 'Tax Rate'
-    shipping: 'Shipping'
-    total: 'Total'
+    heading: "Invoice"
+    text: "Thank you for using."
+    piece: "Pcs"
+    name: "Product Name"
+    price: "Price/Unit"
+    payment: "Payment"
+    subtotal: "Subtotal"
+    tax: "Tax Rate"
+    shipping: "Shipping"
+    total: "Total"

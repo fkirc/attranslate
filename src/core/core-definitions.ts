@@ -5,14 +5,12 @@ export type TSet = Map<string, string | null>;
 
 export interface CoreArgs {
   src: TSet;
-  srcCache: TSet | null;
   srcLng: string;
   oldTarget: TSet | null;
   targetLng: string;
   service: TServiceType;
   serviceConfig: string | null;
   matcher: TMatcherType;
-  overwriteOutdated: boolean;
 }
 
 export interface TChangeSet {
@@ -31,7 +29,6 @@ export interface CoreResults {
   changeSet: TChangeSet;
   serviceInvocation: TServiceInvocation | null;
   newTarget: TSet;
-  newSrcCache: TSet;
 }
 
 export interface CliArgs extends Record<string, string | undefined> {
@@ -43,9 +40,5 @@ export interface CliArgs extends Record<string, string | undefined> {
   targetFormat: string;
   service: string;
   serviceConfig?: string;
-  cacheDir: string;
   matcher: string;
-  overwriteOutdated: string;
-  keySearch: string;
-  keyReplace: string;
 }
