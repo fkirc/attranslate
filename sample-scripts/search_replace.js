@@ -5,14 +5,14 @@ const fs = require("fs");
  * Preprocessing or postprocessing may be needed because attranslate cannot cover every edge-case.
  */
 
-function searchAndReplaceInFile(filePath, searchRegex, replacement) {
+function searchAndReplaceInFile(filePath, search, replacement) {
   fs.readFile(filePath, "utf8", (err, data) => {
     if (err) {
       console.error("Error reading file:", err);
       process.exit(1);
     }
 
-    const updatedContent = data.replace(searchRegex, replacement);
+    const updatedContent = data.replace(search, replacement);
     if (updatedContent === data) {
       console.log("warning: did not replace anything in " + filePath);
       return;
@@ -36,7 +36,8 @@ if (process.argv.length !== 5) {
 }
 
 const filePath = process.argv[2];
-const searchRegex = new RegExp(process.argv[3], "g");
+const search = process.argv[3];
+// const search = new RegExp(process.argv[3], "g");
 const replacement = process.argv[4];
 
-searchAndReplaceInFile(filePath, searchRegex, replacement);
+searchAndReplaceInFile(filePath, search, replacement);
