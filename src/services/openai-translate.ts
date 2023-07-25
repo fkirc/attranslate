@@ -42,6 +42,7 @@ async function translateSingleString(
       logFatal("OpenAI returned undefined for prompt " + prompt);
     }
     return text;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (e: any) {
     if (typeof e.message === "string") {
       logFatal(

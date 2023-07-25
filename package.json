@@ -32,7 +32,7 @@
     "clean": "rm -rf ./dist",
     "lint": "npm run eslint",
     "reformat": "npm run eslint -- --fix",
-    "eslint": "./node_modules/.bin/eslint '**/*.{js,ts,tsx}' --ignore-path=.gitignore",
+    "eslint": "./node_modules/.bin/eslint '**/*.{ts,tsx}' --ignore-path=.gitignore",
     "test": "jest --testTimeout=10000",
     "test:windows": "npm run test -- --config=test/windows.jest.config.js",
     "test:generate_refs": "GENERATE_REFS=True npm run test",

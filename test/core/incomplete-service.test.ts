@@ -1,10 +1,9 @@
 import { commonArgs, enSrc, translateCoreAssert } from "./core-test-util";
-import { CoreArgs, CoreResults, TSet } from "../../src/core/core-definitions";
+import { CoreArgs, CoreResults } from "../../src/core/core-definitions";
 import {
   injectFakeService,
   TResult,
   TService,
-  TServiceArgs,
   TServiceType,
 } from "../../src/services/service-definitions";
 import { toStrictEqualMapOrder } from "../test-util/to-strict-equal-map-order";
@@ -41,26 +40,3 @@ test("no target, empty service", async () => {
   const res = await translateCoreAssert(args);
   toStrictEqualMapOrder(res, expectRes);
 });
-
-const modifiedTarget: TSet = new Map([
-  ["1", "Eins"],
-  ["2", "Zwei"],
-  ["3", "Drei modified"],
-  ["4", "stsd"],
-  ["5", "sfsef"],
-  ["6", "rrw"],
-]);
-
-class PartialResultsService implements TService {
-  translateStrings(args: TServiceArgs): Promise<TResult[]> {
-    const sliceIndex = Math.floor(args.strings.length / 2);
-    const selection = args.strings.slice(sliceIndex);
-    const results: TResult[] = selection.map((v) => {
-      return {
-        key: v.key,
-        translated: v.value,
-      };
-    });
-    return Promise.resolve(results);
-  }
-}
