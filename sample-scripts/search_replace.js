@@ -9,7 +9,7 @@ function searchAndReplaceInFile(filePath, searchRegex, replacement) {
   fs.readFile(filePath, "utf8", (err, data) => {
     if (err) {
       console.error("Error reading file:", err);
-      return;
+      process.exit(1);
     }
 
     const updatedContent = data.replace(searchRegex, replacement);
@@ -21,7 +21,7 @@ function searchAndReplaceInFile(filePath, searchRegex, replacement) {
     fs.writeFile(filePath, updatedContent, "utf8", (err) => {
       if (err) {
         console.error("Error writing to file:", err);
-        return;
+        process.exit(1);
       }
     });
   });
