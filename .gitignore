@@ -14,6 +14,7 @@ dist/
 
 # Secrets
 service-account.json
+.env
 
 # Test Data
 locales/

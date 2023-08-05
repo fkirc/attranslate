@@ -1,9 +1,10 @@
 import commander from "commander";
-import { translateCli, formatCliOptions } from "./core/translate-cli";
-import { getTFileFormatList } from "./file-formats/file-format-definitions";
+import "dotenv/config";
 import { CliArgs } from "./core/core-definitions";
-import { getTServiceList } from "./services/service-definitions";
+import { formatCliOptions, translateCli } from "./core/translate-cli";
+import { getTFileFormatList } from "./file-formats/file-format-definitions";
 import { getTMatcherList } from "./matchers/matcher-definitions";
+import { getTServiceList } from "./services/service-definitions";
 import { extractVersion } from "./util/extract-version";
 
 process.on("unhandledRejection", (error) => {
