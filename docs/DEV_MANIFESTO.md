@@ -17,8 +17,6 @@ Therefore, it is important to minimize setup-time for new users:
 
 `attranslate` is a generic tool that should not enforce any specific workflows. 
 For example, `attranslate` should not enforce any specific directory structure.
-There are some exceptions to this guideline:
-The "manual review"-feature might be an opinionated feature, but it is disabled by default.
 
 ## Test Performance Driven Development 
 
@@ -32,7 +30,6 @@ However, TPDD has additional requirements on how tests should be done:
 - Aggressively optimize the overall running time of test suites.
 - Make tests independent of each other to enable multi-core-testing.
 - Mock expensive operations like network-calls (but not for all tests).
-- Prefer parameterized tests over new tests.
 - Prefer minor test-modifications over new tests (but not at the expense of overly complex tests).
 - Prefer reference-files over testing-code.
 - Prefer stability and robustness over an excessive number of tests.
