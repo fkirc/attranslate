@@ -2,14 +2,14 @@
 
 When generating target files, attranslate has the following two operation modes:
 
-- `Source-tree traversal`
+- `Source-tree preservation`
 - `Tree-generation from scratch`
 
-attranslate tries to use `Source-tree traversal` as often as possible, and only uses `Tree-generation from scratch` as a fallback.
+attranslate tries to use `Source-tree preservation` as often as possible, and only uses `Tree-generation from scratch` as a fallback.
 Moreover, attranslate has the rule that source files are *never* modified, only the target files are modified or generated.
 This document describes the two operation modes in more detail.
 
-## Source-tree traversal
+## Source-tree preservation
 
 This operation mode creates a tree representation of the source file (e.g., nested JSON/YAML/XML).
 Then it traverses the source tree to find translatable entries.
@@ -22,8 +22,8 @@ This operation mode has several advantages:
 - Simple implementation
 - Relatively robust when dealing with complex files
 
-Nevertheless, we realize that source-tree traversal is not suited for every user.
-In particular, source-tree traversal might be problematic for users who have wildly inconsistent target files and are unable or unwilling to make them consistent.
+Nevertheless, we realize that source-tree preservation is not suited for every user.
+In particular, source-tree preservation might be problematic for users who have wildly inconsistent target files and are unable or unwilling to make them consistent.
 
 ## Tree-generation from scratch
 
