@@ -1,3 +1,5 @@
+import { nodeVersionSatisfies } from "../util/util";
+
 export interface TResult {
   key: string;
   translated: string;
@@ -57,8 +59,10 @@ export async function instantiateTService(
     case "openai":
       return new (await import("./openai-translate")).OpenAITranslate();
     case "typechat":
+      nodeVersionSatisfies("typechat", ">=18");
       return new (await import("./typechat")).TypeChatTranslate();
     case "typechat-manual":
+      nodeVersionSatisfies("typechat", ">=18");
       return new (await import("./typechat")).TypeChatTranslate(true);
     case "azure":
       return new (await import("./azure-translator")).AzureTranslator();

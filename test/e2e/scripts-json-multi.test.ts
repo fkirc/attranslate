@@ -1,4 +1,5 @@
 import { join } from "path";
+import semver from "semver";
 import { joinLines, runCommandExpectFailure } from "../test-util/test-util";
 import { runSampleScript } from "./scripts-e2e-util";
 
@@ -32,9 +33,13 @@ test("missing OpenAI key (typechat)", async () => {
     undefined,
     { ...process.env, OPENAI_API_KEY: undefined }
   );
-  expect(output).toContain(
-    "error: Missing environment variable: OPENAI_API_KEY"
-  );
+  if (semver.satisfies(process.version, ">=18")) {
+    expect(output).toContain(
+      "error: Missing environment variable: OPENAI_API_KEY"
+    );
+  } else {
+    expect(output).toContain("error: typechat requires node >=18");
+  }
 });
 
 test("invalid OpenAI key (typechat)", async () => {
@@ -44,7 +49,11 @@ test("invalid OpenAI key (typechat)", async () => {
     undefined,
     { ...process.env, OPENAI_API_KEY: "garbageapikey" }
   );
-  expect(output).toContain("error: REST API error 401: Unauthorized");
+  if (semver.satisfies(process.version, ">=18")) {
+    expect(output).toContain("error: REST API error 401: Unauthorized");
+  } else {
+    expect(output).toContain("error: typechat requires node >=18");
+  }
 });
 
 const targetLngs = ["es", "zh", "de"];
