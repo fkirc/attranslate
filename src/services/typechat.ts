@@ -28,7 +28,7 @@ function generateSchema(
     .join("\n");
 
   const schema = `export interface ${name} {\n${properties}\n}\n`;
-  return comment ? `; // ${comment} \n\n${schema}` : schema;
+  return comment ? `// ${comment} \n\n${schema}` : schema;
 }
 
 function generatePrompt(batch: TString[], args: TServiceArgs): string {
