@@ -41,6 +41,7 @@
   "dependencies": {
     "@google-cloud/translate": "^6.0.3",
     "axios": "^1.4.0",
+    "clipboardy": "^2.3.0",
     "commander": "^6.1.0",
     "detect-indent": "^6.0.0",
     "dotenv": "^16.3.1",

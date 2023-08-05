@@ -1,4 +1,5 @@
 import axios, { CreateAxiosDefaults } from "axios";
+import clipboard from "clipboardy";
 import inquirer from "inquirer";
 import { chunk, flatten } from "lodash";
 import {
@@ -62,7 +63,7 @@ async function translateBatch(
   env: Record<string, string | undefined>
 ): Promise<TResult[]> {
   console.log(
-    "Translate a batch of " + batch.length + " strings with OpenAI..."
+    "Translate a batch of " + batch.length + " strings with TypeChat..."
   );
 
   const schemaName = env.TYPECHAT_SCHEMA_NAME ?? "AppLocalizations";
@@ -106,18 +107,18 @@ function createManualModel(): TypeChatLanguageModel {
   return model;
 
   async function complete(prompt: string) {
-    console.log(`### PROMPT ###`);
-    console.log(prompt);
-    console.log(`### PROMPT END ###`);
+    await clipboard.write(prompt);
+    console.log(`Prompt copied to clipboard`);
 
-    const result = await inquirer.prompt<{ result: string }>([
+    await inquirer.prompt([
       {
-        name: "result",
-        message: "Paste the response:",
-        type: "editor",
+        name: "Enter",
+        message: "Press enter after you copied the response.",
+        type: "input",
       },
     ]);
-    return success(result.result);
+    const result = await clipboard.read();
+    return success(result);
   }
 }
 
