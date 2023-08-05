@@ -13,7 +13,7 @@ This document describes the two operation modes in more detail.
 
 This operation mode creates a tree representation of the source file (e.g., nested JSON/YAML/XML).
 Then it traverses the source tree to find translatable entries.
-Moreover, the same source tree is used for generating the target file.
+Crucially, the same source tree is used for generating the target file.
 Only the translatable entries are swapped; the rest of the source tree is left as-is.
 This operation mode has several advantages:
 
