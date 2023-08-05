@@ -17,8 +17,6 @@ Por lo tanto, es importante minimizar el tiempo de configuración para los nuevo
 
 `attranslate` es una herramienta genérica que no debe aplicar ningún flujo de trabajo específico.
 Por ejemplo `attranslate` no debe aplicar ninguna estructura de directorios específica.
-Hay algunas excepciones a esta guía:
-La función de "revisión manual" puede ser una función obstinada, pero está deshabilitada de forma predeterminada.
 
 ## Desarrollo basado en el rendimiento de pruebas
 
@@ -33,7 +31,6 @@ Sin embargo, TPDD tiene requisitos adicionales sobre cómo se deben realizar las
 *   Optimice agresivamente el tiempo de ejecución general de los conjuntos de pruebas.
 *   Haga que las pruebas sean independientes entre sí para permitir las pruebas de múltiples núcleos.
 *   Simular operaciones costosas como llamadas de red (pero no para todas las pruebas).
-*   Prefiere las pruebas parametrizadas a las nuevas.
 *   Prefiera modificaciones menores de las pruebas sobre las nuevas pruebas (pero no a expensas de pruebas demasiado complejas).
 *   Prefiere los archivos de referencia a los de prueba.
 *   Prefiere la estabilidad y la robustez a un número excesivo de pruebas.
