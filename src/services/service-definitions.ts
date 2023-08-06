@@ -1,3 +1,5 @@
+import { nodeVersionSatisfies } from "../util/util";
+
 export interface TResult {
   key: string;
   translated: string;
@@ -27,6 +29,8 @@ export function getTServiceList(): TServiceType[] {
 
 const serviceMap = {
   openai: null,
+  typechat: null,
+  "typechat-manual": null,
   manual: null,
   "sync-without-translate": null,
   "google-translate": null,
@@ -54,6 +58,12 @@ export async function instantiateTService(
   switch (service) {
     case "openai":
       return new (await import("./openai-translate")).OpenAITranslate();
+    case "typechat":
+      nodeVersionSatisfies("typechat", ">=18");
+      return new (await import("./typechat")).TypeChatTranslate();
+    case "typechat-manual":
+      nodeVersionSatisfies("typechat", ">=18");
+      return new (await import("./typechat")).TypeChatTranslate(true);
     case "azure":
       return new (await import("./azure-translator")).AzureTranslator();
     // case "deepl":

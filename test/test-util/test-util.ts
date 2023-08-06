@@ -82,12 +82,13 @@ export function runCommand(cmd: string, pwd?: string): Promise<string> {
 
 export function runCommandExpectFailure(
   cmd: string,
-  pwd?: string
+  pwd?: string,
+  env?: Record<string, string | undefined>
 ): Promise<string> {
   cmd = buildFinalCommand(cmd, pwd);
   console.log(`Run expect-fail-command \'${cmd}\'`);
   return new Promise((resolve, reject) => {
-    exec(cmd, (error, stdout, stderr) => {
+    exec(cmd, { env: env }, (error, stdout, stderr) => {
       console.log(stdout);
       if (error) {
         console.log(stderr);
