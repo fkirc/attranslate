@@ -1,3 +1,10 @@
+# StandWithUkraine
+
+We take a clear stand against imperialistic regimes that invade neighboring countries.
+We seek to defend the rule of law against the rule of tyranny.
+We seek to defend democracy against fascism.
+Russian users are encouraged to act against the disinformation and lies that have been used to justify the war.
+
 # Contributor Covenant Code of Conduct
 
 ## Our Pledge
