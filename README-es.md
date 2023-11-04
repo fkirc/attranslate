@@ -96,7 +96,7 @@ Correr `attranslate --help` para ver una lista de opciones disponibles:
       --serviceConfig <serviceKey>        supply configuration for a translation
                                           service (either a path to a key-file or
                                           an API-key)
-      --matcher <matcher>                 An optional feature for string replacements, probably not needed. One of "none", "icu", "i18next",
+      --matcher <matcher>                 An optional feature for string replacements. One of "none", "icu", "i18next",
                                           "sprintf" (default: "none")
       -v, --version                       output the version number
 ```
