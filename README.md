@@ -4,20 +4,14 @@
 
 macOS/Ubuntu/Windows: [![Actions Status](https://github.com/fkirc/attranslate/workflows/Tests/badge.svg/?branch=master)](https://github.com/fkirc/attranslate/actions?query=branch%3Amaster)
 
-[-> Documentación en español](https://attranslate.xyz/README-es)
+`attranslate` is a tool for syncing translation-files, including JSON/YAML/XML and other formats.
+In contrast to paid services, any developer can integrate `attranslate` in a matter of minutes.
+`attranslate` will leave existing translations unchanged and only synchronize new translations.
 
-`attranslate` is a tool for synchronizing translation-files, including JSON/YAML/XML and other formats.
-`attranslate` is optimized for smooth rollouts in hectic project environments, even if you already have many translations.
 Optionally, `attranslate` works with automated translation-services.
 For example, let's say that a translation-service achieves 80% correct translations.
-With `attranslate`, a quick fix of the remaining 20% may be faster than doing everything by hand.
+With `attranslate`, a fix of the remaining 20% may be faster than doing everything by hand.
 Other than that, `attranslate` supports purely manual translations or even file-format-conversions without changing the language.
-
-## Why attranslate?
-
-In contrast to paid services, a single developer can integrate `attranslate` in a matter of minutes.
-`attranslate` can operate on the very same translations-files that you are already using.
-This is possible because `attranslate` operates on your file in a surgical way, with as little changes as possible.
 
 # Features
 
