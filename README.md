@@ -15,25 +15,11 @@ Other than that, `attranslate` supports purely manual translations or even file-
 
 # Features
 
-## Cross-platform Support
-
-`attranslate` is designed to translate any website or app.
-`attranslate` works for i18n/JavaScript/Android/iOS/Flutter/Ruby/Jekyll/Django/WordPress and many other platforms.
-To make this possible, `attranslate` supports the following file formats:
-
-- Flat or nested JSON
-- YAML
-- PO/POT-files
-- Android-XML or other XMLs
-- iOS-Strings
-- Flutter-ARB
-- CSV (e.g. for Google Docs or Excel)
-
 ## Preserve Manual Translations
 
 `attranslate` recognizes that machine translations are not perfect.
 Therefore, whenever you are unhappy with the produced text, `attranslate` allows you to simply overwrite text in your target-files.
-`attranslate` will preserve manual corrections in subsequent runs.
+`attranslate` will never overwrite any manual corrections in subsequent runs.
 
 ## Available Services
 
@@ -109,20 +95,7 @@ Options:
   --serviceConfig <serviceKey>        supply configuration for a translation
                                       service (either a path to a key-file or
                                       an API-key)
-  --matcher <matcher>                 One of "none", "icu", "i18next",
+  --matcher <matcher>                 An optional feature for string replacements. One of "none", "icu", "i18next",
                                       "sprintf" (default: "none")
   -v, --version                       output the version number
 ```
-
-## Matchers
-
-> :warning: For many projects, `attranslate` works out of the box without configuring any matchers. Therefore, we recommend skipping this section.
-
-Many websites/apps insert dynamic values into translations.
-For example, a translation like `Your name is {{name}}` might be replaced with `Your name is Felix`.
-
-To help with with this, `attranslate` offers the following matchers for different styles of replacements:
-
-- **ICU**: Matches something like `{name}`.
-- **i18n**: Matches [i18next](https://www.i18next.com/translation-function/interpolation) format like `{{name}}`.
-- **sprintf**: Matches sprintf-style like `%s`.
