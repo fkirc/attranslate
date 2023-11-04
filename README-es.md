@@ -7,33 +7,15 @@
 macOS/Ubuntu/Windows: [![Actions Status](https://github.com/fkirc/attranslate/workflows/Tests/badge.svg/?branch=master)](https://github.com/fkirc/attranslate/actions?query=branch%3Amaster)
 
 `attranslate` es una herramienta para sincronizar archivos de traducción, incluyendo JSON/YAML/XML y otros formatos.
-`attranslate` está optimizado para implementaciones fluidas en entornos de proyectos agitados, incluso si ya tiene muchas traducciones.
+A diferencia de los servicios de pago, cualquier desarrollador puede integrar `attranslate` en cuestión de minutos.
+`attranslate` dejará las traducciones existentes sin cambios y solo sincronizará las nuevas traducciones.
+
 Opcionalmente `attranslate` trabaja con servicios de traducción automática.
 Por ejemplo, supongamos que un servicio de traducción logra un 80% de traducciones correctas.
 Con `attranslate`, una solución rápida del 20% restante puede ser más rápida que hacer todo a mano.
 Aparte de eso, `attranslate` admite traducciones puramente manuales o incluso conversiones de formato de archivo sin cambiar el idioma.
 
-## ¿Por qué attranslate?
-
-A diferencia de los servicios de pago, un solo desarrollador puede integrar `attranslate` en cuestión de minutos.
-`attranslate` puede operar en los mismos archivos de traducciones que ya está utilizando.
-Esto es posible porque `attranslate` opera en su expediente de forma quirúrgica, con los menores cambios posibles.
-
 # Funciones
-
-## Soporte multiplataforma
-
-`attranslate` está diseñado para traducir cualquier sitio web o aplicación.
-`attranslate` funciona para i18n / JavaScript / Android / iOS / Flutter / Ruby / Jekyll / Django / WordPress y muchas otras plataformas.
-Para que esto sea posible, `attranslate` admite los siguientes formatos de archivo:
-
-- JSON plano o anidado
-- YAML
-- PO/POT-archivos
-- Android-XML o cualquier otro XML
-- Cadenas de iOS
-- Flutter-ARB
-- CSV (por ejemplo, para Google Docs o Excel)
 
 ## Conservar traducciones manuales
 
@@ -114,20 +96,7 @@ Correr `attranslate --help` para ver una lista de opciones disponibles:
       --serviceConfig <serviceKey>        supply configuration for a translation
                                           service (either a path to a key-file or
                                           an API-key)
-      --matcher <matcher>                 One of "none", "icu", "i18next",
+      --matcher <matcher>                 An optional feature for string replacements. One of "none", "icu", "i18next",
                                           "sprintf" (default: "none")
       -v, --version                       output the version number
 ```
-
-## Matchers
-
-> :warning: Para muchos proyectos, `attranslate` funciona de inmediato sin configurar ningún Matchers. Por lo tanto, le recomendamos que omita esta sección.
-
-Muchos sitios web/aplicaciones insertan valores dinámicos en las traducciones.
-Por ejemplo, una traducción como `Su nombre es {{name}}` podría sustituirse por `Su nombre es Felix`.
-
-Para ayudar con esto, `attranslate` ofrece los siguientes Matchers para diferentes estilos de reemplazos:
-
-- **UCI**: Coincide con algo como `{name}`.
-- **i18n**: Coincide [i18siguiente](https://www.i18next.com/translation-function/interpolation) como `{{name}}`.
-- **sprintf**: Coincide estilo de sprintf como `%s`.
