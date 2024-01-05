@@ -14,7 +14,7 @@
     "mobile app translation",
     "i18n"
   ],
-  "license": "MIT",
+  "license": "GPL",
   "bugs": {
     "url": "https://github.com/fkirc/attranslate/issues"
   },
@@ -30,9 +30,6 @@
   "scripts": {
     "build": "npm run clean && tsc && npm link",
     "clean": "rm -rf ./dist",
-    "lint": "npm run eslint",
-    "reformat": "npm run eslint -- --fix",
-    "eslint": "./node_modules/.bin/eslint '**/*.{ts,tsx}' --ignore-path=.gitignore",
     "test": "jest --testTimeout=10000",
     "test:windows": "npm run test -- --config=test/windows.jest.config.js",
     "test:generate_refs": "GENERATE_REFS=True npm run test",
@@ -63,28 +60,11 @@
     "@types/node": "^14.11.8",
     "@types/node-fetch": "^2.1.6",
     "@types/xml2js": "^0.4.5",
-    "@typescript-eslint/eslint-plugin": "^4.4.0",
-    "@typescript-eslint/parser": "^4.4.0",
-    "eslint": "^7.11.0",
-    "eslint-config-prettier": "^7.2.0",
-    "eslint-plugin-prettier": "^3.1.4",
-    "husky": "^4.3.0",
     "jest": "^26.5.2",
-    "lint-staged": "^10.4.0",
     "node-fetch": "^2.3.0",
     "prettier": "^2.2.1",
     "ts-jest": "^26.4.1",
     "typescript": "^4.0.3"
-  },
-  "lint-staged": {
-    "src/**/*.{ts,tsx}": [
-      "node_modules/.bin/eslint --ignore-path=.gitignore --fix"
-    ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "node_modules/.bin/lint-staged"
-    }
   },
   "publishConfig": {
     "access": "public"

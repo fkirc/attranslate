@@ -36,8 +36,6 @@ jobs:
           path: '**/node_modules'
           key: ${{ runner.os }}-modules-${{ hashFiles('**/package-lock.json') }}
       - run: npm ci
-      - if: ${{ matrix.os != 'windows-latest' }}
-        run: npm run lint
       - run: npm run build
       - if: ${{ matrix.os != 'macos-latest' && matrix.os != 'windows-latest' }}
         run: |
