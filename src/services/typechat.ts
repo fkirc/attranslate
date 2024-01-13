@@ -85,7 +85,7 @@ function createLanguageModel(
 ): TypeChatLanguageModel {
   const apiKey =
     env.OPENAI_API_KEY ?? missingEnvironmentVariable("OPENAI_API_KEY");
-  const model = env.OPENAI_MODEL ?? "text-davinci-003";
+  const model = env.OPENAI_MODEL ?? "gpt-3.5-turbo-instruct";
   const url =
     env.OPENAI_ENDPOINT ?? "https://api.openai.com/v1/chat/completions";
 
