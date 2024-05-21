@@ -23,7 +23,7 @@ function generateSchema(
 ): string {
   const properties = batch
     .map((tString: TString) => {
-      return `  ${tString.key}: string;`;
+      return `  '${tString.key}': string;`;
     })
     .join("\n");
 
