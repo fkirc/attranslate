@@ -36,9 +36,9 @@
     "prepublishOnly": "git diff --exit-code"
   },
   "dependencies": {
-    "@google-cloud/translate": "^6.0.3",
+    "@google-cloud/translate": "^8.3.0",
     "@types/semver": "^7.5.0",
-    "axios": "^1.4.0",
+    "axios": "^1.7.2",
     "clipboardy": "^2.3.0",
     "commander": "^6.1.0",
     "detect-indent": "^6.0.0",
@@ -46,7 +46,7 @@
     "gettext-parser": "^4.0.4",
     "inquirer": "^7.3.3",
     "messageformat-parser": "^4.1.0",
-    "openai": "^3.2.0",
+    "openai": "^3.3.0",
     "semver": "^7.5.4",
     "typechat": "^0.0.10",
     "xml2js": "https://github.com/fkirc/node-xml2js/tarball/680ee7ed2dad8b9ddacc37b5e4b4a671706e0bcf",
