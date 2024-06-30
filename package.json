@@ -46,7 +46,7 @@
     "gettext-parser": "^4.0.4",
     "inquirer": "^7.3.3",
     "messageformat-parser": "^4.1.0",
-    "openai": "^3.3.0",
+    "openai": "^4.52.2",
     "semver": "^7.5.4",
     "typechat": "^0.0.10",
     "xml2js": "https://github.com/fkirc/node-xml2js/tarball/680ee7ed2dad8b9ddacc37b5e4b4a671706e0bcf",
