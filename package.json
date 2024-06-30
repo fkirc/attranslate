@@ -36,7 +36,7 @@
     "prepublishOnly": "git diff --exit-code"
   },
   "dependencies": {
-    "@google-cloud/translate": "^6.0.3",
+    "@google-cloud/translate": "^8.3.0",
     "@types/semver": "^7.5.0",
     "axios": "^1.7.2",
     "clipboardy": "^2.3.0",
