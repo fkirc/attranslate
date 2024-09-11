@@ -31,10 +31,10 @@ async function translateSingleString(
    * We generally recommend altering this or top_p but not both.
    */
   try {
-    const completion = await openai.createCompletion({
-      model: "gpt-3.5-turbo-instruct",
-      prompt,
-      temperature: 0.2,
+    const completion = await openai.createChatCompletion({
+      model: "gpt-4o-mini-2024-07-18",
+      messages: messages,
+      temperature: 0,
       max_tokens: 2048,
     });
     const text = completion.data.choices[0].text;
@@ -58,9 +58,9 @@ async function translateSingleString(
 }
 
 function generatePrompt(str: string, args: TServiceArgs) {
-  const capitalizedText = str[0].toUpperCase() + str.slice(1).toLowerCase();
+  const capitalizedText = str;
   return (
-    `Translate the following text from ${args.srcLng} into ${args.targetLng}: ` +
+    `only translate my software string from ${args.srcLng} to ${args.targetLng}. don't chat or explain. Using the correct terms for computer software in the target language, only show target language never repeat string. if you don't find something to translate, don't respond, string:` +
     capitalizedText
   );
 }
