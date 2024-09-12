@@ -1,4 +1,4 @@
-import { Configuration, OpenAIApi } from "openai";
+import { Configuration, OpenAIApi, ChatCompletionRequestMessage } from "openai";
 import {
   TResult,
   TService,
@@ -25,12 +25,8 @@ async function translateSingleString(
   const openai = new OpenAIApi(configuration);
 
   const prompt = generatePrompt(str, args);
-  /**
-   * https://platform.openai.com/docs/api-reference/completions/create
-   * What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.
-   * We generally recommend altering this or top_p but not both.
-   */
-  const messages = [
+
+  const messages: ChatCompletionRequestMessage[] = [
     {
       role: "user",
       content: prompt,
@@ -44,12 +40,12 @@ async function translateSingleString(
       temperature: 0,
       max_tokens: 2048,
     });
+
     const text = completion.data.choices[0].message?.content;
     if (text == undefined) {
       logFatal("OpenAI returned undefined for prompt " + prompt);
     }
     return text;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (e: any) {
     if (typeof e.message === "string") {
       logFatal(
