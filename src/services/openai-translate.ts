@@ -33,6 +33,11 @@ async function translateSingleString(
     },
   ];
 
+  /**
+   * https://platform.openai.com/docs/api-reference/completions/create
+   * What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.
+   * We generally recommend altering this or top_p but not both.
+   */
   try {
     const completion = await openai.createChatCompletion({
       model: "gpt-4o-mini-2024-07-18",
