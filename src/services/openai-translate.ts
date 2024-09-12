@@ -30,6 +30,13 @@ async function translateSingleString(
    * What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.
    * We generally recommend altering this or top_p but not both.
    */
+  const messages = [
+    {
+      role: "user",
+      content: prompt,
+    },
+  ];
+
   try {
     const completion = await openai.createChatCompletion({
       model: "gpt-4o-mini-2024-07-18",
@@ -37,7 +44,7 @@ async function translateSingleString(
       temperature: 0,
       max_tokens: 2048,
     });
-    const text = completion.data.choices[0].text;
+    const text = completion.data.choices[0].message?.content;
     if (text == undefined) {
       logFatal("OpenAI returned undefined for prompt " + prompt);
     }
