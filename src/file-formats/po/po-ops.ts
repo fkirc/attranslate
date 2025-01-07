@@ -70,6 +70,22 @@ export function updatePotTranslations(
         oldTarget: oldTargetComments,
       });
     }
+
+    if (args.changeSet.added.has(key)) {
+      // add a special marking for newly-added PO-entries
+      const newPoMarker = "NEEDS WORK";
+      if (getText.comments) {
+        if (typeof getText.comments.reference === "string") {
+          getText.comments.reference += (" " + newPoMarker);
+        } else {
+          getText.comments.reference = newPoMarker
+        }
+      } else {
+        getText.comments = {
+          reference: newPoMarker
+        } as GetTextComment;
+      }
+    }
   });
 }
 
