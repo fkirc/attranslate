@@ -25,8 +25,23 @@ export class AzureTranslator implements TService {
   async translateBatch(
     batch: TString[],
     args: TServiceArgs,
-    apiKey: string
+    config: string
   ): Promise<TResult[]> {
+    const [apiKey, region] = config?.split(',') ?? [];
+
+    if (!apiKey) {
+      throw new Error('Missing API Key');
+    }
+
+    const headers: Record<string, string> = {
+      "Ocp-Apim-Subscription-Key": apiKey,
+      "Content-Type": "application/json; charset=UTF-8",
+    }
+      
+    if (region) {
+      headers["Ocp-Apim-Subscription-Region"] = region;
+    }
+    
     const azureBody: { Text: string }[] = batch.map((tString) => {
       return {
         Text: tString.value,
@@ -36,11 +51,7 @@ export class AzureTranslator implements TService {
       `${TRANSLATE_ENDPOINT}&from=${args.srcLng}&to=${args.targetLng}&textType=html`,
       {
         method: "POST",
-        headers: {
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          "Ocp-Apim-Subscription-Key": apiKey,
-          "Content-Type": "application/json; charset=UTF-8",
-        },
+        headers,
         body: JSON.stringify(azureBody),
       }
     );
@@ -56,13 +67,13 @@ export class AzureTranslator implements TService {
   }
 
   async translateStrings(args: TServiceArgs): Promise<TResult[]> {
-    const apiKey = args.serviceConfig;
-    if (!apiKey) {
+    const config = args.serviceConfig;
+    if (!config) {
       logFatal("Set '--serviceConfig' to an Azure API key");
     }
     const batches = chunk(args.strings, 50);
     const results = await Promise.all(
-      batches.map((batch) => this.translateBatch(batch, args, apiKey))
+      batches.map((batch) => this.translateBatch(batch, args, config))
     );
     return flatten(results);
   }
