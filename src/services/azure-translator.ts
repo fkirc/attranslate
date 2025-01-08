@@ -33,7 +33,7 @@ export class AzureTranslator implements TService {
       throw new Error('Missing API Key');
     }
 
-    const headers = {
+    const headers: Record<string, string> = {
       "Ocp-Apim-Subscription-Key": apiKey,
       "Content-Type": "application/json; charset=UTF-8",
     }
