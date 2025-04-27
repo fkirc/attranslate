@@ -37,10 +37,12 @@ function generatePrompt(batch: TString[], args: TServiceArgs): string {
     return entries;
   }, {});
 
-  return (
-    `Translate the following JSON object from ${args.srcLng} into ${args.targetLng}:\n` +
-    JSON.stringify(entries, null, 2)
-  );
+  const basePrompt = `Translate the following JSON object from ${args.srcLng} into ${args.targetLng}:\n`;
+  const customPrompt = args.prompt
+    ? `\nAdditional instructions: ${args.prompt}\n\n`
+    : "\n";
+
+  return basePrompt + customPrompt + JSON.stringify(entries, null, 2);
 }
 
 function parseResponse(

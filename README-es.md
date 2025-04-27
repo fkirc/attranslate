@@ -98,5 +98,24 @@ Correr `attranslate --help` para ver una lista de opciones disponibles:
                                           an API-key)
       --matcher <matcher>                 An optional feature for string replacements. One of "none", "icu", "i18next",
                                           "sprintf" (default: "none")
+      --prompt <customPrompt>             Prompt opcional para guiar al servicio de traducción. Útil para especificar
+                                          términos técnicos que no deben traducirse u otras preferencias de traducción.
       -v, --version                       output the version number
 ```
+
+## Ejemplos de Prompt
+
+Puedes usar el parámetro `--prompt` para proporcionar instrucciones específicas al servicio de traducción. Aquí tienes un ejemplo:
+
+```bash
+attranslate --srcFile=json-simple/en.json --srcLng=English --srcFormat=nested-json \
+           --targetFile=json-simple/es.json --targetLng=Spanish --targetFormat=nested-json \
+           --service=openai \
+           --prompt="Estoy desarrollando una aplicación de salud para profesionales médicos. Términos técnicos como 'EKG', 'MRI', 'CT scan', 'blood pressure', 'pulse oximeter' y 'vital signs' deben permanecer en inglés. Por favor, mantenga la terminología médica adecuada y un tono formal en las traducciones."
+```
+
+Este prompt asegurará que los términos técnicos permanezcan en inglés mientras se traduce el resto del contenido. Puedes personalizar el prompt según tus necesidades específicas, como:
+- Especificar qué términos no deben traducirse
+- Solicitar reglas específicas de capitalización
+- Proporcionar contexto sobre el dominio de tu aplicación
+- Establecer preferencias de tono o estilo para las traducciones
