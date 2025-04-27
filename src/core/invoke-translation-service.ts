@@ -71,6 +71,7 @@ async function runTranslationService(
     srcLng: args.srcLng,
     targetLng: args.targetLng,
     serviceConfig: args.serviceConfig,
+    prompt: args.prompt,
   };
   console.info(
     `Invoke '${args.service}' from '${args.srcLng}' to '${args.targetLng}' with ${serviceArgs.strings.length} inputs...`

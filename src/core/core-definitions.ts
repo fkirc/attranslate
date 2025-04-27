@@ -11,6 +11,7 @@ export interface CoreArgs {
   service: TServiceType;
   serviceConfig: string | null;
   matcher: TMatcherType;
+  prompt: string;
 }
 
 export interface TChangeSet {
