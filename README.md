@@ -97,5 +97,24 @@ Options:
                                       an API-key)
   --matcher <matcher>                 An optional feature for string replacements. One of "none", "icu", "i18next",
                                       "sprintf" (default: "none")
+  --prompt <customPrompt>             Optional custom prompt to guide the translation service. Useful for specifying
+                                      technical terms that should not be translated or other translation preferences.
   -v, --version                       output the version number
 ```
+
+## Prompt Examples
+
+You can use the `--prompt` parameter to provide specific instructions to the translation service. Here's an example:
+
+```bash
+attranslate --srcFile=json-simple/en.json --srcLng=English --srcFormat=nested-json \
+           --targetFile=json-simple/es.json --targetLng=Spanish --targetFormat=nested-json \
+           --service=openai \
+           --prompt="I am building a healthcare app for medical professionals. Technical terms like 'EKG', 'MRI', 'CT scan', 'blood pressure', 'pulse oximeter', and 'vital signs' should remain in English. Please maintain proper medical terminology and formal tone in translations."
+```
+
+This prompt will ensure that technical terms remain in English while translating the rest of the content. You can customize the prompt based on your specific needs, such as:
+- Specifying which terms should remain untranslated
+- Requesting specific capitalization rules
+- Providing context about your application domain
+- Setting tone or style preferences for translations

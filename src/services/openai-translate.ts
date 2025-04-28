@@ -9,6 +9,7 @@ import { logFatal } from "../util/util";
 import { chunk, flatten } from "lodash";
 
 async function translateSingleString(
+  key: string,
   str: string,
   args: TServiceArgs
 ): Promise<string> {
@@ -24,7 +25,7 @@ async function translateSingleString(
   });
   const openai = new OpenAIApi(configuration);
 
-  const prompt = generatePrompt(str, args);
+  const prompt = generatePrompt(str, key, args);
 
   const messages: ChatCompletionRequestMessage[] = [
     {
@@ -65,11 +66,13 @@ async function translateSingleString(
   }
 }
 
-function generatePrompt(str: string, args: TServiceArgs) {
+function generatePrompt(str: string, key: string, args: TServiceArgs) {
   const capitalizedText = str;
+  const initialPrompt = `only translate my software string from ${args.srcLng} to ${args.targetLng}. don't chat or explain. Using the correct terms for computer software in the target language, only show target language never repeat string. if you don't find something to translate, don't respond`;
   return (
-    `only translate my software string from ${args.srcLng} to ${args.targetLng}. don't chat or explain. Using the correct terms for computer software in the target language, only show target language never repeat string. if you don't find something to translate, don't respond, string:` +
-    capitalizedText
+    initialPrompt +
+    (args.prompt ? `\n\n${args.prompt}` : "") +
+    `\n\nkey (used for context): ${key}\n\nstring to translate: ${capitalizedText}`
   );
 }
 
@@ -81,7 +84,11 @@ async function translateBatch(
     "Translate a batch of " + batch.length + " strings with OpenAI..."
   );
   const promises: Promise<TResult>[] = batch.map(async (tString: TString) => {
-    const rawResult = await translateSingleString(tString.value, args);
+    const rawResult = await translateSingleString(
+      tString.key,
+      tString.value,
+      args
+    );
     const result: TResult = {
       key: tString.key,
       translated: rawResult.trim(),

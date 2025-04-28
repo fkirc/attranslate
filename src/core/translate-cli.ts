@@ -97,6 +97,7 @@ export async function translateCli(cliArgs: CliArgs) {
     service: cliArgs.service as TServiceType,
     serviceConfig: cliArgs.serviceConfig ?? null,
     matcher: cliArgs.matcher as TMatcherType,
+    prompt: cliArgs.prompt ?? "",
   };
   const result = await translateCore(coreArgs);
 
