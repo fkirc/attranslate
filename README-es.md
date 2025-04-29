@@ -119,3 +119,9 @@ Este prompt asegurará que los términos técnicos permanezcan en inglés mientr
 - Solicitar reglas específicas de capitalización
 - Proporcionar contexto sobre el dominio de tu aplicación
 - Establecer preferencias de tono o estilo para las traducciones
+
+# Contribuidores
+
+Nos gustaría agradecer a todos los contribuidores que han ayudado a mejorar attranslate:
+
+- [@esuljic](https://github.com/esuljic): Agregó la característica de parámetro de prompt para servicios de IA (OpenAI y TypeChat).
