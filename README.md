@@ -118,3 +118,9 @@ This prompt will ensure that technical terms remain in English while translating
 - Requesting specific capitalization rules
 - Providing context about your application domain
 - Setting tone or style preferences for translations
+
+# Contributors
+
+We would like to thank all contributors who have helped improve attranslate:
+
+- [@esuljic](https://github.com/esuljic): Added the prompt parameter feature for AI services (OpenAI and TypeChat).
