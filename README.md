@@ -30,6 +30,9 @@ Therefore, whenever you are unhappy with the produced text, `attranslate` allows
 - [azure](https://azure.microsoft.com/en-us/services/cognitive-services/translator-text-api/): Needs a Microsoft account; costs money
 - `sync-without-translate`: Does not change the language. This can be useful for converting between file formats, or for maintaining region-specific differences.
 - `manual`: Translates text with manual typing
+- `key-as-translation`: Uses the key as the translation, useful for debugging or placeholder translations.
+- [`typechat`](./docs/TypeChat.md): Translates text using OpenAI's language models or a self-hosted model with an OpenAI-compatible API.
+- [`typechat-manual`](./docs/TypeChat.md): Provides manual translation workflows by leveraging clipboard operations.
 
 # Usage Examples
 
@@ -79,27 +82,28 @@ Run `attranslate --help` to see a list of available options:
 Usage: attranslate [options]
 
 Options:
-  --srcFile <sourceFile>              The source file to be translated
-  --srcLng <sourceLanguage>           A language code for the source language
-  --srcFormat <sourceFileFormat>      One of "flat-json", "nested-json",
-                                      "yaml", "po", "xml", "ios-strings",
-                                      "arb", "csv"
-  --targetFile <targetFile>           The target file for the translations
-  --targetLng <targetLanguage>        A language code for the target language
-  --targetFormat <targetFileFormat>   One of "flat-json", "nested-json",
-                                      "yaml", "po", "xml", "ios-strings",
-                                      "arb", "csv"
-  --service <translationService>      One of "openai", "manual",
-                                      "sync-without-translate",
-                                      "google-translate", "azure"
-  --serviceConfig <serviceKey>        supply configuration for a translation
-                                      service (either a path to a key-file or
-                                      an API-key)
-  --matcher <matcher>                 An optional feature for string replacements. One of "none", "icu", "i18next",
-                                      "sprintf" (default: "none")
-  --prompt <customPrompt>             Optional custom prompt to guide the translation service. Useful for specifying
-                                      technical terms that should not be translated or other translation preferences.
-  -v, --version                       output the version number
+  --srcFile <sourceFile>             The source file to be translated
+  --srcLng <sourceLanguage>          A language code for the source language
+  --srcFormat <sourceFileFormat>     One of "flat-json", "nested-json", "yaml",
+                                     "po", "xml", "ios-strings", "arb", "csv"
+  --targetFile <targetFile>          The target file for the translations
+  --targetLng <targetLanguage>       A language code for the target language
+  --targetFormat <targetFileFormat>  One of "flat-json", "nested-json", "yaml",
+                                     "po", "xml", "ios-strings", "arb", "csv"
+  --service <translationService>     One of "openai", "typechat",
+                                     "typechat-manual", "manual",
+                                     "sync-without-translate",
+                                     "google-translate", "azure",
+                                     "key-as-translation"
+  --serviceConfig <serviceKey>       supply configuration for a translation
+                                     service (either a path to a key-file or an
+                                     API-key)
+  --matcher <matcher>                One of "none", "icu", "i18next", "sprintf"
+                                     (default: "none")
+  --prompt <prompt>                  supply a prompt for the AI translation
+                                     service
+  -v, --version                      output the version number
+  -h, --help                         display help for command
 ```
 
 ## Prompt Examples
