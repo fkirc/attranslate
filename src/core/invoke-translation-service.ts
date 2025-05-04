@@ -29,12 +29,12 @@ export async function invokeTranslationService(
   const rawInputs: TString[] = [];
   const results: TSet = new Map();
   serviceInputs.forEach((value, key) => {
-    if (!value || !value.trim().length) {
+    if (args.service != 'key-as-translation' && (!value || !value.trim().length)) {
       results.set(key, value);
     } else {
       rawInputs.push({
         key,
-        value,
+        value: value ?? "",
       });
     }
   });

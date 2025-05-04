@@ -37,6 +37,7 @@ const serviceMap = {
   "google-translate": null,
   // deepl: null,
   azure: null,
+  "key-as-translation": null,
 };
 
 export function injectFakeService(serviceName: string, service: TService) {
@@ -77,5 +78,7 @@ export async function instantiateTService(
       return new (
         await import("./sync-without-translate")
       ).SyncWithoutTranslate();
+    case "key-as-translation":
+      return new (await import("./key-as-translation")).KeyAsTranslation();
   }
 }
