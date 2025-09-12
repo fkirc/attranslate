@@ -1,5 +1,6 @@
 import { TServiceType } from "../services/service-definitions";
 import { TMatcherType } from "../matchers/matcher-definitions";
+import { TMiddlewareType } from "../middleware/middleware-definitions";
 
 export type TSet = Map<string, string | null>;
 
@@ -12,6 +13,7 @@ export interface CoreArgs {
   serviceConfig: string | null;
   matcher: TMatcherType;
   prompt: string;
+  middleware: TMiddlewareType[]
 }
 
 export interface TChangeSet {
@@ -42,4 +44,5 @@ export interface CliArgs extends Record<string, string | undefined> {
   service: string;
   serviceConfig?: string;
   matcher: string;
+  middleware?: string
 }
