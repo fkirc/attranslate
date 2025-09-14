@@ -126,6 +126,40 @@ function createManualModel(): TypeChatLanguageModel {
   }
 }
 
+function sanitize_keys(
+  target: any,
+  propertyKey: string,
+  descriptor: PropertyDescriptor
+) {
+  const originalMethod = descriptor.value;
+
+  descriptor.value = async function (args: TServiceArgs) {
+    const sanitizedKeys = args.strings.map(({ key }) => {
+      return {
+        new: key.replace(/[^a-zA-Z0-9_]+/g, "_"),
+        old: key,
+      };
+    });
+
+    // Replace keys with sanitized versions
+    for (let i = 0; i < sanitizedKeys.length; i++) {
+      args.strings[i].key = sanitizedKeys[i].new;
+    }
+
+    // Call the original method
+    const results: TResult[] = await originalMethod.apply(this, [args]);
+
+    // Restore original keys in the results
+    for (let i = 0; i < sanitizedKeys.length; i++) {
+      results[i].key = sanitizedKeys[i].old;
+    }
+
+    return results;
+  };
+
+  return descriptor;
+}
+
 export class TypeChatTranslate implements TService {
   manual: boolean;
 
@@ -133,6 +167,7 @@ export class TypeChatTranslate implements TService {
     this.manual = manual ?? false;
   }
 
+  @sanitize_keys
   async translateStrings(args: TServiceArgs) {
     const rpm = parseInt(process.env.TYPECHAT_RPM ?? "")
     const batchSize = parseInt(process.env.OPEN_AI_BATCH_SIZE ?? "");
