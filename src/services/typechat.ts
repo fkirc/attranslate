@@ -16,6 +16,8 @@ import {
   TString,
 } from "./service-definitions";
 
+const MINUTE_MS = 60*1000;
+
 function generateSchema(
   batch: TString[],
   name: string,
@@ -124,6 +126,40 @@ function createManualModel(): TypeChatLanguageModel {
   }
 }
 
+function sanitize_keys(
+  target: any,
+  propertyKey: string,
+  descriptor: PropertyDescriptor
+) {
+  const originalMethod = descriptor.value;
+
+  descriptor.value = async function (args: TServiceArgs) {
+    const sanitizedKeys = args.strings.map(({ key }) => {
+      return {
+        new: key.replace(/[^a-zA-Z0-9_]+/g, "_"),
+        old: key,
+      };
+    });
+
+    // Replace keys with sanitized versions
+    for (let i = 0; i < sanitizedKeys.length; i++) {
+      args.strings[i].key = sanitizedKeys[i].new;
+    }
+
+    // Call the original method
+    const results: TResult[] = await originalMethod.apply(this, [args]);
+
+    // Restore original keys in the results
+    for (let i = 0; i < sanitizedKeys.length; i++) {
+      results[i].key = sanitizedKeys[i].old;
+    }
+
+    return results;
+  };
+
+  return descriptor;
+}
+
 export class TypeChatTranslate implements TService {
   manual: boolean;
 
@@ -131,7 +167,9 @@ export class TypeChatTranslate implements TService {
     this.manual = manual ?? false;
   }
 
+  @sanitize_keys
   async translateStrings(args: TServiceArgs) {
+    const rpm = parseInt(process.env.TYPECHAT_RPM ?? "")
     const batchSize = parseInt(process.env.OPEN_AI_BATCH_SIZE ?? "");
     const batches: TString[][] = chunk(
       args.strings,
@@ -141,9 +179,21 @@ export class TypeChatTranslate implements TService {
     const model = this.manual
       ? createManualModel()
       : createLanguageModel(process.env);
-    for (const batch of batches) {
+    for(var i = 0; i < batches.length; i++) {
+      const batch = batches[i]
+      const start = new Date()
       const result = await translateBatch(model, batch, args, process.env);
       results.push(result);
+      
+      // Sleep to not exceeded the specified requests per minute (RPM)
+      if (!this.manual && !isNaN(rpm) && rpm > 0 && i < batches.length - 1) {
+        const requestDuration = new Date().getTime() - start.getTime()
+        const sleepDuration = (MINUTE_MS/rpm)-requestDuration
+        console.log(
+          `Going to sleep for ${sleepDuration} ms`
+        );
+        await sleep(sleepDuration)
+      }
     }
     return flatten(results);
   }
@@ -220,7 +270,7 @@ function isTransientHttpError(code: number): boolean {
  * Sleeps for the given number of milliseconds.
  */
 function sleep(ms: number): Promise<void> {
-  return new Promise((resolve) => setTimeout(resolve, ms));
+  return new Promise((resolve) => setTimeout(resolve, ms > 0 ? ms : 0));
 }
 
 function missingEnvironmentVariable(name: string): never {

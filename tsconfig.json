@@ -20,7 +20,8 @@
     "strictNullChecks": true,
     "strictFunctionTypes": true,
     "strictPropertyInitialization": true,
-    "strictBindCallApply": true
+    "strictBindCallApply": true,
+    "experimentalDecorators": true,
   },
   "files": [
     "src/index.ts"
