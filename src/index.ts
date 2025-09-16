@@ -6,6 +6,7 @@ import { getTFileFormatList } from "./file-formats/file-format-definitions";
 import { getTMatcherList } from "./matchers/matcher-definitions";
 import { getTServiceList } from "./services/service-definitions";
 import { extractVersion } from "./util/extract-version";
+import { getTMiddlewareList } from "./middleware/middleware-definitions";
 
 process.on("unhandledRejection", (error) => {
   console.error("[fatal]", error);
@@ -13,6 +14,10 @@ process.on("unhandledRejection", (error) => {
 
 function formatOneOfOptions(options: string[]): string {
   return `One of ${formatCliOptions(options)}`;
+}
+
+function formatManyOfOptions(options: string[]): string {
+  return `Comma-separated list of ${formatCliOptions(options)}`
 }
 
 export function run(process: NodeJS.Process, cliBinDir: string): void {
@@ -60,6 +65,10 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
       "--prompt <prompt>",
       "supply a prompt for the AI translation service"
     )
+    .option(
+      "--middleware <middleware>",
+      formatManyOfOptions(getTMiddlewareList())
+    )
     .version(extractVersion({ cliBinDir }), "-v, --version")
     .parse(process.argv);
 
@@ -79,6 +88,7 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
     serviceConfig: commander.opts().serviceConfig,
     matcher: commander.opts().matcher,
     prompt: commander.opts().prompt,
+    middleware: commander.opts().middleware,
   };
   translateCli(args)
     .then(() => {

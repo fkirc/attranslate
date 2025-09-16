@@ -11,6 +11,9 @@ import {
   TServiceArgs,
   TString,
 } from "../services/service-definitions";
+import {
+  instantiateTMiddleware
+} from "../middleware/middleware-definitions";
 
 export async function invokeTranslationService(
   serviceInputs: TSet,
@@ -84,7 +87,8 @@ async function runTranslationService(
     `Invoke '${args.service}' from '${args.srcLng}' to '${args.targetLng}' with ${serviceArgs.strings.length} inputs...`
   );
   const translationService = await instantiateTService(args.service);
-  const rawResults = await translationService.translateStrings(serviceArgs);
+  const translationMiddleware = await instantiateTMiddleware(args.middleware, translationService)
+  const rawResults = await translationMiddleware.processTranslation(serviceArgs);
   return rawResults.map((rawResult) => {
     const cleanResult = reInsertInterpolations(
       rawResult.translated,
