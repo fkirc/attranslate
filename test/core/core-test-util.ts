@@ -89,6 +89,7 @@ export const commonArgs: Omit<CoreArgs, "oldTarget" | "src"> = {
   srcLng: "en",
   targetLng: "de",
   prompt: "",
+  middleware: [],
 };
 
 export async function translateCoreAssert(
