@@ -11,6 +11,7 @@ import {
 } from "../file-formats/file-format-definitions";
 import { getTServiceList, TServiceType } from "../services/service-definitions";
 import { getTMatcherList, TMatcherType } from "../matchers/matcher-definitions";
+import { TMiddlewareType } from "../middleware/middleware-definitions";
 
 async function resolveOldTarget(
   args: CliArgs,
@@ -98,6 +99,9 @@ export async function translateCli(cliArgs: CliArgs) {
     serviceConfig: cliArgs.serviceConfig ?? null,
     matcher: cliArgs.matcher as TMatcherType,
     prompt: cliArgs.prompt ?? "",
+    middleware: (cliArgs.middleware ?? "")
+        .split(",")
+        .filter((s) => s) as TMiddlewareType[]
   };
   const result = await translateCore(coreArgs);
 
