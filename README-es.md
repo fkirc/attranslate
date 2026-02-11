@@ -77,3 +77,17 @@ Para reducir el uso de contexto, esto puede envolverse en una declaración condi
 ```
 Al agregar nuevas claves de traducción, consulta <some-explanation.md> para ver cómo deben hacerse las nuevas traducciones.
 ```
+
+# Flujo de trabajo del agente (basado en stdin)
+
+Cuando uses `--service=agent`, attranslate imprimirá una lista de fuentes faltantes e instrucciones para el agente. El agente debe proporcionar una traducción por línea, en el mismo orden, y canalizarlas a attranslate vía stdin. Ejemplo:
+
+```
+attranslate --srcFile=en.json --srcLng=English --srcFormat=nested-json --targetFile=es.json --targetLng=Spanish --targetFormat=nested-json --service=agent
+```
+
+Luego el agente canaliza las traducciones:
+
+```
+echo -e "<traducción1>\n<traducción2>\n..." | attranslate --srcFile=en.json --srcLng=English --srcFormat=nested-json --targetFile=es.json --targetLng=Spanish --targetFormat=nested-json --service=agent
+```

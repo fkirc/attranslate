@@ -17,7 +17,7 @@ Therefore, whenever you are unhappy with the produced text, `attranslate` allows
 
 ## Available Services
 
-- `agent`: For use with Coding Agents. Prompts the agent to translate new strings interactively when detected.
+- `agent`: For use with Coding Agents. Prompts the agent to translate new strings via stdin when detected.
 - `sync-without-translate`: Verifies translation completeness without translating (e.g. for CI/CD pipelines).
 
 Other services (openai, google-translate, azure, manual, typechat, etc.) are deprecated but retained for backwards-compatibility.
@@ -86,4 +86,18 @@ To reduce context-usage, this can be wrapped into a conditional statement:
 
 ```
 When adding new translation-keys, lookup <some-explanation.md> to see how new translations should be done.
+```
+
+# Agent Workflow (stdin-based)
+
+When using `--service=agent`, attranslate will print a list of missing sources and instructions for the agent. The agent should provide one translation per line, in the same order, and pipe them into attranslate via stdin. Example:
+
+```
+attranslate --srcFile=en.json --srcLng=English --srcFormat=nested-json --targetFile=es.json --targetLng=Spanish --targetFormat=nested-json --service=agent
+```
+
+The agent then pipes translations:
+
+```
+echo -e "<translation1>\n<translation2>\n..." | attranslate --srcFile=en.json --srcLng=English --srcFormat=nested-json --targetFile=es.json --targetLng=Spanish --targetFormat=nested-json --service=agent
 ```
