@@ -4,75 +4,50 @@
 
 macOS/Ubuntu/Windows: [![Actions Status](https://github.com/fkirc/attranslate/workflows/Tests/badge.svg/?branch=master)](https://github.com/fkirc/attranslate/actions?query=branch%3Amaster)
 
-`attranslate` is a tool for syncing translation-files, including JSON/YAML/XML and other formats.
-In contrast to paid services, any developer can integrate `attranslate` in a matter of minutes.
-`attranslate` will leave existing translations unchanged and only synchronize new translations.
-
-Optionally, `attranslate` works with automated translation-services.
-For example, let's say that a translation-service achieves 80% correct translations.
-With `attranslate`, a fix of the remaining 20% may be faster than doing everything by hand.
-Other than that, `attranslate` supports purely manual translations or even file-format-conversions without changing the language.
+`attranslate` is a CLI-tool for syncing translation files (JSON/YAML/XML) designed to assist Coding Agents in translating efficiently with minimal token-usage.
+Existing translations remain unchanged; only new strings are synchronized.
 
 # Features
 
 ## Preserve Manual Translations
 
-`attranslate` recognizes that machine translations are not perfect.
+`attranslate` recognizes that machine translations are not yet perfect.
 Therefore, whenever you are unhappy with the produced text, `attranslate` allows you to simply overwrite text in your target-files.
 `attranslate` will never overwrite any manual corrections in subsequent runs.
 
 ## Available Services
 
-`attranslate` supports the following services; many of them are free of charge:
+- `agent`: For use with Coding Agents. Prompts the agent to translate new strings via stdin when detected.
+- `sync-without-translate`: Verifies translation completeness without translating (e.g. for CI/CD pipelines).
 
-- `openai`: Uses a model like ChatGPT; free up to a limit
-- [google-translate](https://cloud.google.com/translate): Needs a GCloud account; free up to a limit
-- [azure](https://azure.microsoft.com/en-us/services/cognitive-services/translator-text-api/): Needs a Microsoft account; costs money
-- `sync-without-translate`: Does not change the language. This can be useful for converting between file formats, or for maintaining region-specific differences.
-- `manual`: Translates text with manual typing
-- `key-as-translation`: Uses the key as the translation, useful for debugging or placeholder translations.
-- [`typechat`](./docs/TypeChat.md): Translates text using OpenAI's language models or a self-hosted model with an OpenAI-compatible API.
-- [`typechat-manual`](./docs/TypeChat.md): Provides manual translation workflows by leveraging clipboard operations.
+Other services (openai, google-translate, azure, manual, typechat, etc.) are deprecated but retained for backwards-compatibility.
 
 # Usage Examples
 
 Translating a single file is as simple as the following line:
 
 ```
-attranslate --srcFile=json-simple/en.json --srcLng=English --srcFormat=nested-json --targetFile=json-simple/es.json --targetLng=Spanish --targetFormat=nested-json --service=openai
+attranslate --srcFile=json-simple/en.json --srcLng=English --srcFormat=nested-json --targetFile=json-simple/es.json --targetLng=Spanish --targetFormat=nested-json --service=agent
 ```
 
-If you have multiple target-languages, then you will need multiple calls to `attranslate`.
-You can write something like the following script:
+For multiple target languages, call `attranslate` for each:
 
 ```bash
-# This example translates an english JSON-file into spanish and german.
-BASE_DIR="json-advanced"
-COMMON_ARGS=( "--srcLng=en" "--srcFormat=nested-json" "--targetFormat=nested-json" "--service=google-translate" "--serviceConfig=gcloud/gcloud_service_account.json" )
-
-# install attranslate if it is not installed yet
-attranslate --version || npm install --global attranslate
-
-attranslate --srcFile=$BASE_DIR/en/fruits.json --targetFile=$BASE_DIR/es/fruits.json --targetLng=es "${COMMON_ARGS[@]}"
-attranslate --srcFile=$BASE_DIR/en/fruits.json --targetFile=$BASE_DIR/de/fruits.json --targetLng=de "${COMMON_ARGS[@]}"
+attranslate --srcFile=en/fruits.json --targetFile=es/fruits.json --targetLng=es --srcLng=en --srcFormat=nested-json --targetFormat=nested-json --service=agent
+attranslate --srcFile=en/fruits.json --targetFile=de/fruits.json --targetLng=de --srcLng=en --srcFormat=nested-json --targetFormat=nested-json --service=agent
 ```
 
-Similarly, you can use `attranslate` to convert between file-formats.
-See [sample scripts](https://github.com/fkirc/attranslate/tree/master/sample-scripts) for more examples.
+# Installation
 
-# Integration Guide
+Install globally:
+```bash
+npm install --global attranslate
+```
 
-Firstly, ensure that [nodejs](https://nodejs.org/) is installed on your machine.
-Once you have `nodejs`, you can install `attranslate` via:
-
-`npm install --global attranslate`
-
-Alternatively, if you are a JavaScript-developer, then you can install `attranslate` via:
-
-`npm install --save-dev attranslate`
-
-Next, you should write a project-specific script that invokes `attranslate` for your specific files.
-See [sample scripts](https://github.com/fkirc/attranslate/tree/master/sample-scripts) for guidance on how to translate your project-specific files.
+Or in a Node.js project:
+```bash
+npm install --save-dev attranslate
+```
 
 # Usage Options
 
@@ -90,41 +65,25 @@ Options:
   --targetLng <targetLanguage>       A language code for the target language
   --targetFormat <targetFileFormat>  One of "flat-json", "nested-json", "yaml",
                                      "po", "xml", "ios-strings", "arb", "csv"
-  --service <translationService>     One of "openai", "typechat",
-                                     "typechat-manual", "manual",
-                                     "sync-without-translate",
-                                     "google-translate", "azure",
-                                     "key-as-translation"
-  --serviceConfig <serviceKey>       supply configuration for a translation
-                                     service (either a path to a key-file or an
-                                     API-key)
-  --matcher <matcher>                One of "none", "icu", "i18next", "sprintf"
-                                     (default: "none")
-  --prompt <prompt>                  supply a prompt for the AI translation
-                                     service
+  --service <translationService>     One of "agent", "sync-without-translate"
   -v, --version                      output the version number
   -h, --help                         display help for command
 ```
 
 ## Prompt Examples
 
-You can use the `--prompt` parameter to provide specific instructions to the translation service. Here's an example:
+It is recommended to expand your AGENTS.md/CLAUDE.md or similar to instruct your Coding Agents on how they should do translations.
+For example, add something like this to your system prompt:
 
-```bash
-attranslate --srcFile=json-simple/en.json --srcLng=English --srcFormat=nested-json \
-           --targetFile=json-simple/es.json --targetLng=Spanish --targetFormat=nested-json \
-           --service=openai \
-           --prompt="I am building a healthcare app for medical professionals. Technical terms like 'EKG', 'MRI', 'CT scan', 'blood pressure', 'pulse oximeter', and 'vital signs' should remain in English. Please maintain proper medical terminology and formal tone in translations."
+```
+When doing translations, remember that you are building a healthcare app for medical professionals. Technical terms like 'EKG', 'MRI', 'CT scan', 'blood pressure', 'pulse oximeter', and 'vital signs' should remain in English. Please maintain proper medical terminology and formal tone in translations.
+Invoke `attranslate` after adding a new translation to the English en.json.
+For example:
+attranslate --service=agent --srcFile=translations/en.json --targetFile=translations/es.json --targetLng=es --srcLng=en --srcFormat=nested-json --targetFormat=nested-json
 ```
 
-This prompt will ensure that technical terms remain in English while translating the rest of the content. You can customize the prompt based on your specific needs, such as:
-- Specifying which terms should remain untranslated
-- Requesting specific capitalization rules
-- Providing context about your application domain
-- Setting tone or style preferences for translations
+To reduce context-usage, this can be wrapped into a conditional statement:
 
-# Contributors
-
-We would like to thank all contributors who have helped improve attranslate:
-
-- [@esuljic](https://github.com/esuljic): Added the prompt parameter feature for AI services (OpenAI and TypeChat).
+```
+When adding new translation-keys, lookup <some-explanation.md> to see how new translations should be done.
+```

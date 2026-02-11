@@ -1,3 +1,5 @@
+This file is an internal architecture-documentation that can be ignored by Coding Agents who call attranslate.
+
 # Operation Modes
 
 When generating target files, attranslate has the following two operation modes:
