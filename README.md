@@ -17,7 +17,7 @@ Therefore, whenever you are unhappy with the produced text, `attranslate` allows
 
 ## Available Services
 
-- `agent`: For use with Coding Agents. Prompts the agent to translate new strings via stdin when detected.
+- `agent`: For use with Coding Agents. Prompts the agent to translate new strings interactively when detected.
 - `sync-without-translate`: Verifies translation completeness without translating (e.g. for CI/CD pipelines).
 
 Other services (openai, google-translate, azure, manual, typechat, etc.) are deprecated but retained for backwards-compatibility.
@@ -33,8 +33,8 @@ attranslate --srcFile=json-simple/en.json --srcLng=English --srcFormat=nested-js
 For multiple target languages, call `attranslate` for each:
 
 ```bash
-attranslate --srcFile=en/fruits.json --targetFile=es/fruits.json --targetLng=es --srcLng=en --srcFormat=nested-json --targetFormat=nested-json --service=agent
-attranslate --srcFile=en/fruits.json --targetFile=de/fruits.json --targetLng=de --srcLng=en --srcFormat=nested-json --targetFormat=nested-json --service=agent
+attranslate --srcFile=en/fruits.json --targetFile=es/fruits.json --targetLng=Spanish --srcLng=English --srcFormat=nested-json --targetFormat=nested-json --service=agent
+attranslate --srcFile=en/fruits.json --targetFile=de/fruits.json --targetLng=German --srcLng=English --srcFormat=nested-json --targetFormat=nested-json --service=agent
 ```
 
 # Installation
@@ -79,7 +79,7 @@ For example, add something like this to your system prompt:
 When doing translations, remember that you are building a healthcare app for medical professionals. Technical terms like 'EKG', 'MRI', 'CT scan', 'blood pressure', 'pulse oximeter', and 'vital signs' should remain in English. Please maintain proper medical terminology and formal tone in translations.
 Invoke `attranslate` after adding a new translation to the English en.json.
 For example:
-attranslate --service=agent --srcFile=translations/en.json --targetFile=translations/es.json --targetLng=es --srcLng=en --srcFormat=nested-json --targetFormat=nested-json
+attranslate --service=agent --srcFile=translations/en.json --targetFile=translations/es.json --targetLng=Spanish --srcLng=English --srcFormat=nested-json --targetFormat=nested-json
 ```
 
 To reduce context-usage, this can be wrapped into a conditional statement:

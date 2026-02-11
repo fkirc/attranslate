@@ -29,6 +29,7 @@ export function getTServiceList(): TServiceType[] {
 }
 
 const serviceMap = {
+  agent: null,
   openai: null,
   typechat: null,
   "typechat-manual": null,
@@ -58,6 +59,8 @@ export async function instantiateTService(
    * This is especially important for google-translate, which uses a huge bunch of packages.
    */
   switch (service) {
+    case "agent":
+      return new (await import("./agent-translate")).AgentTranslation();
     case "openai":
       return new (await import("./openai-translate")).OpenAITranslate();
     case "typechat":

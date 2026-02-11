@@ -19,7 +19,7 @@ Por lo tanto, siempre que no esté satisfecho con los resultados producidos, `at
 
 ## Servicios disponibles
 
-- `agent`: Para usar con Agentes de Código. Solicita al agente traducir nuevas cadenas vía stdin cuando se detectan.
+- `agent`: Para usar con Agentes de Código. Solicita al agente traducir nuevas cadenas de forma interactiva cuando se detectan.
 - `sync-without-translate`: Verifica la integridad de las traducciones sin traducir (p. ej. para tuberías CI/CD).
 
 Otros servicios (openai, google-translate, azure, manual, typechat, etc.) están deprecados pero se retienen para compatibilidad hacia atrás.
@@ -35,8 +35,8 @@ attranslate --srcFile=json-simple/en.json --srcLng=English --srcFormat=nested-js
 Para varios idiomas de destino, invoca `attranslate` para cada uno:
 
 ```bash
-attranslate --srcFile=en/fruits.json --targetFile=es/fruits.json --targetLng=es --srcLng=en --srcFormat=nested-json --targetFormat=nested-json --service=agent
-attranslate --srcFile=en/fruits.json --targetFile=de/fruits.json --targetLng=de --srcLng=en --srcFormat=nested-json --targetFormat=nested-json --service=agent
+attranslate --srcFile=en/fruits.json --targetFile=es/fruits.json --targetLng=Spanish --srcLng=English --srcFormat=nested-json --targetFormat=nested-json --service=agent
+attranslate --srcFile=en/fruits.json --targetFile=de/fruits.json --targetLng=German --srcLng=English --srcFormat=nested-json --targetFormat=nested-json --service=agent
 ```
 
 # Opciones de uso
@@ -69,7 +69,7 @@ Por ejemplo, agrega algo como esto a tu prompt del sistema:
 Al realizar traducciones, recuerda que estás desarrollando una aplicación de salud para profesionales médicos. Términos técnicos como 'EKG', 'MRI', 'CT scan', 'blood pressure', 'pulse oximeter' y 'vital signs' deben permanecer en inglés. Por favor, mantén la terminología médica apropiada y un tono formal en las traducciones.
 Invoca `attranslate` después de agregar una nueva traducción al archivo en.json en inglés.
 Por ejemplo:
-attranslate --service=agent --srcFile=translations/en.json --targetFile=translations/es.json --targetLng=es --srcLng=en --srcFormat=nested-json --targetFormat=nested-json
+attranslate --service=agent --srcFile=translations/en.json --targetFile=translations/es.json --targetLng=Spanish --srcLng=English --srcFormat=nested-json --targetFormat=nested-json
 ```
 
 Para reducir el uso de contexto, esto puede envolverse en una declaración condicional:
