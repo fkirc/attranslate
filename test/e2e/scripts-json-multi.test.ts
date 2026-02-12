@@ -10,7 +10,7 @@ test("json simple up-to-date", async () => {
 
 test("missing OpenAI key", async () => {
   const output =
-    await runCommandExpectFailure(`cd sample-scripts && attranslate --srcFile=json-simple/en.json --srcLng=English --srcFormat=nested-json --targetFile=json-simple/es.json --targetLng=German --targetFormat=nested-json --service=openai
+    await runCommandExpectFailure(`cd sample-scripts && attranslate --srcFile=json-simple/en.json --srcLng=English --format=nested-json --targetFile=json-simple/es.json --targetLng=German --service=openai
   `);
   expect(output).toContain(
     "error: Missing OpenAI API Key: Please get an API key from"
@@ -19,7 +19,7 @@ test("missing OpenAI key", async () => {
 
 test("invalid OpenAI key", async () => {
   const output =
-    await runCommandExpectFailure(`cd sample-scripts && attranslate --srcFile=json-simple/en.json --srcLng=English --srcFormat=nested-json --targetFile=json-simple/es.json --targetLng=German --targetFormat=nested-json --service=openai --serviceConfig=garbageapikey
+    await runCommandExpectFailure(`cd sample-scripts && attranslate --srcFile=json-simple/en.json --srcLng=English --format=nested-json --targetFile=json-simple/es.json --targetLng=German --service=openai --serviceConfig=garbageapikey
   `);
   expect(output).toContain(
     "error: OpenAI: Request failed with status code 401, Status text:"
@@ -28,7 +28,7 @@ test("invalid OpenAI key", async () => {
 
 test("missing OpenAI key (typechat)", async () => {
   const output = await runCommandExpectFailure(
-    `cd sample-scripts && attranslate --srcFile=json-simple/en.json --srcLng=English --srcFormat=nested-json --targetFile=json-simple/es.json --targetLng=German --targetFormat=nested-json --service=typechat
+    `cd sample-scripts && attranslate --srcFile=json-simple/en.json --srcLng=English --format=nested-json --targetFile=json-simple/es.json --targetLng=German --service=typechat
   `,
     undefined,
     { ...process.env, OPENAI_API_KEY: undefined }
@@ -44,7 +44,7 @@ test("missing OpenAI key (typechat)", async () => {
 
 test("invalid OpenAI key (typechat)", async () => {
   const output = await runCommandExpectFailure(
-    `cd sample-scripts && attranslate --srcFile=json-simple/en.json --srcLng=English --srcFormat=nested-json --targetFile=json-simple/es.json --targetLng=German --targetFormat=nested-json --service=typechat
+    `cd sample-scripts && attranslate --srcFile=json-simple/en.json --srcLng=English --format=nested-json --targetFile=json-simple/es.json --targetLng=German --service=typechat
   `,
     undefined,
     { ...process.env, OPENAI_API_KEY: "garbageapikey" }

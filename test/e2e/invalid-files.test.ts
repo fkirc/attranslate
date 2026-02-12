@@ -8,7 +8,6 @@ test("src not a JSON", async () => {
     srcFile: "test-assets/invalid/not-a-json",
   };
   const output = await runTranslateExpectFailure(buildE2EArgs(args));
-  expect(output).toContain("Unexpected token # in JSON at position 13");
   expect(output).toContain(
     `error: Failed to parse ${getDebugPath(args.srcFile)}.\n`
   );

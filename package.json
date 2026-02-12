@@ -1,15 +1,13 @@
 {
   "name": "attranslate",
   "version": "2.2.1",
-  "description": "Semi-automated Text Translator for Websites and Apps",
+  "description": "Text Translator for Websites and Apps",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/fkirc/attranslate.git"
   },
   "keywords": [
-    "semi-automated translation",
-    "openai-translate",
-    "google-translate",
+    "agentic translation",
     "website translation",
     "mobile app translation",
     "i18n"

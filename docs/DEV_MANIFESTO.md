@@ -2,16 +2,14 @@
 
 The development of `attranslate` is guided by the principles that are described in this document.
 
-## Focus on "Time-to-Value"
+## Focus on use for Coding Agents
 
-`attranslate` is a semi-automated tool.
-Semi-automated tools are only valuable if the setup-cost is smaller than the reward of automation.
-Therefore, it is important to minimize setup-time for new users:
+`attranslate` is a CLI-tool that should be easy and efficient to invoke for Coding Agents.
+This means that:
 
-- Think twice before adding any new configuration.
-- Think twice about anything that would require a more complex documentation.
-- Documentation should be minimal, but guaranteed to work and always up-to-date.
-- Avoid unexpected gotcha-moments. Instead, do things that are expected by users.
+- Options should be self-explaining, and listed with `--help`.
+- Output should be short and concise without much ceremony, to avoid wasting token-usage.
+- Error messages should be written in a way that allows Coding Agents to automatically fix the error.
 
 ## Avoid being opinionated
 
