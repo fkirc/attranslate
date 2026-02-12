@@ -66,10 +66,6 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
       formatOneOfOptions(getTMatcherList()),
       "none"
     )
-    .option(
-      "--prompt <prompt>",
-      "supply a prompt for the AI translation service"
-    )
     .version(extractVersion({ cliBinDir }), "-v, --version")
     .parse(process.argv);
 
@@ -89,7 +85,6 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
     service: commander.opts().service,
     serviceConfig: commander.opts().serviceConfig,
     matcher: commander.opts().matcher,
-    prompt: commander.opts().prompt,
   };
   translateCli(args)
     .then(() => {

@@ -11,7 +11,6 @@ export interface CoreArgs {
   service: TServiceType;
   serviceConfig: string | null;
   matcher: TMatcherType;
-  prompt: string;
 }
 
 export interface TChangeSet {
@@ -49,5 +48,4 @@ export interface CliArgs extends Record<string, string | undefined> {
   service: string;
   serviceConfig?: string;
   matcher: string;
-  prompt?: string;
 }

@@ -16,12 +16,6 @@ export async function invokeTranslationService(
   serviceInputs: TSet,
   args: CoreArgs
 ): Promise<TServiceInvocation> {
-  if (args.prompt && !["openai", "typechat"].includes(args.service)) {
-    console.warn(
-      `Warning: The '--prompt' parameter is only supported by 'openai' and 'typechat' services. Your prompt will be ignored when using '${args.service}'.`
-    );
-  }
-
   /**
    * Some translation services throw errors if they see empty strings.
    * Therefore, we bypass empty strings without changing them.
@@ -77,7 +71,6 @@ async function runTranslationService(
     srcLng: args.srcLng,
     targetLng: args.targetLng,
     serviceConfig: args.serviceConfig,
-    prompt: args.prompt,
   };
 
   console.info(

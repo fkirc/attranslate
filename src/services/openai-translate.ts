@@ -71,7 +71,6 @@ function generatePrompt(str: string, key: string, args: TServiceArgs) {
   const initialPrompt = `only translate my software string from ${args.srcLng} to ${args.targetLng}. don't chat or explain. Using the correct terms for computer software in the target language, only show target language never repeat string. if you don't find something to translate, don't respond`;
   return (
     initialPrompt +
-    (args.prompt ? `\n\n${args.prompt}` : "") +
     `\n\nkey (used for context): ${key}\n\nstring to translate: ${capitalizedText}`
   );
 }

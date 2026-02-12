@@ -10,3 +10,11 @@ Do NOT work on files in the dist-folder, because the dist-folder is auto-generat
 When working on unit-tests, see docs/DEV_MANIFESTO.md for details regarding our test philosophy.
 
 When asked for new features, only implement the logic that is requested. Do not implement new logic just because you assume that a user-base exists for it.
+
+## Code Reviews
+
+- Check critically if logic works as intented.
+- Check critical if changes introduce regression.
+- Check changes against the master-branch.
+- Check if the current branch is up-to-date with the master-branch.
+- Check for obvious codesmells or spelling mistakes.
