@@ -2,8 +2,6 @@
   <img alt="attranslate - Semi-automated Text Translator for Websites and Apps" src="docs/logo/attranslate_logo.png">
 </p>
 
-macOS/Ubuntu/Windows: [![Actions Status](https://github.com/fkirc/attranslate/workflows/Tests/badge.svg/?branch=master)](https://github.com/fkirc/attranslate/actions?query=branch%3Amaster)
-
 `attranslate` is a CLI-tool for syncing translation files (JSON/YAML/XML) designed to assist Coding Agents in translating efficiently with minimal token-usage.
 Existing translations remain unchanged; only new strings are synchronized.
 
@@ -17,7 +15,7 @@ Therefore, whenever you are unhappy with the produced text, `attranslate` allows
 
 ## Available Services
 
-- `agent`: For use with Coding Agents. Prompts the agent to translate new strings via stdin when detected.
+- `agent`: For use with Coding Agents. Prompts the agent to translate new strings via a pipe when detected.
 
 Other services (openai, google-translate, azure, manual, typechat, sync-without-translate) are deprecated but retained for backwards-compatibility.
 
@@ -84,7 +82,7 @@ To reduce context-usage, this can be wrapped into a conditional statement:
 When adding new translation-keys, lookup <some-explanation.md> to see how new translations should be done.
 ```
 
-# Agent Workflow (stdin-based)
+# Agent Workflow (pipe-based)
 
 When using `--service=agent`, attranslate will print a list of missing sources and instructions for the agent. The agent should provide one translation per line, in the same order, and pipe them into attranslate via stdin. Example:
 
