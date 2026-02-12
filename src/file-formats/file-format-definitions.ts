@@ -30,6 +30,7 @@ export function getTFileFormatList(): TFileType[] {
 const fileFormatMap = {
   "flat-json": null,
   "nested-json": null,
+  json: null,
   yaml: null,
   po: null,
   xml: null,
@@ -48,6 +49,7 @@ export async function instantiateTFileFormat(
     case "flat-json":
       return new FlatJson();
     case "nested-json":
+    case "json":
       return new NestedJson();
     case "yaml":
       return new (await import("./yaml/yaml-generic")).YamlGeneric();

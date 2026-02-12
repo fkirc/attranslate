@@ -15,7 +15,7 @@ const randomTargetMarker = "random_target";
 export const defaultE2EArgs: E2EArgs = {
   srcFile: "test-assets/nested-json/count-en.json",
   srcLng: "en",
-  srcFormat: "nested-json",
+  srcFormat: "json",
   targetFile: getRandomTargetName("default_target"),
   refTargetFile: "default-ref-target",
   targetLng: "de",

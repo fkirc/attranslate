@@ -14,4 +14,4 @@ attranslate --srcFile=yaml/en_ecommerce.yml --srcLng=English --srcFormat=yaml --
 node search_replace.js "yaml/de_ecommerce.yml" "en:" "de:" # postprocessing
 
 # Convert a JSON to YML (just for the sake of test-coverage)
-attranslate --srcFile="yaml/nested-fruits.json" --srcFormat=nested-json --srcLng=x --targetFile=yaml/nested-fruits.yml --targetFormat=yaml --targetLng=x --service=sync-without-translate
+attranslate --srcFile="yaml/nested-fruits.json" --srcFormat=json --srcLng=x --targetFile=yaml/nested-fruits.yml --targetFormat=yaml --targetLng=x --service=sync-without-translate
