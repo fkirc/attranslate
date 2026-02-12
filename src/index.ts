@@ -25,7 +25,7 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
     )
     .requiredOption(
       "--srcLng <sourceLanguage>",
-      "A language code for the source language"
+      "The source language"
     )
     .requiredOption(
       "--targetFile <targetFile>",
@@ -33,7 +33,7 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
     )
     .requiredOption(
       "--targetLng <targetLanguage>",
-      "A language code for the target language"
+      "The target language"
     )
     .option(
       "--format <format>",

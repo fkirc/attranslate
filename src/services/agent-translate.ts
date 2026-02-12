@@ -33,18 +33,26 @@ export class AgentTranslation implements TService {
     }
     // Read piped stdin, split into lines, map to keys in order
     const stdin = await this.readAllStdin();
-    const lines = stdin
-      .replace(/\r/g, "")
-      .split("\n")
-      .filter((line) => line.trim() !== "");
     const translationCount = args.strings.length;
-    if (lines.length === 0) {
+
+    // Explicitly handle the case where nothing was piped at all.
+    // (Empty lines are allowed as empty-string translations; this only triggers for truly empty stdin.)
+    if (stdin.length === 0 && translationCount > 0) {
       printMissingSources(args.strings, true);
       console.error(
         "ERROR: No translations provided. Pipe one translation per source listed above.",
       );
       process.exit(1);
     }
+
+    // Keep empty lines (empty translations) intact.
+    // Only trim *trailing* empty lines which can occur due to a trailing newline.
+    const lines = stdin.replace(/\r/g, "").split("\n");
+    while (lines.length > translationCount && lines[lines.length - 1] === "") {
+      lines.pop();
+    }
+
+    // Note: `split("\n")` never returns `[]`, so we don't need a separate `lines.length === 0` check.
     if (lines.length !== translationCount) {
       printMissingSources(args.strings, true);
       console.error(
