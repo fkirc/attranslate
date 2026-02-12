@@ -23,7 +23,10 @@ export class AgentTranslation implements TService {
       printMissingSources(args.strings);
       console.log("INSTRUCTIONS FOR AGENTS:");
       console.log(
-        "Provide one translation per line, matching the order above. Pipe them into attranslate as follows:",
+        "Translate the missing sources listed above, matching the order.",
+      );
+      console.log(
+        "Replace <translation1>, <translation2>, ... with your actual translated strings and pipe them into attranslate as follows:",
       );
       const cmd = process.argv.slice(2).join(" ");
       console.log(
