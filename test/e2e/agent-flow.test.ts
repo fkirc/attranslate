@@ -43,10 +43,9 @@ import { buildE2EArgs, defaultE2EArgs, E2EArgs } from "./e2e-common";
     await runCommand(`rm -f ${targetFile}`);
   });
 
-  test("part 1 (interactive): prints missing translations and exits", async () => {
+  test("part 1 (without pipe): prints missing translations and exits", async () => {
     const cmd = buildTranslateCommand(buildE2EArgs({ ...args, targetFile }, true));
 
-    // Force interactive agent output without needing a pseudo-TTY.
     const output = await runCommand(`ATTRANSLATE_AGENT_TTY=1 ${cmd}`);
 
     expect(output).toContain("MISSING TRANSLATIONS:");
@@ -54,7 +53,7 @@ import { buildE2EArgs, defaultE2EArgs, E2EArgs } from "./e2e-common";
     expect(output).toContain("- key: __agent_test_key");
     expect(output).toContain("INSTRUCTIONS FOR AGENTS:");
 
-    // Ensure the agent "interactive" run didn't modify the target file.
+    // Ensure the agent's first run didn't modify the target file.
     await runCommand(`diff ${seedTargetFile} ${targetFile}`);
   });
 
