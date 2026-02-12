@@ -19,7 +19,7 @@ function printMissingSources(
 export class AgentTranslation implements TService {
   async translateStrings(args: TServiceArgs) {
     const results: TResult[] = [];
-    if (process.stdin.isTTY) {
+    if (process.stdin.isTTY || process.env.ATTRANSLATE_AGENT_TTY === "1") {
       printMissingSources(args.strings);
       console.log("INSTRUCTIONS FOR AGENTS:");
       console.log(
