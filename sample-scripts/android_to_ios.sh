@@ -5,12 +5,7 @@ set -e
 
 # This example works in two steps:
 # Step 1: Translate an english XML into a spanish XML and a german XML.
-# Step 2: Covert those Android-XMLs into iOS-Strings, without changing the language.
-
-# Paths to app-specific XML-files:
-ANDROID_EN="android/app/src/main/res/values/strings.xml"
-ANDROID_DE="android/app/src/main/res/values-de/strings.xml"
-ANDROID_ES="android/app/src/main/res/values-es/strings.xml"
+# Step 2: Convert those Android-XMLs into iOS-Strings, without changing the language.
 
 # Paths to app-specific XML-files:
 ANDROID_EN="android/app/src/main/res/values/strings.xml"

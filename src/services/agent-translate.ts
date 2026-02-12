@@ -4,7 +4,10 @@
 
 import { TResult, TService, TServiceArgs } from "./service-definitions";
 
-function printMissingSources(strings: { key: string; value: string }[], useError = false) {
+function printMissingSources(
+  strings: TServiceArgs["strings"],
+  useError = false,
+) {
   const log = useError ? console.error : console.log;
   log("MISSING TRANSLATIONS:\n");
   for (const { key, value } of strings) {
@@ -19,23 +22,34 @@ export class AgentTranslation implements TService {
     if (process.stdin.isTTY) {
       printMissingSources(args.strings);
       console.log("\nINSTRUCTIONS FOR AGENTS:");
-      console.log("Provide one translation per line, matching the order above. Pipe them into attranslate.");
+      console.log(
+        "Provide one translation per line, matching the order above. Pipe them into attranslate.",
+      );
       const cmd = process.argv.slice(2).join(" ");
-      console.log(`echo -e \"<translation1>\\n<translation2>\\n...\" | attranslate ${cmd} --service=agent`);
-      return results;
+      console.log(
+        `echo -e \"<translation1>\\n<translation2>\\n...\" | attranslate ${cmd} --service=agent`,
+      );
+      process.exit(0);
     }
     // Read piped stdin, split into lines, map to keys in order
     const stdin = await this.readAllStdin();
-    const lines = stdin.replace(/\r/g, "").split("\n").filter(line => line.trim() !== "");
+    const lines = stdin
+      .replace(/\r/g, "")
+      .split("\n")
+      .filter((line) => line.trim() !== "");
     const translationCount = args.strings.length;
     if (lines.length === 0) {
       printMissingSources(args.strings, true);
-      console.error("ERROR: No translations provided. Pipe one translation per source listed above.");
+      console.error(
+        "ERROR: No translations provided. Pipe one translation per source listed above.",
+      );
       process.exit(1);
     }
     if (lines.length !== translationCount) {
       printMissingSources(args.strings, true);
-      console.error(`ERROR: ${lines.length} translations given, ${translationCount} required. Provide exactly one translation per source listed above.`);
+      console.error(
+        `ERROR: ${lines.length} translations given, ${translationCount} required. Provide exactly one translation per source listed above.`,
+      );
       process.exit(1);
     }
     for (let i = 0; i < translationCount; i++) {
@@ -52,5 +66,3 @@ export class AgentTranslation implements TService {
     });
   }
 }
-
-

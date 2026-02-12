@@ -13,8 +13,10 @@ When asked for new features, only implement the logic that is requested. Do not 
 
 ## Code Reviews
 
-- Check critically if logic works as intented.
+Do code reviews from the eyes of a critical senior dev, and consider the following things:
+
+- Only review differences between the current branch and the master-branch.
+- Check if the current branch is up-to-date with the master-branch. If not, then suggest to pull from master.
+- Check critically if logic works as intended.
 - Check critical if changes introduce regression.
-- Check changes against the master-branch.
-- Check if the current branch is up-to-date with the master-branch.
-- Check for obvious codesmells or spelling mistakes.
+- Check for obvious code smells or spelling mistakes.
