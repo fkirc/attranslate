@@ -3,6 +3,7 @@ import {
   buildTranslateCommand,
   generateId,
   runCommand,
+  runCommandExpectFailure,
 } from "../test-util/test-util";
 import { buildE2EArgs, defaultE2EArgs, E2EArgs } from "./e2e-common";
 
@@ -46,7 +47,9 @@ import { buildE2EArgs, defaultE2EArgs, E2EArgs } from "./e2e-common";
   test("part 1 (without pipe): prints missing translations and exits", async () => {
     const cmd = buildTranslateCommand(buildE2EArgs({ ...args, targetFile }, true));
 
-    const output = await runCommand(`ATTRANSLATE_AGENT_TTY=1 ${cmd}`);
+    const output = await runCommandExpectFailure(
+      `ATTRANSLATE_AGENT_TTY=1 ${cmd}`
+    );
 
     expect(output).toContain("MISSING TRANSLATIONS:");
     expect(output).toContain("- key: bye");

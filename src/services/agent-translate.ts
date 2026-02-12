@@ -29,7 +29,8 @@ export class AgentTranslation implements TService {
       console.log(
         `echo -e \"<translation1>\\n<translation2>\\n...\" | attranslate ${cmd}`
       );
-      process.exit(0);
+      // Non-zero exit code by design: allows CI/CD or tooling to detect "missing translations".
+      process.exit(2);
     }
     // Read piped stdin, split into lines, map to keys in order
     const stdin = await this.readAllStdin();

@@ -16,6 +16,8 @@ This document summarizes the important changes when migrating from the pre-agent
 1. **First run (no stdin piped):** prints missing keys + source strings and instructions.
 2. **Piped run:** pipe exactly one translation per line (same order as printed) to write the target file.
 
+The first run exits with a non-zero code by design, so CI/CD can detect that translations are missing.
+
 Notes:
 - Empty translations are supported by piping an empty line (line count still must match).
 

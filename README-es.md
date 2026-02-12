@@ -20,9 +20,8 @@ Por lo tanto, siempre que no esté satisfecho con los resultados producidos, `at
 ## Servicios disponibles
 
 - `agent`: Para usar con Agentes de Código. Solicita al agente traducir nuevas cadenas vía stdin cuando se detectan.
-- `sync-without-translate`: Verifica la integridad de las traducciones sin traducir (p. ej. para tuberías CI/CD).
 
-Otros servicios (openai, google-translate, azure, manual, typechat, etc.) están deprecados pero se retienen para compatibilidad hacia atrás.
+Otros servicios (openai, google-translate, azure, manual, typechat, sync-without-translate) están deprecados pero se retienen para compatibilidad hacia atrás.
 
 # Ejemplos de uso
 
@@ -39,6 +38,18 @@ attranslate --srcFile=en/fruits.json --targetFile=es/fruits.json --targetLng=Spa
 attranslate --srcFile=en/fruits.json --targetFile=de/fruits.json --targetLng=German --srcLng=English --format=json --service=agent
 ```
 
+# Instalación
+
+Instalar globalmente:
+```bash
+npm install --global attranslate
+```
+
+O en un proyecto Node.js:
+```bash
+npm install --save-dev attranslate
+```
+
 # Opciones de uso
 
 Ejecuta `attranslate --help` para ver una lista de opciones disponibles:
@@ -48,11 +59,11 @@ Usage: attranslate [options]
 
 Options:
   --srcFile <sourceFile>             The source file to be translated
-  --srcLng <sourceLanguage>          A language code for the source language
+  --srcLng <sourceLanguage>          The source language
   --targetFile <targetFile>          The target file for the translations
-  --targetLng <targetLanguage>       A language code for the target language
+  --targetLng <targetLanguage>       The target language
   --format <format>                  Uno de "flat-json", "nested-json", "json", "yaml", "po", "xml", "ios-strings", "arb", "csv"
-  --service <translationService>     Uno de "agent", "sync-without-translate"
+  --service <translationService>     "agent"
   -v, --version                      output the version number
   -h, --help                         display help for command
 ```
@@ -88,3 +99,5 @@ Luego el agente canaliza las traducciones:
 ```
 echo -e "<traducción1>\n<traducción2>\n..." | attranslate --srcFile=en.json --srcLng=English --format=json --targetFile=es.json --targetLng=Spanish --service=agent
 ```
+
+Nota: la primera ejecución (sin canalizar stdin) sale con un código distinto de cero por diseño; esto se puede usar en CI/CD para detectar traducciones faltantes.

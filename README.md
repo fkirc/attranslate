@@ -18,9 +18,8 @@ Therefore, whenever you are unhappy with the produced text, `attranslate` allows
 ## Available Services
 
 - `agent`: For use with Coding Agents. Prompts the agent to translate new strings via stdin when detected.
-- `sync-without-translate`: Verifies translation completeness without translating (e.g. for CI/CD pipelines).
 
-Other services (openai, google-translate, azure, manual, typechat, etc.) are deprecated but retained for backwards-compatibility.
+Other services (openai, google-translate, azure, manual, typechat, sync-without-translate) are deprecated but retained for backwards-compatibility.
 
 # Usage Examples
 
@@ -58,11 +57,11 @@ Usage: attranslate [options]
 
 Options:
   --srcFile <sourceFile>             The source file to be translated
-  --srcLng <sourceLanguage>          A language code for the source language
+  --srcLng <sourceLanguage>          The source language
   --targetFile <targetFile>          The target file for the translations
-  --targetLng <targetLanguage>       A language code for the target language
+  --targetLng <targetLanguage>       The target language
   --format <format>                  One of "flat-json", "nested-json", "json", "yaml", "po", "xml", "ios-strings", "arb", "csv"
-  --service <translationService>     One of "agent", "sync-without-translate"
+  --service <translationService>     "agent"
   -v, --version                      output the version number
   -h, --help                         display help for command
 ```
@@ -98,3 +97,5 @@ The agent then pipes translations:
 ```
 echo -e "<translation1>\n<translation2>\n..." | attranslate --srcFile=en.json --srcLng=English --format=json --targetFile=es.json --targetLng=Spanish --service=agent
 ```
+
+Note: the first (no-pipe) run exits with a non-zero code by design, which can be used in CI/CD to detect missing translations.
