@@ -21,13 +21,13 @@ export class AgentTranslation implements TService {
     const results: TResult[] = [];
     if (process.stdin.isTTY) {
       printMissingSources(args.strings);
-      console.log("\nINSTRUCTIONS FOR AGENTS:");
+      console.log("INSTRUCTIONS FOR AGENTS:");
       console.log(
         "Provide one translation per line, matching the order above. Pipe them into attranslate.",
       );
       const cmd = process.argv.slice(2).join(" ");
       console.log(
-        `echo -e \"<translation1>\\n<translation2>\\n...\" | attranslate ${cmd} --service=agent`,
+        `echo -e \"<translation1>\\n<translation2>\\n...\" | attranslate ${cmd}`
       );
       process.exit(0);
     }
