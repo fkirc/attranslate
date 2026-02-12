@@ -29,14 +29,14 @@ Otros servicios (openai, google-translate, azure, manual, typechat, etc.) están
 Traducir un archivo único es tan simple como la siguiente línea:
 
 ```
-attranslate --srcFile=en.json --srcLng=English --srcFormat=json --targetFile=es.json --targetLng=Spanish --targetFormat=json --service=agent
+attranslate --srcFile=en.json --srcLng=English --format=json --targetFile=es.json --targetLng=Spanish --service=agent
 ```
 
 Para varios idiomas de destino, invoca `attranslate` para cada uno:
 
 ```bash
-attranslate --srcFile=en/fruits.json --targetFile=es/fruits.json --targetLng=Spanish --srcLng=English --srcFormat=json --targetFormat=json --service=agent
-attranslate --srcFile=en/fruits.json --targetFile=de/fruits.json --targetLng=German --srcLng=English --srcFormat=json --targetFormat=json --service=agent
+attranslate --srcFile=en/fruits.json --targetFile=es/fruits.json --targetLng=Spanish --srcLng=English --format=json --service=agent
+attranslate --srcFile=en/fruits.json --targetFile=de/fruits.json --targetLng=German --srcLng=English --format=json --service=agent
 ```
 
 # Opciones de uso
@@ -49,12 +49,9 @@ Usage: attranslate [options]
 Options:
   --srcFile <sourceFile>             The source file to be translated
   --srcLng <sourceLanguage>          A language code for the source language
-  --srcFormat <sourceFileFormat>     Uno de "flat-json", "json", "yaml",
-                                     "po", "xml", "ios-strings", "arb", "csv"
   --targetFile <targetFile>          The target file for the translations
   --targetLng <targetLanguage>       A language code for the target language
-  --targetFormat <targetFileFormat>  Uno de "flat-json", "json", "yaml",
-                                     "po", "xml", "ios-strings", "arb", "csv"
+  --format <format>                  Uno de "flat-json", "nested-json", "json", "yaml", "po", "xml", "ios-strings", "arb", "csv"
   --service <translationService>     Uno de "agent", "sync-without-translate"
   -v, --version                      output the version number
   -h, --help                         display help for command
@@ -69,7 +66,7 @@ Por ejemplo, agrega algo como esto a tu prompt del sistema:
 Al realizar traducciones, recuerda que estás desarrollando una aplicación de salud para profesionales médicos. Términos técnicos como 'EKG', 'MRI', 'CT scan', 'blood pressure', 'pulse oximeter' y 'vital signs' deben permanecer en inglés. Por favor, mantén la terminología médica apropiada y un tono formal en las traducciones.
 Invoca `attranslate` después de agregar una nueva traducción al archivo en.json en inglés.
 Por ejemplo:
-attranslate --service=agent --srcFile=translations/en.json --targetFile=translations/es.json --targetLng=Spanish --srcLng=English --srcFormat=json --targetFormat=json
+attranslate --service=agent --srcFile=translations/en.json --targetFile=translations/es.json --targetLng=Spanish --srcLng=English --format=json
 ```
 
 Para reducir el uso de contexto, esto puede envolverse en una declaración condicional:
@@ -83,11 +80,11 @@ Al agregar nuevas claves de traducción, consulta <some-explanation.md> para ver
 Cuando uses `--service=agent`, attranslate imprimirá una lista de fuentes faltantes e instrucciones para el agente. El agente debe proporcionar una traducción por línea, en el mismo orden, y canalizarlas a attranslate vía stdin. Ejemplo:
 
 ```
-attranslate --srcFile=en.json --srcLng=English --srcFormat=json --targetFile=es.json --targetLng=Spanish --targetFormat=json --service=agent
+attranslate --srcFile=en.json --srcLng=English --format=json --targetFile=es.json --targetLng=Spanish --service=agent
 ```
 
 Luego el agente canaliza las traducciones:
 
 ```
-echo -e "<traducción1>\n<traducción2>\n..." | attranslate --srcFile=en.json --srcLng=English --srcFormat=json --targetFile=es.json --targetLng=Spanish --targetFormat=json --service=agent
+echo -e "<traducción1>\n<traducción2>\n..." | attranslate --srcFile=en.json --srcLng=English --format=json --targetFile=es.json --targetLng=Spanish --service=agent
 ```

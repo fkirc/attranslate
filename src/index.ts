@@ -28,10 +28,6 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
       "A language code for the source language"
     )
     .requiredOption(
-      "--srcFormat <sourceFileFormat>",
-      formatOneOfOptions(getTFileFormatList())
-    )
-    .requiredOption(
       "--targetFile <targetFile>",
       "The target file for the translations"
     )
@@ -39,9 +35,23 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
       "--targetLng <targetLanguage>",
       "A language code for the target language"
     )
-    .requiredOption(
+    .option(
+      "--format <format>",
+      `Preferred format option (one format for both src and target). ${formatOneOfOptions(
+        getTFileFormatList()
+      )}`
+    )
+    .option(
+      "--srcFormat <sourceFileFormat>",
+      `Legacy. Overrides --format for the source. ${formatOneOfOptions(
+        getTFileFormatList()
+      )}`
+    )
+    .option(
       "--targetFormat <targetFileFormat>",
-      formatOneOfOptions(getTFileFormatList())
+      `Legacy. Overrides --format for the target. ${formatOneOfOptions(
+        getTFileFormatList()
+      )}`
     )
     .requiredOption(
       "--service <translationService>",
@@ -71,6 +81,7 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
   const args: CliArgs = {
     srcFile: commander.opts().srcFile,
     srcLng: commander.opts().srcLng,
+    format: commander.opts().format,
     srcFormat: commander.opts().srcFormat,
     targetFile: commander.opts().targetFile,
     targetLng: commander.opts().targetLng,

@@ -35,11 +35,19 @@ export interface CoreResults {
 export interface CliArgs extends Record<string, string | undefined> {
   srcFile: string;
   srcLng: string;
-  srcFormat: string;
+  /**
+   * Preferred format option.
+   * - "<format>" uses the same format for source and target.
+   */
+  format?: string;
+  /** Legacy option (overrides `format` for the source). */
+  srcFormat?: string;
   targetFile: string;
   targetLng: string;
-  targetFormat: string;
+  /** Legacy option (overrides `format` for the target). */
+  targetFormat?: string;
   service: string;
   serviceConfig?: string;
   matcher: string;
+  prompt?: string;
 }

@@ -36,6 +36,7 @@ export function formatCliOptions(options: string[]): string {
 
 export async function translateCli(cliArgs: CliArgs) {
   checkForEmptyStringOptions(cliArgs);
+  resolveFormatOptions(cliArgs);
   const fileFormats = getTFileFormatList();
   const services = getTServiceList();
   const matchers = getTMatcherList();
@@ -116,6 +117,41 @@ export async function translateCli(cliArgs: CliArgs) {
   if (!flushTarget) {
     console.info(`Target is up-to-date: '${cliArgs.targetFile}'`);
   }
+}
+
+function resolveFormatOptions(cliArgs: CliArgs): void {
+  const legacyUsed =
+    cliArgs.srcFormat !== undefined || cliArgs.targetFormat !== undefined;
+
+  // Legacy mode: explicit source/target formats.
+  // This is the only supported way to do format conversion.
+  if (legacyUsed) {
+    if (!cliArgs.srcFormat) {
+      logFatal(
+        "required option '--srcFormat <sourceFileFormat>' not specified"
+      );
+    }
+    if (!cliArgs.targetFormat) {
+      logFatal(
+        "required option '--targetFormat <targetFileFormat>' not specified"
+      );
+    }
+    return;
+  }
+
+  // New mode: one format for both source and target.
+  if (!cliArgs.format) {
+    logFatal("required option '--format <format>' not specified");
+  }
+
+  const raw = cliArgs.format;
+  const spec = raw.trim();
+  // Empty-string is handled by checkForEmptyStringOptions(), but be defensive.
+  if (!spec.length) {
+    logFatal("required option '--format <format>' not specified");
+  }
+  cliArgs.srcFormat = spec;
+  cliArgs.targetFormat = spec;
 }
 
 // function parseBooleanOption(rawOption: string, optionKey: string): boolean {

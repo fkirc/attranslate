@@ -17,8 +17,8 @@ ANDROID_EN="android/app/src/main/res/values/strings.xml"
 ANDROID_DE="android/app/src/main/res/values-de/strings.xml"
 ANDROID_ES="android/app/src/main/res/values-es/strings.xml"
 
-attranslate --srcFile=$ANDROID_EN --srcLng=English --srcFormat=xml --targetFile=$ANDROID_DE --targetLng=German --targetFormat=xml --service=agent
-attranslate --srcFile=$ANDROID_EN --srcLng=English --srcFormat=xml --targetFile=$ANDROID_ES --targetLng=Spanish --targetFormat=xml --service=agent
+attranslate --srcFile=$ANDROID_EN --srcLng=English --format=xml --targetFile=$ANDROID_DE --targetLng=German --service=agent
+attranslate --srcFile=$ANDROID_EN --srcLng=English --format=xml --targetFile=$ANDROID_ES --targetLng=Spanish --service=agent
 
 # Paths to app-specific iOS-Strings:
 iOS_EN="ios/Localizable/Base.lproj/Localizable.strings"
