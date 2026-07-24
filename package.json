@@ -17,6 +17,7 @@
     "url": "https://github.com/fkirc/attranslate/issues"
   },
   "homepage": "https://github.com/fkirc/attranslate#readme",
+  "packageManager": "pnpm@9.15.0",
   "bin": {
     "attranslate": "bin/attranslate"
   },
@@ -26,11 +27,11 @@
     "dist/"
   ],
   "scripts": {
-    "build": "npm run clean && tsc && npm link",
+    "build": "pnpm run clean && tsc && pnpm link --global",
     "clean": "rm -rf ./dist",
     "test": "jest --testTimeout=10000",
-    "test:windows": "npm run test -- --config=test/windows.jest.config.js",
-    "test:generate_refs": "GENERATE_REFS=True npm run test",
+    "test:windows": "jest --testTimeout=10000 --config=test/windows.jest.config.js",
+    "test:generate_refs": "GENERATE_REFS=True pnpm run test",
     "prepublishOnly": "git diff --exit-code"
   },
   "dependencies": {
@@ -42,10 +43,13 @@
     "detect-indent": "^6.0.0",
     "dotenv": "^16.3.1",
     "gettext-parser": "^4.0.4",
+    "google-gax": "^4.3.7",
     "inquirer": "^7.3.3",
+    "lodash": "^4.17.21",
     "messageformat-parser": "^4.1.0",
     "openai": "^3.3.0",
     "semver": "^7.5.4",
+    "tslib": "^1.14.1",
     "typechat": "^0.0.10",
     "xml2js": "https://github.com/fkirc/node-xml2js/tarball/680ee7ed2dad8b9ddacc37b5e4b4a671706e0bcf",
     "yaml": "2.0.0-1"
