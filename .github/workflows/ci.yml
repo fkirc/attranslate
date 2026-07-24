@@ -22,36 +22,37 @@ jobs:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 15
     steps:
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 18.x
       - run: git config --global core.autocrlf false
       - uses: actions/checkout@v2
         with:
           token: ${{ secrets.CI_PAT || github.token }}
       - run: git config --global user.email "mail@felix.at"
       - run: git config --global user.name "Felix (GitHub Action)"
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 18.x
       - uses: actions/cache@v4
         with:
           path: '**/node_modules'
-          key: ${{ runner.os }}-modules-${{ hashFiles('**/package-lock.json') }}
-      - run: npm ci
-      - run: npm run build
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/pnpm-lock.yaml') }}
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run build
       - if: ${{ matrix.os != 'macos-latest' && matrix.os != 'windows-latest' }}
         run: |
           timeout 0.2s time ./bin/attranslate --version
           timeout 0.2s time ./bin/attranslate --help
       - if: ${{ matrix.os != 'windows-latest' }}
-        run: npm run test
+        run: pnpm run test
       - if: ${{ matrix.os == 'windows-latest' }}
-        run: npm run test:windows
+        run: pnpm run test:windows
       - run: git diff --exit-code
       - name: Release
         if: ${{ github.event.inputs.release == 'true' && matrix.os == 'ubuntu-latest' }}
         run: |
-          npm version ${{ github.event.inputs.new_version }} --git-tag-version=true
-          npm config set '//registry.npmjs.org/:_authToken' "${NPM_TOKEN}"
-          npm publish
+          pnpm version ${{ github.event.inputs.new_version }} --git-tag-version=true
+          pnpm config set '//registry.npmjs.org/:_authToken' "${NPM_TOKEN}"
+          pnpm publish --no-git-checks
           git push origin && git push origin --tags
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
