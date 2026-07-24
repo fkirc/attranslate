@@ -45,6 +45,7 @@
     "gettext-parser": "^4.0.4",
     "google-gax": "^4.3.7",
     "inquirer": "^7.3.3",
+    "lodash": "^4.17.21",
     "messageformat-parser": "^4.1.0",
     "openai": "^3.3.0",
     "semver": "^7.5.4",
