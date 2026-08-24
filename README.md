@@ -1,6 +1,4 @@
-<p align="center">
-  <img alt="attranslate - Semi-automated Text Translator for Websites and Apps" src="docs/logo/attranslate_logo.png">
-</p>
+# attranslate: Translation-sync for Agents
 
 `attranslate` is a CLI-tool for syncing translation files (JSON/YAML/XML) designed to assist Coding Agents in translating efficiently with minimal token-usage.
 Existing translations remain unchanged; only new strings are synchronized.
