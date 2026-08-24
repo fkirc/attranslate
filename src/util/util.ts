@@ -7,7 +7,6 @@ import {
   writeFileSync,
 } from "fs";
 import { join, resolve } from "path";
-import semver from "semver";
 
 export function joinDirWithFileName(dir: string, fileName: string): string {
   checkDir(dir);
@@ -82,11 +81,5 @@ export function runCommandOrDie(command: string): string {
     logFatal(
       `Failed to run \'${command}\' in current directory \'${process.cwd()}\'.`
     );
-  }
-}
-
-export function nodeVersionSatisfies(feature: string, range: string): void {
-  if (!semver.satisfies(process.version, range)) {
-    logFatal(`${feature} requires node ${range}`);
   }
 }
