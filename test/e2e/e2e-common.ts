@@ -15,11 +15,10 @@ const randomTargetMarker = "random_target";
 export const defaultE2EArgs: E2EArgs = {
   srcFile: "test-assets/nested-json/count-en.json",
   srcLng: "en",
-  srcFormat: "json",
+  format: "json",
   targetFile: getRandomTargetName("default_target"),
   refTargetFile: "default-ref-target",
   targetLng: "de",
-  targetFormat: "flat-json",
   service: "sync-without-translate",
 };
 

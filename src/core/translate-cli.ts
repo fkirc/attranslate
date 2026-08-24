@@ -13,16 +13,16 @@ import { getTServiceList, TServiceType } from "../services/service-definitions";
 
 async function resolveOldTarget(
   args: CliArgs,
-  targetFileFormat: TFileType
+  fileFormat: TFileType
 ): Promise<TSet | null> {
   const targetPath = path.resolve(args.targetFile);
   const targetDir = path.dirname(targetPath);
   checkDir(targetDir, { errorHint: "Target path" });
   if (existsSync(targetPath)) {
-    return await readTFileCore(targetFileFormat, {
+    return await readTFileCore(fileFormat, {
       path: args.targetFile,
       lng: args.targetLng,
-      format: targetFileFormat,
+      format: fileFormat,
     });
   } else {
     return null;
@@ -35,7 +35,6 @@ export function formatCliOptions(options: string[]): string {
 
 export async function translateCli(cliArgs: CliArgs) {
   checkForEmptyStringOptions(cliArgs);
-  resolveFormatOptions(cliArgs);
   const fileFormats = getTFileFormatList();
   const services = getTServiceList();
   if (!services.includes(cliArgs.service as TServiceType)) {
@@ -45,28 +44,20 @@ export async function translateCli(cliArgs: CliArgs) {
       }". Available services: ${formatCliOptions(services)}`
     );
   }
-  if (!fileFormats.includes(cliArgs.srcFormat as TFileType)) {
+  if (!fileFormats.includes(cliArgs.format as TFileType)) {
     logFatal(
-      `Unknown source format "${
-        cliArgs.srcFormat
+      `Unknown format "${
+        cliArgs.format
       }". Available formats: ${formatCliOptions(fileFormats)}`
     );
   }
-  const srcFileFormat: TFileType = cliArgs.srcFormat as TFileType;
-  if (!fileFormats.includes(cliArgs.targetFormat as TFileType)) {
-    logFatal(
-      `Unknown target format "${
-        cliArgs.targetFormat
-      }". Available formats: ${formatCliOptions(fileFormats)}`
-    );
-  }
-  const targetFileFormat = cliArgs.targetFormat as TFileType;
+  const fileFormat: TFileType = cliArgs.format as TFileType;
 
   checkNotDir(cliArgs.srcFile, { errorHint: "srcFile" });
-  const src = await readTFileCore(srcFileFormat, {
+  const src = await readTFileCore(fileFormat, {
     path: cliArgs.srcFile,
     lng: cliArgs.srcLng,
-    format: srcFileFormat,
+    format: fileFormat,
   });
   if (!src.size) {
     logFatal(
@@ -76,10 +67,7 @@ export async function translateCli(cliArgs: CliArgs) {
     );
   }
 
-  const oldTarget: TSet | null = await resolveOldTarget(
-    cliArgs,
-    targetFileFormat
-  );
+  const oldTarget: TSet | null = await resolveOldTarget(cliArgs, fileFormat);
 
   const coreArgs: CoreArgs = {
     src,
@@ -99,47 +87,12 @@ export async function translateCli(cliArgs: CliArgs) {
       tSet: result.newTarget,
       lng: cliArgs.targetLng,
       changeSet: result.changeSet,
-      format: targetFileFormat,
+      format: fileFormat,
     });
   }
   if (!flushTarget) {
     console.info(`Target is up-to-date: '${cliArgs.targetFile}'`);
   }
-}
-
-function resolveFormatOptions(cliArgs: CliArgs): void {
-  const legacyUsed =
-    cliArgs.srcFormat !== undefined || cliArgs.targetFormat !== undefined;
-
-  // Legacy mode: explicit source/target formats.
-  // This is the only supported way to do format conversion.
-  if (legacyUsed) {
-    if (!cliArgs.srcFormat) {
-      logFatal(
-        "required option '--srcFormat <sourceFileFormat>' not specified"
-      );
-    }
-    if (!cliArgs.targetFormat) {
-      logFatal(
-        "required option '--targetFormat <targetFileFormat>' not specified"
-      );
-    }
-    return;
-  }
-
-  // New mode: one format for both source and target.
-  if (!cliArgs.format) {
-    logFatal("required option '--format <format>' not specified");
-  }
-
-  const raw = cliArgs.format;
-  const spec = raw.trim();
-  // Empty-string is handled by checkForEmptyStringOptions(), but be defensive.
-  if (!spec.length) {
-    logFatal("required option '--format <format>' not specified");
-  }
-  cliArgs.srcFormat = spec;
-  cliArgs.targetFormat = spec;
 }
 
 // function parseBooleanOption(rawOption: string, optionKey: string): boolean {
