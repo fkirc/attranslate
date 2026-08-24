@@ -21,9 +21,6 @@ import { buildE2EArgs, defaultE2EArgs, E2EArgs } from "./e2e-common";
     ...defaultE2EArgs,
     srcFile,
     srcLng: "English",
-    // Use new single-format flag. (Disable legacy src/target format args)
-    srcFormat: undefined,
-    targetFormat: undefined,
     format: "json",
     targetFile: "",
     refTargetFile: "default-ref-target",

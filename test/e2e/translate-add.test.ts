@@ -16,10 +16,6 @@ const testArray: {
     args: {
       ...defaultE2EArgs,
       srcFile: "test-assets/misc-json/empty-props.json",
-      // Use the new single-format flag for this test.
-      // (defaultE2EArgs uses legacy src/target formats for conversion tests)
-      srcFormat: undefined,
-      targetFormat: undefined,
       format: "flat-json",
       targetFile: "test-assets/nested-json/count-de.clean.json",
       refTargetFile: "test-assets/misc-json/empty-props+count-de.json",
@@ -31,8 +27,6 @@ const testArray: {
     args: {
       ...defaultE2EArgs,
       srcFile: "test-assets/android-xml/count-en.indent2.flat.xml",
-      srcFormat: undefined,
-      targetFormat: undefined,
       format: "xml",
       targetFile: "test-assets/android-xml/count-de.missing-entry.xml",
       refTargetFile: "test-assets/android-xml/count-de.xml",

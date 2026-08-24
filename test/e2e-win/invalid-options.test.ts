@@ -86,35 +86,23 @@ test("unknown service", async () => {
   );
 });
 
-test("unknown source file format", async () => {
+test("unknown format", async () => {
   const args: E2EArgs = {
     ...defaultE2EArgs,
-    srcFormat: "some-invalid-source" as unknown as never,
+    format: "some-invalid-format" as unknown as never,
   };
   const output = await runTranslateExpectFailure(buildE2EArgs(args));
   expect(output).toContain(
-    `error: Unknown source format "some-invalid-source". Available formats: "`
-  );
-});
-
-test("unknown target file format", async () => {
-  const args: E2EArgs = {
-    ...defaultE2EArgs,
-    targetFormat: "some-invalid-target" as unknown as never,
-  };
-  const output = await runTranslateExpectFailure(buildE2EArgs(args));
-  expect(output).toContain(
-    `error: Unknown target format "some-invalid-target". Available formats: "`
+    `error: Unknown format "some-invalid-format". Available formats: "`
   );
 });
 
 const requiredOptions: (keyof typeof defaultE2EArgs)[] = [
   "srcFile",
   "srcLng",
-  "srcFormat",
+  "format",
   "targetFile",
   "targetLng",
-  "targetFormat",
   "service",
 ];
 
