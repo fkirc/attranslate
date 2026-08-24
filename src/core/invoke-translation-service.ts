@@ -70,7 +70,6 @@ async function runTranslationService(
     strings: replacedInputs,
     srcLng: args.srcLng,
     targetLng: args.targetLng,
-    serviceConfig: args.serviceConfig,
   };
 
   console.info(

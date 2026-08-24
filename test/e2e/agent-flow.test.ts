@@ -29,7 +29,6 @@ import { buildE2EArgs, defaultE2EArgs, E2EArgs } from "./e2e-common";
     refTargetFile: "default-ref-target",
     targetLng: "German",
     service: "agent",
-    serviceConfig: undefined,
     matcher: "none",
   };
 

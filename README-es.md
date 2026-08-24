@@ -65,8 +65,8 @@ Se recomienda añadir instrucciones sobre cómo invocar `attranslate` a tus inst
 ```
 Invoca `attranslate` después de agregar una nueva traducción al archivo en.json en inglés:
 
-attranslate --service=agent --srcFile=translations/en.json --targetFile=translations/es.json --targetLng=Spanish --srcLng=English --format=json
-attranslate --service=agent --srcFile=translations/en.json --targetFile=translations/de.json --targetLng=German --srcLng=English --format=json
+attranslate --srcFile=translations/en.json --targetFile=translations/es.json --targetLng=Spanish --srcLng=English --format=json --service=agent
+attranslate --srcFile=translations/en.json --targetFile=translations/de.json --targetLng=German --srcLng=English --format=json --service=agent
 ```
 
 ## Opciones de uso

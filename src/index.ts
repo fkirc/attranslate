@@ -58,10 +58,6 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
       formatOneOfOptions(getTServiceList())
     )
     .option(
-      "--serviceConfig <serviceKey>",
-      "supply configuration for a translation service (either a path to a key-file or an API-key)"
-    )
-    .option(
       "--matcher <matcher>",
       formatOneOfOptions(getTMatcherList()),
       "none"
@@ -83,7 +79,6 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
     targetLng: commander.opts().targetLng,
     targetFormat: commander.opts().targetFormat,
     service: commander.opts().service,
-    serviceConfig: commander.opts().serviceConfig,
     matcher: commander.opts().matcher,
   };
   translateCli(args)

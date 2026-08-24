@@ -9,7 +9,6 @@ export interface CoreArgs {
   oldTarget: TSet | null;
   targetLng: string;
   service: TServiceType;
-  serviceConfig: string | null;
   matcher: TMatcherType;
 }
 
@@ -46,6 +45,5 @@ export interface CliArgs extends Record<string, string | undefined> {
   /** Legacy option (overrides `format` for the target). */
   targetFormat?: string;
   service: string;
-  serviceConfig?: string;
   matcher: string;
 }
