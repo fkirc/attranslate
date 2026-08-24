@@ -1,5 +1,3 @@
-import { nodeVersionSatisfies } from "../util/util";
-
 export interface TResult {
   key: string;
   translated: string;
@@ -29,14 +27,7 @@ export function getTServiceList(): TServiceType[] {
 
 const serviceMap = {
   agent: null,
-  openai: null,
-  typechat: null,
-  "typechat-manual": null,
-  manual: null,
   "sync-without-translate": null,
-  "google-translate": null,
-  // deepl: null,
-  azure: null,
   "key-as-translation": null,
 };
 
@@ -55,27 +46,10 @@ export async function instantiateTService(
   }
   /**
    * To gain a reasonable launch-performance, we import services dynamically.
-   * This is especially important for google-translate, which uses a huge bunch of packages.
    */
   switch (service) {
     case "agent":
       return new (await import("./agent-translate")).AgentTranslation();
-    case "openai":
-      return new (await import("./openai-translate")).OpenAITranslate();
-    case "typechat":
-      nodeVersionSatisfies("typechat", ">=18");
-      return new (await import("./typechat")).TypeChatTranslate();
-    case "typechat-manual":
-      nodeVersionSatisfies("typechat", ">=18");
-      return new (await import("./typechat")).TypeChatTranslate(true);
-    case "azure":
-      return new (await import("./azure-translator")).AzureTranslator();
-    // case "deepl":
-    //   return new (await import("./deepl")).DeepL();
-    case "google-translate":
-      return new (await import("./google-translate")).GoogleTranslate();
-    case "manual":
-      return new (await import("./manual")).ManualTranslation();
     case "sync-without-translate":
       return new (
         await import("./sync-without-translate")

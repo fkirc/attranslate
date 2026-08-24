@@ -20,8 +20,8 @@ export const defaultE2EArgs: E2EArgs = {
   refTargetFile: "default-ref-target",
   targetLng: "de",
   targetFormat: "flat-json",
-  service: "google-translate",
-  serviceConfig: "invalid-key",
+  service: "sync-without-translate",
+  serviceConfig: undefined,
   matcher: "none",
 };
 

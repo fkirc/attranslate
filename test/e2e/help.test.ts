@@ -9,7 +9,7 @@ test("--help", async () => {
     pwd: "/",
     maxTime: offlineMaxTime,
   });
-  expect(output.includes('One of "openai",'));
+  expect(output).toContain('One of "agent",');
 });
 
 test("-h", async () => {
@@ -17,7 +17,7 @@ test("-h", async () => {
     pwd: "/",
     maxTime: offlineMaxTime,
   });
-  expect(output.includes('One of "openai",'));
+  expect(output).toContain('One of "agent",');
 });
 
 test("no arguments", async () => {

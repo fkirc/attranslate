@@ -5,36 +5,48 @@
 `attranslate` is a CLI-tool for syncing translation files (JSON/YAML/XML) designed to assist Coding Agents in translating efficiently with minimal token-usage.
 Existing translations remain unchanged; only new strings are synchronized.
 
-# Features
+As of v3, `attranslate` is a complete offline-tool; it does not call into any translation-APIs anymore, instead it acts as an efficiency-helper for agents that do the main work.
 
 ## Preserve Manual Translations
 
-`attranslate` recognizes that machine translations are not yet perfect.
+`attranslate` recognizes that agentic translations are not always perfect.
 Therefore, whenever you are unhappy with the produced text, `attranslate` allows you to simply overwrite text in your target-files.
 `attranslate` will never overwrite any manual corrections in subsequent runs.
 
-## Available Services
+## How It Works: Agentic Invocation
 
-- `agent`: For use with Coding Agents. Prompts the agent to translate new strings via a pipe when detected.
-
-Other services (openai, google-translate, azure, manual, typechat, sync-without-translate) are deprecated but retained for backwards-compatibility.
-
-# Usage Examples
-
-Translating a single file is as simple as the following line:
+To help agents in a token-efficient way, attranslate uses a trick of making itself "double-invoked" by agents.
+In the first invocation, attranslate will print a list of missing sources and instructions for the agent. Example:
 
 ```
-attranslate --srcFile=en.json --srcLng=English --format=json --targetFile=es.json --targetLng=Spanish --service=agent
+$ attranslate --srcFile=en.json --srcLng=English --format=json --targetFile=es.json --targetLng=Spanish --service=agent
+Invoke 'agent' from 'English' to 'Spanish' with 2 inputs...
+MISSING TRANSLATIONS:
+
+- key: hello
+  source: Hello
+
+- key: bye
+  source: Goodbye
+
+INSTRUCTIONS FOR AGENTS:
+Translate the missing sources listed above, matching the order.
+Replace <translation1>, <translation2>, ... with your actual translated strings and pipe them into attranslate as follows:
+echo -e "<translation1>\n<translation2>\n..." | attranslate --srcFile=en.json --srcLng=English --format=json --targetFile=es.json --targetLng=Spanish --service=agent
 ```
 
-For multiple target languages, call `attranslate` for each:
+The agent then naturally follows those instructions to finish the job in a second invocation of attranslate:
 
-```bash
-attranslate --srcFile=en/fruits.json --targetFile=es/fruits.json --targetLng=Spanish --srcLng=English --format=json --service=agent
-attranslate --srcFile=en/fruits.json --targetFile=de/fruits.json --targetLng=German --srcLng=English --format=json --service=agent
+```
+$ echo -e "Hola\nAdiós" | attranslate --srcFile=en.json --srcLng=English --format=json --targetFile=es.json --targetLng=Spanish --service=agent
+Invoke 'agent' from 'English' to 'Spanish' with 2 inputs...
+Add 2 new translations
+Write target '/path/to/es.json'
 ```
 
-# Installation
+Note: the first (no-pipe) run exits with a non-zero code by design, which can be used in CI/CD to detect missing translations.
+
+## Installation
 
 Install globally:
 ```bash
@@ -46,7 +58,16 @@ Or in a Node.js project:
 npm install --save-dev attranslate
 ```
 
-# Usage Options
+## Prompt Examples
+
+It is recommended to add instructions for invoking `attranslate` to your agentic instructions (e.g. an agent-skill). For example:
+
+```
+Invoke `attranslate` after adding a new translation to the English en.json.
+attranslate --service=agent --srcFile=translations/en.json --targetFile=translations/es.json --targetLng=Spanish --srcLng=English --format=json
+```
+
+## Usage Options
 
 Run `attranslate --help` to see a list of available options:
 
@@ -63,37 +84,3 @@ Options:
   -v, --version                      output the version number
   -h, --help                         display help for command
 ```
-
-## Prompt Examples
-
-It is recommended to expand your AGENTS.md/CLAUDE.md or similar to instruct your Coding Agents on how they should do translations.
-For example, add something like this to your system prompt:
-
-```
-When doing translations, remember that you are building a healthcare app for medical professionals. Technical terms like 'EKG', 'MRI', 'CT scan', 'blood pressure', 'pulse oximeter', and 'vital signs' should remain in English. Please maintain proper medical terminology and formal tone in translations.
-Invoke `attranslate` after adding a new translation to the English en.json.
-For example:
-attranslate --service=agent --srcFile=translations/en.json --targetFile=translations/es.json --targetLng=Spanish --srcLng=English --format=json
-```
-
-To reduce context-usage, this can be wrapped into a conditional statement:
-
-```
-When adding new translation-keys, lookup <some-explanation.md> to see how new translations should be done.
-```
-
-# Agent Workflow (pipe-based)
-
-When using `--service=agent`, attranslate will print a list of missing sources and instructions for the agent. The agent should provide one translation per line, in the same order, and pipe them into attranslate via stdin. Example:
-
-```
-attranslate --srcFile=en.json --srcLng=English --format=json --targetFile=es.json --targetLng=Spanish --service=agent
-```
-
-The agent then pipes translations:
-
-```
-echo -e "<translation1>\n<translation2>\n..." | attranslate --srcFile=en.json --srcLng=English --format=json --targetFile=es.json --targetLng=Spanish --service=agent
-```
-
-Note: the first (no-pipe) run exits with a non-zero code by design, which can be used in CI/CD to detect missing translations.
