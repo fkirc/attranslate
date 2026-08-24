@@ -63,8 +63,8 @@ It is recommended to add instructions for invoking `attranslate` to your agentic
 ```
 Invoke `attranslate` after adding a new translation to the English en.json:
 
-attranslate --service=agent --srcFile=translations/en.json --targetFile=translations/es.json --targetLng=Spanish --srcLng=English --format=json
-attranslate --service=agent --srcFile=translations/en.json --targetFile=translations/de.json --targetLng=German --srcLng=English --format=json
+attranslate --srcFile=translations/en.json --targetFile=translations/es.json --targetLng=Spanish --srcLng=English --format=json --service=agent
+attranslate --srcFile=translations/en.json --targetFile=translations/de.json --targetLng=German --srcLng=English --format=json --service=agent
 ```
 
 ## Usage Options

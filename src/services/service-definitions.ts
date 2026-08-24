@@ -12,7 +12,6 @@ export interface TServiceArgs {
   strings: TString[];
   srcLng: string;
   targetLng: string;
-  serviceConfig: string | null;
 }
 
 export interface TService {

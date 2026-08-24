@@ -1,11 +1,5 @@
 import { CoreArgs, TServiceInvocation, TSet } from "./core-definitions";
 import {
-  instantiateTMatcher,
-  reInsertInterpolations,
-  replaceInterpolations,
-  Replacer,
-} from "../matchers/matcher-definitions";
-import {
   instantiateTService,
   TResult,
   TServiceArgs,
@@ -52,41 +46,15 @@ async function runTranslationService(
   rawInputs: TString[],
   args: CoreArgs
 ): Promise<TResult[]> {
-  const matcher = instantiateTMatcher(args.matcher);
-  const replacers = new Map<string, Replacer>();
-  rawInputs.forEach((rawString) => {
-    const replacer = replaceInterpolations(rawString.value, matcher);
-    replacers.set(rawString.key, replacer);
-  });
-  const replacedInputs: TString[] = rawInputs.map((rawString) => {
-    return {
-      key: rawString.key,
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      value: replacers.get(rawString.key)!.clean,
-    };
-  });
-
   const serviceArgs: TServiceArgs = {
-    strings: replacedInputs,
+    strings: rawInputs,
     srcLng: args.srcLng,
     targetLng: args.targetLng,
-    serviceConfig: args.serviceConfig,
   };
 
   console.info(
     `Invoke '${args.service}' from '${args.srcLng}' to '${args.targetLng}' with ${serviceArgs.strings.length} inputs...`
   );
   const translationService = await instantiateTService(args.service);
-  const rawResults = await translationService.translateStrings(serviceArgs);
-  return rawResults.map((rawResult) => {
-    const cleanResult = reInsertInterpolations(
-      rawResult.translated,
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      replacers.get(rawResult.key)!.replacements
-    );
-    return {
-      key: rawResult.key,
-      translated: cleanResult,
-    };
-  });
+  return await translationService.translateStrings(serviceArgs);
 }

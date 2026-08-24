@@ -10,7 +10,6 @@ import {
   TFileType,
 } from "../file-formats/file-format-definitions";
 import { getTServiceList, TServiceType } from "../services/service-definitions";
-import { getTMatcherList, TMatcherType } from "../matchers/matcher-definitions";
 
 async function resolveOldTarget(
   args: CliArgs,
@@ -39,19 +38,11 @@ export async function translateCli(cliArgs: CliArgs) {
   resolveFormatOptions(cliArgs);
   const fileFormats = getTFileFormatList();
   const services = getTServiceList();
-  const matchers = getTMatcherList();
   if (!services.includes(cliArgs.service as TServiceType)) {
     logFatal(
       `Unknown service "${
         cliArgs.service
       }". Available services: ${formatCliOptions(services)}`
-    );
-  }
-  if (!matchers.includes(cliArgs.matcher as TMatcherType)) {
-    logFatal(
-      `Unknown matcher "${
-        cliArgs.matcher
-      }". Available matchers: ${formatCliOptions(matchers)}`
     );
   }
   if (!fileFormats.includes(cliArgs.srcFormat as TFileType)) {
@@ -96,8 +87,6 @@ export async function translateCli(cliArgs: CliArgs) {
     oldTarget,
     targetLng: cliArgs.targetLng,
     service: cliArgs.service as TServiceType,
-    serviceConfig: cliArgs.serviceConfig ?? null,
-    matcher: cliArgs.matcher as TMatcherType,
   };
   const result = await translateCore(coreArgs);
 

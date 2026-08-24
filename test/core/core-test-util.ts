@@ -84,8 +84,6 @@ class BogusService implements TService {
 
 export const commonArgs: Omit<CoreArgs, "oldTarget" | "src"> = {
   service: bogusTranslateName as TServiceType,
-  serviceConfig: "invalid-core-key",
-  matcher: "icu",
   srcLng: "en",
   targetLng: "de",
 };

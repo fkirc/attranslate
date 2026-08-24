@@ -21,8 +21,6 @@ export const defaultE2EArgs: E2EArgs = {
   targetLng: "de",
   targetFormat: "flat-json",
   service: "sync-without-translate",
-  serviceConfig: undefined,
-  matcher: "none",
 };
 
 function getRandomTargetName(path: string) {
