@@ -7,6 +7,3 @@ BASE_DIR=xml-generic
 # Run "npm install --global attranslate" before you try this example.
 attranslate --srcFile=$BASE_DIR/en.xml --srcLng=English --format=xml --targetFile=$BASE_DIR/ar.xml --targetLng=Arabic --service=agent
 attranslate --srcFile=$BASE_DIR/en.xml --srcLng=English --format=xml --targetFile=$BASE_DIR/de.xml --targetLng=German --service=agent
-
-# Convert an iOS string file into an XML (just for the sake of test-coverage)
-attranslate --srcFormat=ios-strings --srcFile=$BASE_DIR/nested-fruits.strings --srcLng=en --targetFormat=xml --targetFile=$BASE_DIR/nested-fruits.xml --targetLng=en --service=sync-without-translate
