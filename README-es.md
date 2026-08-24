@@ -63,8 +63,10 @@ npm install --save-dev attranslate
 Se recomienda añadir instrucciones sobre cómo invocar `attranslate` a tus instrucciones agénticas (p. ej. un agent-skill). Por ejemplo:
 
 ```
-Invoca `attranslate` después de agregar una nueva traducción al archivo en.json en inglés.
+Invoca `attranslate` después de agregar una nueva traducción al archivo en.json en inglés:
+
 attranslate --service=agent --srcFile=translations/en.json --targetFile=translations/es.json --targetLng=Spanish --srcLng=English --format=json
+attranslate --service=agent --srcFile=translations/en.json --targetFile=translations/de.json --targetLng=German --srcLng=English --format=json
 ```
 
 ## Opciones de uso
