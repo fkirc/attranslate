@@ -3,7 +3,6 @@ import "dotenv/config";
 import { CliArgs } from "./core/core-definitions";
 import { formatCliOptions, translateCli } from "./core/translate-cli";
 import { getTFileFormatList } from "./file-formats/file-format-definitions";
-import { getTMatcherList } from "./matchers/matcher-definitions";
 import { getTServiceList } from "./services/service-definitions";
 import { extractVersion } from "./util/extract-version";
 
@@ -57,11 +56,6 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
       "--service <translationService>",
       formatOneOfOptions(getTServiceList())
     )
-    .option(
-      "--matcher <matcher>",
-      formatOneOfOptions(getTMatcherList()),
-      "none"
-    )
     .version(extractVersion({ cliBinDir }), "-v, --version")
     .parse(process.argv);
 
@@ -79,7 +73,6 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
     targetLng: commander.opts().targetLng,
     targetFormat: commander.opts().targetFormat,
     service: commander.opts().service,
-    matcher: commander.opts().matcher,
   };
   translateCli(args)
     .then(() => {

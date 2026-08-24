@@ -86,17 +86,6 @@ test("unknown service", async () => {
   );
 });
 
-test("unknown matcher", async () => {
-  const args: E2EArgs = {
-    ...defaultE2EArgs,
-    matcher: "some-invalid-matcher" as unknown as never,
-  };
-  const output = await runTranslateExpectFailure(buildE2EArgs(args));
-  expect(output).toContain(
-    `error: Unknown matcher "some-invalid-matcher". Available matchers: "`
-  );
-});
-
 test("unknown source file format", async () => {
   const args: E2EArgs = {
     ...defaultE2EArgs,
