@@ -1,6 +1,6 @@
 import { WriteTFileArgs } from "../file-format-definitions";
 import { LineChunk } from "./ios-strings";
-import { VALUE_INDEX } from "./ios-read";
+import { iOSLineRegex } from "./ios-read";
 import { FormatCache } from "../common/format-cache";
 import { writeManagedUtf8 } from "../common/managed-utf8";
 
@@ -27,7 +27,7 @@ export function writeiOSFile(
 function createNewChunk(key: string, newValue: string | null): LineChunk {
   return {
     value: newValue,
-    lines: ["", "", `"${key}" = "${newValue}";`],
+    lines: ["", "", `"${key}" = "${escapeQuotes(newValue)}";`],
   };
 }
 
@@ -37,8 +37,13 @@ function convertOldChunkIntoNewChunk(
 ): LineChunk {
   oldChunk.value = newValue;
   const valueLine = oldChunk.lines[oldChunk.lines.length - 1];
-  const token = valueLine.split('"');
-  token[VALUE_INDEX] = newValue ?? "";
-  oldChunk.lines[oldChunk.lines.length - 1] = token.join('"');
+  oldChunk.lines[oldChunk.lines.length - 1] = valueLine.replace(
+    iOSLineRegex,
+    (_match, prefix: string) => `${prefix}${escapeQuotes(newValue)}"`
+  );
   return oldChunk;
+}
+
+function escapeQuotes(value: string | null): string {
+  return (value ?? "").replace(/"/g, '\\"');
 }

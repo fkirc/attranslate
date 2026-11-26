@@ -83,6 +83,10 @@ const testArgs: {
     fileFormat: "ios-strings",
   },
   {
+    srcFile: join(testAssets, "ios-strings", "escaped-quotes.strings"),
+    fileFormat: "ios-strings",
+  },
+  {
     srcFile: join(testAssets, "android-xml", "sanitize.xml"),
     fileFormat: "xml",
   },

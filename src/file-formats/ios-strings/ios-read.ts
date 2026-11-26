@@ -3,8 +3,8 @@ import { ReadTFileArgs } from "../file-format-definitions";
 import { logParseError, logParseWarning } from "../common/parse-utils";
 import { readManagedUtf8 } from "../common/managed-utf8";
 
-const KEY_INDEX = 1;
-export const VALUE_INDEX = 3;
+// Matches `"key" = "value"`, where key and value may contain escapes like \".
+export const iOSLineRegex = /^(\s*"((?:[^"\\]|\\.)*)"\s*=\s*")((?:[^"\\]|\\.)*)"/;
 
 export function parseiOSFile(args: ReadTFileArgs): iOSFile {
   const rawString = readManagedUtf8(args.path);
@@ -54,17 +54,17 @@ function parseiOSLine(
   if (isComment(line)) {
     return null;
   }
-  const token = line.split('"');
-  if (token.length < 5) {
+  const match = iOSLineRegex.exec(line);
+  if (!match) {
     logParseWarning(`Line '${line}' seems to be unexpected`, args);
     return null;
   }
-  const key = token[KEY_INDEX];
+  const key = match[2];
   if (!key || !key.trim().length) {
     logParseWarning(`Did not find a key in '${line}'`, args);
     return null;
   }
-  const value = token[VALUE_INDEX];
+  const value = match[3].replace(/\\"/g, '"');
   return {
     key,
     value,
@@ -76,5 +76,8 @@ function isComment(line: string): boolean {
   if (trimLine.startsWith("//")) {
     return true;
   }
-  return trimLine.startsWith("/*") || trimLine.endsWith("*/");
+  return (
+    trimLine.startsWith("/*") ||
+    (trimLine.endsWith("*/") && !trimLine.startsWith('"'))
+  );
 }
